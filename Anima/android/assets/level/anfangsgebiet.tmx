@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="37">
+ <tileset firstgid="1" name="trees_plants_rocks" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
+ </tileset>
+ <layer name="hintergrund" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2Vlu1EAUheFGfsqwEdNsglHqdDbBKCVkE2GSGrIJRqkhm2DcB+M6OJZ81YeLy9iA4eX/pCO3SldRVNfVrnLPZgAAAAAAAAAAAAAAAAAAAP/Gzpn//R8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOpqNjurzJVzdvWxXNME01hobveUpbJvVx/LNfv0YzIHmttD5bZyZFcfyzVH9GMyK83tQ+WRcmJXH8s1J/RjMmvN7UvllXJqVx/LNaf0YzL53ve5j8/rjjUyt+Dvyfd+PLd9T1V3rJF5W7dMvaE/4zXze165oFxULimXlSvWA99T/ap2mYLh4r6/qlxTris3lJvKLeuB76lKtXVaR3v0YxSfu2PljnJXuafcVx4oO8puel6UahdpHcXfxjDej8fKE+Wp8kx5rryoNmdwf16UauPvLdI6wTA+Z6+VN8pb5Z3yXvlQbc7gW8p2O8+l2lgbeZ1gGJ+zj8on5bPyRfmqfKs2Z3C/90u18Yzxv8v6GG6r+vndx2G7FvL5IuY413ed2/m++j11O4fN/Jf2sHG+iD6semr9GcP31XiLdg6bvpT2sPGON+79dU9tPjOyPsbx7/vSHjbe8fq937ff7TrPY5i455u+lPaw/o53t53zUq0/W/i+Gi/u+aYvpT2sv+Pdbue8VOt7ANbHePF+o+lLaQ9bVz++B1n11PI8/zNxbsvJv836eOn9b99vuhjmoOpO/m22bzyfXeIz/RhvVXUnn/H6xn2s6/xIP4ZbV93Jv832jfuYf6Yf430Heyb4Zg==
+  </data>
+ </layer>
+ <layer name="barrieren" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt18dNAwEURdGBLXQCTQAmSNAEGQmaIBhogxybIMcmyLEI3haE2TFjwTnSXYzlhfWfZuGiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqtbVUhTdqSfVUm/qS/1poKXqX/f/DOfmI2k0jaXxNJEm05Q9Sjebm8+l+bSQ6mkxLaVle5RuJTdfTWtpPW2kzbSVtu1RuoPc/DAdpeN0kk7TWTq3R+lucvPbdJfu00N6TE/p2R5Q1Fo/P/fmua/1++/y+8a+3H48zxP2aBr1bLHYYI+dfL6b9tK+zSp3kQ0u01W6tkflXrLBa3pL7/YAStaW/33t/vs1jY5s0WmPpjGYLYYa7OHdKd907j3T4Obeneby07tD+X56dwD4uz4Ap6ssgA==
+  </data>
+ </layer>
+ <objectgroup name="hintergrund">
+  <object id="3" x="144" y="1344" width="16" height="32"/>
+  <object id="4" x="208" y="1344" width="16" height="32"/>
+  <object id="14" x="144" y="1504" width="32" height="16"/>
+  <object id="15" x="144" y="1488" width="32" height="16"/>
+  <object id="16" x="258.5" y="1547" width="0.5"/>
+  <object id="17" x="256" y="1520" width="32" height="32"/>
+  <object id="19" x="320" y="1376" width="32" height="32"/>
+  <object id="20" x="352" y="1392" width="32" height="32"/>
+  <object id="23" x="352" y="1376" width="16" height="16"/>
+  <object id="24" x="336" y="1408" width="16" height="16"/>
+  <object id="31" x="128" y="1296" width="32" height="32"/>
+  <object id="32" x="192" y="1296" width="64" height="32"/>
+ </objectgroup>
+ <objectgroup name="hauptcharakter">
+  <object id="36" x="176" y="1424" width="16" height="16"/>
+ </objectgroup>
+</map>
