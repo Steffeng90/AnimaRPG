@@ -13,7 +13,7 @@ public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
 	public static final float PPM = 100;
 	public static final int W_WIDTH =320;
-	public static final int W_Height = 220;
+	public static final int W_Height = 160;
 
 	//B2D Collision Bits
 	public static final short NOTHING_BIT=0;

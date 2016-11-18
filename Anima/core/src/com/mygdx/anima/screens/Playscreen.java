@@ -22,6 +22,7 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.ItemFundInfo;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.Raider;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.tools.B2WorldCreator;
@@ -89,7 +90,6 @@ public class Playscreen implements Screen {
 
         //Zeigt den Controller nur bei Android an:
         //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
-        controller.draw();
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         //Raider erzeugen
@@ -100,8 +100,8 @@ public class Playscreen implements Screen {
             schatztruhe.draw(game.batch);
         }
         spieler.draw(game.batch);
-
         game.batch.end();
+        controller.draw();
 
 }
     public void handleInput(float dt) {
@@ -129,17 +129,26 @@ public void update(float dt)
     renderer.setView(gamecam);
     spieler.update(dt);
     for(Enemy enemy: creator.getAllRaider()){
+        if(!enemy.destroyed){
         if(enemy.getX() < spieler.getX() + 250 / AnimaRPG.PPM && enemy.getX() >spieler.getX() - 250 / AnimaRPG.PPM
                 && enemy.getY() < spieler.getY() + 250/ AnimaRPG.PPM && enemy.getY() >spieler.getY() - 250 / AnimaRPG.PPM)
-        {enemy.b2body.setActive(true);}
-     enemy.update(spieler,dt);
+            {enemy.b2body.setActive(true);}
+        enemy.update(spieler,dt);
+        }
+        else{
+            creator.removeRaider((Raider)enemy);
+        }
     }
 
     for(Schatztruhe truhe: creator.getAllSchatztruhen()) {
         truhe.update(dt);
     }
     for(Arrow arrow :Arrow.getAllArrows()){
+        if(!arrow.destroyed)
         arrow.update(dt);
+        else{
+
+        }
     }
     gamecam.position.set(spieler.b2body.getPosition(),0);
 }

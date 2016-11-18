@@ -152,7 +152,7 @@ public class Controller {
                 return true;
             }
         });
-        Image useImg=new Image(new Texture("ui-skin/pfeil_links.png"));
+        Image useImg=new Image(new Texture("ui-skin/action_use.png"));
         useImg.setSize(buttonSize,buttonSize);
         useImg.addListener(new InputListener(){
             @Override

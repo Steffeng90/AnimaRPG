@@ -71,4 +71,7 @@ public class B2WorldCreator {
     }
     public Array<Raider> getAllRaider(){ return allRaider;}
     public Array<Schatztruhe> getAllSchatztruhen(){ return allSchatztruhen;}
+    public void removeRaider(Raider raider){
+        allRaider.removeValue(raider,true);
+    }
 }

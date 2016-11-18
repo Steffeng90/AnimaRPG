@@ -151,15 +151,14 @@ public class HumanoideSprites extends Sprite {
         previousState = currentState;
         switch (currentState) {
             case DYING:
-                if(!destroyed){
-                    destroyBody();destroyed=true;}
                 region=Dying.getKeyFrame(stateTimer,false);
                 if(Dying.isAnimationFinished(stateTimer)){
-                    dead=true;runDying=false;}
+                    dead=true;}
                 break;
             case DEAD:
-                if(!dead)
-                    dead=true;
+                if(runDying && stateTimer >2){
+                    destroyBody();
+                }
                 region=Died;
                 break;
             case STANDING:
@@ -263,10 +262,10 @@ public class HumanoideSprites extends Sprite {
 
     public State getState() {
         Vector2 velocity = b2body.getLinearVelocity();
-        if(runDying){
-            return State.DYING;}
-        else if(dead){
+        if(dead){
             return State.DEAD;}
+        else if(runDying){
+            return State.DYING;}
         else if(runArchery)
             return State.ARCHERY;
         else if(runMeleeAnimation)
@@ -279,6 +278,10 @@ public class HumanoideSprites extends Sprite {
 
     public void destroyBody(){
         world.destroyBody(b2body);
+        b2body.setUserData(null);
+        b2body=null;
+        runDying=false;
+        destroyed=true;
     }
     public void readyToDie(){runDying=true;}
 

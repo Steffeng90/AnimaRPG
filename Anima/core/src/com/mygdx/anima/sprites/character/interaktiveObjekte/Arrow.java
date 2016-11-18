@@ -60,17 +60,23 @@ public class Arrow extends Sprite {
     {   if(setToDestroy){
             destroyArrow();}
         else{
-            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        b2body.setLinearVelocity(flugVector);
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         }}
     }
     public static Array<Arrow> getAllArrows(){
         return allArrows;
     }
-    public void destroyArrow(){
-        world.destroyBody(b2body);
-        Gdx.app.log("Kapuut","");
+    public void destroyArrow (){
+        world.destroyBody(this.b2body);
+        b2body.setUserData(null);
+        b2body=null;
+      //  Gdx.app.log("Kapuut","");
         setToDestroy=false;
         destroyed=true;
         allArrows.removeValue(this,true);
+    }
+    public void remove() {
+        allArrows.removeValue(this, true);
     }
 }

@@ -68,7 +68,6 @@ public abstract class Enemy extends HumanoideSprites{
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(5 / AnimaRPG.PPM);
         Vector2 richtungsVector;
-        Gdx.app.log("Bis hiergut0.","");
 
         switch (getCurrentRichtung()) {
             //Hier sind bei Y immer schon mind. -5 Abzug, weil man es ein bisschen nach unten ziehen muss, um die Mitte der Bodentexture und nicht

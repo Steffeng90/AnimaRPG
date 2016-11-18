@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.tools.B2WorldCreator;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -28,9 +29,15 @@ public class Raider extends Enemy
     public void update(Held hero,float dt) {
         stateTimer +=dt;
         super.update(hero,dt);
+
+        if(!dead && !runDying){
         coordinateWalking(hero, dt);
         b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        }
+        else{
+            b2body.setLinearVelocity(new Vector2(0,0));
+        }
         setRegion(getFrame(dt));
     }
     public void create(){
@@ -118,8 +125,8 @@ public class Raider extends Enemy
     public void readyToDie(){
         super.readyToDie();
     }
-    public void draw(Batch batch){
+    /* public void draw(Batch batch){
         if(!dead || stateTimer< 3)
             super.draw(batch);
-    }
+    }*/
 }
