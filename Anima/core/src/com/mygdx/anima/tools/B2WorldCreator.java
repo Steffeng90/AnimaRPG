@@ -9,8 +9,17 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.enemies.Raider;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
+
+import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
+import static com.mygdx.anima.AnimaRPG.BARRIERE_BIT;
+import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
+import static com.mygdx.anima.AnimaRPG.HERO_BIT;
+import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -23,6 +32,8 @@ public class B2WorldCreator {
     BodyDef bdef;
     FixtureDef fdef;
     PolygonShape pshape;
+    public Array<Raider> allRaider;
+    public Array<Schatztruhe> allSchatztruhen;
     public B2WorldCreator(Playscreen screen)
     {
         this.world=screen.getWorld();
@@ -41,8 +52,23 @@ public class B2WorldCreator {
 
             pshape.setAsBox((rect.getWidth()/2)/AnimaRPG.PPM, (rect.getHeight()/2)/AnimaRPG.PPM);
             fdef.shape=pshape;
+            fdef.filter.categoryBits=BARRIERE_BIT;
+            fdef.filter.maskBits=HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
             body.createFixture(fdef);
         }
+        // Erzeugen von Raider
+        allRaider=new Array<Raider>();
+        for(MapObject object:map.getLayers().get("raider").getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            allRaider.add(new Raider(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM));
+        }
+        // Erzeugen von Schatztruhen
+        allSchatztruhen=new Array<Schatztruhe>();
+        for(MapObject object:map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            allSchatztruhen.add(new Schatztruhe(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM));
+        }
     }
-
+    public Array<Raider> getAllRaider(){ return allRaider;}
+    public Array<Schatztruhe> getAllSchatztruhen(){ return allSchatztruhen;}
 }

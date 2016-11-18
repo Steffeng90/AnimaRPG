@@ -15,6 +15,18 @@ public class AnimaRPG extends Game {
 	public static final int W_WIDTH = 320;
 	public static final int W_Height = 320;
 
+	//B2D Collision Bits
+	public static final short NOTHING_BIT=0;
+	public static final short BARRIERE_BIT=1;
+	public static final short HERO_BIT =2;
+	public static final short ENEMY_BIT=4;
+	public static final short HERO_WEAPON_BIT=16;
+	public static final short OBJECT_BIT=32;
+	public static final short HERO_SENSOR=64;
+	public static final short ENEMY_SENSOR=128;
+	public static final short ENEMY_ATTACK=256;
+	public static final short ARROW_BIT=512;
+
 	public SpriteBatch batch;
 
 	@Override
@@ -25,8 +37,9 @@ public class AnimaRPG extends Game {
 
 	@Override
 	public void dispose() {
-		super.dispose();
 		batch.dispose();
+		super.dispose();
+
 	}
 
 	@Override
