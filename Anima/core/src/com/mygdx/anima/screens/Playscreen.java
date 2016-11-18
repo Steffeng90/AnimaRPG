@@ -1,5 +1,6 @@
 package com.mygdx.anima.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -24,6 +25,7 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.tools.B2WorldCreator;
+import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.WorldContactListener;
 
 /**
@@ -36,6 +38,7 @@ public class Playscreen implements Screen {
 
     OrthographicCamera gamecam;
     private Viewport gameViewPort;
+    Controller controller;
     //Objekte um TileMap einzubinden
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -57,6 +60,7 @@ public class Playscreen implements Screen {
         mapLoader=new TmxMapLoader();
         map=mapLoader.load("level/start.tmx");
         renderer= new OrthogonalTiledMapRenderer(map,1/AnimaRPG.PPM);
+
         gamecam.position.set(gameViewPort.getWorldWidth()/2,gameViewPort.getWorldHeight()/2,0);
 
 
@@ -65,7 +69,7 @@ public class Playscreen implements Screen {
         b2dr=new Box2DDebugRenderer();
         creator= new B2WorldCreator(this);
         spieler=new Held(this);
-
+        controller=new Controller(game.batch);
     }
 
     @Override
@@ -83,6 +87,9 @@ public class Playscreen implements Screen {
         // Render-Linien
         b2dr.render(world,gamecam.combined);
 
+        //Zeigt den Controller nur bei Android an:
+        //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
+        controller.draw();
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         //Raider erzeugen
@@ -98,16 +105,16 @@ public class Playscreen implements Screen {
 
 }
     public void handleInput(float dt) {
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) | controller.isRightPressed()) {
             spieler.b2body.setLinearVelocity(1,0); spieler.setCurrentRichtung(1);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {spieler.b2body.setLinearVelocity(-1,0); spieler.setCurrentRichtung(0);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {spieler.b2body.setLinearVelocity(0,1);spieler.setCurrentRichtung(2);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {spieler.b2body.setLinearVelocity(0,-1);spieler.setCurrentRichtung(3);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){ spieler.meleeAttack();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)){ spieler.useObject();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.V)){ spieler.spriteWechsel();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.C)){ spieler.spriteBogen();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)){ spieler.bowAttack();}
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)| controller.isLeftPressed()) {spieler.b2body.setLinearVelocity(-1,0); spieler.setCurrentRichtung(0);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP) | controller.isUpPressed()) {spieler.b2body.setLinearVelocity(0,1);spieler.setCurrentRichtung(2);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) |controller.isDownPressed()) {spieler.b2body.setLinearVelocity(0,-1);spieler.setCurrentRichtung(3);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()){ spieler.meleeAttack();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()){ spieler.useObject();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.V) ){ spieler.spriteWechsel();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.C) ){ spieler.spriteBogen();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()){ spieler.bowAttack();}
 
         else        {
             spieler.b2body.setLinearVelocity(0,0);
@@ -139,6 +146,7 @@ public void update(float dt)
     @Override
     public void resize(int width, int height) {
         gameViewPort.update(width,height);
+        controller.resize(width,height);
     }
 
     @Override

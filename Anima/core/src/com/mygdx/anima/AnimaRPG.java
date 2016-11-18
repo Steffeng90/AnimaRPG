@@ -12,8 +12,8 @@ import com.mygdx.anima.screens.Playscreen;
 public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
 	public static final float PPM = 100;
-	public static final int W_WIDTH = 320;
-	public static final int W_Height = 320;
+	public static final int W_WIDTH =320;
+	public static final int W_Height = 220;
 
 	//B2D Collision Bits
 	public static final short NOTHING_BIT=0;

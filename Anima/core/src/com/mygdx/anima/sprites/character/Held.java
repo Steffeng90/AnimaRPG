@@ -38,7 +38,7 @@ public class Held extends HumanoideSprites{
         createHero();
         heldErstellt=true;}
         objectInReichweite=false;
-        hitpoints=10;
+        hitpoints=25;
 }
     public TextureRegion getFrame(float dt) {
         return super.getFrame(dt);

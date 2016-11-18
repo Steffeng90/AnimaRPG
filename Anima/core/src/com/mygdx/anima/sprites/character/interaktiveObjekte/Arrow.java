@@ -71,5 +71,6 @@ public class Arrow extends Sprite {
         Gdx.app.log("Kapuut","");
         setToDestroy=false;
         destroyed=true;
+        allArrows.removeValue(this,true);
     }
 }
