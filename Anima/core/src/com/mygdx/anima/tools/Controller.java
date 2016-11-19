@@ -166,7 +166,6 @@ public class Controller {
                 return true;
             }
         });
-        Gdx.app.log("tableleft1","");
         tableRight.padLeft(240);
         tableRight.add();
         tableRight.add(meleeImg).size(meleeImg.getWidth(),meleeImg.getHeight());
@@ -181,10 +180,7 @@ public class Controller {
         tableRight.add();
         tableRight.left().bottom();
 
-
         stage.addActor(tableRight);
-
-        Gdx.app.log("tableright2","");
     }
     public void draw(){
         stage.draw();

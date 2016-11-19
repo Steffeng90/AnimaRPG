@@ -23,13 +23,14 @@ public class HumanoideSprites extends Sprite {
     public Body b2body;
     public float stateTimer;
 
-    public enum State {STANDING, WALKING, MELEE, DYING, DEAD, ARCHERY};
+    public enum State {STANDING, WALKING, MELEE, DYING, DEAD, ARCHERY, CASTING};
     public enum Richtung {Links, Rechts, Oben, Unten};
     public State currentState, previousState;
     public Richtung previousRichtung, currentRichtung;
     public Animation UpWalk, DownWalk, LeftWalk, RightWalk;
     public Animation UpMelee, DownMelee, LeftMelee, RightMelee;
     public Animation UpBow, DownBow, LeftBow, RightBow;
+    public Animation UpCast,DownCast, LeftCast,RightCast;
 
     public Animation Dying;
     public TextureRegion Died;
@@ -38,10 +39,10 @@ public class HumanoideSprites extends Sprite {
     public Texture spriteQuelle;
     public Vector2 velocity;
 
-    public Fixture meleeFixture, sensorFixture;
+    public Fixture meleeFixture,castFixture, sensorFixture;
     CircleShape sensorCircleShape;
-    public boolean meleeExists;
-    public boolean runMeleeAnimation,istHeld,runArchery;
+    public boolean meleeExists, castExists;
+    public boolean runMeleeAnimation,istHeld,runArchery,runCasting;
     public boolean runDying,dead,destroyed;
 
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
@@ -113,7 +114,7 @@ public class HumanoideSprites extends Sprite {
         for (int i = 0; i < 13; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1024, breite, hoehe));
         }
-        UpBow = new Animation(0.05f, frames);
+        UpBow = new Animation(0.1f, frames);
         frames.clear();
         for (int i = 0; i < 13; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1152, breite, hoehe));
@@ -129,6 +130,26 @@ public class HumanoideSprites extends Sprite {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1088, breite, hoehe));
         }
         LeftBow = new Animation(0.05f, frames);
+        frames.clear();
+        for (int i = 0; i < 7; i++) {
+            frames.add(new TextureRegion(spriteQuelle, i *breite, 0, breite, hoehe));
+        }
+        UpCast = new Animation(0.05f, frames);
+        frames.clear();
+        for (int i = 0; i < 7; i++) {
+            frames.add(new TextureRegion(spriteQuelle, i *breite, 128, breite, hoehe));
+        }
+        DownCast= new Animation(0.05f, frames);
+        frames.clear();
+        for (int i = 0; i < 7; i++) {
+            frames.add(new TextureRegion(spriteQuelle, i *breite, 192, breite, hoehe));
+        }
+        RightCast = new Animation(0.05f, frames);
+        frames.clear();
+        for (int i = 0; i < 7; i++) {
+            frames.add(new TextureRegion(spriteQuelle, i *breite, 64, breite, hoehe));
+        }
+        LeftCast = new Animation(0.05f, frames);
 
         frames.clear();
         for (int i = 1; i < 5; i++) {
@@ -253,6 +274,33 @@ public class HumanoideSprites extends Sprite {
                         break;
                 }
                 break;
+            case CASTING:
+                switch (currentRichtung) {
+                    case Links:
+                        region = LeftCast.getKeyFrame(stateTimer, true);
+                        if(LeftCast.isAnimationFinished(stateTimer))
+                            runCasting=false;
+                        break;
+                    case Rechts:
+                        region = RightCast.getKeyFrame(stateTimer, true);
+                        if(RightCast.isAnimationFinished(stateTimer))
+                            runCasting=false;
+                        break;
+                    case Oben:
+                        region = UpCast.getKeyFrame(stateTimer, true);
+                        if(UpCast.isAnimationFinished(stateTimer))
+                            runCasting=false;
+                        break;
+                    case Unten:
+                        region = DownCast.getKeyFrame(stateTimer, true);
+                        if(DownCast.isAnimationFinished(stateTimer))
+                            runCasting=false;
+                        break;
+                    default:
+                        region = standingDownSprite;
+                        break;
+                }
+                break;
             default:
                 region = standingDownSprite;
                 break;
@@ -268,6 +316,8 @@ public class HumanoideSprites extends Sprite {
             return State.DYING;}
         else if(runArchery)
             return State.ARCHERY;
+        else if(runCasting)
+            return State.CASTING;
         else if(runMeleeAnimation)
             return State.MELEE;
         else if(velocity.x == 0 && velocity.y == 0)
