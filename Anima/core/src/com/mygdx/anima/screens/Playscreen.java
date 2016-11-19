@@ -27,6 +27,7 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.Raider;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.WorldContactListener;
@@ -52,7 +53,7 @@ public class Playscreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
-    private Held spieler;
+    private static Held spieler;
 
     //Camera-Variablen
     float mapLeft,mapRight,mapTop,mapBottom;
@@ -98,20 +99,6 @@ public class Playscreen implements Screen {
         cameraHalfWidth = gameViewPort.getWorldWidth() * .5f;
         cameraHalfHeight =gameViewPort.getWorldHeight() * .5f;
 
-
-        Gdx.app.log(""+mapPixelWidth,"");
-        Gdx.app.log(""+mapPixelHeight,"");
-        Gdx.app.log("Gamecam WIDTH"+gamecam.viewportWidth,"");
-        Gdx.app.log("Gamecam HEIGHT"+gamecam.viewportHeight,"");
-        Gdx.app.log(""+cameraLeft+" "+cameraRight,"");
-        Gdx.app.log(""+cameraTop+" "+cameraBottom,"");
-        Gdx.app.log("GamecamX"+gamecam.position.x+"GamecamY"+gamecam.position.y,"");
-        Gdx.app.log("viewPortHeight"+gameViewPort.getWorldHeight()+" "+gameViewPort.getCamera().viewportHeight,"");
-        Gdx.app.log("viewPortWidth"+gameViewPort.getWorldWidth()+" "+gameViewPort.getCamera().viewportWidth,"");
-        Gdx.app.log("halfhei"+cameraHalfHeight,"");
-        Gdx.app.log("halfwid"+cameraHalfWidth,"");
-
-
     }
 
     @Override
@@ -140,6 +127,19 @@ public class Playscreen implements Screen {
         for(Schatztruhe schatztruhe: creator.getAllSchatztruhen()){
             schatztruhe.draw(game.batch);
         }
+        if(Arrow.getAllArrows().size>0) {
+            for (Arrow arrow : Arrow.getAllArrows()) {
+                arrow.draw(game.batch);
+            }
+        }
+        if(Zauber.getAllZauber().size>0) {
+            Gdx.app.log("Zauberzahl"+Zauber.getAllZauber().size,"");
+
+            for (Zauber zauber : Zauber.getAllZauber()) {
+                if(!zauber.destroyed){
+                zauber.draw(game.batch);
+            }}
+        }
         spieler.draw(game.batch);
         game.batch.end();
         controller.draw();
@@ -147,20 +147,34 @@ public class Playscreen implements Screen {
 
 }
     public void handleInput(float dt) {
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) | controller.isRightPressed()) {spieler.b2body.setLinearVelocity(1,0); spieler.setCurrentRichtung(1);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)| controller.isLeftPressed()) {spieler.b2body.setLinearVelocity(-1,0); spieler.setCurrentRichtung(0);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP) | controller.isUpPressed()) {spieler.b2body.setLinearVelocity(0,1);spieler.setCurrentRichtung(2);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) |controller.isDownPressed()) {spieler.b2body.setLinearVelocity(0,-1);spieler.setCurrentRichtung(3);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()){ spieler.meleeAttack();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()){ spieler.useObject();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.V) ){ spieler.spriteWechsel();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.C) ){ spieler.spriteBogen();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()){ spieler.bowAttack();
-        } else if (controller.isCastPressed()){spieler.castAttack();}
-
-
-        else        {
-            spieler.b2body.setLinearVelocity(0,0);
+        if(spieler.actionInProgress()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) | controller.isRightPressed()) {
+                spieler.b2body.setLinearVelocity(1, 0);
+                spieler.setCurrentRichtung(1);
+            } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) | controller.isLeftPressed()) {
+                spieler.b2body.setLinearVelocity(-1, 0);
+                spieler.setCurrentRichtung(0);
+            } else if (Gdx.input.isKeyPressed(Input.Keys.UP) | controller.isUpPressed()) {
+                spieler.b2body.setLinearVelocity(0, 1);
+                spieler.setCurrentRichtung(2);
+            } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) | controller.isDownPressed()) {
+                spieler.b2body.setLinearVelocity(0, -1);
+                spieler.setCurrentRichtung(3);
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
+                spieler.meleeAttack();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
+                spieler.useObject();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+                spieler.spriteWechsel();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
+                spieler.spriteBogen();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()) {
+                spieler.bowAttack();
+            } else if (controller.isCastPressed()) {
+                spieler.castAttack();
+            } else {
+                spieler.b2body.setLinearVelocity(0, 0);
+            }
         }
     }
 public void update(float dt)
@@ -170,39 +184,44 @@ public void update(float dt)
     anzeige.update(dt,spieler);
     gamecam.update();
     renderer.setView(gamecam);
-    spieler.update(dt);
+    if(spieler.currentHitpoints>0){
+        gamecam.position.set(spieler.b2body.getPosition(),0);
+   }
+
     for(Enemy enemy: creator.getAllRaider()){
-        if(!enemy.destroyed){
+       /* if(!enemy.destroyed){
         if(enemy.getX() < spieler.getX() + 250 / AnimaRPG.PPM && enemy.getX() >spieler.getX() - 250 / AnimaRPG.PPM
                 && enemy.getY() < spieler.getY() + 250/ AnimaRPG.PPM && enemy.getY() >spieler.getY() - 250 / AnimaRPG.PPM)
             {enemy.b2body.setActive(true);}
-        enemy.update(spieler,dt);
-        }
-        else{
-            creator.removeRaider((Raider)enemy);
-        }
+        enemy.update(spieler,dt);        }
+        else{            creator.removeRaider((Raider)enemy);        }*/
+        if(!enemy.destroyed){
+            if(enemy.getX() < cameraRight  && enemy.getX() >cameraLeft
+                    && enemy.getY() < cameraTop && enemy.getY() >cameraBottom)
+            {if(enemy.b2body.isActive()==false)
+                    enemy.b2body.setActive(true);
+                enemy.update(spieler,dt);
+            }        }
+        else{            creator.removeRaider((Raider)enemy);        }
     }
     for(Schatztruhe truhe: creator.getAllSchatztruhen()) {
         truhe.update(dt);
     }
     for(Arrow arrow :Arrow.getAllArrows()){
-        if(!arrow.destroyed)
-            arrow.update(dt);
+        if(!arrow.destroyed){
+            arrow.update(dt);}
         else{ arrow.remove();}
     }
-    gamecam.position.set(spieler.b2body.getPosition(),0);
+    for(Zauber zauber :Zauber.getAllZauber()){
+        Gdx.app.log("Zauberzahl"+Zauber.getAllZauber().size,"");
+        if(!zauber.destroyed){
+            zauber.update(dt);}
+        else{ zauber.remove();}
+    }
+    spieler.update(dt);
 
     justiereCam();
 
-    //if(!spieler.destroyed)
-    //gamecam.position.set(gameViewPort.getWorldWidth()/2,spieler.b2body.getPosition().y,0);
-//    gamecam.position.set(spieler.b2body.getPosition(),0);
-    //Testen von Cameraeinstellung: Wenn man sich dem Rand nähert dann geht die Camera dieser Achse nichtmehr nacht
-
-    //Gdx.app.log("Welt: "+renderer.getViewBounds().toString(),"");
-    //Gdx.app.log("Charakter: "+spieler.b2body.getPosition().toString(),"");
-    Gdx.app.log(mapPixelWidth+" "+gamecam.viewportWidth,"");
-    Gdx.app.log(mapPixelHeight+" "+gamecam.viewportHeight,"");
 }
     @Override
     public void resize(int width, int height) {
@@ -213,15 +232,10 @@ public void update(float dt)
 
     @Override
     public void pause() {}
-
     @Override
-    public void resume() {
-    }
-
+    public void resume() {    }
     @Override
-    public void hide() {
-    }
-
+    public void hide() {    }
     @Override
     public void dispose() {
         map.dispose();
@@ -233,46 +247,23 @@ public void update(float dt)
     public World getWorld(){ return world;}
     public TiledMap getMap(){ return map;}
     public void justiereCam(){
-
         cameraLeft= gamecam.position.x - cameraHalfWidth;
         cameraRight=gamecam.position.x + cameraHalfWidth;
         cameraTop=gamecam.position.y +cameraHalfHeight;
         cameraBottom=gamecam.position.y-cameraHalfHeight;
 
         if(mapPixelWidth< gamecam.viewportWidth)
-        {
-            gamecam.position.x = mapRight / 2;
-            Gdx.app.log("Fall1","");
-
-        }
+        {gamecam.position.x = mapRight / 2;}
         else if(cameraLeft <= mapLeft)
-        {
-            gamecam.position.x = mapLeft + cameraHalfWidth;
-            Gdx.app.log("Fall2","");
-        }
+        {gamecam.position.x = mapLeft + cameraHalfWidth;}
         else if(cameraRight >= mapRight)
-        {
-            gamecam.position.x = mapRight - cameraHalfWidth;
-            Gdx.app.log("Fall3","");
-
-        }
-
+        {gamecam.position.x = mapRight - cameraHalfWidth;}
 // Vertical axis
         if(mapPixelHeight<  gamecam.viewportWidth)
-        {
-            gamecam.position.y = mapTop / 2;
-            Gdx.app.log("Fall4","");
-        }
+        {gamecam.position.y = mapTop / 2;}
         else if(cameraBottom <= mapBottom)
-        {
-            gamecam.position.y = mapBottom + cameraHalfHeight;
-            Gdx.app.log("Fall5","");
-
-        }
+        {gamecam.position.y = mapBottom + cameraHalfHeight;}
         else if(cameraTop >= mapTop)
-        {
-            gamecam.position.y = mapTop - cameraHalfHeight;
-            Gdx.app.log("Fall6","");
-        }
+        {gamecam.position.y = mapTop - cameraHalfHeight;}
     }
 }

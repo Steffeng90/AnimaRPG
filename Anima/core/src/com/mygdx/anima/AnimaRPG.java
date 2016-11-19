@@ -26,6 +26,7 @@ public class AnimaRPG extends Game {
 	public static final short ENEMY_SENSOR=128;
 	public static final short ENEMY_ATTACK=256;
 	public static final short ARROW_BIT=512;
+	public static final short HERO_CAST_BIT=1024;
 
 	public SpriteBatch batch;
 

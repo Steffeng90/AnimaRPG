@@ -11,6 +11,7 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -30,11 +31,12 @@ public class Held extends HumanoideSprites{
     public Enemy treffenderEnemy;
 
     //Statistik-Werte
-    public int currentHitpoints,maxHitpoints,currentMana,maxMana;
+    public int currentHitpoints,maxHitpoints,currentMana,maxMana,manareg;
+    float characterTimer;
 
     public Held(Playscreen screen)
     {
-        super(screen,spriteStock,true);
+        super(screen,spriteBogen,true);
         this.screen=screen;
         if(!heldErstellt){
         createHero();
@@ -44,6 +46,9 @@ public class Held extends HumanoideSprites{
         currentHitpoints=maxHitpoints;
         maxMana=15;
         currentMana=maxMana;
+        manareg=1;
+        characterTimer=0;
+
 
 }
     public TextureRegion getFrame(float dt) {
@@ -51,7 +56,7 @@ public class Held extends HumanoideSprites{
     }
     public void createHero(){
         BodyDef bdef=new BodyDef();
-        bdef.position.set(30/ AnimaRPG.PPM,30/AnimaRPG.PPM);
+        bdef.position.set((AnimaRPG.W_WIDTH/2) / AnimaRPG.PPM,30/AnimaRPG.PPM);
         bdef.type=BodyDef.BodyType.DynamicBody;
         b2body=world.createBody(bdef);
         createSensor(true);
@@ -69,8 +74,13 @@ public class Held extends HumanoideSprites{
     }
     public void update(float dt)
     {
+        characterTimer+=dt;
+        if(characterTimer>=1 && currentMana<maxMana){
+            currentMana+=manareg;
+            characterTimer=0;}
         super.update(dt);
         setRegion(getFrame(dt));
+
         if(isHit){
             getsHit(treffenderEnemy);
             isHit=false;}
@@ -78,7 +88,7 @@ public class Held extends HumanoideSprites{
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;}
         if(!runCasting && castExists){
-            b2body.destroyFixture(castFixture);
+            //b2body.destroyFixture(castFixture);
             castExists=false;}
         if(!destroyed)
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
@@ -92,6 +102,7 @@ public class Held extends HumanoideSprites{
     }
     public void meleeAttack()
     {   if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting) {
+       // updateTextures(spriteSword);
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(15 / AnimaRPG.PPM);
         Vector2 richtungsVector;
@@ -130,21 +141,11 @@ public class Held extends HumanoideSprites{
     public void castAttack()
     {   if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting && currentMana>=5) {
         currentMana-=5;
-        CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(30 / AnimaRPG.PPM);
-        circleShape.setPosition(new Vector2(0,-10/AnimaRPG.PPM));
-        FixtureDef fdefAttack = new FixtureDef();
-        fdefAttack.filter.categoryBits = AnimaRPG.HERO_WEAPON_BIT;
-        fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;
-        fdefAttack.shape = circleShape;
-        fdefAttack.isSensor = true;
-        castFixture = b2body.createFixture(fdefAttack);
-        castFixture.setUserData(this);
-        runCasting = true;
-        castExists = true;
+        new Zauber(this);
     }}
     public void bowAttack()
     {   if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting) {
+
         runArchery= true;
         Vector2 startVector, flugVector;
         Vector2 koerper=b2body.getPosition();
@@ -153,21 +154,21 @@ public class Held extends HumanoideSprites{
             // die der Grafikmitte zu treffen
             case Rechts:
                 startVector = new Vector2(koerper.x+20 / AnimaRPG.PPM,koerper.y -8 / AnimaRPG.PPM);
-                flugVector = new Vector2(150 / AnimaRPG.PPM, 0);break;
+                flugVector = new Vector2(200 / AnimaRPG.PPM, 0);break;
             case Links:
                 startVector = new Vector2(koerper.x-20 / AnimaRPG.PPM,koerper.y-8 / AnimaRPG.PPM);
-                flugVector = new Vector2(-150 / AnimaRPG.PPM, 0);break;
+                flugVector = new Vector2(-200 / AnimaRPG.PPM, 0);break;
             case Oben:
                 startVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
-                flugVector = new Vector2(0, 150 / AnimaRPG.PPM);break;
+                flugVector = new Vector2(0, 200 / AnimaRPG.PPM);break;
             case Unten:
                 startVector = new Vector2(koerper.x,koerper.y -33 / AnimaRPG.PPM);
-                flugVector = new Vector2(0, -150 / AnimaRPG.PPM);break;
+                flugVector = new Vector2(0, -200 / AnimaRPG.PPM);break;
             default:
                 startVector = new Vector2(0, 0);
                 flugVector = new Vector2(10, 10);break;
         }
-        Arrow arrow=new Arrow(world,screen,currentRichtung,startVector,flugVector);
+        new Arrow(world,screen,currentRichtung,startVector,flugVector);
 
     }}
     public void setObject(InteraktivesObjekt io){
@@ -191,6 +192,12 @@ public class Held extends HumanoideSprites{
         if(currentHitpoints<=0){
             readyToDie();
         }
+    }
+    //die Methode prüft, ob gerade eine Aktion oder Animation ausgeführt wird und gibt Boolean zurück
+    public boolean actionInProgress(){
+        if(!runDying && !runArchery && !runCasting && !runMeleeAnimation && !destroyed)
+            return true;
+        return false;
     }
     }
 

@@ -44,6 +44,7 @@ public class HumanoideSprites extends Sprite {
     public boolean meleeExists, castExists;
     public boolean runMeleeAnimation,istHeld,runArchery,runCasting;
     public boolean runDying,dead,destroyed;
+    public float hitdauer,wertHeld=0.07f,wertEnemy=0.2f;
 
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
     public int breite;
@@ -57,6 +58,10 @@ public class HumanoideSprites extends Sprite {
         runMeleeAnimation=false;
         runDying=false;
         meleeExists=false;
+
+        if(istHeld)
+            hitdauer=wertHeld;
+        else{ hitdauer=wertEnemy;}
 
         //Spritebreite
         breite=64;
@@ -94,27 +99,27 @@ public class HumanoideSprites extends Sprite {
         for (int i = 0; i < 5; i++) {
             frames.add(new TextureRegion(spriteQuelle,i* breite, 768, breite, hoehe));
         }
-        UpMelee = new Animation(0.07f, frames);
+        UpMelee = new Animation(hitdauer, frames);
         frames.clear();
         for (int i = 0; i < 5; i++) {
             frames.add(new TextureRegion(spriteQuelle, i*breite,896, breite, hoehe));
         }
-        DownMelee = new Animation(0.07f, frames);
+        DownMelee = new Animation(hitdauer, frames);
         frames.clear();
         for (int i = 0; i < 5; i++) {
             frames.add(new TextureRegion(spriteQuelle, i * breite, 832, breite, hoehe));
         }
-        LeftMelee= new Animation(0.07f, frames);
+        LeftMelee= new Animation(hitdauer, frames);
         frames.clear();
         for (int i = 0; i < 5; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 960, breite, hoehe));
         }
-        RightMelee = new Animation(0.07f, frames);
+        RightMelee = new Animation(hitdauer, frames);
         frames.clear();
         for (int i = 0; i < 13; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1024, breite, hoehe));
         }
-        UpBow = new Animation(0.1f, frames);
+        UpBow = new Animation(0.05f, frames);
         frames.clear();
         for (int i = 0; i < 13; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1152, breite, hoehe));

@@ -17,7 +17,7 @@ import com.mygdx.anima.sprites.character.HumanoideSprites;
 
 public abstract class Enemy extends HumanoideSprites{
     public int hitCounter;
-    public boolean beginAttack;
+    public boolean enemyInReichweite;
 
     public Enemy(Playscreen screen,float x, float y, String quelle)
     {
@@ -27,7 +27,7 @@ public abstract class Enemy extends HumanoideSprites{
         velocity=new Vector2(0.2f,0.2f);
         b2body.setActive(false);
         hitCounter=0;
-        beginAttack=false;
+        enemyInReichweite=false;
     }
 
 
@@ -43,20 +43,21 @@ public abstract class Enemy extends HumanoideSprites{
         PolygonShape shape=new PolygonShape();
         shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(0,-10/AnimaRPG.PPM),0);
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
-        fdef.filter.maskBits= AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT
+        fdef.filter.maskBits= AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
         | AnimaRPG.ARROW_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
     }
 
     public void update(Held hero, float dt){
-        if(beginAttack){
-            attack();
-        beginAttack=false;}
         if(!runMeleeAnimation && meleeExists){
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;
         }
+        else if(enemyInReichweite && !runMeleeAnimation &&!destroyed){
+            attack();
+        }
+
         super.update(dt);
 
 
@@ -64,7 +65,7 @@ public abstract class Enemy extends HumanoideSprites{
     public abstract void getsHit(Held hero);
     public void readyToDie(){super.readyToDie();}
     public void attack()
-    {  if(!meleeExists && !runMeleeAnimation &&!destroyed) {
+    {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(5 / AnimaRPG.PPM);
         Vector2 richtungsVector;
@@ -89,8 +90,7 @@ public abstract class Enemy extends HumanoideSprites{
                 break;
 
         }
-        Gdx.app.log("Bis hiergut123.","");
-      circleShape.setPosition(richtungsVector);
+        circleShape.setPosition(richtungsVector);
         FixtureDef fdefAttack = new FixtureDef();
         fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
         fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT;
@@ -101,7 +101,7 @@ public abstract class Enemy extends HumanoideSprites{
         runMeleeAnimation = true;
         meleeExists = true;
     }
-    }
+
     public abstract void getsHit();
     }
 

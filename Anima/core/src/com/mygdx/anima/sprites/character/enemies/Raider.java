@@ -30,7 +30,7 @@ public class Raider extends Enemy
         stateTimer +=dt;
         super.update(hero,dt);
 
-        if(!dead && !runDying){
+        if(!dead && !runDying && !runMeleeAnimation){
         coordinateWalking(hero, dt);
         b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -90,6 +90,7 @@ public class Raider extends Enemy
     }
     public void getsHit(){
         getsDamaged();}
+
     public void getsHit(Held hero){
         getsDamaged();
         //Links
