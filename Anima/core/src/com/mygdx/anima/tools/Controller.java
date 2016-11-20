@@ -216,4 +216,8 @@ public class Controller {
     public boolean isUsePressed() {
         return usePressed;
     }
+
+    public void dispose(){
+        stage.dispose();
+    }
 }

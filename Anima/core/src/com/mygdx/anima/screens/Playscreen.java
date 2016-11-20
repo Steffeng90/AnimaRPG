@@ -23,6 +23,7 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.AnzeigenDisplay;
 import com.mygdx.anima.scenes.ItemFundInfo;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.Raider;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
@@ -160,7 +161,9 @@ public class Playscreen implements Screen {
             } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) | controller.isDownPressed()) {
                 spieler.b2body.setLinearVelocity(0, -1);
                 spieler.setCurrentRichtung(3);
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
+            }else {
+                spieler.b2body.setLinearVelocity(0, 0);            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
                 spieler.meleeAttack();
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
                 spieler.useObject();
@@ -172,8 +175,6 @@ public class Playscreen implements Screen {
                 spieler.bowAttack();
             } else if (controller.isCastPressed()) {
                 spieler.castAttack();
-            } else {
-                spieler.b2body.setLinearVelocity(0, 0);
             }
         }
     }
@@ -200,8 +201,9 @@ public void update(float dt)
                     && enemy.getY() < cameraTop && enemy.getY() >cameraBottom)
             {if(enemy.b2body.isActive()==false)
                     enemy.b2body.setActive(true);
-                enemy.update(spieler,dt);
-            }        }
+            }
+            enemy.update(spieler,dt);
+        }
         else{            creator.removeRaider((Raider)enemy);        }
     }
     for(Schatztruhe truhe: creator.getAllSchatztruhen()) {
@@ -218,7 +220,13 @@ public void update(float dt)
             zauber.update(dt);}
         else{ zauber.remove();}
     }
-    spieler.update(dt);
+    if(!spieler.destroyed)
+        spieler.update(dt);
+    Gdx.app.log("DEA?"+ spieler.currentState+"statetimer:"+spieler.stateTimer,"");
+
+    if(gameOver()){
+        game.setScreen(new GameOverScreen(game));
+        dispose();}
 
     justiereCam();
 
@@ -239,9 +247,11 @@ public void update(float dt)
     @Override
     public void dispose() {
         map.dispose();
-       renderer.dispose();
+      // renderer.dispose();
         this.dispose();
         anzeige.dispose();
+        b2dr.dispose();
+        controller.dispose();
     }
     //Getter und Setter, selbstgeschrieben
     public World getWorld(){ return world;}
@@ -265,5 +275,11 @@ public void update(float dt)
         {gamecam.position.y = mapBottom + cameraHalfHeight;}
         else if(cameraTop >= mapTop)
         {gamecam.position.y = mapTop - cameraHalfHeight;}
+    }
+    public boolean gameOver(){
+        if(spieler.currentState == HumanoideSprites.State.DEAD && spieler.stateTimer>3){
+            return true;
+        }
+        return false;
     }
 }

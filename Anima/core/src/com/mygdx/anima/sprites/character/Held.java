@@ -144,9 +144,13 @@ public class Held extends HumanoideSprites{
         new Zauber(this);
     }}
     public void bowAttack()
-    {   if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting) {
-
+    {  // if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting)
+        if(currentState==State.STANDING |currentState==State.WALKING)
+    {
+        Gdx.app.log("runA:" +runArchery,"");
         runArchery= true;
+        Gdx.app.log("runA:" +runArchery,"");
+
         Vector2 startVector, flugVector;
         Vector2 koerper=b2body.getPosition();
         switch (getCurrentRichtung()) {
@@ -169,7 +173,6 @@ public class Held extends HumanoideSprites{
                 flugVector = new Vector2(10, 10);break;
         }
         new Arrow(world,screen,currentRichtung,startVector,flugVector);
-
     }}
     public void setObject(InteraktivesObjekt io){
         object=io;

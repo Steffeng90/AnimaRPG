@@ -182,7 +182,7 @@ public class HumanoideSprites extends Sprite {
                     dead=true;}
                 break;
             case DEAD:
-                if(runDying && stateTimer >2){
+                if(runDying && stateTimer >3 ){
                     destroyBody();
                 }
                 region=Died;
