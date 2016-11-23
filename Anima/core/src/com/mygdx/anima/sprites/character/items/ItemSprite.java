@@ -68,16 +68,16 @@ public class ItemSprite extends Sprite {
         TextureRegion region;
         switch(type){
             case Brot:
-                region=new TextureRegion(spriteQuelle,8*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
+                region=new TextureRegion(spriteQuelle,7*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
                 break;
             case Pilz:
                 region=new TextureRegion(spriteQuelle,5 *spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
                 break;
             case Käse:
-                region=new TextureRegion(spriteQuelle,10*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
+                region=new TextureRegion(spriteQuelle,9*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
                 break;
             case Fisch:
-                region=new TextureRegion(spriteQuelle,11*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
+                region=new TextureRegion(spriteQuelle,10*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
                 break;
             case Schwert:
                 region=new TextureRegion(spriteQuelle,0*spriteBreite,5* spriteHoehe,spriteBreite,spriteHoehe);

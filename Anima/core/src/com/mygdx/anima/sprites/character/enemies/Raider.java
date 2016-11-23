@@ -30,8 +30,12 @@ public class Raider extends Enemy
     public void update(Held hero,float dt) {
         stateTimer +=dt;
         super.update(hero,dt);
-
-        if(!dead && !runDying && !runMeleeAnimation){
+        if(vonFeedbackbetroffen){
+            b2body.setLinearVelocity(velocity);
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+            vonFeedbackbetroffen=false;
+        }
+        else if(!dead && !runDying && !runMeleeAnimation){
         coordinateWalking(hero, dt);
         b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -51,6 +55,7 @@ public class Raider extends Enemy
     public void changeVelocity(Vector2 v2){
         velocity.x+=v2.x;
         velocity.y+=v2.y;
+
     }
     public void coordinateWalking(Held hero, float dt){
         if(hero.getX()<getX()  ){
@@ -91,6 +96,7 @@ public class Raider extends Enemy
     }
     public void getsHit(){ getsDamaged();};
     public void getsHitbySpell(Zauber z){
+        vonFeedbackbetroffen=true;
         Held tempHeld=z.zaubernder;
         getsDamaged();
     if(tempHeld.getX()<getX() ){
@@ -114,6 +120,7 @@ public class Raider extends Enemy
     }
 }}
     public void getsHit(Held hero){
+        vonFeedbackbetroffen=true;
         getsDamaged();
         //Links
         float feedback=1.5f;

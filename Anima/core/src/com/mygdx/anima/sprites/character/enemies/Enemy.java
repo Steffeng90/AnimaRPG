@@ -18,7 +18,7 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 
 public abstract class Enemy extends HumanoideSprites{
     public int hitCounter;
-    public boolean enemyInReichweite;
+    public boolean enemyInReichweite,vonFeedbackbetroffen;
 
     public Enemy(Playscreen screen,float x, float y, String quelle)
     {
@@ -29,6 +29,7 @@ public abstract class Enemy extends HumanoideSprites{
         b2body.setActive(false);
         hitCounter=0;
         enemyInReichweite=false;
+        vonFeedbackbetroffen=false;
     }
 
 
