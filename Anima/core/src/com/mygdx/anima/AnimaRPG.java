@@ -27,6 +27,7 @@ public class AnimaRPG extends Game {
 	public static final short ENEMY_ATTACK=256;
 	public static final short ARROW_BIT=512;
 	public static final short HERO_CAST_BIT=1024;
+	public static final short ITEM_SPRITE_BIT=2048;
 
 	public SpriteBatch batch;
 
@@ -40,7 +41,6 @@ public class AnimaRPG extends Game {
 	public void dispose() {
 		batch.dispose();
 		super.dispose();
-
 	}
 
 	@Override

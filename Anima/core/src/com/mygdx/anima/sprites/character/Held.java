@@ -22,7 +22,7 @@ public class Held extends HumanoideSprites{
     public InteraktivesObjekt object;
     public Playscreen screen;
     public boolean waffe=false;
-    public static boolean heldErstellt=false;
+    public boolean heldErstellt=false;
     public static String spriteNude="character/female_stock.png",
     spriteStock="character/female_stock.png",
     spriteSword="character/female_sword.png",
@@ -42,11 +42,11 @@ public class Held extends HumanoideSprites{
         createHero();
         heldErstellt=true;}
         objectInReichweite=false;
-        maxHitpoints=15;
+        maxHitpoints=40;
         currentHitpoints=maxHitpoints;
         maxMana=15;
         currentMana=maxMana;
-        manareg=1;
+        manareg=5;
         characterTimer=0;
 
 

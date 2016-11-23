@@ -34,6 +34,7 @@ public class B2WorldCreator {
     PolygonShape pshape;
     public Array<Raider> allRaider;
     public Array<Schatztruhe> allSchatztruhen;
+
     public B2WorldCreator(Playscreen screen)
     {
         this.world=screen.getWorld();
@@ -65,9 +66,11 @@ public class B2WorldCreator {
         // Erzeugen von Schatztruhen
         allSchatztruhen=new Array<Schatztruhe>();
         for(MapObject object:map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
+            String inhalt=(String)object.getProperties().get("Inhalt");
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            allSchatztruhen.add(new Schatztruhe(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM));
+            allSchatztruhen.add(new Schatztruhe(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM, inhalt));
         }
+
     }
     public Array<Raider> getAllRaider(){ return allRaider;}
     public Array<Schatztruhe> getAllSchatztruhen(){ return allSchatztruhen;}

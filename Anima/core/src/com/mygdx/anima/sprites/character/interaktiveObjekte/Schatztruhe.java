@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.sprites.character.items.ItemSprite;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -27,9 +28,11 @@ public class Schatztruhe extends InteraktivesObjekt {
     public boolean runOpenAnimation, closed;
     TextureRegion spriteClose,spriteOpen;
     public float stateTimer;
+    public String inhalt;
 
-    public Schatztruhe(Playscreen screen, float x, float y){
+    public Schatztruhe(Playscreen screen, float x, float y,String inhalt){
         super(screen,x,y);
+        this.inhalt=inhalt;
         spriteQuelle=new Texture("objekte/schatztruhe.png");
         spriteOpen=new TextureRegion(spriteQuelle,0,224, 32,32);
                 spriteClose=new TextureRegion(spriteQuelle,0,128, 32,32);
@@ -91,8 +94,9 @@ public class Schatztruhe extends InteraktivesObjekt {
                 break;
             case OPENING:
                 region = openTruhe.getKeyFrame(stateTimer, false);
-                if(openTruhe.isAnimationFinished(stateTimer))
+                if(openTruhe.isAnimationFinished(stateTimer)){
                     runOpenAnimation=false;closed=false;
+                    screen.setCurrentItemsprite(new ItemSprite(screen,getX(),getY()+getHeight()/2,inhalt));}
                 break;
             case OPEN:
             default:

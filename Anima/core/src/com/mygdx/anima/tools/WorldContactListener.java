@@ -85,9 +85,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.HERO_CAST_BIT | AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_CAST_BIT)
-                    ((Enemy)fixB.getUserData()).getsHit(((Zauber)fixA.getUserData()).zaubernder);
+                    ((Enemy)fixB.getUserData()).getsHitbySpell((Zauber)fixA.getUserData());
                 else
-                    ((Enemy)fixA.getUserData()).getsHit(((Zauber)fixB.getUserData()).zaubernder);
+                    ((Enemy)fixA.getUserData()).getsHitbySpell((Zauber)fixB.getUserData());
                 break;
             default:
                 Gdx.app.log("undefined","unknown");break;

@@ -22,7 +22,7 @@ import com.mygdx.anima.screens.Playscreen;
 
 public class Controller {
     Viewport viewport;
-    Stage stage;
+    private Stage stage;
     boolean upPressed,downPressed,leftPressed,rightPressed,
     meleePressed,bowPressed,castPressed, usePressed;
     OrthographicCamera cam;
@@ -149,7 +149,10 @@ public class Controller {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 castPressed=true;
+                Gdx.app.log("Cast","");
+
                 return true;
+
             }
         });
         Image useImg=new Image(new Texture("ui-skin/action_use.png"));
@@ -219,5 +222,9 @@ public class Controller {
 
     public void dispose(){
         stage.dispose();
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

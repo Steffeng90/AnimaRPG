@@ -21,8 +21,8 @@ import com.mygdx.anima.AnimaRPG;
         private Viewport viewport;
         private Stage stage;
 
-        private Game game;
-        public GameOverScreen(Game game)
+        private AnimaRPG game;
+        public GameOverScreen(AnimaRPG game)
         {
             this.game=game;
             this.viewport=new FitViewport(AnimaRPG.W_WIDTH,AnimaRPG.W_Height,new OrthographicCamera());
@@ -50,7 +50,8 @@ import com.mygdx.anima.AnimaRPG;
         public void render(float delta) {
             if(Gdx.input.justTouched())
             {
-                game.setScreen(new Playscreen((AnimaRPG) game));
+                game.setScreen(new Playscreen(game));
+                dispose();
             }
             Gdx.gl.glClearColor(0,0,0,1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

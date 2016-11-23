@@ -10,6 +10,7 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -57,10 +58,7 @@ public abstract class Enemy extends HumanoideSprites{
         else if(enemyInReichweite && !runMeleeAnimation &&!destroyed){
             attack();
         }
-
         super.update(dt);
-
-
     }
     public abstract void getsHit(Held hero);
     public void readyToDie(){super.readyToDie();}
@@ -101,6 +99,7 @@ public abstract class Enemy extends HumanoideSprites{
         runMeleeAnimation = true;
         meleeExists = true;
     }
+    public abstract void getsHitbySpell(Zauber z);
 
     public abstract void getsHit();
     }

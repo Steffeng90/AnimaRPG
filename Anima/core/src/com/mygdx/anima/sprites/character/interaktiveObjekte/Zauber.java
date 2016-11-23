@@ -32,31 +32,34 @@ public class Zauber extends Sprite {
     TextureRegion initialTexture;
     Array<TextureRegion> frames;
     int laenge, breite;
-    float stateTimer;
+    public float stateTimer,rueckstoss;
+    int radius;
     //Refernz auf Held:
     public Held zaubernder;
-    public boolean setToDestroy,destroyed;
+    public boolean setToDestroy,destroyed,fixtureErzeugen,fixtureistErzeugt;
+    FixtureDef fdefAttack;
 public Zauber(Held held) {
     this.zaubernder=held;
     this.world=held.world;
     this.screen=held.screen;
-    BodyDef bdef=new BodyDef();
-    bdef.position.set(held.getX(),held.getY());
+    bdef=new BodyDef();
+    bdef.position.set(held.b2body.getPosition().x,held.b2body.getPosition().y);
     bdef.type = BodyDef.BodyType.DynamicBody;
     b2body =world.createBody(bdef);
     b2body.setActive(true);
     laenge = 20;
     breite = 20;
+    radius=38;
     stateTimer=0;
+    rueckstoss=3;
     zauberQuelle = new Texture("objekte/energieNova.png");
     initialTexture=new TextureRegion(zauberQuelle,13, 463, laenge, breite);
     setRegion(initialTexture);
 
-    setBounds(b2body.getPosition().x-3/AnimaRPG.PPM,b2body.getPosition().y-13/AnimaRPG.PPM,50 / AnimaRPG.PPM,50/ AnimaRPG.PPM);
+    setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,75 / AnimaRPG.PPM,75/ AnimaRPG.PPM);
     frames = new Array<TextureRegion>();
-    //for (int i = 0; i < 10; i++) {
 
-    frames.add(new TextureRegion(zauberQuelle, 4, 9, breite, laenge));
+    frames.add(new TextureRegion(zauberQuelle, 5, 11, 16, 16));
     frames.add(new TextureRegion(zauberQuelle,24,10, breite, laenge));
     frames.add(new TextureRegion(zauberQuelle,47 , 7, 26, 24));
     frames.add(new TextureRegion(zauberQuelle, 77,13, 13, 13));
@@ -66,51 +69,54 @@ public Zauber(Held held) {
     frames.add(new TextureRegion(zauberQuelle, 188, 3, 31, 30));
     frames.add(new TextureRegion(zauberQuelle, 229, 3, 33, 31));
     frames.add(new TextureRegion(zauberQuelle, 272, 2, 36, 33));
-    //}
-    zauber = new Animation(0.05f, frames);
+    zauber = new Animation(.1f, frames);
     frames.clear();
     Gdx.app.log("1","");
 
 
     CircleShape circleShape = new CircleShape();
-    circleShape.setRadius(30 / AnimaRPG.PPM);
-    circleShape.setPosition(new Vector2(23/AnimaRPG.PPM,18/AnimaRPG.PPM));
-    FixtureDef fdefAttack = new FixtureDef();
+    circleShape.setRadius(radius / AnimaRPG.PPM);
+    circleShape.setPosition(new Vector2(0,0));
+     fdefAttack = new FixtureDef();
     fdefAttack.filter.categoryBits = AnimaRPG.HERO_CAST_BIT;
     fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;
     fdefAttack.shape = circleShape;
     fdefAttack.isSensor = true;
-    Gdx.app.log("2","");
 
-    held.castFixture = b2body.createFixture(fdefAttack);
-    held.castFixture.setUserData(this);
    held.runCasting = true;
     held.castExists = true;
     setToDestroy=false;
     destroyed=false;
-    Gdx.app.log("3","");
     allZauber.add(this);
 }
 
     @Override
     public void draw(Batch batch) {
-        Gdx.app.log("Beginn draw","");
         super.draw(batch);
     }
     public TextureRegion getFrame(float dt)
     {
         TextureRegion region;
-        // System.out.println(getState().toString()+ stateTimer);
         stateTimer = stateTimer + dt;
         region= zauber.getKeyFrame(stateTimer,false);
+        if(!fixtureistErzeugt && stateTimer>=zauber.getAnimationDuration()*0.8)
+            fixtureErzeugen=true;
+
+
         if(zauber.isAnimationFinished(stateTimer))
             setToDestroy=true;
-        //if(zauber.isAnimationFinished())
         return region;
     }
     public void update(float dt)
     {  if(!destroyed)
-    {   if(setToDestroy){
+    {   if(fixtureErzeugen){
+        zaubernder.castFixture = b2body.createFixture(fdefAttack);
+        zaubernder.castFixture.setUserData(this);
+        fixtureErzeugen=false;
+        fixtureistErzeugt=true;
+        Gdx.app.log("einen zauber","");
+    }
+        if(setToDestroy){
         destroyZauber();}
         setRegion(getFrame(dt));
     }}
@@ -118,12 +124,10 @@ public Zauber(Held held) {
         return allZauber;
     }
     public void destroyZauber (){
-        Gdx.app.log("Zsrst","");
 
         world.destroyBody(this.b2body);
         b2body.setUserData(null);
         b2body=null;
-         Gdx.app.log("Kapuut","");
         setToDestroy=false;
         destroyed=true;
     }

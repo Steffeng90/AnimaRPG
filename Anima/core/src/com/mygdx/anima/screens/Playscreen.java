@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
@@ -29,6 +31,7 @@ import com.mygdx.anima.sprites.character.enemies.Raider;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.sprites.character.items.ItemSprite;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.WorldContactListener;
@@ -37,13 +40,18 @@ import com.mygdx.anima.tools.WorldContactListener;
  * Created by Steffen on 06.11.2016.
  */
 
-public class Playscreen implements Screen {
+public class Playscreen implements Screen{
+
 
     private AnimaRPG game;
 
+    public enum GameState {RUN, PAUSE}
+    private GameState currentGameState;
     OrthographicCamera gamecam;
     private Viewport gameViewPort;
     Controller controller;
+    ItemFundInfo itemWindow;
+
     AnzeigenDisplay anzeige;
     //Objekte um TileMap einzubinden
     private TmxMapLoader mapLoader;
@@ -54,115 +62,159 @@ public class Playscreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
-    private static Held spieler;
-
+    private Held spieler;
+    private ItemSprite currentItemsprite;
     //Camera-Variablen
-    float mapLeft,mapRight,mapTop,mapBottom;
-    float cameraHalfWidth,cameraHalfHeight;
-    float cameraLeft,cameraRight,cameraTop,cameraBottom;
+    float mapLeft, mapRight, mapTop, mapBottom;
+    float cameraHalfWidth, cameraHalfHeight;
+    float cameraLeft, cameraRight, cameraTop, cameraBottom;
     MapProperties properties;
-    float mapWidth, mapHeight, tilePixelWidth, tilePixelHeight,mapPixelWidth, mapPixelHeight;
-
-    public Playscreen(AnimaRPG game){
-        this.game=game;
-        gamecam=new OrthographicCamera();
-        gameViewPort=new FitViewport(AnimaRPG.W_WIDTH /AnimaRPG.PPM, AnimaRPG.W_Height/AnimaRPG.PPM, gamecam);
-
-        mapLoader=new TmxMapLoader();
-        map=mapLoader.load("level/start.tmx");
-        renderer= new OrthogonalTiledMapRenderer(map,1/AnimaRPG.PPM);
-
-        gamecam.position.set(gameViewPort.getWorldWidth()/2,gameViewPort.getWorldHeight()/2,0);
+    float mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
 
 
-        world=new World(new Vector2(0,0),false);
+    public Playscreen(AnimaRPG game) {
+        this.game = game;
+        gamecam = new OrthographicCamera();
+        gameViewPort = new FitViewport(AnimaRPG.W_WIDTH / AnimaRPG.PPM, AnimaRPG.W_Height / AnimaRPG.PPM, gamecam);
+
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("level/start.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / AnimaRPG.PPM);
+
+        gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
+        setCurrentGameState(GameState.RUN);
+
+        world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
-        b2dr=new Box2DDebugRenderer();
-        creator= new B2WorldCreator(this);
-        spieler=new Held(this);
-        controller=new Controller(game.batch);
-        anzeige=new AnzeigenDisplay(game.batch,spieler);
-
+        b2dr = new Box2DDebugRenderer();
+        creator = new B2WorldCreator(this);
+        spieler = new Held(this);
+        controller = new Controller(game.batch);
+        anzeige = new AnzeigenDisplay(game.batch, spieler);
+        this.
         //Map-Camera-Initialisierung
 
-        properties=map.getProperties();
-        mapWidth =properties.get("width", Integer.class);
-        mapHeight=properties.get("height", Integer.class);
-        tilePixelWidth=properties.get("tilewidth", Integer.class);
-        tilePixelHeight=properties.get("tileheight", Integer.class);
-        mapPixelWidth =mapWidth*tilePixelWidth/AnimaRPG.PPM;
-        mapPixelHeight=mapHeight*tilePixelHeight/AnimaRPG.PPM;
+        properties = map.getProperties();
+        mapWidth = properties.get("width", Integer.class);
+        mapHeight = properties.get("height", Integer.class);
+        tilePixelWidth = properties.get("tilewidth", Integer.class);
+        tilePixelHeight = properties.get("tileheight", Integer.class);
+        mapPixelWidth = mapWidth * tilePixelWidth / AnimaRPG.PPM;
+        mapPixelHeight = mapHeight * tilePixelHeight / AnimaRPG.PPM;
 
-        mapLeft=0;
-        mapRight=0+mapPixelWidth;
-        mapBottom=0;
-        mapTop=0+mapPixelHeight;
+        mapLeft = 0;
+        mapRight = 0 + mapPixelWidth;
+        mapBottom = 0;
+        mapTop = 0 + mapPixelHeight;
         cameraHalfWidth = gameViewPort.getWorldWidth() * .5f;
-        cameraHalfHeight =gameViewPort.getWorldHeight() * .5f;
-
+        cameraHalfHeight = gameViewPort.getWorldHeight() * .5f;
     }
 
     @Override
     public void show() {
 
     }
-
     @Override
     public void render(float delta) {
-        update(delta);
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //karte rendern
-        renderer.render();
-        // Render-Linien
-        b2dr.render(world,gamecam.combined);
+        switch (getCurrentGameState())
+        {
+            case RUN:
+                update(delta);
+                break;
+            case PAUSE:
+                break;
+        }
 
-        //Zeigt den Controller nur bei Android an:
-        //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
-        game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin();
-        //Raider erzeugen
-        for(Enemy enemy: creator.getAllRaider()){
-            enemy.draw(game.batch);
-        }
-        for(Schatztruhe schatztruhe: creator.getAllSchatztruhen()){
-            schatztruhe.draw(game.batch);
-        }
-        if(Arrow.getAllArrows().size>0) {
-            for (Arrow arrow : Arrow.getAllArrows()) {
-                arrow.draw(game.batch);
+                Gdx.gl.glClearColor(1, 0, 0, 1);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                //karte rendern
+                renderer.render();
+                // Render-Linien
+                b2dr.render(world, gamecam.combined);
+
+                //Zeigt den Controller nur bei Android an:
+                //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
+                game.batch.setProjectionMatrix(gamecam.combined);
+                game.batch.begin();
+
+                //Raider erzeugen
+                for (Enemy enemy : creator.getAllRaider()) {
+                    enemy.draw(game.batch);
+                }
+                for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
+                    schatztruhe.draw(game.batch);
+                }
+                if (Arrow.getAllArrows().size > 0) {
+                    for (Arrow arrow : Arrow.getAllArrows()) {
+                        arrow.draw(game.batch);
+                    }
+                }
+                if (Zauber.getAllZauber().size > 0) {
+
+                    for (Zauber zauber : Zauber.getAllZauber()) {
+                        if (!zauber.destroyed) {
+                            zauber.draw(game.batch);
+                        }
+                    }
+                }
+                if (getCurrentItemsprite() != null) {
+                    setCurrentGameState(GameState.PAUSE);}
+
+                spieler.draw(game.batch);
+
+                game.batch.end();
+        switch (getCurrentGameState())
+        {
+            case RUN:
+                controller.draw();
+                break;
+            case PAUSE:
+                game.batch.begin();
+                getCurrentItemsprite().draw(game.batch);
+                game.batch.end();
+
+                controller.draw();
+                itemWindow.draw();
+                getCurrentItemsprite().update(delta);
+                Gdx.app.log("warte","");
+                if(itemWindow.isGeklickt()){
+                    setCurrentItemsprite(null);
+                    itemWindow.dispose();
+                    Gdx.input.setInputProcessor(controller.getStage());
+
+                    setCurrentGameState(GameState.RUN);
+                }
+                break;
             }
-        }
-        if(Zauber.getAllZauber().size>0) {
-            Gdx.app.log("Zauberzahl"+Zauber.getAllZauber().size,"");
 
-            for (Zauber zauber : Zauber.getAllZauber()) {
-                if(!zauber.destroyed){
-                zauber.draw(game.batch);
-            }}
-        }
-        spieler.draw(game.batch);
-        game.batch.end();
-        controller.draw();
-        anzeige.draw();
+                anzeige.draw();
 
-}
+                if (gameOver()) {
+                    game.setScreen(new GameOverScreen(game));
+                    dispose();
+                }
+
+        }
+
+
     public void handleInput(float dt) {
-        if(spieler.actionInProgress()) {
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) | controller.isRightPressed()) {
+        if (spieler.actionInProgress()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.D) | controller.isRightPressed()) {
                 spieler.b2body.setLinearVelocity(1, 0);
                 spieler.setCurrentRichtung(1);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) | controller.isLeftPressed()) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.A) | controller.isLeftPressed()) {
                 spieler.b2body.setLinearVelocity(-1, 0);
                 spieler.setCurrentRichtung(0);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.UP) | controller.isUpPressed()) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.W) | controller.isUpPressed()) {
                 spieler.b2body.setLinearVelocity(0, 1);
                 spieler.setCurrentRichtung(2);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) | controller.isDownPressed()) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.S) | controller.isDownPressed()) {
                 spieler.b2body.setLinearVelocity(0, -1);
                 spieler.setCurrentRichtung(3);
-            }else {
-                spieler.b2body.setLinearVelocity(0, 0);            }
+            } else {
+                if (spieler.b2body != null)
+                    spieler.b2body.setLinearVelocity(0, 0);
+            }
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
                 spieler.meleeAttack();
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
@@ -178,59 +230,67 @@ public class Playscreen implements Screen {
             }
         }
     }
-public void update(float dt)
-{
-    handleInput(dt);
-    world.step(1 / 60f, 6, 2);
-    anzeige.update(dt,spieler);
-    gamecam.update();
-    renderer.setView(gamecam);
-    if(spieler.currentHitpoints>0){
-        gamecam.position.set(spieler.b2body.getPosition(),0);
-   }
 
-    for(Enemy enemy: creator.getAllRaider()){
+    public void update(float dt) {
+
+                handleInput(dt);
+                world.step(1 / 60f, 6, 2);
+                anzeige.update(dt, spieler);
+                gamecam.update();
+                renderer.setView(gamecam);
+                if (spieler.currentHitpoints > 0) {
+                    gamecam.position.set(spieler.b2body.getPosition(), 0);
+                }
+                for (Enemy enemy : creator.getAllRaider()) {
        /* if(!enemy.destroyed){
         if(enemy.getX() < spieler.getX() + 250 / AnimaRPG.PPM && enemy.getX() >spieler.getX() - 250 / AnimaRPG.PPM
                 && enemy.getY() < spieler.getY() + 250/ AnimaRPG.PPM && enemy.getY() >spieler.getY() - 250 / AnimaRPG.PPM)
             {enemy.b2body.setActive(true);}
         enemy.update(spieler,dt);        }
         else{            creator.removeRaider((Raider)enemy);        }*/
-        if(!enemy.destroyed){
-            if(enemy.getX() < cameraRight  && enemy.getX() >cameraLeft
-                    && enemy.getY() < cameraTop && enemy.getY() >cameraBottom)
-            {if(enemy.b2body.isActive()==false)
-                    enemy.b2body.setActive(true);
-            }
-            enemy.update(spieler,dt);
-        }
-        else{            creator.removeRaider((Raider)enemy);        }
-    }
-    for(Schatztruhe truhe: creator.getAllSchatztruhen()) {
-        truhe.update(dt);
-    }
-    for(Arrow arrow :Arrow.getAllArrows()){
-        if(!arrow.destroyed){
-            arrow.update(dt);}
-        else{ arrow.remove();}
-    }
-    for(Zauber zauber :Zauber.getAllZauber()){
-        Gdx.app.log("Zauberzahl"+Zauber.getAllZauber().size,"");
-        if(!zauber.destroyed){
-            zauber.update(dt);}
-        else{ zauber.remove();}
-    }
-    if(!spieler.destroyed)
-        spieler.update(dt);
-    Gdx.app.log("DEA?"+ spieler.currentState+"statetimer:"+spieler.stateTimer,"");
+                    if (!enemy.destroyed) {
+                        if (enemy.getX() < cameraRight && enemy.getX() > cameraLeft
+                                && enemy.getY() < cameraTop && enemy.getY() > cameraBottom) {
+                            if (enemy.b2body.isActive() == false)
+                                enemy.b2body.setActive(true);
+                        }
+                        enemy.update(spieler, dt);
+                    } else {
+                        creator.removeRaider((Raider) enemy);
+                    }
+                }
+                for (Schatztruhe truhe : creator.getAllSchatztruhen()) {
+                    truhe.update(dt);
+                }
+                if (getCurrentItemsprite() != null) {
+                    Gdx.app.log("nichtnull","");
+                    itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite().type.toString());
+                }
 
-    if(gameOver()){
-        game.setScreen(new GameOverScreen(game));
-        dispose();}
+                for (Arrow arrow : Arrow.getAllArrows()) {
+                    if (!arrow.destroyed) {
+                        arrow.update(dt);
+                    } else {
+                        arrow.remove();
+                    }
+                }
+                for (Zauber zauber : Zauber.getAllZauber()) {
+                    if (!zauber.destroyed) {
+                        zauber.update(dt);
+                    } else {
+                        zauber.remove();
+                    }
+                }
+                if (!spieler.destroyed)
+                    spieler.update(dt);
 
-    justiereCam();
 
-}
+                justiereCam();
+
+
+    }
+
+
     @Override
     public void resize(int width, int height) {
         gameViewPort.update(width,height);
@@ -239,16 +299,16 @@ public void update(float dt)
     }
 
     @Override
-    public void pause() {}
+    public void pause(    ) {}
     @Override
     public void resume() {    }
     @Override
     public void hide() {    }
     @Override
     public void dispose() {
+        world.dispose();
+        renderer.dispose();
         map.dispose();
-      // renderer.dispose();
-        this.dispose();
         anzeige.dispose();
         b2dr.dispose();
         controller.dispose();
@@ -281,5 +341,24 @@ public void update(float dt)
             return true;
         }
         return false;
+    }
+
+    public ItemSprite getCurrentItemsprite() {
+        return currentItemsprite;
+    }
+
+    public void setCurrentItemsprite(ItemSprite currentItemsprite) {
+        this.currentItemsprite = currentItemsprite;
+    }
+
+    public GameState getCurrentGameState() {
+        return currentGameState;
+    }
+
+    public void setCurrentGameState(GameState currentGameState) {
+        this.currentGameState = currentGameState;
+    }
+    public void runCurrentGameState() {
+        this.currentGameState = GameState.RUN;
     }
 }

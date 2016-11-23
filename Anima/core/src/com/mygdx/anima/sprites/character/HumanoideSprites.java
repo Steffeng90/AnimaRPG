@@ -75,43 +75,43 @@ public class HumanoideSprites extends Sprite {
     public void updateTextures(String quelle){
         spriteQuelle = new Texture(quelle);
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             frames.add(new TextureRegion(spriteQuelle, i*breite, 512, breite, hoehe));
         }
         UpWalk = new Animation(0.1f, frames);
         frames.clear();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             frames.add(new TextureRegion(spriteQuelle,i *breite, 640, breite, hoehe));
         }
         DownWalk = new Animation(0.1f, frames);
         frames.clear();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 577, breite, hoehe));
         }
         LeftWalk = new Animation(0.1f, frames);
         frames.clear();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 704, breite, hoehe));
         }
         RightWalk = new Animation(0.1f, frames);
         frames.clear();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             frames.add(new TextureRegion(spriteQuelle,i* breite, 768, breite, hoehe));
         }
         UpMelee = new Animation(hitdauer, frames);
         frames.clear();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             frames.add(new TextureRegion(spriteQuelle, i*breite,896, breite, hoehe));
         }
         DownMelee = new Animation(hitdauer, frames);
         frames.clear();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             frames.add(new TextureRegion(spriteQuelle, i * breite, 832, breite, hoehe));
         }
         LeftMelee= new Animation(hitdauer, frames);
         frames.clear();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 960, breite, hoehe));
         }
         RightMelee = new Animation(hitdauer, frames);
@@ -139,25 +139,25 @@ public class HumanoideSprites extends Sprite {
         for (int i = 0; i < 7; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 0, breite, hoehe));
         }
-        UpCast = new Animation(0.05f, frames);
+        UpCast = new Animation(0.18f, frames);
         frames.clear();
         for (int i = 0; i < 7; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 128, breite, hoehe));
         }
-        DownCast= new Animation(0.05f, frames);
+        DownCast= new Animation(0.18f, frames);
         frames.clear();
         for (int i = 0; i < 7; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 192, breite, hoehe));
         }
-        RightCast = new Animation(0.05f, frames);
+        RightCast = new Animation(0.18f, frames);
         frames.clear();
         for (int i = 0; i < 7; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 64, breite, hoehe));
         }
-        LeftCast = new Animation(0.05f, frames);
+        LeftCast = new Animation(0.18f, frames);
 
         frames.clear();
-        for (int i = 1; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1280,breite,hoehe));
         }
         Dying=new Animation(0.2f,frames);

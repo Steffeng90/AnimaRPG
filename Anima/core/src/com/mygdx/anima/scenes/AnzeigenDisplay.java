@@ -75,6 +75,7 @@ public class AnzeigenDisplay implements Disposable {
         //add our table to the stage
         stage.addActor(table);
 
+
     }
 
     public void update(float dt,Held held){

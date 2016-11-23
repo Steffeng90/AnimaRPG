@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.tools.B2WorldCreator;
 
 /**
@@ -88,9 +89,30 @@ public class Raider extends Enemy
         if((velocity.y>-0.3f &&velocity.y<0.3f) || (velocity.y>=0.3f && v2.y<0) || (velocity.y<=-0.3f && v2.y>0))
         velocity.y+=v2.y;
     }
-    public void getsHit(){
-        getsDamaged();}
-
+    public void getsHit(){ getsDamaged();};
+    public void getsHitbySpell(Zauber z){
+        Held tempHeld=z.zaubernder;
+        getsDamaged();
+    if(tempHeld.getX()<getX() ){
+    // Runter
+    if(tempHeld.getY()<getY()){
+        changeVelocity(new Vector2(z.rueckstoss,z.rueckstoss));
+    }
+    // Hoch
+    else{
+        changeVelocity(new Vector2(z.rueckstoss,-z.rueckstoss));
+    }}
+    // Rechts
+    else {
+    // Runter
+    if (tempHeld.getY() < getY()) {
+        changeVelocity(new Vector2(-z.rueckstoss,z.rueckstoss));
+    }
+    // Hoch
+    else{
+        changeVelocity(new Vector2(-z.rueckstoss,-z.rueckstoss));
+    }
+}}
     public void getsHit(Held hero){
         getsDamaged();
         //Links
