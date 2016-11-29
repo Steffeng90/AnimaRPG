@@ -54,7 +54,7 @@ public class ItemFundInfo implements Disposable {
         table.setFillParent(true);
 
         //define our labels using the String, and a Label style consisting of a font and color
-        AnzeigeHPLabel = new Label(itemName+" gefunden!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("ui-skin/gamefont.fnt")), Color.WHITE));
+        AnzeigeHPLabel = new Label(itemName+" gefunden!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("ui-skin/default.fnt")), Color.WHITE));
         //add our labels to our table, padding the top, and giving them all equal width with expandX
         table.add().expandX().padTop(2);
         table.add(AnzeigeHPLabel).expandX();

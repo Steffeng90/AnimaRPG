@@ -88,7 +88,6 @@ public class Held extends HumanoideSprites{
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;}
         if(!runCasting && castExists){
-            //b2body.destroyFixture(castFixture);
             castExists=false;}
         if(!destroyed)
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
@@ -139,17 +138,14 @@ public class Held extends HumanoideSprites{
         meleeExists= true;
     }}
     public void castAttack()
-    {   if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting && currentMana>=5) {
+    {   if((currentState==State.STANDING |currentState==State.WALKING) && currentMana>=5){
         currentMana-=5;
-        new Zauber(this);
-    }}
+        new Zauber(this);}
+    }
     public void bowAttack()
-    {  // if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting)
-        if(currentState==State.STANDING |currentState==State.WALKING)
-    {
-        Gdx.app.log("runA:" +runArchery,"");
+    {   if(currentState==State.STANDING |currentState==State.WALKING)
+        {
         runArchery= true;
-        Gdx.app.log("runA:" +runArchery,"");
 
         Vector2 startVector, flugVector;
         Vector2 koerper=b2body.getPosition();
@@ -174,7 +170,8 @@ public class Held extends HumanoideSprites{
         }
         new Arrow(world,screen,currentRichtung,startVector,flugVector);
     }}
-    public void setObject(InteraktivesObjekt io){
+    public void setObject(boolean inReichweite,InteraktivesObjekt io){
+        objectInReichweite=inReichweite;
         object=io;
     }
     public void useObject(){

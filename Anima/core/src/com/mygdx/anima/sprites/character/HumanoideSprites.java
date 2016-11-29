@@ -1,5 +1,6 @@
 package com.mygdx.anima.sprites.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,7 +24,7 @@ public class HumanoideSprites extends Sprite {
     public Body b2body;
     public float stateTimer;
 
-    public enum State {STANDING, WALKING, MELEE, DYING, DEAD, ARCHERY, CASTING};
+    public enum State {STANDING, WALKING, MELEE, DYING, DEAD, ARCHERY, CASTING,FEEDBACK};
     public enum Richtung {Links, Rechts, Oben, Unten};
     public State currentState, previousState;
     public Richtung previousRichtung, currentRichtung;
@@ -42,7 +43,7 @@ public class HumanoideSprites extends Sprite {
     public Fixture meleeFixture,castFixture, sensorFixture;
     CircleShape sensorCircleShape;
     public boolean meleeExists, castExists;
-    public boolean runMeleeAnimation,istHeld,runArchery,runCasting;
+    public boolean runMeleeAnimation,istHeld,runArchery,runCasting,hitByFeedback;
     public boolean runDying,dead,destroyed;
     public float hitdauer,wertHeld=0.07f,wertEnemy=0.2f;
 
@@ -272,7 +273,7 @@ public class HumanoideSprites extends Sprite {
                     case Unten:
                         region = DownBow.getKeyFrame(stateTimer, true);
                         if(DownBow.isAnimationFinished(stateTimer))
-                            runArchery=false;
+                        {runArchery=false;}
                         break;
                     default:
                         region = standingDownSprite;
@@ -283,27 +284,50 @@ public class HumanoideSprites extends Sprite {
                 switch (currentRichtung) {
                     case Links:
                         region = LeftCast.getKeyFrame(stateTimer, true);
-                        if(LeftCast.isAnimationFinished(stateTimer))
-                            runCasting=false;
+                        if(LeftCast.isAnimationFinished(stateTimer)){
+                            runCasting=false; Gdx.app.log("Cast auf false setzen","");}
                         break;
                     case Rechts:
                         region = RightCast.getKeyFrame(stateTimer, true);
-                        if(RightCast.isAnimationFinished(stateTimer))
-                            runCasting=false;
+                        if(RightCast.isAnimationFinished(stateTimer)){
+                            runCasting=false;Gdx.app.log("Cast auf false setzen","");}
                         break;
                     case Oben:
                         region = UpCast.getKeyFrame(stateTimer, true);
-                        if(UpCast.isAnimationFinished(stateTimer))
-                            runCasting=false;
+                        if(UpCast.isAnimationFinished(stateTimer)){
+                            runCasting=false;Gdx.app.log("Cast auf false setzen","");}
                         break;
                     case Unten:
                         region = DownCast.getKeyFrame(stateTimer, true);
-                        if(DownCast.isAnimationFinished(stateTimer))
-                            runCasting=false;
+                        if(DownCast.isAnimationFinished(stateTimer)){
+                            runCasting=false;Gdx.app.log("Cast auf false setzen","");}
                         break;
                     default:
                         region = standingDownSprite;
                         break;
+                }
+            break;
+            case FEEDBACK:
+                switch (currentRichtung) {
+                    case Links:
+                        region=standingLeftSprite;
+                        break;
+                    case Rechts:
+                        region=standingRightSprite;
+                        break;
+                    case Oben:
+                        region = standingUpSprite;
+                        break;
+                    case Unten:
+                        region =standingDownSprite;
+                        break;
+                    default:
+                        region = standingDownSprite;
+                        break;
+                }
+                if(stateTimer>=1)
+                {
+                    hitByFeedback=false;
                 }
                 break;
             default:
@@ -317,6 +341,8 @@ public class HumanoideSprites extends Sprite {
         Vector2 velocity = b2body.getLinearVelocity();
         if(dead){
             return State.DEAD;}
+        else if(hitByFeedback){
+            return State.FEEDBACK;}
         else if(runDying){
             return State.DYING;}
         else if(runArchery)

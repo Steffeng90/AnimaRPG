@@ -71,8 +71,8 @@ public Zauber(Held held) {
     frames.add(new TextureRegion(zauberQuelle, 272, 2, 36, 33));
     zauber = new Animation(.1f, frames);
     frames.clear();
-    Gdx.app.log("1","");
-
+    held.runCasting = true;
+    held.castExists = true;
 
     CircleShape circleShape = new CircleShape();
     circleShape.setRadius(radius / AnimaRPG.PPM);
@@ -83,8 +83,6 @@ public Zauber(Held held) {
     fdefAttack.shape = circleShape;
     fdefAttack.isSensor = true;
 
-   held.runCasting = true;
-    held.castExists = true;
     setToDestroy=false;
     destroyed=false;
     allZauber.add(this);

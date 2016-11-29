@@ -198,7 +198,25 @@ public class Playscreen implements Screen{
 
 
     public void handleInput(float dt) {
-        if (spieler.actionInProgress()) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
+            spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
+
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
+            spieler.useObject();spieler.b2body.setLinearVelocity(0, 0);
+
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+            spieler.spriteWechsel();spieler.b2body.setLinearVelocity(0, 0);
+
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
+            spieler.spriteBogen();spieler.b2body.setLinearVelocity(0, 0);
+
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()) {
+            spieler.bowAttack();spieler.b2body.setLinearVelocity(0, 0);
+
+        } else if (controller.isCastPressed()) {
+            spieler.castAttack();spieler.b2body.setLinearVelocity(0, 0);
+        }
+        else if (spieler.actionInProgress()) {
             if (Gdx.input.isKeyPressed(Input.Keys.D) | controller.isRightPressed()) {
                 spieler.b2body.setLinearVelocity(1, 0);
                 spieler.setCurrentRichtung(1);
@@ -214,19 +232,6 @@ public class Playscreen implements Screen{
             } else {
                 if (spieler.b2body != null)
                     spieler.b2body.setLinearVelocity(0, 0);
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
-                spieler.meleeAttack();
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
-                spieler.useObject();
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
-                spieler.spriteWechsel();
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
-                spieler.spriteBogen();
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()) {
-                spieler.bowAttack();
-            } else if (controller.isCastPressed()) {
-                spieler.castAttack();
             }
         }
     }

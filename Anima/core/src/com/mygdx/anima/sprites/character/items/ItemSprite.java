@@ -57,7 +57,7 @@ public class ItemSprite extends Sprite {
         // fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR | AnimaRPG.ARROW_BIT;
         fdef.shape=shape;
 
-        body.createFixture(fdef).setUserData(this);
+        //body.createFixture(fdef).setUserData(this);
     }
     public void update(float dt){
         Gdx.app.log("uüdatea","");
@@ -98,4 +98,8 @@ public class ItemSprite extends Sprite {
         Gdx.app.log("drwa","");
         super.draw(batch);
     }
+    public void itemDispose(){
+       // body.destroyFixture(fdef);
+    }
+
 }
