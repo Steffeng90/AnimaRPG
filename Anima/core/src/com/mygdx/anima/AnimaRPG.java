@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.anima.screens.Inventar;
 import com.mygdx.anima.screens.Menue;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.screens.actors.StandardUI;
 
 public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist

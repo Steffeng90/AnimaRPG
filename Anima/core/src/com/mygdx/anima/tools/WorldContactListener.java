@@ -35,12 +35,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.HERO_SENSOR | AnimaRPG.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_SENSOR){
-                    ((Held) fixA.getUserData()).objectInReichweite=true;
-                    ((Held) fixA.getUserData()).setObject(((InteraktivesObjekt) fixB.getUserData()));}
-
+                    ((Held) fixA.getUserData()).setObject(true,((InteraktivesObjekt) fixB.getUserData()));}
                 else{
-                    ((Held) fixB.getUserData()).objectInReichweite=true;
-                    ((Held) fixB.getUserData()).setObject(((InteraktivesObjekt) fixA.getUserData()));}
+                    ((Held) fixB.getUserData()).setObject(true,((InteraktivesObjekt) fixA.getUserData()));}
                 break;
             case AnimaRPG.ENEMY_SENSOR | AnimaRPG.HERO_BIT:
                 Gdx.app.log("Held im Sensor","");
@@ -57,7 +54,7 @@ public class WorldContactListener implements ContactListener {
                 else
                 {   ((Held)fixA.getUserData()).isHit=true;
                     ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
-                    //((Held)fixA.getUserData()).getsHit((Enemy)fixB.getUserData());
+                    ((Held)fixA.getUserData()).getsHit((Enemy)fixB.getUserData());
                 break;
             case AnimaRPG.ARROW_BIT | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
@@ -103,11 +100,10 @@ public class WorldContactListener implements ContactListener {
         switch(cDef) {
             case AnimaRPG.HERO_SENSOR | AnimaRPG.OBJECT_BIT:
              //   Gdx.app.log("Object verlässt Reichweite","unknown");
-                if (fixA.getFilterData().categoryBits == AnimaRPG.HERO_SENSOR)
-                    ((Held) fixA.getUserData()).objectInReichweite = false;
-                    // ((Schatztruhe)fixA.getUserData()).use((Held)fixB.getUserData());
-                else
-                    ((Held) fixB.getUserData()).objectInReichweite = false;
+                if (fixA.getFilterData().categoryBits == AnimaRPG.HERO_SENSOR){
+                    ((Held) fixA.getUserData()).setObject(false,null);}
+                else{
+                    ((Held) fixB.getUserData()).setObject(false,null);}
                 break;
             case AnimaRPG.ENEMY_SENSOR | AnimaRPG.HERO_BIT:
                 Gdx.app.log("Held nicht im Sensor","");

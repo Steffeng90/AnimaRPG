@@ -12,6 +12,7 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.sprites.character.items.InventarList;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -29,6 +30,7 @@ public class Held extends HumanoideSprites{
     spriteBogen="character/female_bogen.png";
     public boolean isHit;
     public Enemy treffenderEnemy;
+    private InventarList heldenInventar;
 
     //Statistik-Werte
     public int currentHitpoints,maxHitpoints,currentMana,maxMana,manareg;
@@ -48,7 +50,7 @@ public class Held extends HumanoideSprites{
         currentMana=maxMana;
         manareg=5;
         characterTimer=0;
-
+        heldenInventar=new InventarList();
 
 }
     public TextureRegion getFrame(float dt) {
@@ -199,5 +201,13 @@ public class Held extends HumanoideSprites{
             return true;
         return false;
     }
+
+    public InventarList getHeldenInventar() {
+        return heldenInventar;
     }
+
+    public void setHeldenInventar(InventarList heldenInventar) {
+        this.heldenInventar = heldenInventar;
+    }
+}
 

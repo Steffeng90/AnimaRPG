@@ -342,6 +342,9 @@ public class HumanoideSprites extends Sprite {
         if(dead){
             return State.DEAD;}
         else if(hitByFeedback){
+            runArchery=false;
+            runMeleeAnimation=false;
+            runCasting=false;
             return State.FEEDBACK;}
         else if(runDying){
             return State.DYING;}

@@ -176,7 +176,6 @@ public class Playscreen implements Screen{
                 controller.draw();
                 itemWindow.draw();
                 getCurrentItemsprite().update(delta);
-                Gdx.app.log("warte","");
                 if(itemWindow.isGeklickt()){
                     setCurrentItemsprite(null);
                     itemWindow.dispose();
@@ -269,7 +268,7 @@ public class Playscreen implements Screen{
                 }
                 if (getCurrentItemsprite() != null) {
                     Gdx.app.log("nichtnull","");
-                    itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite().type.toString());
+                    itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite().name);
                 }
 
                 for (Arrow arrow : Arrow.getAllArrows()) {
@@ -365,5 +364,13 @@ public class Playscreen implements Screen{
     }
     public void runCurrentGameState() {
         this.currentGameState = GameState.RUN;
+    }
+
+    public Held getSpieler() {
+        return spieler;
+    }
+
+    public void setSpieler(Held spieler) {
+        this.spieler = spieler;
     }
 }

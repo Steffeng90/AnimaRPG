@@ -97,6 +97,7 @@ public class Raider extends Enemy
     public void getsHit(){ getsDamaged();};
     public void getsHitbySpell(Zauber z){
         vonFeedbackbetroffen=true;
+        hitByFeedback=true;
         Held tempHeld=z.zaubernder;
         getsDamaged();
     if(tempHeld.getX()<getX() ){

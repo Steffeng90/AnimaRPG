@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
 
 /**
@@ -96,7 +97,7 @@ public class Schatztruhe extends InteraktivesObjekt {
                 region = openTruhe.getKeyFrame(stateTimer, false);
                 if(openTruhe.isAnimationFinished(stateTimer)){
                     runOpenAnimation=false;closed=false;
-                    screen.setCurrentItemsprite(new ItemSprite(screen,getX(),getY()+getHeight()/2,inhalt));}
+                    screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));}
                 break;
             case OPEN:
             default:

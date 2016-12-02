@@ -184,6 +184,23 @@ public class Controller {
         tableRight.left().bottom();
 
         stage.addActor(tableRight);
+
+        Image inventarImg=new Image(new Texture("ui-skin/inventar.png"));
+        inventarImg.setSize(buttonSize,buttonSize);
+        inventarImg.addListener(new InputListener(){
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                AnimaRPG.new Inventar;
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                usePressed=true;
+                return true;
+            }
+        });
+        inventarImg.setPosition(AnimaRPG.W_WIDTH-buttonSize,AnimaRPG.W_Height-buttonSize);
+        stage.addActor(inventarImg);
     }
     public void draw(){
         stage.draw();
