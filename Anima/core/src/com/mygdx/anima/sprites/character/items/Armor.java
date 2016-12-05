@@ -7,9 +7,17 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class Armor extends Ausruestung{
-    public int ruestung;
+    private int ruestung;
     public Armor(String name, String itemKategorie, Vector2 grafikposi, int goldWert, int ruestung){
         super(name, itemKategorie, grafikposi, goldWert);
         this.ruestung=ruestung;
     }
+
+    public int getRuestung() {
+        return ruestung;
     }
+
+    public void setRuestung(int ruestung) {
+        this.ruestung = ruestung;
+    }
+}

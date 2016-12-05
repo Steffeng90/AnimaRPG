@@ -11,6 +11,7 @@ import com.mygdx.anima.screens.Inventar;
 import com.mygdx.anima.screens.Menue;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.screens.actors.StandardUI;
+import com.mygdx.anima.sprites.character.Held;
 
 public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
@@ -33,13 +34,28 @@ public class AnimaRPG extends Game {
 	public static final short ITEM_SPRITE_BIT=2048;
 
 	public SpriteBatch batch;
+	public static Screen currentScreen, previousScreen;
+	public static Held held;
 
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		setScreen(new Playscreen(this));
+		currentScreen=new Playscreen(this);
+		setScreen(currentScreen);
+		held=((Playscreen)currentScreen).getSpieler();
 	}
 
+	public void changeScreen(Screen screen){
+		previousScreen=currentScreen;
+		currentScreen=screen;
+		setScreen(currentScreen);
+	}
+	public void closeScreen(){
+		Gdx.app.log("Close","");
+	//	currentScreen.dispose();
+		currentScreen=previousScreen;
+		setScreen(currentScreen);
+	}
 	@Override
 	public void dispose() {
 		batch.dispose();

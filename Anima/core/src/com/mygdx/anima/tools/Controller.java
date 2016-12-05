@@ -10,17 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.screens.Inventar;
 
 /**
  * Created by Steffen on 18.11.2016.
  */
 
 public class Controller {
+    AnimaRPG game;
     Viewport viewport;
     private Stage stage;
     boolean upPressed,downPressed,leftPressed,rightPressed,
@@ -29,10 +29,11 @@ public class Controller {
     SpriteBatch batch;
     public int buttonSize;
 
-    public Controller(SpriteBatch batch){
+    public Controller(final AnimaRPG game){
         cam=new OrthographicCamera();
+        this.game=game;
         viewport=new FitViewport(AnimaRPG.W_WIDTH,AnimaRPG.W_Height,cam);
-        stage=new Stage(viewport, batch);
+        stage=new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
         buttonSize=25;
         this.batch=batch;
@@ -190,12 +191,12 @@ public class Controller {
         inventarImg.addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                AnimaRPG.new Inventar;
+                game.getScreen().pause();
+                game.changeScreen(new Inventar(game));
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                usePressed=true;
                 return true;
             }
         });

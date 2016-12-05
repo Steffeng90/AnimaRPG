@@ -1,7 +1,5 @@
 package com.mygdx.anima.sprites.character.items;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.anima.screens.Playscreen;
 
@@ -14,6 +12,7 @@ public class ItemGenerator {
     public enum Itemtyp {
         Schwert1, Schwert2, Schwert3, Schwert4, Schwert5, Schwert6, Schwert7, Schwert8,
         ruestung1,ruestung2,ruestung3,ruestung4,ruestung5,ruestung6,ruestung7,
+        Bogen1,Bogen2,Bogen3,Bogen4,Bogen5,Bogen6,
         Brot, Pilz, Kaese, Fisch, Schwert, Bogen
     }
     private static String itemName="Default";
@@ -51,26 +50,74 @@ public class ItemGenerator {
                 goldWert=15;
                 break;
             case Schwert4:
-                x = 3;
-                y = 6;
+                itemName="Langschwert";
+                kategorie=1;
+                vector=new Vector2(3,6);
+                schaden=23;
+                goldWert=45;
                 break;
             case Schwert5:
-                x = 4;
-                y = 6;
+                itemName="Großschwert";
+                kategorie=1;
+                vector=new Vector2(4,6);
+                schaden=30;
+                goldWert=75;
                 break;
             case Schwert6:
-                x = 5;
-                y = 6;
+                itemName="Schwert der Läuterung";
+                kategorie=1;
+                vector=new Vector2(5,6);
+                schaden=45;
+                goldWert=135;
                 break;
             case Schwert7:
                 x = 6;
                 y = 6;
                 break;
-            case Schwert8:
-                x = 7;
-                y = 6;
+            //Fernkampfewaffen
+            case Bogen1:
+                itemName="Kurzbogen";
+                kategorie=2;
+                vector=new Vector2(0,11);
+                schaden=45;
+                goldWert=135;
                 break;
-
+            case Bogen2:
+                itemName="Gehärteter Bogen";
+                kategorie=2;
+                vector=new Vector2(1,11);
+                schaden=45;
+                goldWert=135;
+                break;
+            case Bogen3:
+                itemName="Langbogen";
+                kategorie=2;
+                vector=new Vector2(2,11);
+                schaden=45;
+                goldWert=135;
+                break;
+            case Bogen4:
+                itemName="Kompositbogen";
+                kategorie=2;
+                vector=new Vector2(3,11);
+                schaden=45;
+                goldWert=135;
+                break;
+            case Bogen5:
+                itemName="Eschenbogen";
+                kategorie=2;
+                vector=new Vector2(4,11);
+                schaden=45;
+                goldWert=135;
+                break;
+            case Bogen6:
+                itemName="Alptraum";
+                kategorie=2;
+                vector=new Vector2(5,11);
+                schaden=45;
+                goldWert=135;
+                break;
+            //Ruestung / Armor
             case ruestung1:
                 itemName="Stoffhemd";
                 kategorie=3;
@@ -152,19 +199,19 @@ public class ItemGenerator {
         }
         switch(kategorie){
             case 1:
-                screen.getSpieler().getHeldenInventar().add(new Waffe(itemName, "nahkampf", vector,schaden, goldWert));
+                screen.getSpieler().getHeldenInventar().add(new WaffeNah(itemName, "nahkampf", vector,schaden, goldWert));
                 break;
             case 2:
+                screen.getSpieler().getHeldenInventar().add(new WaffeFern(itemName, "fernkampf", vector,schaden, goldWert));
+                break;
             case 3:
                 screen.getSpieler().getHeldenInventar().add(new Armor(itemName, "armor", vector,ruestung, goldWert));
                 break;
             case 4:
                 // screen.getSpieler().getHeldenInventar().add(new Benutzbar(itemName, "benutzbar", vector,schaden, goldWert));
-
-
         }
 
-       // Gdx.app.log("Waffe definiert","");
+       // Gdx.app.log("WaffeNah definiert","");
         return new ItemSprite(screen, x, y, vector, itemName);
     }
     private static Itemtyp setItemID(String type) {

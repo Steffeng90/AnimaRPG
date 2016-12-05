@@ -32,6 +32,8 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
+import com.mygdx.anima.sprites.character.items.WaffeFern;
+import com.mygdx.anima.sprites.character.items.WaffeNah;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.WorldContactListener;
@@ -89,7 +91,7 @@ public class Playscreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         spieler = new Held(this);
-        controller = new Controller(game.batch);
+        controller = new Controller(game);
         anzeige = new AnzeigenDisplay(game.batch, spieler);
         this.
         //Map-Camera-Initialisierung
@@ -108,6 +110,49 @@ public class Playscreen implements Screen{
         mapTop = 0 + mapPixelHeight;
         cameraHalfWidth = gameViewPort.getWorldWidth() * .5f;
         cameraHalfHeight = gameViewPort.getWorldHeight() * .5f;
+
+        //Testitems erzeugen:
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test1", "nahkampf", new Vector2(0,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test5", "nahkampf", new Vector2(4,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test6", "nahkampf", new Vector2(5,5),15,18));
+    /*    getSpieler().getHeldenInventar().add(new WaffeNah("Test1", "nahkampf", new Vector2(0,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test5", "nahkampf", new Vector2(4,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test6", "nahkampf", new Vector2(5,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test1", "nahkampf", new Vector2(0,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test5", "nahkampf", new Vector2(4,5),15,18));
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test6", "nahkampf", new Vector2(5,5),15,18));
+     */   getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(4,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(5,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(7,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(8,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(9,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(4,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(5,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(7,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(8,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(9,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(5,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(7,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(8,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(9,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(4,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(5,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(7,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(8,13),15, 24));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,13),15, 24));
     }
 
     @Override
@@ -124,7 +169,6 @@ public class Playscreen implements Screen{
             case PAUSE:
                 break;
         }
-
                 Gdx.gl.glClearColor(1, 0, 0, 1);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 //karte rendern
@@ -167,6 +211,8 @@ public class Playscreen implements Screen{
         {
             case RUN:
                 controller.draw();
+                Gdx.input.setInputProcessor(controller.getStage());
+
                 break;
             case PAUSE:
                 game.batch.begin();

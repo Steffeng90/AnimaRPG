@@ -5,45 +5,61 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.actors.ImageActor;
 import com.mygdx.anima.screens.actors.MyActor;
+import com.mygdx.anima.sprites.character.items.Armor;
+import com.mygdx.anima.sprites.character.items.Item;
+import com.mygdx.anima.sprites.character.items.WaffeFern;
+import com.mygdx.anima.sprites.character.items.WaffeNah;
+import com.mygdx.anima.tools.InventarListener;
+import com.mygdx.anima.tools.anlegeButtonListener;
+
+import java.util.ArrayList;
 
 /**
  * Created by Steffen on 24.11.2016.
  */
 
 public class Inventar implements Screen {
+    public AnimaRPG game;
     private Viewport viewport;
+    private boolean zuSchliessen;
     Stage stage;
     MyActor myActor;
     ImageActor imageActor;
     Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
     private float width, height;
-
-    public Inventar(AnimaRPG game) {
-        width = game.W_WIDTH*2;
-        height = game.W_Height*2;
+    Item angelegtWaffeNah, angelegtWaffeFern, angelegtRuestung;
+    public Item auswahlItem;
+    private float scrollbarposition;
+    public ScrollPane pane;
+    public Table inventarLinks,inventarRechts;
+    TextButton angelegtButton,ausziehenButton,wegwerfButton;
+    public Inventar(final AnimaRPG game) {
+        this.game = game;
+        width = game.W_WIDTH * 2;
+        height = game.W_Height * 2;
         this.viewport = new FitViewport(width, height, new OrthographicCamera());
         Gdx.app.log("BRreite und hoehe:", width + " " + height);
-      //  BitmapFont bf=new BitmapFont(Gdx.files.internal("default.fnt"),true);
+        //  BitmapFont bf=new BitmapFont(Gdx.files.internal("default.fnt"),true);
         stage = new Stage(viewport, game.batch);
+        zuSchliessen = false;
+        auswahlItem = null;
+        scrollbarposition=0f;
 
         Gdx.input.setInputProcessor(stage);
 //        myActor=new MyActor();
@@ -71,134 +87,174 @@ public class Inventar implements Screen {
         stage.addActor(reiterTable);
 
         Group inventarGroup = new Group();
-        Table inventarLinks = new Table(skin);
+        auswahlAnzeige();
+//        stage.addActor(inventarLinks);
 
-        // inventarLinks.setWidth(stage.getWidth()/5);
+        pane = zeigeItems();
+
+        //stage.addActor(pane);
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    public void zurueckButtonErzeugen(){
+        Image inventarImg = new Image(new Texture("ui-skin/inventar.png"));
+        inventarImg.setSize(50, 50);
+        inventarImg.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {game.held.getHeldenInventar().resetAuswahl();game.closeScreen();dispose();}
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}});
+        inventarImg.setPosition(width - 50, height - 50);
+        stage.addActor(inventarImg);
+    }
+    public void auswahlAnzeige(){
+        inventarLinks = new Table(skin);
+
+        inventarLinks.setWidth(stage.getWidth() / 5);
         inventarLinks.setPosition(width / 5, height);
         inventarLinks.align(Align.left | Align.top);
-        Label aktWaffe = new Label("Aktuelle Waffe", skin);
+        Label aktWaffe = new Label("Angelegt:", skin);
+        Label ausgwWaffe = new Label("Auswahl:", skin);
+        if(auswahlItem!=null) {
+        String name=" ",eigenschaft1=" ",wert1auswahl=" ",wert1angelegt=" ",eigenschaft2,wert2auswahl=" ",wert2angelegt=" ",nameAngelegt=" ";
+        name=auswahlItem.getName();
+        eigenschaft2="Wert";
 
-        Label dieseWaffe = new Label("Diese Waffe", skin);
-        Table mitte = new Table(skin);
-        mitte.add(aktWaffe).width(width / 5);
-        mitte.add(new Label("Schwert", skin));
-        mitte.row();
-        mitte.add(new Label("Schaden", skin)).uniform();
-        mitte.add(new Label("10", skin)).uniform();
-        mitte.row();
-        mitte.add(new Label("Wert", skin));
-        mitte.add(new Label("15 Gold", skin));
-        mitte.setSize(width / 5, height / 3f);
+
+        switch (Item.kategorie.valueOf(auswahlItem.getItemKategorie())) {
+            case nahkampf:
+                eigenschaft1="Schaden";
+                wert1auswahl=" "+((WaffeNah)auswahlItem).getSchaden();
+                wert2auswahl=" "+auswahlItem.getGoldWert();
+                angelegtWaffeNah=game.held.getHeldenInventar().getAngelegtWaffeNah();
+                if(angelegtWaffeNah!=null){
+                nameAngelegt=angelegtWaffeNah.getName();
+                wert1angelegt=" "+((WaffeNah)angelegtWaffeNah).getSchaden();
+                wert2angelegt=" "+angelegtWaffeNah.getGoldWert();}
+                break;
+            case fernkampf:
+                eigenschaft1="Fern-Schaden";
+                wert1auswahl=" "+((WaffeFern)auswahlItem).getSchaden();
+                wert2auswahl=" "+auswahlItem.getGoldWert();
+                angelegtWaffeFern=game.held.getHeldenInventar().getAngelegtWaffeFern();
+                if(angelegtWaffeFern!=null){
+                nameAngelegt=angelegtWaffeFern.getName();
+                wert1angelegt=" "+((WaffeFern)angelegtWaffeFern).getSchaden();
+                wert2angelegt=" "+angelegtWaffeFern.getGoldWert();}
+                break;
+            case armor:
+                eigenschaft1="Ruestungswert";
+                wert1auswahl=" "+((Armor)auswahlItem).getRuestung();
+                wert2auswahl=" "+auswahlItem.getGoldWert();
+                angelegtRuestung=game.held.getHeldenInventar().getAngelegtRuestung();
+                if(angelegtWaffeFern!=null){
+                    nameAngelegt=angelegtWaffeFern.getName();
+                    wert1angelegt=" "+((Armor)auswahlItem).getRuestung();
+                wert2angelegt=" "+auswahlItem.getGoldWert();}
+                break;
+            default:
+                break;
+        }
         inventarLinks.add(aktWaffe).colspan(2);
         inventarLinks.row();
-        //inventarLinks.add(oben).width(width / 5);
+        inventarLinks.add(new Label(nameAngelegt, skin)).size(width * 3 / 20, height / 12f);
         inventarLinks.row();
-        inventarLinks.add(dieseWaffe).colspan(2);
+        inventarLinks.add(new Label(eigenschaft1, skin)).size(width * 3 / 20, height / 12f);
+        inventarLinks.add(new Label(wert1angelegt, skin)).size(width * 1 / 20, height / 12f);
         inventarLinks.row();
-        inventarLinks.add(mitte).width(width / 5);
+        inventarLinks.add(new Label(eigenschaft2, skin)).size(width * 3 / 20, height / 12f);
+        inventarLinks.add(new Label(wert2angelegt, skin)).size(width * 1 / 20, height / 12f);
         inventarLinks.row();
-        inventarLinks.add(new TextButton("Benutzen", skin)).size(width / 5, height / 6f);
+        inventarLinks.add(ausgwWaffe).colspan(2);
         inventarLinks.row();
-        inventarLinks.add(new TextButton("Wegwerfen", skin)).size(width / 5, height / 6f);
-
-        //inventarGroup.addActor(inventarLinks);
+        inventarLinks.add(new Label(name, skin)).size(width * 3 / 20, height / 12f);
+        inventarLinks.row();
+        inventarLinks.add(new Label(eigenschaft1, skin)).size(width * 3 / 20, height / 12f);
+        inventarLinks.add(new Label(wert1auswahl,skin)).size(width * 1 / 20, height / 12f);
+        inventarLinks.row();
+        inventarLinks.add(new Label(eigenschaft2, skin)).size(width * 3 / 20, height / 12f);
+        inventarLinks.add(new Label(wert2auswahl, skin)).size(width * 1 / 20, height / 12f);
+        inventarLinks.row();
+        angelegtButton =new TextButton("Anlegen", skin);
+        angelegtButton.addListener(new anlegeButtonListener(game,auswahlItem,this));
+        inventarLinks.add(angelegtButton).size(width / 5, height / 6f).colspan(2);
+        inventarLinks.row();
+        inventarLinks.add(new TextButton("Wegwerfen", skin)).size(width / 5, height / 6f).colspan(2);
+        inventarLinks.row();
         stage.addActor(inventarLinks);
-/*
-        Table inventarRechts=new Table(skin);
-        inventarRechts.setWidth((stage.getWidth()/5)*2);
-        inventarRechts.setPosition((stage.getWidth()/5)*3,Gdx.graphics.getHeight());
-        inventarRechts.align(Align.left |Align.top);
-        inventarRechts.add(new Label("Nahkampf-Waffen",skin,"default"));
-        inventarRechts.row();
-        inventarRechts.add(new Label("Fernkampf-Waffen",skin,"default"));
+        }}
+    public ScrollPane zeigeItems() {
+        inventarRechts = new Table();
+        inventarRechts.setPosition(width * 2 / 5, height);
+        inventarRechts.align(Align.left | Align.top);
+        inventarRechts.add(new Label("Nahkampf-Waffen", skin)).colspan(3);
         inventarRechts.row();
 
-        inventarRechts.add(new Label("Rüstung",skin,"default"));
-        stage.addActor(inventarRechts);
-*/
-        /*
-        Table root = new Table();
+        ArrayList<WaffeNah> liste = game.held.getHeldenInventar().getWaffenNahList();
+        int size = liste.size();
+        //Gdx.app.log("Size:"+size,"");
+        for (int i = 0; i < size; i++) {
+            if ((i) % 4 == 0) {inventarRechts.row();}
+            Image beispiel4 = new Image(liste.get(i).getGrafik());
+            beispiel4.addListener(new InventarListener(this, liste.get(i),beispiel4));
+            inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+        }
+        inventarRechts.row();
+        inventarRechts.add(new Label("Fernkampf-Waffen", skin)).colspan(3);
+        inventarRechts.row();
+        ArrayList<WaffeFern> listenf = game.held.getHeldenInventar().getWaffenFernList();
+        size = listenf.size();
+        for (int i = 0; i < size; i++) {
+            if ((i) % 4 == 0) {
+                inventarRechts.row();}
+            Image beispiel4=new Image(listenf.get(i).getGrafik());
+            beispiel4.addListener(new InventarListener(this, listenf.get(i),beispiel4));
+            inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+        }
+        ScrollPane scrollPane = new ScrollPane(inventarRechts, skin);
+        scrollPane.setBounds(0, 0, width / 2, height);
+        scrollPane.setScrollingDisabled(true, false);
+        scrollPane.setSmoothScrolling(false);
+        scrollPane.setPosition(width / 2, 0);
+        scrollPane.setFadeScrollBars(true);
+        scrollPane.setScrollbarsOnTop(false);
+        scrollPane.setupFadeScrollBars(0, 0);
+        scrollPane.layout();
+        scrollPane.setScrollPercentY(getScrollbarposition());
+        Gdx.app.log("Scroller erneuert","");
+        scrollPane.layout();
+        stage.addActor(scrollPane);
+        pane=scrollPane;
+        zurueckButtonErzeugen();
 
-        root.setFillParent(true);
-
-        root.debug().defaults().space(6).size(110);
-        stage.addActor(root);
-
-        root.add(new Container(new Label("center",skin,"default")));
-        root.add(new Container(new Label("top",skin,"default")).top());
-        root.add(new Container(new Label("right",skin,"default")).right());
-        root.add(new Container(new Label("bottom",skin,"default")).bottom());
-        root.add(new Container(new Label("left",skin,"default")).left());
-        root.row();
-        root.add(new Container(new Label("fill",skin,"default")).fill());
-        root.add(new Container(new Label("fillX",skin,"default")).fillX());
-        root.add(new Container(new Label("fillY",skin,"default")).fillY());
-        root.add(new Container(new Label("fill 75%",skin,"default")).fill(0.75f, 0.75f));
-        root.add(new Container(new Label("fill 75% br",skin,"default")).fill(0.75f, 0.75f).bottom().right());
-        root.row();
-        root.add(new Container(new Label("padTop 5\ntop",skin,"default")).padTop(5).top());
-        root.add(new Container(new Label("padBottom 5\nbottom",skin,"default")).padBottom(5).bottom());
-        root.add(new Container(new Label("padLeft 15",skin,"default")).padLeft(15));
-        root.add(new Container(new Label("pad 10 fill",skin,"default")).pad(10).fill());
-        root.add(new Container(new Label("pad 10 tl",skin,"default")).pad(10).top().left());
-        root.row();
-        //root.add(new Container(new Label("bg",skin,"default")).background(logo));
-       // root.add(new Container(new Label("bg height 50",skin,"default")).background(logo).height(50));
-
-        Container transformBG = new Container(new Label("bg transform",skin,"default"));
-        transformBG.setTransform(true);
-        transformBG.setOrigin(55, 55);
-        transformBG.rotateBy(90);
-        root.add(transformBG);
-
-        Container transform = new Container(new Label("transform",skin,"default"));
-        transform.setTransform(true);
-        transform.setOrigin(55, 55);
-        transform.rotateBy(90);
-        root.add(transform);
-
-        Container clip = new Container(new Label("clip1clip2clip3clip4",skin,"default"));
-        clip.setClip(true);
-        root.add(clip);
-        */
-    }
-
-    @Override
-    public void show() {
+        return scrollPane;
 
     }
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act();
         stage.draw();
     }
-
     @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
+    public void resize(int width, int height) {viewport.update(width, height);}
+    @Override
+    public void pause() {    }
+    @Override
+    public void resume() {    }
+    @Override
+    public void hide() {    }
+    @Override
+    public void dispose() {    }
+    @Override
+    public void show() {    }
 
+    public synchronized float getScrollbarposition() {
+        return scrollbarposition;
     }
 
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
+    public synchronized void setScrollbarposition(float scrollbarposition) {
+        this.scrollbarposition = scrollbarposition;
     }
 }
-
