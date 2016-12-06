@@ -111,17 +111,14 @@ public class InventarList {
         int temp=waffenNahList.size();
         for(int i=0;i<temp;i++){
             waffenNahList.get(i).setAusgewaehlt(false);
-            waffenNahList.get(i).changeGrafik();
         }
         temp=waffenFernList.size();
         for(int i=0;i<temp;i++){
             waffenFernList.get(i).setAusgewaehlt(false);
-            waffenFernList.get(i).changeGrafik();
         }
         temp=ruestungsList.size();
         for(int i=0;i<temp;i++){
             ruestungsList.get(i).setAusgewaehlt(false);
-            ruestungsList.get(i).changeGrafik();
         }
 //        Gdx.app.log("Resetdurchgeführt","");
     }
@@ -130,15 +127,24 @@ public class InventarList {
     public synchronized void setAngelegtWaffeNah(WaffeNah angelegtWaffeNah) {
         if(this.angelegtWaffeNah!=null)
             this.angelegtWaffeNah.setAngelegt(false);
+        if(angelegtWaffeNah!=null){
         this.angelegtWaffeNah = angelegtWaffeNah;angelegtWaffeNah.setAngelegt(true);}
+    else{this.angelegtWaffeNah=null;}}
     public synchronized WaffeFern getAngelegtWaffeFern() {return angelegtWaffeFern;}
     public synchronized void setAngelegtWaffeFern(WaffeFern angelegtWaffeFern) {
         if(this.angelegtWaffeFern!=null)
             this.angelegtWaffeFern.setAngelegt(false);
+        if(angelegtWaffeFern!=null){
         this.angelegtWaffeFern = angelegtWaffeFern;angelegtWaffeFern.setAngelegt(true);}
+        else{this.angelegtWaffeFern=null;}}
+
     public synchronized Armor getAngelegtRuestung() {return angelegtRuestung;}
     public synchronized void setAngelegtRuestung(Armor angelegtRuestung) {
         if(this.angelegtRuestung!=null)
             this.angelegtRuestung.setAngelegt(false);
-        this.angelegtRuestung = angelegtRuestung;angelegtRuestung.setAngelegt(true);}
+        if(angelegtRuestung!=null){
+            this.angelegtRuestung = angelegtRuestung;angelegtRuestung.setAngelegt(true);}
+        else{this.angelegtRuestung=null;}}
+
+
 }

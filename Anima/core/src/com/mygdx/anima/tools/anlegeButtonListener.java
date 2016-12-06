@@ -30,17 +30,27 @@ public class anlegeButtonListener extends InputListener {
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        if (item.isAngelegt()) {
+            item.setAngelegt(false);
+            switch(temp)
+            {
+                case nahkampf: held.getHeldenInventar().setAngelegtWaffeNah(null);break;
+                case fernkampf: held.getHeldenInventar().setAngelegtWaffeFern(null);break;
+                case armor: held.getHeldenInventar().setAngelegtRuestung(null);break;
+                default: break;
+            }}
+
+            else{
         switch(temp)
         {
             case nahkampf: held.getHeldenInventar().setAngelegtWaffeNah((WaffeNah)item);break;
             case fernkampf: held.getHeldenInventar().setAngelegtWaffeFern((WaffeFern)item);break;
             case armor: held.getHeldenInventar().setAngelegtRuestung((Armor)item);break;
             default: break;
-        }
+        }}
         inv.inventarRechts.clear();
         inv.zeigeItems();
         inv.inventarLinks.clear();
-
         inv.auswahlAnzeige();
         return super.touchDown(event, x, y, pointer, button);
     }

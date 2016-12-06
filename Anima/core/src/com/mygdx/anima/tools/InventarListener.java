@@ -37,19 +37,16 @@ public class InventarListener extends InputListener {
 
             if(tempItem.isAngelegt())
             {
-                tempItem.changeGrafik();
                 inventar.inventarRechts.clear();
                 inventar.zeigeItems();
             }
             else if(tempItem.isAusgewaehlt())
             {   tempItem.setAusgewaehlt(false);
-                tempItem.changeGrafik();
                 inventar.inventarRechts.clear();
                 inventar.zeigeItems();
             }
             else{
                 tempItem.setAusgewaehlt(true);
-                tempItem.changeGrafik();
                 img=new Image(tempItem.getGrafik());
                 inventar.inventarRechts.clear();
                 inventar.zeigeItems();

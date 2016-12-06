@@ -7,19 +7,21 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 /**
  * Created by Steffen on 01.12.2016.
  */
 
 public class Item{
-
+    private enum State{nichts,ausgewaehlt,angelegt}
+    private State state;
     public static enum kategorie{nahkampf,fernkampf,nutzbar,armor}
     private kategorie itemKategorie;
     private static Texture spriteQuelle_weiss=new Texture("objekte/icons_for_rpg.png")
             ,spriteQuelle_blau=new Texture("objekte/icons_for_rpg_auswahl.png"),
             spriteQuelle_gruen=new Texture("objekte/icons_for_rpg_angelegt.png");
-    private TextureRegion grafik;
+    private TextureRegion grafikNichts,grafikAusgewaehlt,grafikAngelegt;
     private String name;
     private int goldWert;
     private boolean angelegt,ausgewaehlt;
@@ -33,7 +35,9 @@ public class Item{
         grafikPosY = (int) grafikposi.y;
         ausgewaehlt=false;
         angelegt=false;
-        setGrafik(new TextureRegion(spriteQuelle_weiss, grafikPosX * 34, grafikPosY * 34, 34, 34));
+        setGrafiken(new TextureRegion(spriteQuelle_weiss, grafikPosX * 34, grafikPosY * 34, 34, 34),
+                new TextureRegion(spriteQuelle_gruen,grafikPosX*34,grafikPosY*34,34,34),
+                new TextureRegion(spriteQuelle_blau,grafikPosX*34,grafikPosY*34,34,34));
         setGoldWert(goldWert);
         setItemKategorie(kategorieString);
     }
@@ -54,22 +58,19 @@ public class Item{
         this.ausgewaehlt = ausgewaehlt;
     }
 
-    public void setGrafik(TextureRegion grafik) {
-        this.grafik = grafik;
+    public void setGrafiken(TextureRegion grafikNichts,TextureRegion grafikAngelegt,TextureRegion grafikAusgewaehlt) {
+        this.grafikNichts = grafikNichts;
+        this.grafikAngelegt=grafikAngelegt;
+        this.grafikAusgewaehlt=grafikAusgewaehlt;
     }
-    public void changeGrafik(){
-        if(angelegt)
-        {
-            setGrafik(new TextureRegion(spriteQuelle_gruen,grafikPosX*34,grafikPosY*34,34,34));
-        }else if(ausgewaehlt){
-            setGrafik(new TextureRegion(spriteQuelle_blau,grafikPosX*34,grafikPosY*34,34,34));
-        }else{
-            setGrafik(new TextureRegion(spriteQuelle_weiss,grafikPosX*34,grafikPosY*34,34,34));
+    public TextureRegion getGrafik(){
+        switch (getState()){
+            case angelegt: return grafikAngelegt;
+            case ausgewaehlt: return  grafikAusgewaehlt;
+            case nichts:
+            default: return  grafikNichts;
         }
-       // Gdx.app.log("Wechsel","");
     }
-
-    public TextureRegion getGrafik(){ return grafik;}
 
     public String getItemKategorie() {return itemKategorie.toString();}
     public boolean isWeaponNah(){
@@ -97,13 +98,6 @@ public class Item{
     }public void setItemKategorie(String itemKategorie) {
         this.itemKategorie = kategorie.valueOf(itemKategorie);
     }
-    /*public TextureRegion getTextureRegion() {
-        return grafik;
-    }
-    public void setTextureRegion(TextureRegion grafik) {
-        this.grafik = grafik;
-    }
-*/
     public String getName() {
         return name;
     }
@@ -120,5 +114,10 @@ public class Item{
         this.goldWert = goldWert;
     }
 
-
+    private State getState() {
+        if(angelegt){return State.angelegt;}
+        else if(ausgewaehlt){return  State.ausgewaehlt;}
+        else {return State.nichts;}
+    }
+    //private void setState(State state) {this.state = state;}
 }
