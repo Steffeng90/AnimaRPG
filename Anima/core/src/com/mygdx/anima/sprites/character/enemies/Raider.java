@@ -94,12 +94,12 @@ public class Raider extends Enemy
         if((velocity.y>-0.3f &&velocity.y<0.3f) || (velocity.y>=0.3f && v2.y<0) || (velocity.y<=-0.3f && v2.y>0))
         velocity.y+=v2.y;
     }
-    public void getsHit(){ getsDamaged();};
+    public void getsHit(){ getsDamaged(2);};
     public void getsHitbySpell(Zauber z){
         vonFeedbackbetroffen=true;
         hitByFeedback=true;
         Held tempHeld=z.zaubernder;
-        getsDamaged();
+        getsDamaged(3);
     if(tempHeld.getX()<getX() ){
     // Runter
     if(tempHeld.getY()<getY()){
@@ -122,7 +122,7 @@ public class Raider extends Enemy
 }}
     public void getsHit(Held hero){
         vonFeedbackbetroffen=true;
-        getsDamaged();
+        getsDamaged(1);
         //Links
         float feedback=1.5f;
         if(hero.getX()<getX() ){
@@ -144,13 +144,6 @@ public class Raider extends Enemy
             else{
                 changeVelocity(new Vector2(-feedback,-feedback));
             }
-        }
-    }
-    public void getsDamaged(){
-        hitCounter++;
-
-        if(hitCounter>=3 && !runDying){
-            readyToDie();
         }
     }
     public void readyToDie(){

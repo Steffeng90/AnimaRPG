@@ -1,17 +1,17 @@
 package com.mygdx.anima;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.anima.screens.Inventar;
-import com.mygdx.anima.screens.Menue;
+import com.badlogic.gdx.utils.Json;
+import com.google.gson.Gson;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.screens.actors.StandardUI;
 import com.mygdx.anima.sprites.character.Held;
+
+import javax.xml.soap.Text;
 
 public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
@@ -32,13 +32,18 @@ public class AnimaRPG extends Game {
 	public static final short ARROW_BIT=512;
 	public static final short HERO_CAST_BIT=1024;
 	public static final short ITEM_SPRITE_BIT=2048;
+	public static final short GEBIETSWECHSEL_BIT=4096;
 
 	public SpriteBatch batch;
 	public static Screen currentScreen, previousScreen;
 	public static Held held;
-
+	public static AssetManager aManager;
 	@Override
 	public void create() {
+		aManager=new AssetManager();
+//		aManager.load("objekte/itemdb.json", Gson.class);
+		aManager.finishLoading();
+
 		batch = new SpriteBatch();
 		currentScreen=new Playscreen(this);
 		setScreen(currentScreen);
@@ -51,8 +56,6 @@ public class AnimaRPG extends Game {
 		setScreen(currentScreen);
 	}
 	public void closeScreen(){
-		Gdx.app.log("Close","");
-	//	currentScreen.dispose();
 		currentScreen=previousScreen;
 		setScreen(currentScreen);
 	}

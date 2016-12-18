@@ -47,9 +47,14 @@ public class HumanoideSprites extends Sprite {
     public boolean runDying,dead,destroyed;
     public float hitdauer,wertHeld=0.07f,wertEnemy=0.2f;
 
+    //Einstellungen
+    private int currentHitpoints,maxHitpoints,currentMana,maxMana,regMana,regHitpoints,
+            Erfahrung,schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand;
+    private float geschwindigkeitLaufen;
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
     public int breite;
     public int hoehe;
+
     public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
         this.world = screen.getWorld();
         currentState = State.STANDING;
@@ -466,6 +471,122 @@ public class HumanoideSprites extends Sprite {
         fdefSensor.isSensor = true;
         sensorFixture= b2body.createFixture(fdefSensor);
         sensorFixture.setUserData(this);
+    }
+    public int getCurrentHitpoints() {
+        return currentHitpoints;
+    }
+
+    public void setCurrentHitpoints(int currentHitpoints) {
+        if(currentHitpoints<=0){
+            readyToDie();
+            this.currentHitpoints=0;
+        }else if(currentHitpoints>maxHitpoints){
+            this.currentHitpoints=maxHitpoints;
+        }
+        else{
+            this.currentHitpoints = currentHitpoints;
+        }
+    }
+    public int getMaxHitpoints() {
+        return maxHitpoints;
+    }
+
+    public void setMaxHitpoints(int maxHitpoints) {
+        setCurrentHitpoints(getCurrentHitpoints()+(maxHitpoints-this.maxHitpoints));
+        this.maxHitpoints = maxHitpoints;
+    }
+
+    public int getCurrentMana() {
+        return currentMana;
+    }
+
+    public void setCurrentMana(int currentMana) {
+        if (currentMana <= 0) {
+            this.currentMana = 0;
+        } else if (currentMana > maxMana) {
+            this.currentMana = maxMana;
+        } else {
+            this.currentMana = maxMana;
+        }
+    }
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+    public void setMaxMana(int maxMana) {
+        setCurrentMana(getCurrentMana()+(maxMana-this.maxMana));
+
+        this.maxMana = maxMana;
+    }
+
+    public int getRegMana() {
+        return regMana;
+    }
+
+    public void setRegMana(int regMana) {
+        this.regMana = regMana;
+    }
+
+    public int getErfahrung() {
+        return Erfahrung;
+    }
+
+    public void setErfahrung(int erfahrung) {
+        Erfahrung = erfahrung;
+    }
+
+    public int getSchadenNah() {
+        return schadenNah;
+    }
+
+    public void setSchadenNah(int schadenNah) {
+        this.schadenNah = schadenNah;
+    }
+
+    public int getSchadenFern() {
+        return schadenFern;
+    }
+
+    public void setSchadenFern(int schadenFern) {
+        this.schadenFern = schadenFern;
+    }
+
+    public int getSchadenZauber() {
+        return schadenZauber;
+    }
+
+    public void setSchadenZauber(int schadenZauber) {
+        this.schadenZauber = schadenZauber;
+    }
+
+    public int getRuestung() {
+        return ruestung;
+    }
+
+    public void setRuestung(int ruestung) {
+        this.ruestung = ruestung;
+    }
+
+    public float getGeschwindigkeitLaufen() {
+        return geschwindigkeitLaufen;
+    }
+
+    public void setGeschwindigkeitLaufen(float geschwindigkeitLaufen) {
+        this.geschwindigkeitLaufen = geschwindigkeitLaufen;
+    }
+    public int getZauberwiderstand() {
+        return zauberwiderstand;
+    }
+
+    public void setZauberwiderstand(int zauberwiderstand) {
+        this.zauberwiderstand = zauberwiderstand;
+    }
+    public int getRegHitpoints() {
+        return regHitpoints;
+    }
+
+    public void setRegHitpoints(int regHitpoints) {
+        this.regHitpoints = regHitpoints;
     }
     public Richtung getCurrentRichtung(){
         return currentRichtung;

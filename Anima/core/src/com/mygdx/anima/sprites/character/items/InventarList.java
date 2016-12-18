@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import static com.mygdx.anima.AnimaRPG.held;
+
 /**
  * Created by Steffen on 01.12.2016.
  */
@@ -64,6 +66,10 @@ public class InventarList {
     }
 
     public boolean add(Armor armor) {return ruestungsList.add(armor);}
+    public boolean add(Benutzbar benutzbar) {return benutzbarList.add(benutzbar);}
+    public boolean remove(Benutzbar benutzbar) {
+        return benutzbarList.remove(benutzbar);
+    }
 
     public Object[] toArray() {
         return ruestungsList.toArray();
@@ -83,6 +89,7 @@ public class InventarList {
     public boolean add(WaffeFern waffeFern) {
         return waffenFernList.add(waffeFern);
     }
+
 
     public <T> T[] toArray(T[] ts) {
         return ruestungsList.toArray(ts);
@@ -120,6 +127,10 @@ public class InventarList {
         for(int i=0;i<temp;i++){
             ruestungsList.get(i).setAusgewaehlt(false);
         }
+        temp=benutzbarList.size();
+        for(int i=0;i<temp;i++){
+            benutzbarList.get(i).setAusgewaehlt(false);
+        }
 //        Gdx.app.log("Resetdurchgeführt","");
     }
     // Getter und Setter für angelegte Variablen
@@ -129,14 +140,16 @@ public class InventarList {
             this.angelegtWaffeNah.setAngelegt(false);
         if(angelegtWaffeNah!=null){
         this.angelegtWaffeNah = angelegtWaffeNah;angelegtWaffeNah.setAngelegt(true);}
-    else{this.angelegtWaffeNah=null;}}
+    else{this.angelegtWaffeNah=null;}
+        held.setSchadenNah();}
     public synchronized WaffeFern getAngelegtWaffeFern() {return angelegtWaffeFern;}
     public synchronized void setAngelegtWaffeFern(WaffeFern angelegtWaffeFern) {
         if(this.angelegtWaffeFern!=null)
             this.angelegtWaffeFern.setAngelegt(false);
         if(angelegtWaffeFern!=null){
         this.angelegtWaffeFern = angelegtWaffeFern;angelegtWaffeFern.setAngelegt(true);}
-        else{this.angelegtWaffeFern=null;}}
+        else{this.angelegtWaffeFern=null;}
+        held.setSchadenFern();}
 
     public synchronized Armor getAngelegtRuestung() {return angelegtRuestung;}
     public synchronized void setAngelegtRuestung(Armor angelegtRuestung) {
@@ -144,7 +157,8 @@ public class InventarList {
             this.angelegtRuestung.setAngelegt(false);
         if(angelegtRuestung!=null){
             this.angelegtRuestung = angelegtRuestung;angelegtRuestung.setAngelegt(true);}
-        else{this.angelegtRuestung=null;}}
+        else{this.angelegtRuestung=null;}
+        held.setRuestung();}
 
 
 }

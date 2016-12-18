@@ -13,8 +13,11 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Raider;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 
+import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.all;
+import static com.badlogic.gdx.utils.JsonValue.ValueType.array;
 import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.BARRIERE_BIT;
 import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
@@ -34,6 +37,7 @@ public class B2WorldCreator {
     PolygonShape pshape;
     public Array<Raider> allRaider;
     public Array<Schatztruhe> allSchatztruhen;
+    public Array allAusgang;
 
     public B2WorldCreator(Playscreen screen)
     {
@@ -56,6 +60,13 @@ public class B2WorldCreator {
             fdef.filter.categoryBits=BARRIERE_BIT;
             fdef.filter.maskBits=HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
             body.createFixture(fdef);
+        }
+        // Erzeugen von Ein und Ausgängen
+        allAusgang=new Array();
+        for(MapObject object:map.getLayers().get("raider").getObjects().getByType(RectangleMapObject.class)) {
+            String inhalt=(String)object.getProperties().get("ausgang");
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            allAusgang.add(new Gebietswechsel(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,inhalt));
         }
         // Erzeugen von Raider
         allRaider=new Array<Raider>();

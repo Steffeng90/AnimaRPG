@@ -1,4 +1,4 @@
-package com.mygdx.anima.tools;
+package com.mygdx.anima.tools.listener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -54,7 +54,6 @@ public class WorldContactListener implements ContactListener {
                 else
                 {   ((Held)fixA.getUserData()).isHit=true;
                     ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
-                    ((Held)fixA.getUserData()).getsHit((Enemy)fixB.getUserData());
                 break;
             case AnimaRPG.ARROW_BIT | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)

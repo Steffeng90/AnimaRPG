@@ -34,10 +34,10 @@ public class AnzeigenDisplay implements Disposable {
 
     public AnzeigenDisplay(SpriteBatch sb,Held held){
         //define our tracking variables
-        this.currentHitpoints=held.currentHitpoints;
-        this.maxHitpoints=held.maxHitpoints;
-        this.currentMana=held.currentMana;
-        this.maxMana=held.maxMana;
+        this.currentHitpoints=held.getCurrentHitpoints();
+        this.maxHitpoints=held.getMaxHitpoints();
+        this.currentMana=held.getCurrentMana();
+        this.maxMana=held.getMaxMana();
 
         //setup the HUD viewport using a new camera seperate from our gamecam
         //define our stage using that viewport and our games spritebatch
@@ -67,22 +67,16 @@ public class AnzeigenDisplay implements Disposable {
         table.add().expandX().padTop(2);
         table.add().expandX().padTop(2);
         table.add().expandX().padTop(2);
-
-
         //add a second row to our table
         table.row();
-
         //add our table to the stage
         stage.addActor(table);
-
-
     }
-
     public void update(float dt,Held held){
-        this.currentHitpoints=held.currentHitpoints;
-        this.maxHitpoints=held.maxHitpoints;
-        this.currentMana=held.currentMana;
-        this.maxMana=held.maxMana;
+        this.currentHitpoints=held.getCurrentHitpoints();
+        this.maxHitpoints=held.getMaxHitpoints();
+        this.currentMana=held.getCurrentMana();
+        this.maxMana=held.getMaxMana();
         this.hitpointLabel.setText(String.format("%d / %d",this.currentHitpoints,this.maxHitpoints));
         this.manaLabel.setText(String.format("%d / %d",this.currentMana,this.maxMana));
 

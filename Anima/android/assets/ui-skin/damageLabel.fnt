@@ -1,0 +1,17 @@
+info face="AR ESSENCE" size=150 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=1,1,1,1 spacing=-2,-2
+common lineHeight=192 base=142 scaleW=512 scaleH=512 pages=1 packed=0
+page id=0 file="damageLabel.png"
+chars count=12
+char id=0       x=0    y=0    width=0    height=0    xoffset=-1   yoffset=0    xadvance=64   page=0    chnl=0 
+char id=32      x=0    y=0    width=0    height=0    xoffset=-1   yoffset=0    xadvance=64   page=0    chnl=0 
+char id=48      x=0    y=106  width=70   height=102  xoffset=3    yoffset=42   xadvance=77   page=0    chnl=0 
+char id=49      x=444  y=0    width=36   height=101  xoffset=3    yoffset=42   xadvance=42   page=0    chnl=0 
+char id=50      x=70   y=106  width=60   height=101  xoffset=3    yoffset=42   xadvance=66   page=0    chnl=0 
+char id=51      x=197  y=0    width=57   height=103  xoffset=3    yoffset=42   xadvance=63   page=0    chnl=0 
+char id=52      x=254  y=0    width=68   height=103  xoffset=3    yoffset=40   xadvance=69   page=0    chnl=0 
+char id=53      x=322  y=0    width=55   height=102  xoffset=3    yoffset=42   xadvance=62   page=0    chnl=0 
+char id=54      x=0    y=0    width=66   height=106  xoffset=3    yoffset=39   xadvance=73   page=0    chnl=0 
+char id=55      x=132  y=0    width=65   height=104  xoffset=3    yoffset=42   xadvance=63   page=0    chnl=0 
+char id=56      x=377  y=0    width=67   height=102  xoffset=3    yoffset=42   xadvance=74   page=0    chnl=0 
+char id=57      x=66   y=0    width=66   height=106  xoffset=3    yoffset=41   xadvance=73   page=0    chnl=0 
+kernings count=0

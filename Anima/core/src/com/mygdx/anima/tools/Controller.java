@@ -4,16 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.screens.Inventar;
+import com.mygdx.anima.screens.Menu;
 
 /**
  * Created by Steffen on 18.11.2016.
@@ -36,10 +37,10 @@ public class Controller {
         stage=new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
         buttonSize=25;
-        this.batch=batch;
 
         Table tableLeft=new Table();
         tableLeft.left().bottom();
+
         Image upImg=new Image(new Texture("ui-skin/pfeil_oben.png"));
         upImg.setSize(buttonSize,buttonSize);
         upImg.addListener(new InputListener(){
@@ -54,6 +55,8 @@ public class Controller {
                 return true;
             }
         });
+
+
         Image downImg=new Image(new Texture("ui-skin/pfeil_unten.png"));
         downImg.setSize(buttonSize,buttonSize);
         downImg.addListener(new InputListener(){
@@ -106,7 +109,14 @@ public class Controller {
         tableLeft.row().padBottom(0);
         tableLeft.add();
         tableLeft.add(downImg).size(downImg.getWidth(),downImg.getHeight());
-        tableLeft.add();
+        //tableLeft.add();
+       // stage.addActor(tableLeft);
+
+        Touchpad touchpad;
+        Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+        touchpad = new Touchpad(20f, skin);
+        touchpad.setBounds(15, 15, 100, 100);
+        tableLeft.add(touchpad);
         stage.addActor(tableLeft);
 
         Table tableRight=new Table();
@@ -192,7 +202,7 @@ public class Controller {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.getScreen().pause();
-                game.changeScreen(new Inventar(game));
+                game.changeScreen(new Menu(game));
             }
 
             @Override

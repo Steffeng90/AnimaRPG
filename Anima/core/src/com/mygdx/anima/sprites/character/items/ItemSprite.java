@@ -41,6 +41,8 @@ public class ItemSprite extends Sprite {
         this.name=name;
         spriteBreite=34;
         spriteHoehe =34;
+        Gdx.app.log("davor","vector:"+textureArea.x+"und "+textureArea.y);
+
         texture=new TextureRegion(spriteQuelle,((int)textureArea.x)*spriteBreite,((int)textureArea.y)*spriteHoehe,spriteBreite,spriteHoehe);
 
         setRegion(texture);
@@ -58,7 +60,6 @@ public class ItemSprite extends Sprite {
         fdef.filter.categoryBits=AnimaRPG.ITEM_SPRITE_BIT;
         // fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR | AnimaRPG.ARROW_BIT;
         fdef.shape=shape;
-        Gdx.app.log("Define durchgeführt","");
 
        // body.createFixture(fdef).setUserData(this);
     }

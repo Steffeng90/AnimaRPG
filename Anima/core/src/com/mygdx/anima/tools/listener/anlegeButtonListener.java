@@ -1,11 +1,10 @@
-package com.mygdx.anima.tools;
+package com.mygdx.anima.tools.listener;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.screens.Inventar;
-import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.screens.Menu;
+import com.mygdx.anima.screens.menuReiter.InventarReiter;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.items.Armor;
 import com.mygdx.anima.sprites.character.items.Item;
@@ -20,9 +19,9 @@ public class anlegeButtonListener extends InputListener {
     Item.kategorie temp;
     Held held;
     Item item;
-    Inventar inv;
+    InventarReiter inv;
 
-    public anlegeButtonListener(AnimaRPG game, Item item,Inventar inv){
+    public anlegeButtonListener(AnimaRPG game, Item item,InventarReiter inv){
         temp =Item.kategorie.valueOf(item.getItemKategorie());
         this.held=game.held;
         this.item=item;

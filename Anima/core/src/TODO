@@ -1,11 +1,7 @@
 TODO Aufgaben:
 
 Zu prüfen:
-- Wieso Zauber so spät Feedback geben (Vllt getsHit in Update-methode)
-- Itembilder korriegen
 - Zauber kann bounds langsam größer werden
 Nächste Schritte:
-- CONTAINER für UI Probieren
--Textmeldung "apfel gefunden" wenn Item aufgerufen -> Idee dass wenn Item gefunden wird, die anzeige nichtmehr gerendert wird,sondern nurnoch das Anzeigedisplay
--Inventar / Charaktermenü aufrufen
+-Nutzbare Items
 -Fernkampfgegner

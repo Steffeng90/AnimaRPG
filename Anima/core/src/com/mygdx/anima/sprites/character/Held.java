@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
@@ -13,6 +15,7 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.sprites.character.items.InventarList;
+import com.mygdx.anima.tools.SchadenBerechner;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -33,7 +36,12 @@ public class Held extends HumanoideSprites{
     private InventarList heldenInventar;
 
     //Statistik-Werte
-    public int currentHitpoints,maxHitpoints,currentMana,maxMana,manareg;
+
+    private float spielzeit,geschwindigkeitLaufen;
+
+    private int schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,staerke,
+    geschick,zauberkraft,currentErfahrung,currentLevel,nextLevelUp;
+
     float characterTimer;
 
     public Held(Playscreen screen)
@@ -44,14 +52,28 @@ public class Held extends HumanoideSprites{
         createHero();
         heldErstellt=true;}
         objectInReichweite=false;
-        maxHitpoints=40;
-        currentHitpoints=maxHitpoints;
-        maxMana=15;
-        currentMana=maxMana;
-        manareg=5;
-        characterTimer=0;
+
         heldenInventar=new InventarList();
 
+        // Gameplay-Variablen
+        setMaxHitpoints(125);
+        setCurrentHitpoints(getMaxHitpoints());
+        setMaxMana(15);
+        setCurrentMana(getMaxMana());
+        setRegMana(5);
+        setCurrentLevel(1);
+        setCurrentErfahrung(0);
+        setNextLevelUp(50);
+        setGeschwindigkeitLaufen(15);
+        setStaerke(10);
+        setGeschick(12);
+        setZauberkraft(8);
+        setSchadenNah();
+        setSchadenFern();
+        setSchadenZauber(15);
+        setRuestung();
+        setZauberwiderstand(11);
+        characterTimer=0;
 }
     public TextureRegion getFrame(float dt) {
         return super.getFrame(dt);
@@ -77,8 +99,9 @@ public class Held extends HumanoideSprites{
     public void update(float dt)
     {
         characterTimer+=dt;
-        if(characterTimer>=1 && currentMana<maxMana){
-            currentMana+=manareg;
+        setSpielzeit(dt);
+        if(characterTimer>=1 && getCurrentMana()<getMaxMana()){
+            setCurrentMana(getCurrentMana()+getRegMana());
             characterTimer=0;}
         super.update(dt);
         setRegion(getFrame(dt));
@@ -140,8 +163,8 @@ public class Held extends HumanoideSprites{
         meleeExists= true;
     }}
     public void castAttack()
-    {   if((currentState==State.STANDING |currentState==State.WALKING) && currentMana>=5){
-        currentMana-=5;
+    {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
+        setCurrentMana(getCurrentMana()-5);
         new Zauber(this);}
     }
     public void bowAttack()
@@ -187,13 +210,11 @@ public class Held extends HumanoideSprites{
         updateTextures(spriteBogen);
     }
     public void getsHit(Enemy enemy){
-        getsDamaged();
-        }
-    public void getsDamaged(){
-        currentHitpoints= currentHitpoints-2;
-        if(currentHitpoints<=0){
-            readyToDie();
-        }
+        getsDamaged(1,enemy);
+    }
+    public void getsDamaged(int schadensTyp,Enemy enemy){
+        int verursachterSchaden;
+        SchadenBerechner.berechneSchaden(schadensTyp,this,enemy);
     }
     //die Methode prüft, ob gerade eine Aktion oder Animation ausgeführt wird und gibt Boolean zurück
     public boolean actionInProgress(){
@@ -206,8 +227,129 @@ public class Held extends HumanoideSprites{
         return heldenInventar;
     }
 
+
+    //Getter und Setter für alle Attribute
     public void setHeldenInventar(InventarList heldenInventar) {
         this.heldenInventar = heldenInventar;
+    }
+    public TextureRegion getProfilbild(){
+        return standingDownSprite;
+    }
+
+
+
+    public int getCurrentErfahrung() {
+        return currentErfahrung;
+    }
+
+    public void setCurrentErfahrung(int currentErfahrung) {
+        this.currentErfahrung = currentErfahrung;
+    }
+
+    public int getNextLevelUp() {
+        return nextLevelUp;
+    }
+
+    public void setNextLevelUp(int nextLevelUp) {
+        this.nextLevelUp = nextLevelUp;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public String getSpielzeit() {
+        int stunde =(int) spielzeit/3600,minute=(int) (spielzeit%3600)/60,sekunden=(int)(spielzeit%3600)%60;
+
+        return ""+String.format("%02d",stunde)+":"+String.format("%02d",minute)+":"+String.format("%02d",sekunden);
+    }
+
+    public void setSpielzeit(float spielzeit) {
+        this.spielzeit += spielzeit;
+    }
+
+    public float getGeschwindigkeitLaufen() {
+        return geschwindigkeitLaufen;
+    }
+
+    public void setGeschwindigkeitLaufen(float geschwindigkeitLaufen) {
+        this.geschwindigkeitLaufen = geschwindigkeitLaufen;
+    }
+
+    public int getSchadenNah() {
+        return schadenNah;
+    }
+
+    public void setSchadenNah() {
+        if(getHeldenInventar().getAngelegtWaffeNah()!=null)
+        {this.schadenNah=getHeldenInventar().getAngelegtWaffeNah().getSchaden()*(100+staerke)/100;
+        }else{
+            this.schadenNah = 0;
+        }
+    }
+
+    public int getSchadenFern() {
+        return schadenFern;
+    }
+
+    public void setSchadenFern() {
+        if(getHeldenInventar().getAngelegtWaffeFern()!=null)
+        {this.schadenFern=getHeldenInventar().getAngelegtWaffeFern().getSchaden()*(100+geschick)/100;
+        }else{this.schadenFern = 0;}
+    }
+    public int getSchadenZauber() {
+        return schadenZauber;
+    }
+
+    public void setSchadenZauber(int schadenZauber) {
+        //TODO Zauberübergabe einstellen
+        this.schadenZauber = schadenZauber;
+    }
+
+    public int getRuestung() {
+        return ruestung;
+    }
+
+    public void setRuestung() {
+        if(getHeldenInventar().getAngelegtRuestung()!=null)
+        {this.ruestung=getHeldenInventar().getAngelegtRuestung().getRuestung();
+        }else{this.ruestung = 0;}
+    }
+
+    public int getStaerke() {
+        return staerke;
+    }
+
+    public void setStaerke(int staerke) {
+        this.staerke = staerke;
+    }
+
+    public int getGeschick() {
+        return geschick;
+    }
+
+    public void setGeschick(int geschick) {
+        this.geschick = geschick;
+    }
+
+    public int getZauberkraft() {
+        return zauberkraft;
+    }
+
+    public void setZauberkraft(int zauberkraft) {
+        this.zauberkraft = zauberkraft;
+    }
+
+    public int getZauberwiderstand() {
+        return zauberwiderstand;
+    }
+
+    public void setZauberwiderstand(int zauberwiderstand) {
+        this.zauberwiderstand = zauberwiderstand;
     }
 }
 

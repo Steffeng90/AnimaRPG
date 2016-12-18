@@ -10,14 +10,18 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
+import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.tools.SchadenBerechner;
+
+import static com.mygdx.anima.AnimaRPG.held;
 
 /**
  * Created by Steffen on 13.11.2016.
  */
 
 public abstract class Enemy extends HumanoideSprites{
-    public int hitCounter;
+
     public boolean enemyInReichweite,vonFeedbackbetroffen;
 
     public Enemy(Playscreen screen,float x, float y, String quelle)
@@ -27,9 +31,21 @@ public abstract class Enemy extends HumanoideSprites{
         create();
         velocity=new Vector2(0.2f,0.2f);
         b2body.setActive(false);
-        hitCounter=0;
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
+
+        setMaxHitpoints(25);
+        setCurrentHitpoints(getMaxHitpoints());
+        setMaxMana(15);
+        setCurrentMana(getMaxMana());
+        setRegMana(5);
+        setErfahrung(15);
+        setGeschwindigkeitLaufen(15);
+        setSchadenNah(5);
+        setSchadenFern(4);
+        setSchadenZauber(15);
+        setRuestung(4);
+
     }
 
 
@@ -61,7 +77,6 @@ public abstract class Enemy extends HumanoideSprites{
         }
         super.update(dt);
     }
-    public abstract void getsHit(Held hero);
     public void readyToDie(){super.readyToDie();}
     public void attack()
     {
@@ -101,8 +116,14 @@ public abstract class Enemy extends HumanoideSprites{
         meleeExists = true;
     }
     public abstract void getsHitbySpell(Zauber z);
-
     public abstract void getsHit();
+    public abstract void getsHit(Held hero);
+
+    public void getsDamaged(int schadensTyp){
+        SchadenBerechner.berechneSchaden(schadensTyp,this,held);
+
     }
+
+}
 
 

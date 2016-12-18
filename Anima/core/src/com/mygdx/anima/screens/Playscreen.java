@@ -1,24 +1,19 @@
 package com.mygdx.anima.screens;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
@@ -26,18 +21,16 @@ import com.mygdx.anima.scenes.AnzeigenDisplay;
 import com.mygdx.anima.scenes.ItemFundInfo;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
+import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.Raider;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
-import com.mygdx.anima.sprites.character.items.Armor;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
-import com.mygdx.anima.sprites.character.items.WaffeFern;
-import com.mygdx.anima.sprites.character.items.WaffeNah;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
-import com.mygdx.anima.tools.WorldContactListener;
+import com.mygdx.anima.tools.listener.WorldContactListener;
 
 /**
  * Created by Steffen on 06.11.2016.
@@ -54,6 +47,7 @@ public class Playscreen implements Screen{
     private Viewport gameViewPort;
     Controller controller;
     ItemFundInfo itemWindow;
+    BitmapFont bf;
 
     AnzeigenDisplay anzeige;
     //Objekte um TileMap einzubinden
@@ -74,7 +68,6 @@ public class Playscreen implements Screen{
     MapProperties properties;
     float mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
 
-
     public Playscreen(AnimaRPG game) {
         this.game = game;
         gamecam = new OrthographicCamera();
@@ -94,7 +87,11 @@ public class Playscreen implements Screen{
         spieler = new Held(this);
         controller = new Controller(game);
         anzeige = new AnzeigenDisplay(game.batch, spieler);
-        this.
+        bf=new BitmapFont(Gdx.files.internal("ui-skin/default.fnt"));
+        bf.setColor(Color.BLUE);
+        bf.setUseIntegerPositions(false);
+        bf.getData().setScale(1f/AnimaRPG.W_WIDTH,1f/AnimaRPG.W_Height);
+
         //Map-Camera-Initialisierung
 
         properties = map.getProperties();
@@ -113,7 +110,7 @@ public class Playscreen implements Screen{
         cameraHalfHeight = gameViewPort.getWorldHeight() * .5f;
 
         //Testitems erzeugen:
-
+/*
         getSpieler().getHeldenInventar().add(new Armor("Ruessi1","armor",new Vector2(5,13),15,20));
         getSpieler().getHeldenInventar().add(new Armor("Ruessi2","armor",new Vector2(6,13),15,16));
         getSpieler().getHeldenInventar().add(new Armor("Ruessi3","armor",new Vector2(7,13),1125,13));
@@ -154,94 +151,99 @@ public class Playscreen implements Screen{
         getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,11),8, 2));
         getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(7,11),5, 6));
         getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(8,11),151, 23));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(9,11),534, 52));
+        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(9,11),534, 52));*/
     }
-
     @Override
     public void show() {
 
     }
     @Override
     public void render(float delta) {
-        switch (getCurrentGameState())
-        {
+        switch (getCurrentGameState()) {
             case RUN:
                 update(delta);
                 break;
             case PAUSE:
                 break;
         }
-                Gdx.gl.glClearColor(1, 0, 0, 1);
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-                //karte rendern
-                renderer.render();
-                // Render-Linien
-                b2dr.render(world, gamecam.combined);
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //karte rendern
+        renderer.render();
+        // Render-Linien
+        b2dr.render(world, gamecam.combined);
 
-                //Zeigt den Controller nur bei Android an:
-                //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
-                game.batch.setProjectionMatrix(gamecam.combined);
-                game.batch.begin();
+        //Zeigt den Controller nur bei Android an:
+        //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
+        game.batch.setProjectionMatrix(gamecam.combined);
 
-                //Raider erzeugen
-                for (Enemy enemy : creator.getAllRaider()) {
-                    enemy.draw(game.batch);
+        game.batch.begin();
+
+        //Raider erzeugen
+        for (Enemy enemy : creator.getAllRaider()) {
+            enemy.draw(game.batch);
+        }
+        for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
+            schatztruhe.draw(game.batch);
+        }
+        if (Arrow.getAllArrows().size > 0) {
+            for (Arrow arrow : Arrow.getAllArrows()) {
+                arrow.draw(game.batch);
+            }
+        }
+        if (Zauber.getAllZauber().size > 0) {
+
+            for (Zauber zauber : Zauber.getAllZauber()) {
+                if (!zauber.destroyed) {
+                    zauber.draw(game.batch);
                 }
-                for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
-                    schatztruhe.draw(game.batch);
-                }
-                if (Arrow.getAllArrows().size > 0) {
-                    for (Arrow arrow : Arrow.getAllArrows()) {
-                        arrow.draw(game.batch);
-                    }
-                }
-                if (Zauber.getAllZauber().size > 0) {
-
-                    for (Zauber zauber : Zauber.getAllZauber()) {
-                        if (!zauber.destroyed) {
-                            zauber.draw(game.batch);
-                        }
-                    }
-                }
-                if (getCurrentItemsprite() != null) {
-                    setCurrentGameState(GameState.PAUSE);}
-
-                spieler.draw(game.batch);
-
-                game.batch.end();
-        switch (getCurrentGameState())
-        {
-            case RUN:
-                controller.draw();
-                Gdx.input.setInputProcessor(controller.getStage());
-
-                break;
-            case PAUSE:
-                game.batch.begin();
-                getCurrentItemsprite().draw(game.batch);
-                game.batch.end();
-
-                controller.draw();
-                itemWindow.draw();
-                getCurrentItemsprite().update(delta);
-                if(itemWindow.isGeklickt()){
-                    setCurrentItemsprite(null);
-                    itemWindow.dispose();
-                    Gdx.input.setInputProcessor(controller.getStage());
-
-                    setCurrentGameState(GameState.RUN);
-                }
-                break;
+            }
+        }
+        spieler.draw(game.batch);
+        if (SchadenLabel.getSchadensLabelArray().size > 0) {
+            for (int i = 0; i < SchadenLabel.getSchadensLabelArray().size; i++) {
+                    SchadenLabel sl = SchadenLabel.getSchadenLabel(i);
+                    if (sl.getTimer() < 0.5) {
+                        sl.draw(game.batch);
+                        sl.addTime(delta);
+                    } else {sl.removeSchadenLabel(i);}
+            }}
+            if (getCurrentItemsprite() != null) {
+                setCurrentGameState(GameState.PAUSE);
             }
 
-                anzeige.draw();
+            game.batch.end();
+            switch (getCurrentGameState()) {
+                case RUN:
+                    controller.draw();
+                    Gdx.input.setInputProcessor(controller.getStage());
 
-                if (gameOver()) {
-                    game.setScreen(new GameOverScreen(game));
-                    dispose();
-                }
+                    break;
+                case PAUSE:
+                    game.batch.begin();
+                    getCurrentItemsprite().draw(game.batch);
+                    game.batch.end();
 
+                    controller.draw();
+                    itemWindow.draw();
+                    getCurrentItemsprite().update(delta);
+                    if (itemWindow.isGeklickt()) {
+                        setCurrentItemsprite(null);
+                        itemWindow.dispose();
+                        Gdx.input.setInputProcessor(controller.getStage());
+
+                        setCurrentGameState(GameState.RUN);
+                    }
+                    break;
+            }
+            anzeige.draw();
+
+            if (gameOver()) {
+                game.setScreen(new GameOverScreen(game));
+                dispose();
+            }
         }
+
 
 
     public void handleInput(float dt) {
@@ -290,7 +292,7 @@ public class Playscreen implements Screen{
                 anzeige.update(dt, spieler);
                 gamecam.update();
                 renderer.setView(gamecam);
-                if (spieler.currentHitpoints > 0) {
+                if (spieler.getCurrentHitpoints() > 0) {
                     gamecam.position.set(spieler.b2body.getPosition(), 0);
                 }
                 for (Enemy enemy : creator.getAllRaider()) {
@@ -421,4 +423,5 @@ public class Playscreen implements Screen{
     public void setSpieler(Held spieler) {
         this.spieler = spieler;
     }
+
 }

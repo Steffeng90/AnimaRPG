@@ -15,13 +15,13 @@ import com.mygdx.anima.screens.actors.MyActor;
  * Created by Steffen on 23.11.2016.
  */
 
-public class Menue implements Screen {
-//    public class Menue extends ApplicationAdapter {
+public class TestMenue implements Screen {
+//    public class TestMenue extends ApplicationAdapter {
     Stage stage;
     MyActor myActor;
     ImageActor imageActor;
 
-    public Menue(AnimaRPG game) {
+    public TestMenue(AnimaRPG game) {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         myActor=new MyActor();

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
@@ -54,7 +55,7 @@ public class ItemFundInfo implements Disposable {
         table.setFillParent(true);
 
         //define our labels using the String, and a Label style consisting of a font and color
-        AnzeigeHPLabel = new Label(itemName+" gefunden!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("ui-skin/default.fnt")), Color.WHITE));
+        AnzeigeHPLabel = new Label(itemName+" gefunden!", new Skin(Gdx.files.internal("ui-skin/uiskin.json")));
         //add our labels to our table, padding the top, and giving them all equal width with expandX
         table.add().expandX().padTop(2);
         table.add(AnzeigeHPLabel).expandX();

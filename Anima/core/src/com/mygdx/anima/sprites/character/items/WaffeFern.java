@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 public class WaffeFern extends Ausruestung{
     private int schaden;
 
-    public WaffeFern(String name, String itemKategorie, Vector2 grafikposi, int goldWert, int schaden){
+    public WaffeFern(String name, String itemKategorie, Vector2 grafikposi, int schaden, int goldWert){
         super(name, itemKategorie, grafikposi, goldWert);
         this.schaden=schaden;
     }

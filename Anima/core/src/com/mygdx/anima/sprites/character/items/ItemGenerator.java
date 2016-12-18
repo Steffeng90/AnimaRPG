@@ -1,7 +1,36 @@
 package com.mygdx.anima.sprites.character.items;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.mygdx.anima.screens.Playscreen;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import sun.awt.AppContext;
+
+import static com.badlogic.gdx.Gdx.app;
+import static com.badlogic.gdx.Gdx.input;
+import static com.mygdx.anima.AnimaRPG.aManager;
+/*
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.ruestung;
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
+import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;*/
 
 
 /**
@@ -18,200 +47,55 @@ public class ItemGenerator {
     private static String itemName="Default";
     private static Vector2 vector;
     //Kategorie 1: Nahkampf, 2: Fernkampf 3: Armor, 4: Benutzbar
-    private static int kategorie,schaden,goldWert,ruestung;
+    //Benutzbarkateogie 1: Lebenspunkte
+    private static int kategorie,schaden,goldWert, benutzbarKategorie, benutzbarWert,ruestung;
  //  private static kategorie itemKategorie=waffe;
 
     public static ItemSprite generateItem(Playscreen screen, float x, float y, String typ) {
-        Itemtyp itemID = setItemID(typ);
-        //return new ItemSprite(screen, x, y, getFrame(itemID), itemName);
+        Gson gson = new Gson();
+        try {
+            //TODO FIlehandling für Android
+            FileHandle file =Gdx.files.internal("objekte/itemdb.json");
+            FileInputStream input = new FileInputStream(file.path());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            JsonObject json = gson.fromJson(reader, JsonObject.class);
 
-        switch (itemID) {
-            case Schwert1:
-                itemName="Eisenschwert";
-                kategorie=1;
-                vector=new Vector2(0,6);
-                schaden=10;
-                goldWert=15;
-                break;
+            // Attribut "item" als Array lesen
+            JsonArray itemArray = json. getAsJsonArray("item");
+            for (int i = 0; i < itemArray.size(); i++) {
+                if(typ.equals(itemArray.get(i).getAsJsonObject().get("id").getAsString())){
+                JsonObject item = itemArray.get(i).getAsJsonObject();
+                itemName = item.get("name").getAsString();
+                vector = new Vector2(item.get("vectorX").getAsFloat(), item.get("vectorY").getAsFloat());
+                goldWert = item.get("goldWert").getAsInt();
+                kategorie = item.get("kategorie").getAsInt();
 
-            case Schwert2:
-                itemName="Stahlschwert";
-                kategorie=1;
-                vector=new Vector2(1,6);
-                schaden=15;
-                goldWert=15;
-                break;
-
-            case Schwert3:
-                itemName="Mithrilschwert";
-                kategorie=1;
-                vector=new Vector2(2,6);
-                schaden=20;
-                goldWert=15;
-                break;
-            case Schwert4:
-                itemName="Langschwert";
-                kategorie=1;
-                vector=new Vector2(3,6);
-                schaden=23;
-                goldWert=45;
-                break;
-            case Schwert5:
-                itemName="Großschwert";
-                kategorie=1;
-                vector=new Vector2(4,6);
-                schaden=30;
-                goldWert=75;
-                break;
-            case Schwert6:
-                itemName="Schwert der Läuterung";
-                kategorie=1;
-                vector=new Vector2(5,6);
-                schaden=45;
-                goldWert=135;
-                break;
-            case Schwert7:
-                x = 6;
-                y = 6;
-                break;
-            //Fernkampfewaffen
-            case Bogen1:
-                itemName="Kurzbogen";
-                kategorie=2;
-                vector=new Vector2(0,11);
-                schaden=45;
-                goldWert=135;
-                break;
-            case Bogen2:
-                itemName="Gehärteter Bogen";
-                kategorie=2;
-                vector=new Vector2(1,11);
-                schaden=45;
-                goldWert=135;
-                break;
-            case Bogen3:
-                itemName="Langbogen";
-                kategorie=2;
-                vector=new Vector2(2,11);
-                schaden=45;
-                goldWert=135;
-                break;
-            case Bogen4:
-                itemName="Kompositbogen";
-                kategorie=2;
-                vector=new Vector2(3,11);
-                schaden=45;
-                goldWert=135;
-                break;
-            case Bogen5:
-                itemName="Eschenbogen";
-                kategorie=2;
-                vector=new Vector2(4,11);
-                schaden=45;
-                goldWert=135;
-                break;
-            case Bogen6:
-                itemName="Alptraum";
-                kategorie=2;
-                vector=new Vector2(5,11);
-                schaden=45;
-                goldWert=135;
-                break;
-            //Ruestung / Armor
-            case ruestung1:
-                itemName="Stoffhemd";
-                kategorie=3;
-                vector=new Vector2(0,13);
-                ruestung=10;
-                goldWert=15;
-                break;
-            case ruestung2:
-                itemName="Schutzweste";
-                kategorie=3;
-                vector=new Vector2(1,13);
-                ruestung=20;
-                goldWert=15;
-                break;
-            case ruestung3:
-                itemName="Lederwarms";
-                kategorie=3;
-                vector=new Vector2(2,13);
-                ruestung=30;
-                goldWert=15;
-                break;
-            case ruestung4:
-                itemName="Brustpanzer";
-                kategorie=3;
-                vector=new Vector2(3,13);
-                ruestung=40;
-                goldWert=15;
-                break;
-            case ruestung5:
-                itemName="Plattenpanzer";
-                kategorie=3;
-                vector=new Vector2(4,13);
-                ruestung=50;
-                goldWert=15;
-                break;
-            case ruestung6:
-                itemName="Warms der Heilung";
-                kategorie=3;
-                vector=new Vector2(5,13);
-                ruestung=60;
-                goldWert=15;
-                break;
-            case ruestung7:
-                itemName="Vollstrecker-Gewand";
-                kategorie=3;
-                vector=new Vector2(6,13);
-                ruestung=70;
-                goldWert=15;
-                break;
-            case Brot:
-                x = 7;
-                y = 1;
-                break;
-            case Pilz:
-                x = 5;
-                y = 1;
-                break;
-            case Kaese:
-                x = 9;
-                y = 1;
-                break;
-            case Fisch:
-                x = 10;
-                y = 1;
-                break;
-            case Schwert:
-                x = 0;
-                y = 5;
-                break;
-            case Bogen:
-                x = 0;
-                y = 11;
-                break;
-            default:
-                //Default_traube
-                x = 3;
-                y = 3;
-                break;
+                switch (kategorie){
+                    case 1:
+                        schaden = item.get("schaden").getAsInt();
+                        screen.getSpieler().getHeldenInventar().add(new WaffeNah(itemName, "nahkampf", vector,schaden, goldWert));
+                        break;
+                    case 2:
+                        schaden = item.get("schaden").getAsInt();
+                        screen.getSpieler().getHeldenInventar().add(new WaffeFern(itemName, "fernkampf", vector,schaden, goldWert));
+                        break;
+                    case 3:
+                        ruestung = item.get("ruestung").getAsInt();
+                        screen.getSpieler().getHeldenInventar().add(new Armor(itemName, "armor", vector,ruestung, goldWert));
+                        break;
+                    case 4:
+                        benutzbarKategorie=item.get("benutzbarKategorie").getAsInt();
+                        benutzbarWert=item.get("benutzbarWert").getAsInt();
+                        screen.getSpieler().getHeldenInventar().add(new Benutzbar(itemName, "nutzbar", vector,benutzbarKategorie, benutzbarWert, goldWert));
+                        break;
+                }
+                break;}
+            }
         }
-        switch(kategorie){
-            case 1:
-                screen.getSpieler().getHeldenInventar().add(new WaffeNah(itemName, "nahkampf", vector,schaden, goldWert));
-                break;
-            case 2:
-                screen.getSpieler().getHeldenInventar().add(new WaffeFern(itemName, "fernkampf", vector,schaden, goldWert));
-                break;
-            case 3:
-                screen.getSpieler().getHeldenInventar().add(new Armor(itemName, "armor", vector,ruestung, goldWert));
-                break;
-            case 4:
-                // screen.getSpieler().getHeldenInventar().add(new Benutzbar(itemName, "benutzbar", vector,schaden, goldWert));
+        catch (Exception e){
+            System.out.print("Fehler beim Itemauslesen:");
+            e.printStackTrace();
         }
-
-       // Gdx.app.log("WaffeNah definiert","");
         return new ItemSprite(screen, x, y, vector, itemName);
     }
     private static Itemtyp setItemID(String type) {
@@ -219,35 +103,6 @@ public class ItemGenerator {
 
     }
 
-   /* public static Vector2 getFrame(Itemtyp type) {
-        int x, y;
 
-        switch(type){
-            case Brot:
-                region=new TextureRegion(spriteQuelle,7*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
-                break;
-            case Pilz:
-                region=new TextureRegion(spriteQuelle,5 *spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
-                break;
-            case Käse:
-                region=new TextureRegion(spriteQuelle,9*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
-                break;
-            case Fisch:
-                region=new TextureRegion(spriteQuelle,10*spriteBreite,1* spriteHoehe,spriteBreite,spriteHoehe);
-                break;
-            case Schwert:
-                region=new TextureRegion(spriteQuelle,0*spriteBreite,5* spriteHoehe,spriteBreite,spriteHoehe);
-                break;
-            case Bogen:
-                region=new TextureRegion(spriteQuelle,0*spriteBreite,11* spriteHoehe,spriteBreite,spriteHoehe);
-                break;
-            default:
-                //Default_traube
-                region=new TextureRegion(spriteQuelle,0*spriteBreite,0* spriteHoehe,spriteBreite,spriteHoehe);
-                break;
-        }
+    }
 
-        }
-        return new Vector2(x, y);
-    }*/
-}
