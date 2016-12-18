@@ -61,7 +61,7 @@ public abstract class Enemy extends HumanoideSprites{
         PolygonShape shape=new PolygonShape();
         shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(0,-10/AnimaRPG.PPM),0);
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
-        fdef.filter.maskBits= AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
+        fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
         | AnimaRPG.ARROW_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);

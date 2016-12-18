@@ -71,7 +71,7 @@ public class Arrow extends Sprite {
         }
         FixtureDef fdefAttack = new FixtureDef();
         fdefAttack.filter.categoryBits = AnimaRPG.ARROW_BIT;
-        fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT;
+        fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT| AnimaRPG.GEBIETSWECHSEL_BIT;
         fdefAttack.shape = shape;
         arrowFixture = b2body.createFixture(fdefAttack);
         arrowFixture.setUserData(this);

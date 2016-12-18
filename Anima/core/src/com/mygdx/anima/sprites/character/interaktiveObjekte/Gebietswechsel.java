@@ -1,8 +1,10 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,36 +22,41 @@ import static com.mygdx.anima.AnimaRPG.GEBIETSWECHSEL_BIT;
  * Created by Steffen on 13.11.2016.
  */
 
-public class Gebietswechsel extends InteraktivesObjekt {
-
-    Texture spriteQuelle;
+public class Gebietswechsel {
     Body body;
-    Animation openTruhe;
+    private int nextMapId;
+    // 1=süd,2=west,3=nord,4=ost; Wert wird in Getter-Methoden umgedreht
+    private int ausgangsrichtung;
 
-    public String inhalt;
-
-    public Gebietswechsel(Playscreen screen, float x, float y, String inhalt){
-        super(screen,x,y);
-        this.inhalt=inhalt;
-    }
-    @Override
-    public void defineItem() {
-        BodyDef bdef= new BodyDef();
-        bdef.position.set(getX(),getY());
+    public Gebietswechsel(Playscreen screen, float x, float y, int nextMap,int richtung, Rectangle rect) {
+        this.nextMapId = nextMap;
+        ausgangsrichtung=richtung;
+        BodyDef bdef = new BodyDef();
+        bdef.position.set((rect.getX()+rect.getWidth()/2)/ AnimaRPG.PPM, (rect.getY()+rect.getHeight()/2)/AnimaRPG.PPM);
         bdef.type = BodyDef.BodyType.StaticBody;
-        body =world.createBody(bdef);
+        body = screen.getWorld().createBody(bdef);
         body.setActive(true);
 
-        FixtureDef fdef= new FixtureDef();
-        PolygonShape shape=new PolygonShape();
-        shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(getWidth()/2, getHeight()/2),0);
-        fdef.filter.categoryBits=AnimaRPG.GEBIETSWECHSEL_BIT;
-        fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.ARROW_BIT;
-        fdef.shape=shape;
-
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape pshape = new PolygonShape();
+        pshape.setAsBox((rect.getWidth() / 2) / AnimaRPG.PPM, (rect.getHeight() / 2) / AnimaRPG.PPM);
+        fdef.filter.categoryBits = AnimaRPG.GEBIETSWECHSEL_BIT;
+        fdef.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.ARROW_BIT;
+        fdef.shape = pshape;
         body.createFixture(fdef).setUserData(this);
+    }
+    public int getNextMapId() {return nextMapId;}
+    public void setNextMapId(int inhalt) {this.nextMapId = nextMapId;}
+    public int getAusgangsrichtung() {
+        //Hier wird der int wert umgedreht: Aus Nord wird Süd
+        switch(ausgangsrichtung){
+            case 1:return 3;
+            case 2:return 4;
+            case 3:return 1;
+            case 4:return 2;
+            default:
+                Gdx.app.log("Fehler bei",""+this);return 1;
         }
-    public void update(float dt){}
-    @Override
-    public void use(Held hero) {}
+        }
+    public void setAusgangsrichtung(int ausgangsrichtung) {this.ausgangsrichtung = ausgangsrichtung;}
 }

@@ -34,7 +34,8 @@ public class Held extends HumanoideSprites{
     public boolean isHit;
     public Enemy treffenderEnemy;
     private InventarList heldenInventar;
-
+    //Dieser Wert wird über Methoden übergeben, um den Held neu zu positionieren, bei Kartenwechsel
+    private Vector2 heldPosition;
     //Statistik-Werte
 
     private float spielzeit,geschwindigkeitLaufen;
@@ -44,12 +45,14 @@ public class Held extends HumanoideSprites{
 
     float characterTimer;
 
-    public Held(Playscreen screen)
+    public Held(Playscreen screen,Vector2 spielerPosition)
     {
         super(screen,spriteBogen,true);
         this.screen=screen;
+        heldPosition=spielerPosition;
+
         if(!heldErstellt){
-        createHero();
+        createHeroBody(new Vector2(150f/AnimaRPG.PPM,50f/AnimaRPG.PPM));
         heldErstellt=true;}
         objectInReichweite=false;
 
@@ -78,9 +81,9 @@ public class Held extends HumanoideSprites{
     public TextureRegion getFrame(float dt) {
         return super.getFrame(dt);
     }
-    public void createHero(){
+    public void createHeroBody(Vector2 heldPosition){
         BodyDef bdef=new BodyDef();
-        bdef.position.set((AnimaRPG.W_WIDTH/2) / AnimaRPG.PPM,30/AnimaRPG.PPM);
+        bdef.position.set(heldPosition);
         bdef.type=BodyDef.BodyType.DynamicBody;
         b2body=world.createBody(bdef);
         createSensor(true);
@@ -88,11 +91,9 @@ public class Held extends HumanoideSprites{
         CircleShape shape=new CircleShape();
         shape.setRadius(8/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
-        //PolygonShape shape =new PolygonShape();
-        //shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(0,-10/AnimaRPG.PPM),0);
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
-        fdef.filter.maskBits=AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
-        | AnimaRPG.ARROW_BIT;
+        fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
+                | AnimaRPG.ARROW_BIT;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
     }
@@ -350,6 +351,15 @@ public class Held extends HumanoideSprites{
 
     public void setZauberwiderstand(int zauberwiderstand) {
         this.zauberwiderstand = zauberwiderstand;
+    }
+
+    public Vector2 getHeldPosition() {
+        return heldPosition;
+    }
+
+    public void setHeldPosition(Vector2 heldPosition) {
+        //this.heldPosition = heldPosition;
+
     }
 }
 

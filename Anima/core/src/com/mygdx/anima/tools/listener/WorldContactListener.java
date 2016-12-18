@@ -7,11 +7,14 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.anima.AnimaRPG;
+import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.tools.KartenManager;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -49,8 +52,7 @@ public class WorldContactListener implements ContactListener {
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
                 {   ((Held)fixB.getUserData()).isHit=true;
-                    ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
-
+                    ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)fixA.getUserData();}
                 else
                 {   ((Held)fixA.getUserData()).isHit=true;
                     ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
@@ -84,6 +86,16 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy)fixB.getUserData()).getsHitbySpell((Zauber)fixA.getUserData());
                 else
                     ((Enemy)fixA.getUserData()).getsHitbySpell((Zauber)fixB.getUserData());
+                break;
+            case AnimaRPG.HERO_BIT | AnimaRPG.GEBIETSWECHSEL_BIT:
+                Gdx.app.log("Wechsel der Karte","unknown");
+                if(fixA.getFilterData().categoryBits==AnimaRPG.GEBIETSWECHSEL_BIT){
+                    Playscreen.setMapId(((Gebietswechsel)fixA.getUserData()).getNextMapId());
+                    Playscreen.setMapEinstieg(((Gebietswechsel)fixA.getUserData()).getAusgangsrichtung());}
+                else{
+                    Playscreen.setMapId(((Gebietswechsel)fixB.getUserData()).getNextMapId());
+                    Playscreen.setMapEinstieg(((Gebietswechsel)fixB.getUserData()).getAusgangsrichtung());}
+                Playscreen.setMapWechsel(true);
                 break;
             default:
                 Gdx.app.log("undefined","unknown");break;

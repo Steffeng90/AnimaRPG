@@ -12,8 +12,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
@@ -25,11 +28,13 @@ import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.Raider;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
+import com.mygdx.anima.tools.KartenManager;
 import com.mygdx.anima.tools.listener.WorldContactListener;
 
 /**
@@ -37,45 +42,43 @@ import com.mygdx.anima.tools.listener.WorldContactListener;
  */
 
 public class Playscreen implements Screen{
-
-
     private AnimaRPG game;
-
     public enum GameState {RUN, PAUSE}
     private GameState currentGameState;
-    OrthographicCamera gamecam;
-    private Viewport gameViewPort;
+     OrthographicCamera gamecam;
+    private static Viewport gameViewPort;
     Controller controller;
     ItemFundInfo itemWindow;
     BitmapFont bf;
 
+
     AnzeigenDisplay anzeige;
     //Objekte um TileMap einzubinden
-    private TmxMapLoader mapLoader;
-    private TiledMap map;
+
     private OrthogonalTiledMapRenderer renderer;
+    private static boolean mapWechsel;
+    private static int mapID;
+    // 1=süd,2=west,3=nord,4=ost;
+    private static int mapEinstieg;
 
     // Box2D-Einbindung
     private World world;
     private Box2DDebugRenderer b2dr;
     private B2WorldCreator creator;
     private Held spieler;
+    private Vector2 spielerPosition;
     private ItemSprite currentItemsprite;
+    private static KartenManager kartenManager;
+
     //Camera-Variablen
-    float mapLeft, mapRight, mapTop, mapBottom;
-    float cameraHalfWidth, cameraHalfHeight;
-    float cameraLeft, cameraRight, cameraTop, cameraBottom;
-    MapProperties properties;
-    float mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
 
     public Playscreen(AnimaRPG game) {
         this.game = game;
         gamecam = new OrthographicCamera();
         gameViewPort = new FitViewport(AnimaRPG.W_WIDTH / AnimaRPG.PPM, AnimaRPG.W_Height / AnimaRPG.PPM, gamecam);
 
-        mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level/start.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / AnimaRPG.PPM);
+        kartenManager =new KartenManager();
+        renderer = kartenManager.karteErstellen(0,gameViewPort);
 
         gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
         setCurrentGameState(GameState.RUN);
@@ -84,30 +87,13 @@ public class Playscreen implements Screen{
         world.setContactListener(new WorldContactListener());
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
-        spieler = new Held(this);
+        spieler = new Held(this,spielerPosition);
         controller = new Controller(game);
         anzeige = new AnzeigenDisplay(game.batch, spieler);
         bf=new BitmapFont(Gdx.files.internal("ui-skin/default.fnt"));
         bf.setColor(Color.BLUE);
         bf.setUseIntegerPositions(false);
         bf.getData().setScale(1f/AnimaRPG.W_WIDTH,1f/AnimaRPG.W_Height);
-
-        //Map-Camera-Initialisierung
-
-        properties = map.getProperties();
-        mapWidth = properties.get("width", Integer.class);
-        mapHeight = properties.get("height", Integer.class);
-        tilePixelWidth = properties.get("tilewidth", Integer.class);
-        tilePixelHeight = properties.get("tileheight", Integer.class);
-        mapPixelWidth = mapWidth * tilePixelWidth / AnimaRPG.PPM;
-        mapPixelHeight = mapHeight * tilePixelHeight / AnimaRPG.PPM;
-
-        mapLeft = 0;
-        mapRight = 0 + mapPixelWidth;
-        mapBottom = 0;
-        mapTop = 0 + mapPixelHeight;
-        cameraHalfWidth = gameViewPort.getWorldWidth() * .5f;
-        cameraHalfHeight = gameViewPort.getWorldHeight() * .5f;
 
         //Testitems erzeugen:
 /*
@@ -166,7 +152,27 @@ public class Playscreen implements Screen{
             case PAUSE:
                 break;
         }
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        if(isMapWechsel()){
+            // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
+            setMapWechsel(false);
+
+            renderer.dispose();
+            //TODO destroy alle bodies in WOrld (google)
+            Array<Body> bodyArray=new Array<Body>();
+            world.getBodies(bodyArray);
+            world.clearForces();
+            for(Body b:bodyArray){
+                for(Fixture fix:b.getFixtureList()){
+                    b.destroyFixture(fix);
+                }
+               // world.destroyBody(b);
+            }
+            renderer=kartenManager.karteErstellen(mapID,gameViewPort);
+            creator=new B2WorldCreator(this);
+
+            Gdx.app.log("KArte erstellt","");
+        }
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //karte rendern
         renderer.render();
@@ -199,6 +205,9 @@ public class Playscreen implements Screen{
                 }
             }
         }
+       /* for (Gebietswechsel gebietswechsel : creator.getAllAusgang()) {
+            gebietswechsel.draw(game.batch);
+        }*/
         spieler.draw(game.batch);
         if (SchadenLabel.getSchadensLabelArray().size > 0) {
             for (int i = 0; i < SchadenLabel.getSchadensLabelArray().size; i++) {
@@ -284,9 +293,7 @@ public class Playscreen implements Screen{
             }
         }
     }
-
     public void update(float dt) {
-
                 handleInput(dt);
                 world.step(1 / 60f, 6, 2);
                 anzeige.update(dt, spieler);
@@ -303,11 +310,7 @@ public class Playscreen implements Screen{
         enemy.update(spieler,dt);        }
         else{            creator.removeRaider((Raider)enemy);        }*/
                     if (!enemy.destroyed) {
-                        if (enemy.getX() < cameraRight && enemy.getX() > cameraLeft
-                                && enemy.getY() < cameraTop && enemy.getY() > cameraBottom) {
-                            if (enemy.b2body.isActive() == false)
-                                enemy.b2body.setActive(true);
-                        }
+                        kartenManager.isEnemyinRange(enemy);
                         enemy.update(spieler, dt);
                     } else {
                         creator.removeRaider((Raider) enemy);
@@ -328,6 +331,7 @@ public class Playscreen implements Screen{
                         arrow.remove();
                     }
                 }
+
                 for (Zauber zauber : Zauber.getAllZauber()) {
                     if (!zauber.destroyed) {
                         zauber.update(dt);
@@ -337,14 +341,8 @@ public class Playscreen implements Screen{
                 }
                 if (!spieler.destroyed)
                     spieler.update(dt);
-
-
-                justiereCam();
-
-
+                kartenManager.justiereCam(gamecam);
     }
-
-
     @Override
     public void resize(int width, int height) {
         gameViewPort.update(width,height);
@@ -362,34 +360,15 @@ public class Playscreen implements Screen{
     public void dispose() {
         world.dispose();
         renderer.dispose();
-        map.dispose();
+        kartenManager.getMap().dispose();
         anzeige.dispose();
         b2dr.dispose();
         controller.dispose();
     }
     //Getter und Setter, selbstgeschrieben
     public World getWorld(){ return world;}
-    public TiledMap getMap(){ return map;}
-    public void justiereCam(){
-        cameraLeft= gamecam.position.x - cameraHalfWidth;
-        cameraRight=gamecam.position.x + cameraHalfWidth;
-        cameraTop=gamecam.position.y +cameraHalfHeight;
-        cameraBottom=gamecam.position.y-cameraHalfHeight;
+    public TiledMap getMap(){ return kartenManager.getMap();}
 
-        if(mapPixelWidth< gamecam.viewportWidth)
-        {gamecam.position.x = mapRight / 2;}
-        else if(cameraLeft <= mapLeft)
-        {gamecam.position.x = mapLeft + cameraHalfWidth;}
-        else if(cameraRight >= mapRight)
-        {gamecam.position.x = mapRight - cameraHalfWidth;}
-// Vertical axis
-        if(mapPixelHeight<  gamecam.viewportWidth)
-        {gamecam.position.y = mapTop / 2;}
-        else if(cameraBottom <= mapBottom)
-        {gamecam.position.y = mapBottom + cameraHalfHeight;}
-        else if(cameraTop >= mapTop)
-        {gamecam.position.y = mapTop - cameraHalfHeight;}
-    }
     public boolean gameOver(){
         if(spieler.currentState == HumanoideSprites.State.DEAD && spieler.stateTimer>3){
             return true;
@@ -424,4 +403,48 @@ public class Playscreen implements Screen{
         this.spieler = spieler;
     }
 
+    public static Viewport getGameViewPort() {
+        return gameViewPort;
+    }
+    public static void setGameViewPort(Viewport tempgameViewPort) {
+        gameViewPort = tempgameViewPort;
+    }
+    public static KartenManager getKartenManager() {
+        return kartenManager;
+    }
+    public static void setKartenManager(KartenManager kartenManager) {
+        Playscreen.kartenManager = kartenManager;
+    }
+
+    public static boolean isMapWechsel() {
+        return mapWechsel;
+    }
+
+    public static void setMapWechsel(boolean tempmapWechsel) {
+        mapWechsel = tempmapWechsel;
+    }
+
+    public static int getMapId() {
+        return mapID;}
+    public static void setMapId(int tempMapID) {
+        mapID = tempMapID;
+    }
+
+    public Vector2 getSpielerPosition() {
+        return spielerPosition;
+    }
+
+    public void setSpielerPosition(Vector2 spielerPosition) {
+        this.spielerPosition = spielerPosition;
+    }
+
+    public static int getMapEinstieg() {
+        return mapEinstieg;
+    }
+
+    public static void setMapEinstieg(int mapEinstieg) {
+        if(mapEinstieg>4)
+        {Gdx.app.log("Fehler beim Richtungsauswahl","");}
+        Playscreen.mapEinstieg = mapEinstieg;
+    }
 }
