@@ -78,7 +78,7 @@ public class Playscreen implements Screen{
         gameViewPort = new FitViewport(AnimaRPG.W_WIDTH / AnimaRPG.PPM, AnimaRPG.W_Height / AnimaRPG.PPM, gamecam);
 
         kartenManager =new KartenManager();
-        renderer = kartenManager.karteErstellen(0,gameViewPort);
+        renderer = kartenManager.karteErstellen(1,gameViewPort);
 
         gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
         setCurrentGameState(GameState.RUN);
@@ -442,9 +442,7 @@ public class Playscreen implements Screen{
         return mapEinstieg;
     }
 
-    public static void setMapEinstieg(int mapEinstieg) {
-        if(mapEinstieg>4)
-        {Gdx.app.log("Fehler beim Richtungsauswahl","");}
-        Playscreen.mapEinstieg = mapEinstieg;
+    public static void setMapEinstieg(int tempMapEinstieg) {
+        Playscreen.mapEinstieg = tempMapEinstieg;
     }
 }

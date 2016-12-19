@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -372,7 +373,16 @@ public class HumanoideSprites extends Sprite {
         runDying=false;
         destroyed=true;
     }
-    public void readyToDie(){runDying=true;}
+    public void readyToDie(){runDying=true;
+        for(Fixture fix:b2body.getFixtureList()){
+            Filter filter=new Filter();
+            filter=fix.getFilterData();
+            filter.categoryBits=AnimaRPG.NOTHING_BIT;
+            fix.setFilterData(filter);
+            Gdx.app.log("Fixture auf Nothing gesetzt",""+fix.getFilterData().categoryBits);}
+
+    }
+
 
     public void update(float dt){
 

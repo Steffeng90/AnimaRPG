@@ -55,20 +55,19 @@ public class Raider extends Enemy
     public void changeVelocity(Vector2 v2){
         velocity.x+=v2.x;
         velocity.y+=v2.y;
-
     }
     public void coordinateWalking(Held hero, float dt){
-        if(hero.getX()<getX()  ){
+        if(hero.getX()<getX() ){
             // Runter
             if(hero.getY()<getY()){
 
-                walkingVelo(new Vector2(-0.1f,-0.1f));
+                walkingVelo(hero,new Vector2(-0.1f,-0.1f));
                 if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(3);}
                 else{ setCurrentRichtung(0);}
             }
             // Hoch
             else{
-                walkingVelo(new Vector2(-0.1f,0.1f));
+                walkingVelo(hero,new Vector2(-0.1f,0.1f));
                 if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(2);}
                 else{setCurrentRichtung(0);}
             }}
@@ -76,23 +75,28 @@ public class Raider extends Enemy
         else {
             // Runter
             if (hero.getY() < getY()) {
-                walkingVelo(new Vector2(0.1f,-0.1f));
+                walkingVelo(hero,new Vector2(0.1f,-0.1f));
                 if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(3);}
                 else{setCurrentRichtung(1);}
             }
             // Hoch
             else{
-                walkingVelo(new Vector2(0.1f,0.1f));
+                walkingVelo(hero,new Vector2(0.1f,0.1f));
                 if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(2);}
                 else{setCurrentRichtung(1);}
             }
         }
     }
-    public void walkingVelo(Vector2 v2){
-        if((velocity.x>-0.3f && velocity.x<0.3f) || (velocity.x>=0.3f && v2.x<0) || (velocity.x<=-0.3f && v2.x>0))
-        velocity.x+=v2.x;
-        if((velocity.y>-0.3f &&velocity.y<0.3f) || (velocity.y>=0.3f && v2.y<0) || (velocity.y<=-0.3f && v2.y>0))
-        velocity.y+=v2.y;
+    public void walkingVelo(Held hero,Vector2 v2){
+        if((getX()-hero.getX())<0.05f && (getX()-hero.getX())>-0.05f){
+            velocity.x=0;
+        }else if((velocity.x>-0.3f && velocity.x<0.3f) || (velocity.x>=0.3f && v2.x<0) || (velocity.x<=-0.3f && v2.x>0))
+            velocity.x+=v2.x;
+        if((getY()-hero.getY())<0.05f && (getY()-hero.getY())>-0.05f){
+            velocity.y=0;
+        }else if((velocity.y>-0.3f &&velocity.y<0.3f) || (velocity.y>=0.3f && v2.y<0) || (velocity.y<=-0.3f && v2.y>0))
+            velocity.y+=v2.y;
+
     }
     public void getsHit(){ getsDamaged(2);};
     public void getsHitbySpell(Zauber z){

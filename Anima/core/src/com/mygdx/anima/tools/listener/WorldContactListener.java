@@ -98,7 +98,8 @@ public class WorldContactListener implements ContactListener {
                 Playscreen.setMapWechsel(true);
                 break;
             default:
-                Gdx.app.log("undefined","unknown");break;
+                //Gdx.app.log("undefined","unknown");
+                break;
 
         }
     }

@@ -26,19 +26,13 @@ public class KartenManager {
     private TmxMapLoader mapLoader;
     private TiledMap map;
     public OrthogonalTiledMapRenderer karteErstellen(int kartenNummer,Viewport gameViewPort){
-        if(map!=null)
-        {map.dispose();}
+        if(map!=null){map.dispose();}
         mapLoader = new TmxMapLoader();
-        Gdx.app.log(""+kartenNummer,"");
-        switch (kartenNummer){
-            case 0: map = mapLoader.load("level/start.tmx");break;
-            case 1: map = mapLoader.load("level/wechsel1.tmx");break;
-            case 2: map = mapLoader.load("level/wechsel2.tmx");break;
-            case 3: map = mapLoader.load("level/wechsel3.tmx");break;
-            case 4: map = mapLoader.load("level/wechsel4.tmx");break;
-        }
-        //Map-Camera-Initialisierung
+        // Gdx.app.log(""+kartenNummer,""+"level/level"+kartenNummer+".tmx");
 
+        map=mapLoader.load("level/level"+kartenNummer+".tmx");
+
+        //Map-Camera-Initialisierung
         properties = map.getProperties();
         mapWidth = properties.get("width", Integer.class);
         mapHeight = properties.get("height", Integer.class);

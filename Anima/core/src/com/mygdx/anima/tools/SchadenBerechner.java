@@ -29,9 +29,6 @@ public class SchadenBerechner {
             verursachterSchaden=2;
         }
         new SchadenLabel(verursachterSchaden,erleidender,held.b2body.getPosition());
-
-
-
         erleidender.setCurrentHitpoints(erleidender.getCurrentHitpoints()-verursachterSchaden);
     }
 }

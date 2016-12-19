@@ -54,6 +54,7 @@ public class Gebietswechsel {
             case 2:return 4;
             case 3:return 1;
             case 4:return 2;
+            case 10: return 10;
             default:
                 Gdx.app.log("Fehler bei",""+this);return 1;
         }

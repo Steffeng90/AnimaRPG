@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="50" tilewidth="16" tileheight="16" nextobjectid="142">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="50" tilewidth="16" tileheight="16" nextobjectid="150">
  <tileset firstgid="1" name="start" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
  </tileset>
@@ -15,7 +15,7 @@
  </layer>
  <layer name="onTop2" width="20" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1blPFGEYx/EBgYpEE1SoaBBtSMCIlCSgHIkkHEIrEQVMJBH5Ayjk7LhRKUi4STRRLgELDTcKCMohUKCwy4JcotxUfieycZywMrPvNIpP8slOdp7nt/vO7OwrSb8q0kGSohCNGATjCq4iBKEIQzje0P8WAxjEEN5Jv9c9+lJxH2lIwC3cRiKSkIw7+EL/EpaxglWsqfLy6MtHAQrxABnIRBaykYNcB0lTPaPvORrQiEpUoRo1qEUd6jXmKauDmU50oRs96EUf+u3Im2VmDiaYMQ8LFrAo3x9H7o+j/lx1zcOCRLKCEKzIfMLnuOr87s70uxzM3CQrQZE3wPs+OvO86T9vY73LvB+hM88Es/RzvUmqPHm9T3XmnaDfycaMvN5BnXle9J+zMSOvd8WO35KtusD6C3gtRBGKUYJSVV8FfZUafmth9DTw2ogmNKMFL1R9HfR1ashLpuc9rx8wijGMY0LVN0vfHFo1XJtv+I4NbGIL24rzY2SMYwIfMSlwvTeY3cQWtrGDXezZmenGGk/jDM7CHR4C/wGXmPXHZQQY8F9ynYxYxCEDmRoyrXvPUVVFVrWGPOvec1R1kdV9SJ4vs364eJBh3Xuu0Rvxh883cc58yHnlHiuXde+5S2+KHddcuccaUco91ohS7rFyPcQjPEaZQO4weSNo5bgN7XgpkPeVrHX5Ged4ElOYFsg7yb08hR2Od7GHfYE8X7L8DHgm/9bKYu3ZyEGu4HXwZL4GtahDvWBeIPM96EUf+gXzbjAfDwsWsCiYl27wessNXu8r5l8buN4Z5j/h8zF+Xv7Xv1E/AI+tnfw=
+   eJzt1cdPFGEYx/EBhZOJJko5cVE4mYBBOJLQ1AQSFOUKEWkJJJQ/gIPUm4KK5UBCJ9GEpqIeMPTeWUQPtF0WVBSR7snvRjaMk80ws+9cEJ/kk51knue3+87szCtJBxXjIknXcQOxCEM4IhCJK7iKa+infwCDGMIwRqS/K5O+LGQjB4m4gyQkIwWpSMNn+r/gK1bxDd8Veffou48SlOIu8pCPAhSiCMUukqZqoK8RTWhGJapQjRrUog71GvPk1c5MBzrRhW70oBd9TuQtMLMIMyxYghXLWLHdH1fuj6v+XGUtwYpkskIRJst8zvec0vnb3eh335+5TVai4jde1JnnS7+fynqjdeaZYZH+rDfFQd4LnXkn6D+pMjOkM+88/RdUZlad+C+pVQlK8QAP8Qhlip4KrlOlxv9aE5rRgpd4hdeKnnayOjTkpdIzzucEJjEFE6YVfQv0LaJVw7VZx09sYBNb2JadnyLDhGl8wIzA9d5gdhNb2MYOdrHnZOZZ1ngOHvCEF7wF3gGBzF5GEIINeJfcJOMW4pCHfA2Z9r3nsKoiq1pDnn3vOaw6yepykOfPbAAu7WfY954oeqNVvt/MOYuD8/I91lb2vSed3gwnrrl8jzWi5HusESXfY231GE/wFM8EckfJG0Mrx2/wFu8E8tbI+mF7xjmewUd8Esg7zb08gx2Od7GHXwJ5/mQFGPBMHtUqYO2FKEKx4HXwYb4GtahDvWBeCPPd6EEv+gTz4plPgBXLWBHMyzV4veUGr7eN+fcGrneW+TnMH+Pn5X/9G/UbFuaZbg==
   </data>
  </layer>
  <objectgroup name="barrieren">
@@ -45,7 +45,6 @@
   <object id="27" x="96" y="64" width="32" height="32"/>
   <object id="29" x="176" y="0" width="144" height="64"/>
   <object id="30" x="160" y="64" width="160" height="32"/>
-  <object id="31" x="304" y="96" width="16" height="128"/>
   <object id="34" x="288" y="224" width="32" height="272"/>
   <object id="35" x="224" y="320" width="64" height="80"/>
   <object id="36" x="256" y="400" width="32" height="32"/>
@@ -56,11 +55,17 @@
   <object id="43" x="176" y="288" width="16" height="16"/>
   <object id="44" x="192" y="96" width="48" height="80"/>
   <object id="45" x="240" y="96" width="16" height="64"/>
-  <object id="46" x="256" y="96" width="48" height="32"/>
+  <object id="46" x="256" y="96" width="64" height="32"/>
   <object id="47" x="96" y="144" width="32" height="48"/>
   <object id="49" x="128" y="160" width="64" height="48"/>
   <object id="51" x="192" y="176" width="32" height="16"/>
   <object id="52" x="96" y="96" width="32" height="16"/>
+  <object id="146" x="160" y="576" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="149" x="96" y="592" width="16" height="16">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup name="schatztruhen">
   <object id="54" x="32" y="288" width="16" height="16">
@@ -153,32 +158,32 @@
     <property name="Inhalt" value="Schwert6"/>
    </properties>
   </object>
-  <object id="97" x="144" y="513" width="16" height="16">
+  <object id="97" x="144" y="480" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen3"/>
    </properties>
   </object>
-  <object id="98" x="176" y="513" width="16" height="16">
+  <object id="98" x="176" y="480" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen4"/>
    </properties>
   </object>
-  <object id="99" x="208" y="513" width="16" height="16">
+  <object id="99" x="208" y="480" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen5"/>
    </properties>
   </object>
-  <object id="100" x="240" y="513" width="16" height="16">
+  <object id="100" x="240" y="480" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen6"/>
    </properties>
   </object>
-  <object id="101" x="112" y="513" width="16" height="16">
+  <object id="101" x="112" y="480" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen2"/>
    </properties>
   </object>
-  <object id="102" x="80" y="513" width="16" height="16">
+  <object id="102" x="80" y="480" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen1"/>
    </properties>
@@ -234,7 +239,7 @@
   <object id="128" x="-0.5" y="495" width="15.5" height="65.5">
    <properties>
     <property name="ausgang" value="west"/>
-    <property name="nextMap" value="1"/>
+    <property name="nextMap" value="2"/>
    </properties>
   </object>
   <object id="130" x="32.25" y="722.75" width="15.5" height="65.5">
@@ -251,7 +256,11 @@
   </object>
  </objectgroup>
  <objectgroup name="startpunkt">
-  <object id="131" x="208" y="768" width="16" height="16"/>
+  <object id="131" x="208" y="768" width="16" height="16">
+   <properties>
+    <property name="start" value="sued"/>
+   </properties>
+  </object>
   <object id="136" x="144" y="0" width="16" height="16">
    <properties>
     <property name="start" value="nord"/>
@@ -260,6 +269,11 @@
   <object id="139" x="0" y="800" width="304">
    <properties>
     <property name="richtung" value="sued"/>
+   </properties>
+  </object>
+  <object id="143" x="64" y="512" width="16" height="16">
+   <properties>
+    <property name="start" value="west"/>
    </properties>
   </object>
  </objectgroup>
