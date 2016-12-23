@@ -50,7 +50,7 @@ public class HumanoideSprites extends Sprite {
 
     //Einstellungen
     private int currentHitpoints,maxHitpoints,currentMana,maxMana,regMana,regHitpoints,
-            Erfahrung,schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand;
+            schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand;
     private float geschwindigkeitLaufen;
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
     public int breite;
@@ -525,7 +525,6 @@ public class HumanoideSprites extends Sprite {
 
     public void setMaxMana(int maxMana) {
         setCurrentMana(getCurrentMana()+(maxMana-this.maxMana));
-
         this.maxMana = maxMana;
     }
 
@@ -535,14 +534,6 @@ public class HumanoideSprites extends Sprite {
 
     public void setRegMana(int regMana) {
         this.regMana = regMana;
-    }
-
-    public int getErfahrung() {
-        return Erfahrung;
-    }
-
-    public void setErfahrung(int erfahrung) {
-        Erfahrung = erfahrung;
     }
 
     public int getSchadenNah() {

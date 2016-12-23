@@ -17,11 +17,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import sun.awt.AppContext;
+import jdk.nashorn.internal.runtime.Context;
 
-import static com.badlogic.gdx.Gdx.app;
-import static com.badlogic.gdx.Gdx.input;
-import static com.mygdx.anima.AnimaRPG.aManager;
 /*
 import static com.mygdx.anima.sprites.character.items.ItemGenerator.ruestung;
 import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
@@ -54,13 +51,10 @@ public class ItemGenerator {
     public static ItemSprite generateItem(Playscreen screen, float x, float y, String typ) {
         Gson gson = new Gson();
         try {
-            //TODO FIlehandling für Android
-            FileHandle file =Gdx.files.internal("objekte/itemdb.json");
-            FileInputStream input = new FileInputStream(file.path());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            FileHandle file =Gdx.files.internal("itemdb.json");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(file.read()));
             JsonObject json = gson.fromJson(reader, JsonObject.class);
 
-            // Attribut "item" als Array lesen
             JsonArray itemArray = json. getAsJsonArray("item");
             for (int i = 0; i < itemArray.size(); i++) {
                 if(typ.equals(itemArray.get(i).getAsJsonObject().get("id").getAsString())){

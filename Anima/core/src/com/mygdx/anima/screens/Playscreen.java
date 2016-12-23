@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.AnzeigenDisplay;
 import com.mygdx.anima.scenes.ItemFundInfo;
+import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
@@ -49,6 +50,7 @@ public class Playscreen implements Screen{
     private static Viewport gameViewPort;
     Controller controller;
     ItemFundInfo itemWindow;
+    private LevelUpInfo levelUpWindow;
     BitmapFont bf;
 
 
@@ -145,13 +147,6 @@ public class Playscreen implements Screen{
     }
     @Override
     public void render(float delta) {
-        switch (getCurrentGameState()) {
-            case RUN:
-                update(delta);
-                break;
-            case PAUSE:
-                break;
-        }
         if(isMapWechsel()){
             // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
             setMapWechsel(false);
@@ -165,13 +160,21 @@ public class Playscreen implements Screen{
                 for(Fixture fix:b.getFixtureList()){
                     b.destroyFixture(fix);
                 }
-               // world.destroyBody(b);
+                // world.destroyBody(b);
             }
             renderer=kartenManager.karteErstellen(mapID,gameViewPort);
             creator=new B2WorldCreator(this);
 
             Gdx.app.log("KArte erstellt","");
         }
+        switch (getCurrentGameState()) {
+            case RUN:
+                update(delta);
+                break;
+            case PAUSE:
+                break;
+        }
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //karte rendern
@@ -217,7 +220,7 @@ public class Playscreen implements Screen{
                         sl.addTime(delta);
                     } else {sl.removeSchadenLabel(i);}
             }}
-            if (getCurrentItemsprite() != null) {
+            if (getCurrentItemsprite() != null || getLevelUpWindow()!=null) {
                 setCurrentGameState(GameState.PAUSE);
             }
 
@@ -226,23 +229,35 @@ public class Playscreen implements Screen{
                 case RUN:
                     controller.draw();
                     Gdx.input.setInputProcessor(controller.getStage());
-
                     break;
                 case PAUSE:
                     game.batch.begin();
-                    getCurrentItemsprite().draw(game.batch);
+                    if(getCurrentItemsprite()!=null)
+                        getCurrentItemsprite().draw(game.batch);
                     game.batch.end();
 
                     controller.draw();
-                    itemWindow.draw();
-                    getCurrentItemsprite().update(delta);
-                    if (itemWindow.isGeklickt()) {
-                        setCurrentItemsprite(null);
-                        itemWindow.dispose();
-                        Gdx.input.setInputProcessor(controller.getStage());
+                    if(itemWindow!=null){itemWindow.draw();
+                        getCurrentItemsprite().update(delta);
+                        if (itemWindow.isGeklickt()) {
+                            setCurrentItemsprite(null);
+                            itemWindow.dispose();
+                            itemWindow=null;
+                            Gdx.input.setInputProcessor(controller.getStage());
 
-                        setCurrentGameState(GameState.RUN);
+                            setCurrentGameState(GameState.RUN);
+                        }}
+                    if(levelUpWindow!=null){
+                        levelUpWindow.draw();
+                        if (levelUpWindow.isGeklickt()) {
+                            levelUpWindow.dispose();
+                            levelUpWindow=null;
+                            Gdx.input.setInputProcessor(controller.getStage());
+                            setCurrentGameState(GameState.RUN);
+                        }
                     }
+
+
                     break;
             }
             anzeige.draw();
@@ -276,16 +291,16 @@ public class Playscreen implements Screen{
         }
         else if (spieler.actionInProgress()) {
             if (Gdx.input.isKeyPressed(Input.Keys.D) | controller.isRightPressed()) {
-                spieler.b2body.setLinearVelocity(1, 0);
+                spieler.b2body.setLinearVelocity(spieler.getGeschwindigkeitLaufen()/10, 0);
                 spieler.setCurrentRichtung(1);
             } else if (Gdx.input.isKeyPressed(Input.Keys.A) | controller.isLeftPressed()) {
-                spieler.b2body.setLinearVelocity(-1, 0);
+                spieler.b2body.setLinearVelocity(-spieler.getGeschwindigkeitLaufen()/10, 0);
                 spieler.setCurrentRichtung(0);
             } else if (Gdx.input.isKeyPressed(Input.Keys.W) | controller.isUpPressed()) {
-                spieler.b2body.setLinearVelocity(0, 1);
+                spieler.b2body.setLinearVelocity(0, spieler.getGeschwindigkeitLaufen()/10);
                 spieler.setCurrentRichtung(2);
             } else if (Gdx.input.isKeyPressed(Input.Keys.S) | controller.isDownPressed()) {
-                spieler.b2body.setLinearVelocity(0, -1);
+                spieler.b2body.setLinearVelocity(0, -spieler.getGeschwindigkeitLaufen()/10);
                 spieler.setCurrentRichtung(3);
             } else {
                 if (spieler.b2body != null)
@@ -301,14 +316,9 @@ public class Playscreen implements Screen{
                 renderer.setView(gamecam);
                 if (spieler.getCurrentHitpoints() > 0) {
                     gamecam.position.set(spieler.b2body.getPosition(), 0);
+                    kartenManager.justiereCam(gamecam);
                 }
                 for (Enemy enemy : creator.getAllRaider()) {
-       /* if(!enemy.destroyed){
-        if(enemy.getX() < spieler.getX() + 250 / AnimaRPG.PPM && enemy.getX() >spieler.getX() - 250 / AnimaRPG.PPM
-                && enemy.getY() < spieler.getY() + 250/ AnimaRPG.PPM && enemy.getY() >spieler.getY() - 250 / AnimaRPG.PPM)
-            {enemy.b2body.setActive(true);}
-        enemy.update(spieler,dt);        }
-        else{            creator.removeRaider((Raider)enemy);        }*/
                     if (!enemy.destroyed) {
                         kartenManager.isEnemyinRange(enemy);
                         enemy.update(spieler, dt);
@@ -320,9 +330,12 @@ public class Playscreen implements Screen{
                     truhe.update(dt);
                 }
                 if (getCurrentItemsprite() != null) {
-                    Gdx.app.log("nichtnull","");
                     itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite().name);
                 }
+                /*if (levelUpWindow != null) {
+                    Gdx.app.log("nichtnull","");
+                    levelUpWindow=new LevelUpInfo(this,game.batch,getCurrentItemsprite().name);
+                }*/
 
                 for (Arrow arrow : Arrow.getAllArrows()) {
                     if (!arrow.destroyed) {
@@ -341,7 +354,7 @@ public class Playscreen implements Screen{
                 }
                 if (!spieler.destroyed)
                     spieler.update(dt);
-                kartenManager.justiereCam(gamecam);
+
     }
     @Override
     public void resize(int width, int height) {
@@ -444,5 +457,13 @@ public class Playscreen implements Screen{
 
     public static void setMapEinstieg(int tempMapEinstieg) {
         Playscreen.mapEinstieg = tempMapEinstieg;
+    }
+
+    public LevelUpInfo getLevelUpWindow() {
+        return levelUpWindow;
+    }
+
+    public void setLevelUpWindow(LevelUpInfo levelUpWindow) {
+        this.levelUpWindow = levelUpWindow;
     }
 }

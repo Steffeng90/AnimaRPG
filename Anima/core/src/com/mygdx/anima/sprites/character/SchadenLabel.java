@@ -36,7 +36,6 @@ public class SchadenLabel extends BitmapFont {
             }else{
                 this.setColor(Color.WHITE);
             }
-            //position=positionBestimmen(getroffener.b2body.getPosition(),treffender);
             position=new Vector2((getroffener.b2body.getPosition().x+treffender.x)/2,(getroffener.b2body.getPosition().y+treffender.y)/2);
             timer=0;
             this.setUseIntegerPositions(false);

@@ -112,11 +112,11 @@ public class Controller {
         //tableLeft.add();
        // stage.addActor(tableLeft);
 
-        Touchpad touchpad;
+        /*Touchpad touchpad;
         Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
         touchpad = new Touchpad(20f, skin);
         touchpad.setBounds(15, 15, 100, 100);
-        tableLeft.add(touchpad);
+        tableLeft.add(touchpad);*/
         stage.addActor(tableLeft);
 
         Table tableRight=new Table();
@@ -180,7 +180,10 @@ public class Controller {
                 return true;
             }
         });
-        tableRight.padLeft(240);
+        //Pad bei 320 Breite
+        //tableRight.padLeft(240);
+        //Pad bei 360 Breite
+        tableRight.padLeft(280);
         tableRight.add();
         tableRight.add(meleeImg).size(meleeImg.getWidth(),meleeImg.getHeight());
         tableRight.add();

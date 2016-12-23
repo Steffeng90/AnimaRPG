@@ -18,17 +18,18 @@ import static java.lang.System.getProperties;
 
 public class KartenManager {
     float mapLeft, mapRight, mapTop, mapBottom;
-    float cameraHalfWidth, cameraHalfHeight;
+    float cameraHalfWidth, cameraHalfHeight,enemyActivePuffer;
     float cameraLeft, cameraRight, cameraTop, cameraBottom;
     MapProperties properties;
     float mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
+
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
     public OrthogonalTiledMapRenderer karteErstellen(int kartenNummer,Viewport gameViewPort){
         if(map!=null){map.dispose();}
         mapLoader = new TmxMapLoader();
-        // Gdx.app.log(""+kartenNummer,""+"level/level"+kartenNummer+".tmx");
+         Gdx.app.log(""+kartenNummer,""+"level/level"+kartenNummer+".tmx");
 
         map=mapLoader.load("level/level"+kartenNummer+".tmx");
 
@@ -47,6 +48,7 @@ public class KartenManager {
         mapTop = 0 + mapPixelHeight;
         cameraHalfWidth = gameViewPort.getWorldWidth() * .5f;
         cameraHalfHeight = gameViewPort.getWorldHeight() * .5f;
+        enemyActivePuffer=tilePixelWidth/AnimaRPG.PPM;
 
         return new OrthogonalTiledMapRenderer(map, 1 /AnimaRPG.PPM);
 }
@@ -75,6 +77,7 @@ public class KartenManager {
         {gamecam.position.x = mapLeft + cameraHalfWidth;}
         else if(cameraRight >= mapRight)
         {gamecam.position.x = mapRight - cameraHalfWidth;}
+
 // Vertical axis
         if(mapPixelHeight<  gamecam.viewportWidth)
         {gamecam.position.y = mapTop / 2;}
@@ -83,16 +86,16 @@ public class KartenManager {
         else if(cameraTop >= mapTop)
         {gamecam.position.y = mapTop - cameraHalfHeight;}
     }
-    public void update(Enemy enemy) {
-        if (enemy.getX() < cameraRight && enemy.getX() > cameraLeft
-                && enemy.getY() < cameraTop && enemy.getY() > cameraBottom) {
+   /* public void update(Enemy enemy) {
+        if (enemy.getX() < cameraRight+enemyActivePuffer && enemy.getX() > cameraLeft-enemyActivePuffer
+                && enemy.getY() < cameraTop+enemyActivePuffer && enemy.getY() > cameraBottom-enemyActivePuffer) {
             if (enemy.b2body.isActive() == false)
                 enemy.b2body.setActive(true);
         }
-    }
+    }*/
     public void isEnemyinRange(Enemy enemy){
-        if (enemy.getX() < cameraRight && enemy.getX() > cameraLeft
-                && enemy.getY() < cameraTop && enemy.getY() > cameraBottom) {
+        if (enemy.getX() < cameraRight+enemyActivePuffer && enemy.getX() > cameraLeft-enemyActivePuffer
+                && enemy.getY() < cameraTop+enemyActivePuffer && enemy.getY() > cameraBottom-enemyActivePuffer) {
             if (enemy.b2body.isActive() == false)
                 enemy.b2body.setActive(true);
         }

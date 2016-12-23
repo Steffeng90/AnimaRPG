@@ -11,6 +11,8 @@ import com.mygdx.anima.sprites.character.items.Item;
 import com.mygdx.anima.sprites.character.items.WaffeFern;
 import com.mygdx.anima.sprites.character.items.WaffeNah;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /**
  * Created by Steffen on 05.12.2016.
  */
@@ -23,7 +25,7 @@ public class anlegeButtonListener extends InputListener {
 
     public anlegeButtonListener(AnimaRPG game, Item item,InventarReiter inv){
         temp =Item.kategorie.valueOf(item.getItemKategorie());
-        this.held=game.held;
+        this.held=getHeld();
         this.item=item;
         this.inv=inv;
     }

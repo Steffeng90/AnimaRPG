@@ -20,6 +20,8 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.tools.listener.ReiterButtonListener;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /**
  * Created by Steffen on 24.11.2016.
  */
@@ -49,7 +51,7 @@ public class Menu implements Screen {
     }
     @Override
     public void render(float delta) {
-        game.held.setSpielzeit(delta);
+        getHeld().setSpielzeit(delta);
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(isChangeReiter() && anzeigeGroup!=null){
@@ -66,7 +68,7 @@ public class Menu implements Screen {
         inventarImg.setSize(50, 50);
         inventarImg.addListener(new InputListener() {
             @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {game.held.getHeldenInventar().resetAuswahl();game.closeScreen();dispose();}
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {getHeld().getHeldenInventar().resetAuswahl();game.closeScreen();dispose();}
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}});
         inventarImg.setPosition(width - 50, height - 50);

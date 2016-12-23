@@ -15,13 +15,14 @@ import javax.xml.soap.Text;
 
 public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
-	//public static final float PPM = 100;
+	//public static final float  MAP_SCALE=0.5625;
+	public static final float PPM = 100;
 	//public static final int W_WIDTH =320;
 	//public static final int W_Height = 180;
 
-	public static final float PPM = 125;
-	public static final int W_WIDTH =400;
-	public static final int W_Height = 225;
+	//public static final float PPM = 100;
+	public static final int W_WIDTH =360;
+	public static final int W_Height = 200;
 
 	//B2D Collision Bits
 	public static final short NOTHING_BIT=0;
@@ -38,20 +39,21 @@ public class AnimaRPG extends Game {
 	public static final short ITEM_SPRITE_BIT=2048;
 	public static final short GEBIETSWECHSEL_BIT=4096;
 
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
 	public static Screen currentScreen, previousScreen;
-	public static Held held;
+	private static Held held;
 	public static AssetManager aManager;
 	@Override
 	public void create() {
 		aManager=new AssetManager();
+		Gdx.files.getLocalStoragePath();
+		//aManager.load("objekte/itemdb.json);
 //		aManager.load("objekte/itemdb.json", Gson.class);
 		aManager.finishLoading();
 
 		batch = new SpriteBatch();
 		currentScreen=new Playscreen(this);
 		setScreen(currentScreen);
-		held=((Playscreen)currentScreen).getSpieler();
 	}
 
 	public void changeScreen(Screen screen){
@@ -72,5 +74,13 @@ public class AnimaRPG extends Game {
 	@Override
 	public void render() {
 		super.render();
+	}
+
+	public static Held getHeld() {
+		return held;
+	}
+
+	public static void setHeld(Held held) {
+		AnimaRPG.held = held;
 	}
 }

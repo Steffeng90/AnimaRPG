@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import static com.mygdx.anima.AnimaRPG.held;
+import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 01.12.2016.
@@ -141,7 +141,7 @@ public class InventarList {
         if(angelegtWaffeNah!=null){
         this.angelegtWaffeNah = angelegtWaffeNah;angelegtWaffeNah.setAngelegt(true);}
     else{this.angelegtWaffeNah=null;}
-        held.setSchadenNah();}
+        getHeld().setSchadenNah();}
     public synchronized WaffeFern getAngelegtWaffeFern() {return angelegtWaffeFern;}
     public synchronized void setAngelegtWaffeFern(WaffeFern angelegtWaffeFern) {
         if(this.angelegtWaffeFern!=null)
@@ -149,7 +149,7 @@ public class InventarList {
         if(angelegtWaffeFern!=null){
         this.angelegtWaffeFern = angelegtWaffeFern;angelegtWaffeFern.setAngelegt(true);}
         else{this.angelegtWaffeFern=null;}
-        held.setSchadenFern();}
+        getHeld().setSchadenFern();}
 
     public synchronized Armor getAngelegtRuestung() {return angelegtRuestung;}
     public synchronized void setAngelegtRuestung(Armor angelegtRuestung) {
@@ -158,7 +158,7 @@ public class InventarList {
         if(angelegtRuestung!=null){
             this.angelegtRuestung = angelegtRuestung;angelegtRuestung.setAngelegt(true);}
         else{this.angelegtRuestung=null;}
-        held.setRuestung();}
+        getHeld().setRuestung();}
 
 
 }

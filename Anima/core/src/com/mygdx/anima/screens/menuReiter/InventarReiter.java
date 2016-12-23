@@ -18,6 +18,8 @@ import com.mygdx.anima.tools.listener.anlegeButtonListener;
 
 import java.util.ArrayList;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /**
  * Created by Steffen on 12.12.2016.
  */
@@ -31,6 +33,7 @@ public class InventarReiter extends Group {
     private float width, height,invLinksWidth,invRechtsWidth,reiterWidth;
     public Item auswahlItem;
     public Menu menu;
+    int size;
 
     public InventarReiter(Menu menu){
         this.menu=menu;
@@ -65,7 +68,7 @@ public class InventarReiter extends Group {
                     eigenschaft1="Schaden";
                     wert1auswahl=" "+((WaffeNah)auswahlItem).getSchaden();
                     wert2auswahl=" "+auswahlItem.getGoldWert();
-                    angelegtWaffeNah=menu.game.held.getHeldenInventar().getAngelegtWaffeNah();
+                    angelegtWaffeNah=getHeld().getHeldenInventar().getAngelegtWaffeNah();
                     if(angelegtWaffeNah!=null){
                         nameAngelegt=angelegtWaffeNah.getName();
                         wert1angelegt=" "+((WaffeNah)angelegtWaffeNah).getSchaden();
@@ -79,7 +82,7 @@ public class InventarReiter extends Group {
                     eigenschaft1="Fern-Schaden";
                     wert1auswahl=" "+((WaffeFern)auswahlItem).getSchaden();
                     wert2auswahl=" "+auswahlItem.getGoldWert();
-                    angelegtWaffeFern=menu.game.held.getHeldenInventar().getAngelegtWaffeFern();
+                    angelegtWaffeFern=getHeld().getHeldenInventar().getAngelegtWaffeFern();
                     if(angelegtWaffeFern!=null){
                         nameAngelegt=angelegtWaffeFern.getName();
                         wert1angelegt=" "+((WaffeFern)angelegtWaffeFern).getSchaden();
@@ -93,7 +96,7 @@ public class InventarReiter extends Group {
                     eigenschaft1="Schutz:";
                     wert1auswahl=" "+((Armor)auswahlItem).getRuestung();
                     wert2auswahl=" "+auswahlItem.getGoldWert();
-                    angelegtRuestung=menu.game.held.getHeldenInventar().getAngelegtRuestung();
+                    angelegtRuestung=getHeld().getHeldenInventar().getAngelegtRuestung();
                     if(angelegtRuestung!=null){
                         nameAngelegt=angelegtRuestung.getName();
                         wert1angelegt=" "+((Armor)angelegtRuestung).getRuestung();
@@ -150,33 +153,45 @@ public class InventarReiter extends Group {
         inventarRechts.setWidth(invRechtsWidth);
         inventarRechts.setPosition(invRechtsWidth, height);
         inventarRechts.align(Align.left | Align.top);
-        inventarRechts.add(new Label("Nahkampf-Waffen", menu.getSkin())).colspan(3);
-        inventarRechts.row();
-
-        ArrayList<WaffeNah> liste = menu.game.held.getHeldenInventar().getWaffenNahList();
-        int size = liste.size();
-        for (int i = 0; i < size; i++) {
-            if ((i) % 5 == 0) {inventarRechts.row();}
-            Image beispiel4 = new Image(liste.get(i).getGrafik());
-            beispiel4.addListener(new InventarListener(this, liste.get(i),beispiel4));
-            inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+        if(getHeld().getHeldenInventar().getWaffenNahList().size()==0 |
+                getHeld().getHeldenInventar().getWaffenFernList().size()==0 |
+                getHeld().getHeldenInventar().getWaffenNahList().size()==0){
+            inventarRechts.add(new Label("Du besitzt keine Ausruestungsgegenstaende.", menu.getSkin())).colspan(3);
+        }
+        if(getHeld().getHeldenInventar().getWaffenNahList().size()>0) {
+            inventarRechts.add(new Label("Nahkampf-Waffen", menu.getSkin())).colspan(3);
+            inventarRechts.row();
+            ArrayList<WaffeNah> liste = getHeld().getHeldenInventar().getWaffenNahList();
+            size = liste.size();
+            for (int i = 0; i < size; i++) {
+                if ((i) % 5 == 0) {
+                    inventarRechts.row();
+                }
+                Image beispiel4 = new Image(liste.get(i).getGrafik());
+                beispiel4.addListener(new InventarListener(this, liste.get(i), beispiel4));
+                inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+            }
         }
         inventarRechts.row();
-        inventarRechts.add(new Label("Fernkampf-Waffen", menu.getSkin())).colspan(3);
-        inventarRechts.row();
-        ArrayList<WaffeFern> listenf = menu.game.held.getHeldenInventar().getWaffenFernList();
-        size = listenf.size();
-        for (int i = 0; i < size; i++) {
-            if ((i) % 5 == 0) {
-                inventarRechts.row();}
-            Image beispiel4=new Image(listenf.get(i).getGrafik());
-            beispiel4.addListener(new InventarListener(this, listenf.get(i),beispiel4));
-            inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+        if(getHeld().getHeldenInventar().getWaffenFernList().size()>0) {
+            inventarRechts.add(new Label("Fernkampf-Waffen", menu.getSkin())).colspan(3);
+            inventarRechts.row();
+            ArrayList<WaffeFern> listenf = getHeld().getHeldenInventar().getWaffenFernList();
+            size = listenf.size();
+            for (int i = 0; i < size; i++) {
+                if ((i) % 5 == 0) {
+                    inventarRechts.row();
+                }
+                Image beispiel4 = new Image(listenf.get(i).getGrafik());
+                beispiel4.addListener(new InventarListener(this, listenf.get(i), beispiel4));
+                inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+            }
         }
         inventarRechts.row();
+        if(getHeld().getHeldenInventar().getRuestungsList().size()>0){
         inventarRechts.add(new Label("Ruestungen", menu.getSkin())).colspan(3);
         inventarRechts.row();
-        ArrayList<Armor> listeRues= menu.game.held.getHeldenInventar().getRuestungsList();
+        ArrayList<Armor> listeRues= getHeld().getHeldenInventar().getRuestungsList();
         size = listeRues.size();
         for (int i = 0; i < size; i++) {
             if ((i) % 5 == 0) {
@@ -185,6 +200,8 @@ public class InventarReiter extends Group {
             beispiel4.addListener(new InventarListener(this, listeRues.get(i),beispiel4));
             inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
         }
+        }
+
         ScrollPane scrollPane = new ScrollPane(inventarRechts, menu.getSkin());
         scrollPane.setBounds(0, 0, width / 2, height);
         scrollPane.setScrollingDisabled(true, false);

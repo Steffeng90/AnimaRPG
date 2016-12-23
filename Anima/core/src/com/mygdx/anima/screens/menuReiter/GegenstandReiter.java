@@ -15,7 +15,7 @@ import com.mygdx.anima.tools.listener.benutzenButtonListener;
 
 import java.util.ArrayList;
 
-import static com.mygdx.anima.AnimaRPG.held;
+import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 12.12.2016.
@@ -85,44 +85,44 @@ public class GegenstandReiter extends Group {
             switch(auswahlItem.getKategoriezahl())
             {
                 case 1: eigenschaft="Lebenspunkte";
-                aktuell=""+held.getCurrentHitpoints()+"/"+held.getMaxHitpoints();
-                if(auswahlItem.getWertUpgradeZahl()<(held.getMaxHitpoints()-held.getCurrentHitpoints())) {
-                    verbesserung = "" + (held.getCurrentHitpoints() + auswahlItem.getWertUpgradeZahl()) + "/" +held.getMaxHitpoints();
+                aktuell=""+getHeld().getCurrentHitpoints()+"/"+getHeld().getMaxHitpoints();
+                if(auswahlItem.getWertUpgradeZahl()<(getHeld().getMaxHitpoints()-getHeld().getCurrentHitpoints())) {
+                    verbesserung = "" + (getHeld().getCurrentHitpoints() + auswahlItem.getWertUpgradeZahl()) + "/" +getHeld().getMaxHitpoints();
                 }else{
-                    verbesserung=""+(held.getMaxHitpoints()+"/"+held.getMaxHitpoints());
+                    verbesserung=""+(getHeld().getMaxHitpoints()+"/"+getHeld().getMaxHitpoints());
                 }
                 break;
                 case 2: eigenschaft="Maximale Lebenspunkte";
-                    aktuell=""+(held.getCurrentHitpoints()+"/"+held.getMaxHitpoints());
-                    verbesserung = "" + (held.getCurrentHitpoints() + auswahlItem.getWertUpgradeZahl()) + "/" +(held.getMaxHitpoints()  + auswahlItem.getWertUpgradeZahl());
+                    aktuell=""+(getHeld().getCurrentHitpoints()+"/"+getHeld().getMaxHitpoints());
+                    verbesserung = "" + (getHeld().getCurrentHitpoints() + auswahlItem.getWertUpgradeZahl()) + "/" +(getHeld().getMaxHitpoints()  + auswahlItem.getWertUpgradeZahl());
                     break;
                 case 3: eigenschaft="Magiepunkte";
-                    aktuell=""+held.getCurrentMana()+"/"+held.getMaxMana();
-                    if(auswahlItem.getWertUpgradeZahl()<(held.getMaxMana()-held.getCurrentMana())) {
-                        verbesserung = "" + (held.getCurrentMana() + auswahlItem.getWertUpgradeZahl()) + "/" +held.getMaxMana();
+                    aktuell=""+getHeld().getCurrentMana()+"/"+getHeld().getMaxMana();
+                    if(auswahlItem.getWertUpgradeZahl()<(getHeld().getMaxMana()-getHeld().getCurrentMana())) {
+                        verbesserung = "" + (getHeld().getCurrentMana() + auswahlItem.getWertUpgradeZahl()) + "/" +getHeld().getMaxMana();
                     }else{
-                        verbesserung=""+(held.getMaxMana()+"/"+held.getMaxMana());
+                        verbesserung=""+(getHeld().getMaxMana()+"/"+getHeld().getMaxMana());
                     }
                     break;
                 case 4: eigenschaft="Maximale Magiepunkte";
-                    aktuell=""+held.getCurrentMana()+"/"+held.getMaxMana();
-                    verbesserung = "" + (held.getCurrentMana() + auswahlItem.getWertUpgradeZahl()) + "/" +(held.getMaxMana()  + auswahlItem.getWertUpgradeZahl());
+                    aktuell=""+getHeld().getCurrentMana()+"/"+getHeld().getMaxMana();
+                    verbesserung = "" + (getHeld().getCurrentMana() + auswahlItem.getWertUpgradeZahl()) + "/" +(getHeld().getMaxMana()  + auswahlItem.getWertUpgradeZahl());
                     break;
                 case 5: eigenschaft="Kraft";
-                    aktuell=""+held.getStaerke();
-                    verbesserung = "" + (held.getStaerke() + auswahlItem.getWertUpgradeZahl());
+                    aktuell=""+getHeld().getStaerke();
+                    verbesserung = "" + (getHeld().getStaerke() + auswahlItem.getWertUpgradeZahl());
                     break;
                 case 6: eigenschaft="Geschicklichkeit";
-                    aktuell=""+held.getGeschick();
-                    verbesserung = "" + (held.getGeschick() + auswahlItem.getWertUpgradeZahl());
+                    aktuell=""+getHeld().getGeschick();
+                    verbesserung = "" + (getHeld().getGeschick() + auswahlItem.getWertUpgradeZahl());
                     break;
                 case 7: eigenschaft="Zauberkraft";
-                    aktuell=""+held.getZauberkraft();
-                    verbesserung = "" + (held.getZauberkraft() + auswahlItem.getWertUpgradeZahl());
+                    aktuell=""+getHeld().getZauberkraft();
+                    verbesserung = "" + (getHeld().getZauberkraft() + auswahlItem.getWertUpgradeZahl());
                     break;
                 case 8: eigenschaft="Zauberabwehr";
-                    aktuell=""+held.getZauberwiderstand();
-                    verbesserung = "" + (held.getZauberwiderstand() + auswahlItem.getWertUpgradeZahl());
+                    aktuell=""+getHeld().getZauberwiderstand();
+                    verbesserung = "" + (getHeld().getZauberwiderstand() + auswahlItem.getWertUpgradeZahl());
                     break;
                 default:
                     eigenschaft=aktuell=verbesserung="undefined";
@@ -162,7 +162,7 @@ public class GegenstandReiter extends Group {
         inventarRechts.add(new Label("Gegenstaende", menu.getSkin())).colspan(3);
         inventarRechts.row();
 
-        ArrayList<Benutzbar> liste = held.getHeldenInventar().getBenutzbarList();
+        ArrayList<Benutzbar> liste = getHeld().getHeldenInventar().getBenutzbarList();
         int size = liste.size();
         for (int i = 0; i < size; i++) {
             if ((i) % 5 == 0) {inventarRechts.row();}

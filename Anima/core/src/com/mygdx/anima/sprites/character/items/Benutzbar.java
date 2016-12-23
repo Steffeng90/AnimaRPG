@@ -2,7 +2,7 @@ package com.mygdx.anima.sprites.character.items;
 
 import com.badlogic.gdx.math.Vector2;
 
-import static com.mygdx.anima.AnimaRPG.held;
+import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 01.12.2016.
@@ -33,16 +33,16 @@ public class Benutzbar extends Item {
     }
     public void benutzen(){
         switch(kategoriezahl) {
-            case 1: held.setCurrentHitpoints(held.getCurrentHitpoints() + wertUpgradeZahl);break;
-            case 2: held.setMaxHitpoints(held.getMaxHitpoints() + wertUpgradeZahl);break;
-            case 3: held.setCurrentMana(held.getCurrentMana() + wertUpgradeZahl);break;
-            case 4: held.setMaxMana(held.getMaxMana() + wertUpgradeZahl);break;
-            case 5: held.setStaerke(held.getStaerke() + wertUpgradeZahl);break;
-            case 6: held.setGeschick(held.getGeschick() + wertUpgradeZahl);break;
-            case 7: held.setZauberkraft(held.getZauberkraft() + wertUpgradeZahl);break;
-            case 8: held.setZauberwiderstand(held.getZauberwiderstand() + wertUpgradeZahl);break;
+            case 1: getHeld().setCurrentHitpoints(getHeld().getCurrentHitpoints() + wertUpgradeZahl);break;
+            case 2: getHeld().setMaxHitpoints(getHeld().getMaxHitpoints() + wertUpgradeZahl);break;
+            case 3: getHeld().setCurrentMana(getHeld().getCurrentMana() + wertUpgradeZahl);break;
+            case 4: getHeld().setMaxMana(getHeld().getMaxMana() + wertUpgradeZahl);break;
+            case 5: getHeld().setStaerke(getHeld().getStaerke() + wertUpgradeZahl);break;
+            case 6: getHeld().setGeschick(getHeld().getGeschick() + wertUpgradeZahl);break;
+            case 7: getHeld().setZauberkraft(getHeld().getZauberkraft() + wertUpgradeZahl);break;
+            case 8: getHeld().setZauberwiderstand(getHeld().getZauberwiderstand() + wertUpgradeZahl);break;
         }
-        held.getHeldenInventar().getBenutzbarList().remove(this);
+        getHeld().getHeldenInventar().getBenutzbarList().remove(this);
     }
 
     public String getWertKategorie() {

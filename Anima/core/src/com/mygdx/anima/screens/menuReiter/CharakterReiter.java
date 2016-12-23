@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Align;
 import com.mygdx.anima.screens.Menu;
 import com.mygdx.anima.sprites.character.Held;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /**
  * Created by Steffen on 12.12.2016.
  */
@@ -22,7 +24,7 @@ public class CharakterReiter extends Group {
     private Held held;
     public CharakterReiter(Menu menu){
         this.menu=menu;
-        this.held=menu.game.held;
+        this.held=getHeld();
         this.width=menu.getWidth();
         this.height=menu.getHeight();
         scrollbarposition=0f;
@@ -48,7 +50,7 @@ public class CharakterReiter extends Group {
         Label nameString= new Label("Alana", menu.getSkin());
         Label spielzeitLabel= new Label("Spielzeit:", menu.getSkin());
         Label spielzeitString= new Label(held.getSpielzeit(), menu.getSkin());
-        Image charBild=new Image (menu.game.held.getProfilbild());
+        Image charBild=new Image (getHeld().getProfilbild());
         charLinks.add(charBild).size(linksWidth,zeilenHeight*8).colspan(2);
         charLinks.row();
         charLinks.add(nameLabel);charLinks.add(nameString);
@@ -127,7 +129,7 @@ public class CharakterReiter extends Group {
     public synchronized void setScrollbarposition(float scrollbarposition) {this.scrollbarposition = scrollbarposition;}
 
     public Label createAttributLabel(int wert1, int wert2){
-        Label lpz=new Label(wert1+"/"+wert2+" ", menu.getSkin());
+        Label lpz=new Label(wert1+" / "+wert2+" ", menu.getSkin());
         lpz.setAlignment(Align.right);
         return lpz;
     }

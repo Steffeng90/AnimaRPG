@@ -55,8 +55,7 @@ public class Gebietswechsel {
             case 3:return 1;
             case 4:return 2;
             case 10: return 10;
-            default:
-                Gdx.app.log("Fehler bei",""+this);return 1;
+            default: Gdx.app.log("Fehler bei",""+this);return 1;
         }
         }
     public void setAusgangsrichtung(int ausgangsrichtung) {this.ausgangsrichtung = ausgangsrichtung;}

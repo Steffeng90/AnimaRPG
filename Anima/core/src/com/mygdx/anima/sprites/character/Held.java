@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
+import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
@@ -17,12 +17,16 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.sprites.character.items.InventarList;
 import com.mygdx.anima.tools.SchadenBerechner;
 
+import static com.mygdx.anima.AnimaRPG.setHeld;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+
 /**
  * Created by Steffen on 09.11.2016.
  */
 
 public class Held extends HumanoideSprites{
-    public boolean objectInReichweite;
+    public boolean objectInReichweite, genugEP;
+    private int[] erfahrungsstufen;
     public InteraktivesObjekt object;
     public Playscreen screen;
     public boolean waffe=false;
@@ -59,6 +63,16 @@ public class Held extends HumanoideSprites{
         heldenInventar=new InventarList();
 
         // Gameplay-Variablen
+        int Startwert=100;
+        int lastWert=Startwert;
+        erfahrungsstufen=new int[50];
+        for(int i=0;i<50;i++){
+            lastWert=(int) (lastWert*1.2);
+            lastWert-=(lastWert%10);
+            erfahrungsstufen[i]=lastWert;
+            // Gdx.app.log("Stufe "+i+" EPWert:",""+erfahrungsstufen[i]);
+        }
+
         setMaxHitpoints(125);
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
@@ -66,8 +80,8 @@ public class Held extends HumanoideSprites{
         setRegMana(5);
         setCurrentLevel(1);
         setCurrentErfahrung(0);
-        setNextLevelUp(50);
-        setGeschwindigkeitLaufen(15);
+        setNextLevelUp(1);
+        setGeschwindigkeitLaufen(20); // 10 ist guter Startwert
         setStaerke(10);
         setGeschick(12);
         setZauberkraft(8);
@@ -77,6 +91,7 @@ public class Held extends HumanoideSprites{
         setRuestung();
         setZauberwiderstand(11);
         characterTimer=0;
+        setHeld(this);
 }
     public TextureRegion getFrame(float dt) {
         return super.getFrame(dt);
@@ -89,7 +104,7 @@ public class Held extends HumanoideSprites{
         createSensor(true);
         FixtureDef fdef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(8/AnimaRPG.PPM);
+        shape.setRadius(7/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
         fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
@@ -106,7 +121,10 @@ public class Held extends HumanoideSprites{
             characterTimer=0;}
         super.update(dt);
         setRegion(getFrame(dt));
-
+        if(genugEP){
+            genugEP=false;
+            stufenAufstieg();
+        }
         if(isHit){
             getsHit(treffenderEnemy);
             isHit=false;}
@@ -239,20 +257,22 @@ public class Held extends HumanoideSprites{
 
 
 
-    public int getCurrentErfahrung() {
+    public synchronized int getCurrentErfahrung() {
         return currentErfahrung;
     }
 
-    public void setCurrentErfahrung(int currentErfahrung) {
+    public synchronized void setCurrentErfahrung(int currentErfahrung) {
         this.currentErfahrung = currentErfahrung;
+        if(currentErfahrung>nextLevelUp){
+            this.currentErfahrung=currentErfahrung-nextLevelUp;
+            genugEP=true;}
     }
-
     public int getNextLevelUp() {
         return nextLevelUp;
     }
 
-    public void setNextLevelUp(int nextLevelUp) {
-        this.nextLevelUp = nextLevelUp;
+    public void setNextLevelUp(int level) {
+        this.nextLevelUp = erfahrungsstufen[level-1];
     }
 
     public int getCurrentLevel() {
@@ -261,6 +281,7 @@ public class Held extends HumanoideSprites{
 
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
+        setNextLevelUp(currentLevel);
     }
 
     public String getSpielzeit() {
@@ -359,7 +380,42 @@ public class Held extends HumanoideSprites{
 
     public void setHeldPosition(Vector2 heldPosition) {
         //this.heldPosition = heldPosition;
+    }
+    public void stufenAufstieg(){
+        //TODO Idee: Werte 2,2,1 aufteilen und LP + 5-12 und MP + 2-3
+        Gdx.app.log("Stufenaufstieg","");
+        setCurrentLevel(getCurrentLevel()+1);
 
+        // Zufällige verteilung der Werte auf Stärke, Geschick, und Zauberkraft
+        int i=(int)(3*Math.random()),stark,gesch,zaub,hp=0,mana=0;
+        switch(i){
+            case 0: stark=1 ;gesch=2 ;zaub=2 ;break;
+            case 1: stark=2 ;gesch=1 ;zaub=2 ;break;
+            case 2: stark=2 ;gesch=2 ;zaub=1 ;break;
+            case 3: stark=3 ;gesch=2 ;zaub=2 ;break;
+            case 4: stark=2 ;gesch=3 ;zaub=2 ;break;
+            case 5: stark=2 ;gesch=2 ;zaub=3 ;break;
+            case 6: stark=1 ;gesch=2 ;zaub=1 ;break;
+            case 7: stark=2 ;gesch=1 ;zaub=1 ;break;
+            case 8: stark=1 ;gesch=1 ;zaub=2 ;break;
+                default:stark=2 ;gesch=2 ;zaub=2 ;
+        }
+        setStaerke(getStaerke()+stark);setGeschick(getGeschick()+gesch);setZauberkraft(getZauberkraft()+zaub);
+        //Lebenspunkte 5-8
+        i=(int)(4*Math.random());
+        switch(i){
+            case 0:hp=5;break;
+            case 1:hp=6;break;
+            case 2:hp=7;break;
+            case 3:hp=8;break;
+        }
+        setMaxHitpoints(getMaxHitpoints()+hp);
+        i=(int)(2*Math.random());
+        switch(i) {
+            case 0: mana=2;break;
+            case 1: mana=3;break;
+        }
+        setMaxMana(getMaxMana() + 2);
+        screen.setLevelUpWindow(new LevelUpInfo(screen,AnimaRPG.batch,currentLevel,stark,gesch,zaub,hp,mana));
     }
 }
-

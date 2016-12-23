@@ -14,7 +14,7 @@ import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.tools.SchadenBerechner;
 
-import static com.mygdx.anima.AnimaRPG.held;
+import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -23,6 +23,7 @@ import static com.mygdx.anima.AnimaRPG.held;
 public abstract class Enemy extends HumanoideSprites{
 
     public boolean enemyInReichweite,vonFeedbackbetroffen;
+    public int erfahrung;
 
     public Enemy(Playscreen screen,float x, float y, String quelle)
     {
@@ -34,12 +35,12 @@ public abstract class Enemy extends HumanoideSprites{
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
 
-        setMaxHitpoints(25);
+        setMaxHitpoints(5);
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
         setCurrentMana(getMaxMana());
         setRegMana(5);
-        setErfahrung(15);
+        setErfahrung(100);
         setGeschwindigkeitLaufen(15);
         setSchadenNah(5);
         setSchadenFern(4);
@@ -58,8 +59,11 @@ public abstract class Enemy extends HumanoideSprites{
         b2body.setActive(false);
 
         FixtureDef fdef=new FixtureDef();
-        PolygonShape shape=new PolygonShape();
-        shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(0,-10/AnimaRPG.PPM),0);
+        CircleShape shape=new CircleShape();
+        shape.setRadius(7/AnimaRPG.PPM);
+        shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
+        //PolygonShape shape=new PolygonShape();
+        //shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(0,-10/AnimaRPG.PPM),0);
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
         fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
         | AnimaRPG.ARROW_BIT;
@@ -77,7 +81,9 @@ public abstract class Enemy extends HumanoideSprites{
         }
         super.update(dt);
     }
-    public void readyToDie(){super.readyToDie();}
+    public void readyToDie(){super.readyToDie();
+        giveErfahrung();
+    }
     public void attack()
     {
         CircleShape circleShape = new CircleShape();
@@ -120,8 +126,21 @@ public abstract class Enemy extends HumanoideSprites{
     public abstract void getsHit(Held hero);
 
     public void getsDamaged(int schadensTyp){
-        SchadenBerechner.berechneSchaden(schadensTyp,this,held);
+        SchadenBerechner.berechneSchaden(schadensTyp,this,getHeld());
+    }
 
+    public int getErfahrung() {
+        return erfahrung;
+    }
+
+    public void setErfahrung(int erfahrung) {
+        this.erfahrung = erfahrung;
+    }
+
+
+    public void giveErfahrung(){
+        Gdx.app.log("Erfahrung gegeben","");
+        getHeld().setCurrentErfahrung(getHeld().getCurrentErfahrung()+this.getErfahrung());
     }
 
 }

@@ -1,0 +1,56 @@
+{"item":[
+  {"id":"Schwert1","name":"Eisenschwert","kategorie":1,"vectorX":0,"vectorY":6,"schaden":10,"goldWert":15},
+  {"id":"Schwert2","name":"Stahlschwert","kategorie":1,"vectorX":1,"vectorY":6,"schaden":12,"goldWert":18},
+  {"id":"Schwert3","name":"Mithrilschwert","kategorie":1,"vectorX":2,"vectorY":6,"schaden":15,"goldWert":23},
+  {"id":"Schwert4","name":"Langschwert","kategorie":1,"vectorX":3,"vectorY":6,"schaden":18,"goldWert":30},
+  {"id":"Schwert5","name":"Groﬂschwert","kategorie":1,"vectorX":4,"vectorY":6,"schaden":23,"goldWert":42},
+  {"id":"Schwert6","name":"Schwert der Gnade","kategorie":1,"vectorX":5,"vectorY":6,"schaden":45,"goldWert":135},
+
+  //Fernkampfewaffen
+  {"id":"Bogen1","name":"Kurzbogen","kategorie":2,"vectorX":0,"vectorY":11,"schaden":9,"goldWert":6},
+  {"id":"Bogen2","name":"Geh‰rteter Bogen","kategorie":2,"vectorX":1,"vectorY":11,"schaden":14,"goldWert":12},
+  {"id":"Bogen3","name":"Langbogen","kategorie":2,"vectorX":2,"vectorY":11,"schaden":19,"goldWert":27},
+  {"id":"Bogen4","name":"Kompositbogen","kategorie":2,"vectorX":3,"vectorY":11,"schaden":24,"goldWert":32},
+  {"id":"Bogen5","name":"Eschenbogen","kategorie":2,"vectorX":4,"vectorY":11,"schaden":30,"goldWert":56},
+  {"id":"Bogen6","name":"Alptraum","kategorie":2,"vectorX":5,"vectorY":11,"schaden":45,"goldWert":76},
+
+  //Ruestungen
+  {"id":"ruestung1","name":"Stoffhemd","kategorie":3,"vectorX":0,"vectorY":13,"ruestung":10,"goldWert":15},
+  {"id":"ruestung2","name":"Schutzweste","kategorie":3,"vectorX":1,"vectorY":13,"ruestung":14,"goldWert":22},
+  {"id":"ruestung3","name":"Lederwarms","kategorie":3,"vectorX":2,"vectorY":13,"ruestung":19,"goldWert":31},
+  {"id":"ruestung4","name":"Brustpanzer","kategorie":3,"vectorX":3,"vectorY":13,"ruestung":28,"goldWert":54},
+  {"id":"ruestung5","name":"Plattenpanzer","kategorie":3,"vectorX":4,"vectorY":13,"ruestung":38,"goldWert":85},
+  {"id":"ruestung6","name":"Warms der Heilung","kategorie":3,"vectorX":5,"vectorY":13,"ruestung":50,"goldWert":120},
+  {"id":"ruestung7","name":"Vollstrecker-Gewand","kategorie":3,"vectorX":6,"vectorY":13,"ruestung":70,"goldWert":185},
+
+  //Benutzbare Gegenst‰nde
+  //CurrentHitpoints
+  {"id":"Nahrung1","name":"Brot","kategorie":4,"vectorX":7,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":15},
+  {"id":"Nahrung2","name":"Pilz","kategorie":4,"vectorX":5,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung3","name":"Kaese","kategorie":4,"vectorX":9,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung4","name":"Fisch","kategorie":4,"vectorX":10,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung5","name":"Traube","kategorie":4,"vectorX":5,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung6","name":"Fleisch","kategorie":4,"vectorX":11,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  //MaxHp
+  {"id":"MaxHP","name":"Lebenselixir","kategorie":4,"vectorX":0,"vectorY":2,"benutzbarKategorie":2,"benutzbarWert":20,"goldWert":25},
+
+  //CurrentMana
+  {"id":"ManaPot1","name":"kleiner Manatrank","kategorie":4,"vectorX":10,"vectorY":2,"benutzbarKategorie":3,"benutzbarWert":20,"goldWert":25},
+  {"id":"ManaPot2","name":"grosser Manatrank","kategorie":4,"vectorX":10,"vectorY":3,"benutzbarKategorie":3,"benutzbarWert":40,"goldWert":25},
+
+  //MaxMana
+  {"id":"MaxMana","name":"Manaelixir","kategorie":4,"vectorX":9,"vectorY":4,"benutzbarKategorie":4,"benutzbarWert":20,"goldWert":25},
+
+  //Staerke
+  {"id":"FoliantKraft","name":"Foliant der Macht","kategorie":4,"vectorX":1,"vectorY":29,"benutzbarKategorie":5,"benutzbarWert":3,"goldWert":15},
+
+  //Geschick
+  {"id":"FoliantGeschick","name":"Foliant der Disziplin","kategorie":4,"vectorX":0,"vectorY":29,"benutzbarKategorie":6,"benutzbarWert":2,"goldWert":25},
+
+  //Zauberkraft
+  {"id":"FoliantZauberK","name":"Foliant der Weisheit","kategorie":4,"vectorX":5,"vectorY":29,"benutzbarKategorie":7,"benutzbarWert":1,"goldWert":32},
+
+  //Zauberwiderstand
+ {"id":"FoliantZauberW","name":"Foliant der Reinheit","kategorie":4,"vectorX":6,"vectorY":29,"benutzbarKategorie":8,"benutzbarWert":2,"goldWert":17}
+]
+}

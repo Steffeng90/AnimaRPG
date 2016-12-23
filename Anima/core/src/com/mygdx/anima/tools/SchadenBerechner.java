@@ -1,10 +1,11 @@
 package com.mygdx.anima.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 
-import static com.mygdx.anima.AnimaRPG.held;
+import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 14.12.2016.
@@ -28,7 +29,15 @@ public class SchadenBerechner {
         {
             verursachterSchaden=2;
         }
-        new SchadenLabel(verursachterSchaden,erleidender,held.b2body.getPosition());
+            Gdx.app.log("Wert","SCahden da:"+verursachterSchaden);
+        if(erleidender!=null){
+            Gdx.app.log("Wert","erleidender da");
+
+        }//if(held.b2body!=null){
+            Gdx.app.log("Wert","Body da");
+
+//        Gdx.app.log("Wert",""+verursachterSchaden+" "+ erleidender.toString()+"body:"+ held.b2body.getPosition());
+        new SchadenLabel(verursachterSchaden,erleidender,getHeld().b2body.getPosition());
         erleidender.setCurrentHitpoints(erleidender.getCurrentHitpoints()-verursachterSchaden);
     }
 }

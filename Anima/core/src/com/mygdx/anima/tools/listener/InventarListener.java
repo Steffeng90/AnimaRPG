@@ -8,6 +8,8 @@ import com.mygdx.anima.screens.Menu;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
 import com.mygdx.anima.sprites.character.items.Item;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /**
  * Created by Steffen on 04.12.2016.
  */
@@ -27,7 +29,7 @@ public class InventarListener extends InputListener {
 
             // Funktion wird nur ausgeführt, wenn es kein Swipe war
             if(posi.x-x<10 && posi.x-x>-10 && posi.y-y<10 && posi.y-y>-10){
-            inv.menu.game.held.getHeldenInventar().resetAuswahl();
+                getHeld().getHeldenInventar().resetAuswahl();
             // Vorrige Auswahl wird auf ausgewählt false gesetzt
             if(inv.auswahlItem!=null)
                 inv.auswahlItem.setAusgewaehlt(false);
