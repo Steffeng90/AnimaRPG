@@ -49,8 +49,8 @@ public class ItemFundInfo implements Disposable {
 
     public ItemFundInfo(final Playscreen screen, SpriteBatch sb,String itemName){
        this.screen=screen;
-        infoWidth=(float)(AnimaRPG.W_WIDTH*1.8);
-                infoHeight=(float)(AnimaRPG.W_Height*1.8);
+        infoWidth=(float)(AnimaRPG.W_WIDTH*2);
+                infoHeight=(float)(AnimaRPG.W_Height*2);
         viewport = new FitViewport(infoWidth,infoHeight, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Gdx.input.setInputProcessor(stage);
@@ -83,17 +83,20 @@ public class ItemFundInfo implements Disposable {
                 return true;}
         });
     }
-    public void update(float dt){
-        if(geklickt==true){
+   // public void update(float dt){
+        /*if(geklickt==true){
+            geklickt=false;
             dispose();
-        }}
+        }*/
+   // }
     public void draw() {
         stage.draw();
     }
     @Override
     public void dispose()
     {   stage.clear();
-        stage.dispose();}
+        stage.dispose();;
+    }
 
     public void resize(int width,int height){
         viewport.update(width,height);

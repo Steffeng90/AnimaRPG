@@ -3,6 +3,7 @@ package com.mygdx.anima.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
@@ -27,8 +29,11 @@ public class Controller {
     boolean upPressed,downPressed,leftPressed,rightPressed,
     meleePressed,bowPressed,castPressed, usePressed;
     OrthographicCamera cam;
+    private Touchpad touchpad;
     SpriteBatch batch;
     public int buttonSize;
+    Skin skin=new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+
 
     public Controller(final AnimaRPG game){
         cam=new OrthographicCamera();
@@ -117,7 +122,20 @@ public class Controller {
         touchpad = new Touchpad(20f, skin);
         touchpad.setBounds(15, 15, 100, 100);
         tableLeft.add(touchpad);*/
-        stage.addActor(tableLeft);
+
+        Touchpad.TouchpadStyle touchpadStyle = new Touchpad.TouchpadStyle();
+        //touchpadStyle.knob=skin.getDrawable("knob");
+        //touchpadStyle.background=skin.getDrawable("background");
+
+        //        touchpad = new Touchpad(10, touchpadStyle);
+
+        touchpad = new Touchpad(10, skin);
+        skin.add("touchBackground",new Texture("touchBackground.png"));
+        touchpad.getStyle().background=skin.getDrawable("touchBackground");
+
+        touchpad.setBounds(0, 0,60, 60);
+       // touchpad.
+        stage.addActor(touchpad);
 
         Table tableRight=new Table();
 
@@ -257,5 +275,12 @@ public class Controller {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public Touchpad getTouchpad() {
+        return touchpad;
+    }
+    public void setTouchpad(Touchpad touchpad) {
+        this.touchpad = touchpad;
     }
 }

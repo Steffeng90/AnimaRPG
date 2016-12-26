@@ -153,17 +153,19 @@ public class InventarReiter extends Group {
         inventarRechts.setWidth(invRechtsWidth);
         inventarRechts.setPosition(invRechtsWidth, height);
         inventarRechts.align(Align.left | Align.top);
-        if(getHeld().getHeldenInventar().getWaffenNahList().size()==0 |
-                getHeld().getHeldenInventar().getWaffenFernList().size()==0 |
+        if(getHeld().getHeldenInventar().getWaffenNahList().size()==0 &&
+                getHeld().getHeldenInventar().getWaffenFernList().size()==0 &&
                 getHeld().getHeldenInventar().getWaffenNahList().size()==0){
-            inventarRechts.add(new Label("Du besitzt keine Ausruestungsgegenstaende.", menu.getSkin())).colspan(3);
+            inventarRechts.add(new Label("Du besitzt keine\n Ausruestungsgegenstaende.", menu.getSkin())).colspan(3);
         }
         if(getHeld().getHeldenInventar().getWaffenNahList().size()>0) {
+
             inventarRechts.add(new Label("Nahkampf-Waffen", menu.getSkin())).colspan(3);
             inventarRechts.row();
             ArrayList<WaffeNah> liste = getHeld().getHeldenInventar().getWaffenNahList();
             size = liste.size();
             for (int i = 0; i < size; i++) {
+                if(auswahlItem!=null){auswahlItem=liste.get(i);}
                 if ((i) % 5 == 0) {
                     inventarRechts.row();
                 }

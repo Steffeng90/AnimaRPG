@@ -77,7 +77,7 @@ public class Held extends HumanoideSprites{
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
         setCurrentMana(getMaxMana());
-        setRegMana(5);
+        setRegMana(1);
         setCurrentLevel(1);
         setCurrentErfahrung(0);
         setNextLevelUp(1);
@@ -116,7 +116,9 @@ public class Held extends HumanoideSprites{
     {
         characterTimer+=dt;
         setSpielzeit(dt);
-        if(characterTimer>=1 && getCurrentMana()<getMaxMana()){
+        if(characterTimer>=3 && getCurrentMana()<getMaxMana()){
+            Gdx.app.log("PlusMAna","");
+
             setCurrentMana(getCurrentMana()+getRegMana());
             characterTimer=0;}
         super.update(dt);
@@ -183,6 +185,7 @@ public class Held extends HumanoideSprites{
     }}
     public void castAttack()
     {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
+        Gdx.app.log("MinusMAna","");
         setCurrentMana(getCurrentMana()-5);
         new Zauber(this);}
     }
@@ -381,7 +384,7 @@ public class Held extends HumanoideSprites{
     public void setHeldPosition(Vector2 heldPosition) {
         //this.heldPosition = heldPosition;
     }
-    public void stufenAufstieg(){
+    public synchronized void stufenAufstieg(){
         //TODO Idee: Werte 2,2,1 aufteilen und LP + 5-12 und MP + 2-3
         Gdx.app.log("Stufenaufstieg","");
         setCurrentLevel(getCurrentLevel()+1);

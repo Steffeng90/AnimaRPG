@@ -2,6 +2,7 @@ package com.mygdx.anima.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 
+import static com.badlogic.gdx.utils.Align.center;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 /**
@@ -37,8 +39,8 @@ public class LevelUpInfo implements Disposable {
 
     public LevelUpInfo(Playscreen screen, SpriteBatch sb,int level, int stark,int gesch,int zaub,int hp,int mana){
        this.screen=screen;
-        infoWidth=(float)(AnimaRPG.W_WIDTH*2.5);
-                infoHeight=(float)(AnimaRPG.W_Height*2.5);
+        infoWidth=(float)(AnimaRPG.W_WIDTH*2);
+                infoHeight=(float)(AnimaRPG.W_Height*2);
         viewport = new FitViewport(infoWidth,infoHeight, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Gdx.input.setInputProcessor(stage);
@@ -46,19 +48,24 @@ public class LevelUpInfo implements Disposable {
 
         geklickt=false;
 
-        Dialog dialog = new Dialog("", skin, "dialog") {
+        Dialog dialog = new Dialog("Neue Stufe!", skin, "dialog") {
             public void result(Object obj) {
                 System.out.println("result "+obj);
             }
         };
-        Label l1a=new Label("Stufe",skin);
-        Label l1b=new Label("+"+level,skin);
+        dialog.key(Input.Keys.ENTER, true); //sends "true" when the ENTER key is pressed
+        dialog.setSize(infoWidth/3.5f,infoHeight/3.5f);
+        dialog.setPosition(infoWidth/3,0);
+        dialog.getTitleLabel().setAlignment(center);
+        dialog.getTitleLabel().setSize(infoWidth,infoHeight*3/4);
+        Label l1a=new Label("Stufe:",skin);
+        Label l1b=new Label(""+level,skin);
         Label l1c=new Label("Staerke:",skin);
         Label l1d=new Label("+"+stark,skin);
-        Label l2a=new Label("Lebenspunkte:",skin);
+        Label l2a=new Label("Leben:",skin);
         Label l2b=new Label("+"+hp,skin);
 
-        Label l2c=new Label("Geschicklichkeit:",skin);
+        Label l2c=new Label("Geschick:",skin);
         Label l2d=new Label("+"+gesch,skin);
         Label l3a=new Label("Mana:",skin);
         Label l3b=new Label("+"+mana,skin);
@@ -66,16 +73,13 @@ public class LevelUpInfo implements Disposable {
         Label l3d=new Label("+"+zaub,skin);
 
         Table table=new Table();
-        table.add(l1a);table.add(l1b);table.add(l1c);table.add(l1d);
+        table.add(l1a).expandY();table.add(l1b).expandY();table.add(l1c).expandY();table.add(l1d).expandY();
         table.row();
-        table.add(l2a);table.add(l2b);table.add(l2c);table.add(l2d);
+        table.add(l2a).expandY();table.add(l2b).expandY();table.add(l2c).expandY();table.add(l2d).expandY();
         table.row();
-        table.add(l3a);table.add(l3b);table.add(l3c);table.add(l3d);
+        table.add(l3a).expandY();table.add(l3b).expandY();table.add(l3c).expandY();table.add(l3d).expandY();
         dialog.add(table);
-        dialog.key(Input.Keys.ENTER, true); //sends "true" when the ENTER key is pressed
-        dialog.setSize(infoWidth/3,infoHeight/3);
-        dialog.setPosition(infoWidth/3,0);
-        dialog.align(Align.center);
+        table.left();
 
         stage.addActor(dialog);
         stage.addListener(new InputListener(){
@@ -89,17 +93,14 @@ public class LevelUpInfo implements Disposable {
                 return true;}
         });
     }
-    public void update(float dt){
-        if(geklickt==true){
-            dispose();
-        }}
     public void draw() {
         stage.draw();
     }
     @Override
     public void dispose()
     {   stage.clear();
-        stage.dispose();}
+        stage.dispose();
+    }
 
     public void resize(int width,int height){
         viewport.update(width,height);

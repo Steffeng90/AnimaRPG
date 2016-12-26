@@ -62,11 +62,6 @@
   <object id="52" x="96" y="96" width="32" height="16"/>
  </objectgroup>
  <objectgroup name="schatztruhen">
-  <object id="54" x="32" y="288" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Brot"/>
-   </properties>
-  </object>
   <object id="55" x="16" y="496" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen"/>
@@ -255,7 +250,7 @@
     <property name="start" value="sued"/>
    </properties>
   </object>
-  <object id="136" x="144" y="0" width="16" height="16">
+  <object id="136" x="144" y="16" width="16" height="16">
    <properties>
     <property name="start" value="nord"/>
    </properties>

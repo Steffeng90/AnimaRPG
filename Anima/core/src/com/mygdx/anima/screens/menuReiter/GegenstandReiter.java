@@ -54,11 +54,10 @@ public class GegenstandReiter extends Group {
         Label label2;
         switch(auswahlItem.getKategoriezahl()){
             case 1:
+            case 2:
             case 3:
             case 4: label2 = new Label("Du konntest deine \n"+eigenschaft+" von\n" + aktuell+" " +
                     "auf " + verbesserung +"\n steigern!", menu.getSkin());break;
-            case 2:
-
             case 5:
             case 6:
             case 7:

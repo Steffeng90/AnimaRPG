@@ -212,10 +212,9 @@
   <object id="18" x="48" y="864" width="16" height="16"/>
   <object id="19" x="272" y="592" width="16" height="16"/>
   <object id="24" x="144" y="656" width="16" height="16"/>
-  <object id="25" x="352" y="656" width="16" height="16"/>
-  <object id="26" x="80" y="336" width="16" height="16"/>
-  <object id="27" x="64" y="320" width="16" height="16"/>
-  <object id="28" x="64" y="336" height="16"/>
+  <object id="25" x="352" y="640" width="16" height="16"/>
+  <object id="26" x="64" y="320" width="16" height="16"/>
+  <object id="27" x="64" y="288" width="16" height="16"/>
   <object id="29" x="144" y="32" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="schatztruhen">

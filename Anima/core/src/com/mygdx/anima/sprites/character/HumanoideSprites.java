@@ -55,6 +55,7 @@ public class HumanoideSprites extends Sprite {
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
     public int breite;
     public int hoehe;
+    public static int framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13;
 
     public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
         this.world = screen.getWorld();
@@ -82,89 +83,89 @@ public class HumanoideSprites extends Sprite {
     public void updateTextures(String quelle){
         spriteQuelle = new Texture(quelle);
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(spriteQuelle, i*breite, 512, breite, hoehe));
         }
         UpWalk = new Animation(0.1f, frames);
         frames.clear();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(spriteQuelle,i *breite, 640, breite, hoehe));
         }
         DownWalk = new Animation(0.1f, frames);
         frames.clear();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 577, breite, hoehe));
         }
         LeftWalk = new Animation(0.1f, frames);
         frames.clear();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 704, breite, hoehe));
         }
         RightWalk = new Animation(0.1f, frames);
         frames.clear();
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle,i* breite, 768, breite, hoehe));
         }
         UpMelee = new Animation(hitdauer, frames);
         frames.clear();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle, i*breite,896, breite, hoehe));
         }
         DownMelee = new Animation(hitdauer, frames);
         frames.clear();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle, i * breite, 832, breite, hoehe));
         }
         LeftMelee= new Animation(hitdauer, frames);
         frames.clear();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 960, breite, hoehe));
         }
         RightMelee = new Animation(hitdauer, frames);
         frames.clear();
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1024, breite, hoehe));
         }
         UpBow = new Animation(0.05f, frames);
         frames.clear();
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1152, breite, hoehe));
         }
         DownBow = new Animation(0.05f, frames);
         frames.clear();
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1216, breite, hoehe));
         }
         RightBow = new Animation(0.05f, frames);
         frames.clear();
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1088, breite, hoehe));
         }
         LeftBow = new Animation(0.05f, frames);
         frames.clear();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 0, breite, hoehe));
         }
         UpCast = new Animation(0.18f, frames);
         frames.clear();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 128, breite, hoehe));
         }
         DownCast= new Animation(0.18f, frames);
         frames.clear();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 192, breite, hoehe));
         }
         RightCast = new Animation(0.18f, frames);
         frames.clear();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 64, breite, hoehe));
         }
         LeftCast = new Animation(0.18f, frames);
 
         frames.clear();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < framesDie; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1280,breite,hoehe));
         }
         Dying=new Animation(0.2f,frames);
@@ -373,14 +374,13 @@ public class HumanoideSprites extends Sprite {
         runDying=false;
         destroyed=true;
     }
-    public void readyToDie(){runDying=true;
+    public void readyToDie(){
         for(Fixture fix:b2body.getFixtureList()){
-            Filter filter=new Filter();
-            filter=fix.getFilterData();
+            Filter filter=fix.getFilterData();
             filter.categoryBits=AnimaRPG.NOTHING_BIT;
             fix.setFilterData(filter);
             Gdx.app.log("Fixture auf Nothing gesetzt",""+fix.getFilterData().categoryBits);}
-
+        runDying=true;
     }
 
 
@@ -516,7 +516,7 @@ public class HumanoideSprites extends Sprite {
         } else if (currentMana > maxMana) {
             this.currentMana = maxMana;
         } else {
-            this.currentMana = maxMana;
+            this.currentMana = currentMana;
         }
     }
     public int getMaxMana() {

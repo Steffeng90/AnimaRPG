@@ -87,7 +87,7 @@ public class Playscreen implements Screen{
 
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
-        b2dr = new Box2DDebugRenderer();
+        // b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         spieler = new Held(this,spielerPosition);
         controller = new Controller(game);
@@ -180,7 +180,7 @@ public class Playscreen implements Screen{
         //karte rendern
         renderer.render();
         // Render-Linien
-        b2dr.render(world, gamecam.combined);
+        // b2dr.render(world, gamecam.combined);
 
         //Zeigt den Controller nur bei Android an:
         //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
@@ -241,9 +241,9 @@ public class Playscreen implements Screen{
                         getCurrentItemsprite().update(delta);
                         if (itemWindow.isGeklickt()) {
                             setCurrentItemsprite(null);
+                            Gdx.input.setInputProcessor(controller.getStage());
                             itemWindow.dispose();
                             itemWindow=null;
-                            Gdx.input.setInputProcessor(controller.getStage());
 
                             setCurrentGameState(GameState.RUN);
                         }}
@@ -290,7 +290,16 @@ public class Playscreen implements Screen{
             spieler.castAttack();spieler.b2body.setLinearVelocity(0, 0);
         }
         else if (spieler.actionInProgress()) {
-            if (Gdx.input.isKeyPressed(Input.Keys.D) | controller.isRightPressed()) {
+            float xAchse=controller.getTouchpad().getKnobPercentX()*spieler.getGeschwindigkeitLaufen();
+            float yAchse=controller.getTouchpad().getKnobPercentY()*spieler.getGeschwindigkeitLaufen();
+            spieler.b2body.setLinearVelocity(xAchse/10,yAchse/10);
+            // nach unten schauen
+            if(yAchse<0 && Math.abs(yAchse)>Math.abs(xAchse)){ spieler.setCurrentRichtung(3);}
+            else if(yAchse>0 && Math.abs(yAchse)>Math.abs(xAchse)){ spieler.setCurrentRichtung(2);}
+            else if(xAchse>0 && Math.abs(xAchse)>Math.abs(yAchse)){ spieler.setCurrentRichtung(1);}
+            else if(xAchse<0 && Math.abs(xAchse)>Math.abs(yAchse)){ spieler.setCurrentRichtung(0);}
+
+            else if (Gdx.input.isKeyPressed(Input.Keys.D) | controller.isRightPressed()) {
                 spieler.b2body.setLinearVelocity(spieler.getGeschwindigkeitLaufen()/10, 0);
                 spieler.setCurrentRichtung(1);
             } else if (Gdx.input.isKeyPressed(Input.Keys.A) | controller.isLeftPressed()) {
@@ -303,8 +312,8 @@ public class Playscreen implements Screen{
                 spieler.b2body.setLinearVelocity(0, -spieler.getGeschwindigkeitLaufen()/10);
                 spieler.setCurrentRichtung(3);
             } else {
-                if (spieler.b2body != null)
-                    spieler.b2body.setLinearVelocity(0, 0);
+                //if (spieler.b2body != null)
+                //    spieler.b2body.setLinearVelocity(0, 0);
             }
         }
     }
@@ -332,11 +341,6 @@ public class Playscreen implements Screen{
                 if (getCurrentItemsprite() != null) {
                     itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite().name);
                 }
-                /*if (levelUpWindow != null) {
-                    Gdx.app.log("nichtnull","");
-                    levelUpWindow=new LevelUpInfo(this,game.batch,getCurrentItemsprite().name);
-                }*/
-
                 for (Arrow arrow : Arrow.getAllArrows()) {
                     if (!arrow.destroyed) {
                         arrow.update(dt);
@@ -374,8 +378,10 @@ public class Playscreen implements Screen{
         world.dispose();
         renderer.dispose();
         kartenManager.getMap().dispose();
+        itemWindow.dispose();
+        levelUpWindow.dispose();
         anzeige.dispose();
-        b2dr.dispose();
+        // b2dr.dispose();
         controller.dispose();
     }
     //Getter und Setter, selbstgeschrieben

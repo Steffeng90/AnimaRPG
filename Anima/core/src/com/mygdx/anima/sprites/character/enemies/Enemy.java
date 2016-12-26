@@ -35,12 +35,12 @@ public abstract class Enemy extends HumanoideSprites{
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
 
-        setMaxHitpoints(5);
+        setMaxHitpoints(10);
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
         setCurrentMana(getMaxMana());
         setRegMana(5);
-        setErfahrung(100);
+        setErfahrung(25);
         setGeschwindigkeitLaufen(15);
         setSchadenNah(5);
         setSchadenFern(4);
