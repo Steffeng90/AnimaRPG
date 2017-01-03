@@ -13,8 +13,8 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
-import com.mygdx.anima.tools.KartenManager;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -51,19 +51,22 @@ public class WorldContactListener implements ContactListener {
                     break;
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
-                {   ((Held)fixB.getUserData()).isHit=true;
+                {   ((Held)fixB.getUserData()).isHitbyMelee=true;
                     ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)fixA.getUserData();}
                 else
-                {   ((Held)fixA.getUserData()).isHit=true;
+                {   ((Held)fixA.getUserData()).isHitbyMelee=true;
                     ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
                 break;
             case AnimaRPG.ARROW_BIT | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
-                {   ((Held)fixB.getUserData()).isHit=true;
+                {
+                    ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)((Arrow)fixA.getUserData()).erzeuger;
+                    ((Held)fixB.getUserData()).isHitbyBow=true;
                     ((Arrow)fixA.getUserData()).setToDestroy=true;}
                 else
-                {   ((Held)fixA.getUserData()).isHit=true;
-                ((Arrow)fixB.getUserData()).setToDestroy=true;}
+                {   ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)((Arrow)fixB.getUserData()).erzeuger;
+                    ((Held)fixA.getUserData()).isHitbyBow=true;
+                    ((Arrow)fixB.getUserData()).setToDestroy=true;}
                 break;
             case AnimaRPG.ARROW_BIT | AnimaRPG.BARRIERE_BIT:
             case AnimaRPG.ARROW_BIT | AnimaRPG.OBJECT_BIT:
@@ -88,7 +91,6 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy)fixA.getUserData()).getsHitbySpell((Zauber)fixB.getUserData());
                 break;
             case AnimaRPG.HERO_BIT | AnimaRPG.GEBIETSWECHSEL_BIT:
-                Gdx.app.log("Wechsel der Karte","unknown");
                 if(fixA.getFilterData().categoryBits==AnimaRPG.GEBIETSWECHSEL_BIT){
                     Playscreen.setMapId(((Gebietswechsel)fixA.getUserData()).getNextMapId());
                     Playscreen.setMapEinstieg(((Gebietswechsel)fixA.getUserData()).getAusgangsrichtung());}
@@ -96,6 +98,20 @@ public class WorldContactListener implements ContactListener {
                     Playscreen.setMapId(((Gebietswechsel)fixB.getUserData()).getNextMapId());
                     Playscreen.setMapEinstieg(((Gebietswechsel)fixB.getUserData()).getAusgangsrichtung());}
                 Playscreen.setMapWechsel(true);
+                break;
+            case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_BIT:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
+                {if((((Enemy)fixB.getUserData()).getMaxHitpoints()-((Enemy)fixB.getUserData()).getCurrentHitpoints())>((Enemy)fixA.getUserData()).getSchadenZauber()*1.5)
+                    {((Enemy)fixA.getUserData()).zaubereHeilung=true;}}
+                    else
+                { if((((Enemy)fixA.getUserData()).getMaxHitpoints()-((Enemy)fixA.getUserData()).getCurrentHitpoints())>((Enemy)fixB.getUserData()).getSchadenZauber()*1.5)
+                    ((Enemy)fixB.getUserData()).zaubereHeilung=true;}
+                break;
+            case AnimaRPG.ENEMY_CAST_HEAL | AnimaRPG.ENEMY_BIT:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_CAST_BIT)
+                    ((Enemy)fixB.getUserData()).getsHitbySpell((Zauber)fixA.getUserData());
+                else
+                    ((Enemy)fixA.getUserData()).getsHitbySpell((Zauber)fixB.getUserData());
                 break;
             default:
                 //Gdx.app.log("undefined","unknown");
@@ -126,11 +142,11 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
-                {   ((Held)fixB.getUserData()).isHit=false;
+                {   //((Held)fixB.getUserData()).isHit=false;
                     ((Held)fixB.getUserData()).treffenderEnemy=null;}
 
                 else
-                {   ((Held)fixA.getUserData()).isHit=false;
+                {   //w((Held)fixA.getUserData()).isHit=false;
                     ((Held)fixA.getUserData()).treffenderEnemy=null;}
                 //((Held)fixA.getUserData()).getsHit((Enemy)fixB.getUserData());
                 break;

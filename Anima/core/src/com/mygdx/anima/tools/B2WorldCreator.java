@@ -2,13 +2,10 @@ package com.mygdx.anima.tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -22,24 +19,17 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.enemies.Raider;
+import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.EnemyGenerator;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 
-import java.awt.geom.Ellipse2D;
-import java.security.spec.EllipticCurve;
-
-import static com.badlogic.gdx.graphics.g2d.ParticleEmitter.SpawnShape.ellipse;
-import static com.badlogic.gdx.math.Interpolation.circle;
-import static com.badlogic.gdx.utils.JsonValue.ValueType.object;
 import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.BARRIERE_BIT;
 import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
 import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
-import static com.mygdx.anima.AnimaRPG.currentScreen;
 import static com.mygdx.anima.screens.Playscreen.getMapEinstieg;
-import static java.lang.System.getProperties;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -53,7 +43,7 @@ public class B2WorldCreator {
     FixtureDef fdef;
     PolygonShape pshape;
     CircleShape cshape;
-    public Array<Raider> allRaider;
+    public Array<Enemy> allEnemy;
     public Array<Schatztruhe> allSchatztruhen;
     public Array<Gebietswechsel> allAusgang;
 
@@ -68,9 +58,9 @@ public class B2WorldCreator {
         try {
             if (map.getLayers().get("barrieren") != null) {
                 //TODO PoliLine Probieren
-                for (MapObject object : map.getLayers().get("barrieren").getObjects()) {
-                    // Gdx.app.log("RectFound", "" + object.getClass());
-                }
+                /*for (MapObject object : map.getLayers().get("barrieren").getObjects()) {
+                     Gdx.app.log("RectFound", "" + object.getClass());
+                }*/
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(RectangleMapObject.class)) {
 
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -119,6 +109,11 @@ public class B2WorldCreator {
                     body.createFixture(fdef);
                 }
                 // Keine PolygonShapes verwenden.
+            }
+        }
+            catch(Exception e){
+                Gdx.app.log("Error:",e.getMessage());
+                Gdx.app.log("Error:",e.getStackTrace().toString());
 
             }
             // Erzeugen von Ein und Ausgängen
@@ -130,13 +125,13 @@ public class B2WorldCreator {
                 allAusgang.add(new Gebietswechsel(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM, nextMap, richtungInt, rect));
                 // Gdx.app.log("Wechsel erzeugt"," ");
             }
-            // Erzeugen von Raider
-            allRaider = new Array<Raider>();
-            if (map.getLayers().get("raider") != null) {
-                for (MapObject object : map.getLayers().get("raider").getObjects().getByType(RectangleMapObject.class)) {
+            // Erzeugen von Gegner
+            allEnemy = new Array<Enemy>();
+            if (map.getLayers().get("enemy") != null) {
+                for (MapObject object : map.getLayers().get("enemy").getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    allRaider.add(new Raider(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM));
-                    //Gdx.app.log("Radider erzeugt", "");
+                    allEnemy.add(EnemyGenerator.generateEnemy(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,object.getProperties().get("typ").toString()));
+                    Gdx.app.log("Raider erzeugt", "");
                 }
             }
             // Erzeugen von Schatztruhen
@@ -159,14 +154,12 @@ public class B2WorldCreator {
                 }
             }
         }
-        catch(Exception e){
-            Gdx.app.log("Error:",e.getMessage());
-        }
-    }
-    public Array<Raider> getAllRaider(){ return allRaider;}
+
+
+    public Array<Enemy> getAllEnemies(){ return allEnemy;}
     public Array<Schatztruhe> getAllSchatztruhen(){ return allSchatztruhen;}
-    public void removeRaider(Raider raider){
-        allRaider.removeValue(raider,true);
+    public void removeEnemy(Enemy enemy){
+        allEnemy.removeValue(enemy,true);
     }
     public Array<Gebietswechsel> getAllAusgang() {
         return allAusgang;

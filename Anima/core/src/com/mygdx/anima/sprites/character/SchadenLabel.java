@@ -26,13 +26,12 @@ public class SchadenLabel extends BitmapFont {
     private float timer;
     private String schaden;
         public SchadenLabel(int schaden, HumanoideSprites getroffener,Vector2 treffender){
-            //super("Blabla123",skin);
             super(Gdx.files.internal("ui-skin/damageLabel.fnt"));
-            //super();
             this.schaden = String.valueOf(schaden);
             if(getroffener instanceof Held)
-            {
-                this.setColor(Color.RED);
+            {   this.setColor(Color.RED);
+            }else if(schaden<0){
+                this.setColor(Color.FOREST);
             }else{
                 this.setColor(Color.WHITE);
             }

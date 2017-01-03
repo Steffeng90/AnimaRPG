@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -27,9 +25,8 @@ import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
-import com.mygdx.anima.sprites.character.enemies.Raider;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
@@ -87,7 +84,7 @@ public class Playscreen implements Screen{
 
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
-        // b2dr = new Box2DDebugRenderer();
+        b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         spieler = new Held(this,spielerPosition);
         controller = new Controller(game);
@@ -180,7 +177,7 @@ public class Playscreen implements Screen{
         //karte rendern
         renderer.render();
         // Render-Linien
-        // b2dr.render(world, gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
         //Zeigt den Controller nur bei Android an:
         //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
@@ -188,8 +185,8 @@ public class Playscreen implements Screen{
 
         game.batch.begin();
 
-        //Raider erzeugen
-        for (Enemy enemy : creator.getAllRaider()) {
+        //Enemies malen
+       for (Enemy enemy : creator.getAllEnemies()) {
             enemy.draw(game.batch);
         }
         for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
@@ -202,13 +199,13 @@ public class Playscreen implements Screen{
         }
         if (Zauber.getAllZauber().size > 0) {
 
-            for (Zauber zauber : Zauber.getAllZauber()) {
+            for (Zauber zauber : Nova.getAllZauber()) {
                 if (!zauber.destroyed) {
                     zauber.draw(game.batch);
                 }
             }
         }
-       /* for (Gebietswechsel gebietswechsel : creator.getAllAusgang()) {
+        /*for (Gebietswechsel gebietswechsel : creator.getAllAusgang()) {
             gebietswechsel.draw(game.batch);
         }*/
         spieler.draw(game.batch);
@@ -312,8 +309,8 @@ public class Playscreen implements Screen{
                 spieler.b2body.setLinearVelocity(0, -spieler.getGeschwindigkeitLaufen()/10);
                 spieler.setCurrentRichtung(3);
             } else {
-                //if (spieler.b2body != null)
-                //    spieler.b2body.setLinearVelocity(0, 0);
+                /*if (spieler.b2body != null)
+                    spieler.b2body.setLinearVelocity(0, 0);*/
             }
         }
     }
@@ -327,12 +324,12 @@ public class Playscreen implements Screen{
                     gamecam.position.set(spieler.b2body.getPosition(), 0);
                     kartenManager.justiereCam(gamecam);
                 }
-                for (Enemy enemy : creator.getAllRaider()) {
+                for (Enemy enemy : creator.getAllEnemies()) {
                     if (!enemy.destroyed) {
                         kartenManager.isEnemyinRange(enemy);
                         enemy.update(spieler, dt);
                     } else {
-                        creator.removeRaider((Raider) enemy);
+                        creator.removeEnemy(enemy);
                     }
                 }
                 for (Schatztruhe truhe : creator.getAllSchatztruhen()) {
@@ -349,7 +346,7 @@ public class Playscreen implements Screen{
                     }
                 }
 
-                for (Zauber zauber : Zauber.getAllZauber()) {
+                for (Zauber zauber : Nova.getAllZauber()) {
                     if (!zauber.destroyed) {
                         zauber.update(dt);
                     } else {
@@ -378,10 +375,10 @@ public class Playscreen implements Screen{
         world.dispose();
         renderer.dispose();
         kartenManager.getMap().dispose();
-        itemWindow.dispose();
-        levelUpWindow.dispose();
+        //itemWindow.dispose();
+        //levelUpWindow.dispose();
         anzeige.dispose();
-        // b2dr.dispose();
+        b2dr.dispose();
         controller.dispose();
     }
     //Getter und Setter, selbstgeschrieben

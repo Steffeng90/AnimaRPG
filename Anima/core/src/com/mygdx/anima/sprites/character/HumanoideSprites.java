@@ -46,7 +46,7 @@ public class HumanoideSprites extends Sprite {
     public boolean meleeExists, castExists;
     public boolean runMeleeAnimation,istHeld,runArchery,runCasting,hitByFeedback;
     public boolean runDying,dead,destroyed;
-    public float hitdauer,wertHeld=0.07f,wertEnemy=0.2f;
+    public float hitdauer,wertHeld=0.07f;
 
     //Einstellungen
     private int currentHitpoints,maxHitpoints,currentMana,maxMana,regMana,regHitpoints,
@@ -56,9 +56,25 @@ public class HumanoideSprites extends Sprite {
     public int breite;
     public int hoehe;
     public static int framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13;
+    public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
 
-    public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
+    //Konstruktor für Enemies
+    public HumanoideSprites(Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,int boundsX,int boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
         this.world = screen.getWorld();
+        setMaxHitpoints(maxhp);
+        setMaxMana(maxmana);
+        setRegMana(regMana);
+        geschwindigkeitLaufen=speed;
+        this.schadenNah=schadenNah;
+        this.schadenFern=schadenfern;
+        this.schadenZauber=schadenzauber;
+        this.ruestung=ruestung;
+        this.bowSpeed=bowSpeed;
+        this.meleeSpeed=meleeSpeed;
+        this.castSpeed=castSpeed;
+        this.thrustSpeed=thrustSpeed;
+
+        istHeld=false;
         currentState = State.STANDING;
         previousState = State.STANDING;
         currentRichtung = Richtung.Unten;
@@ -66,20 +82,35 @@ public class HumanoideSprites extends Sprite {
         runMeleeAnimation=false;
         runDying=false;
         meleeExists=false;
-
-        if(istHeld)
-            hitdauer=wertHeld;
-        else{ hitdauer=wertEnemy;}
-
-        //Spritebreite
         breite=64;
         hoehe=64;
-
-        //Animationen erstellen
-        updateTextures(quelle);
-        setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-        setRegion(standingDownSprite);
+        setBounds(0, 0, boundsX / AnimaRPG.PPM, boundsY/ AnimaRPG.PPM);
+        //setRegion(standingDownSprite);
     }
+
+    //Konstruktor für Held
+    public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
+        this.world = screen.getWorld();
+        this.istHeld=istHeld;
+
+        currentState = State.STANDING;
+        previousState = State.STANDING;
+        currentRichtung = Richtung.Unten;
+        stateTimer = 0;
+        runMeleeAnimation=false;
+        runDying=false;
+        meleeExists=false;
+        breite=64;
+        hoehe=64;
+            hitdauer=wertHeld;
+            //Animationen erstellen
+            updateTextures(quelle);
+            setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+            setRegion(standingDownSprite);
+            }
+        //Spritebreite
+
+
     public void updateTextures(String quelle){
         spriteQuelle = new Texture(quelle);
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -172,10 +203,11 @@ public class HumanoideSprites extends Sprite {
         frames.clear();
         Died=new TextureRegion(spriteQuelle,320,1280,breite,hoehe);
         standingDownSprite = new TextureRegion(spriteQuelle, 0, 640, breite, hoehe);
-        standingUpSprite = new TextureRegion(spriteQuelle, 0, 512, breite, hoehe);
-        standingLeftSprite = new TextureRegion(spriteQuelle, 0, 576, breite, hoehe);
+        standingUpSprite = new TextureRegion(spriteQuelle, 0,512, breite, hoehe);
+        standingLeftSprite = new TextureRegion(spriteQuelle, 0, 577, breite, hoehe);
         standingRightSprite = new TextureRegion(spriteQuelle, 0, 704, breite, hoehe);
         setRegion(standingDownSprite);
+
     }
     public TextureRegion getFrame(float dt) {
         currentState = getState();
@@ -292,22 +324,22 @@ public class HumanoideSprites extends Sprite {
                     case Links:
                         region = LeftCast.getKeyFrame(stateTimer, true);
                         if(LeftCast.isAnimationFinished(stateTimer)){
-                            runCasting=false; Gdx.app.log("Cast auf false setzen","");}
+                            runCasting=false;}
                         break;
                     case Rechts:
                         region = RightCast.getKeyFrame(stateTimer, true);
                         if(RightCast.isAnimationFinished(stateTimer)){
-                            runCasting=false;Gdx.app.log("Cast auf false setzen","");}
+                            runCasting=false;}
                         break;
                     case Oben:
                         region = UpCast.getKeyFrame(stateTimer, true);
                         if(UpCast.isAnimationFinished(stateTimer)){
-                            runCasting=false;Gdx.app.log("Cast auf false setzen","");}
+                            runCasting=false;}
                         break;
                     case Unten:
                         region = DownCast.getKeyFrame(stateTimer, true);
                         if(DownCast.isAnimationFinished(stateTimer)){
-                            runCasting=false;Gdx.app.log("Cast auf false setzen","");}
+                            runCasting=false;}
                         break;
                     default:
                         region = standingDownSprite;
@@ -378,17 +410,16 @@ public class HumanoideSprites extends Sprite {
         for(Fixture fix:b2body.getFixtureList()){
             Filter filter=fix.getFilterData();
             filter.categoryBits=AnimaRPG.NOTHING_BIT;
-            fix.setFilterData(filter);
-            Gdx.app.log("Fixture auf Nothing gesetzt",""+fix.getFilterData().categoryBits);}
+            fix.setFilterData(filter);}
         runDying=true;
     }
 
 
     public void update(float dt){
-
-        if(getCurrentRichtung()!=getPreviousRichtung() && !destroyed)
+        if(getCurrentRichtung()!=getPreviousRichtung() && !destroyed) {
             sensorAnpassen();
-    }
+        }
+        }
     public void setCurrentRichtung(int richtung) {
         previousRichtung=currentRichtung;
         switch (richtung) {
@@ -409,9 +440,8 @@ public class HumanoideSprites extends Sprite {
         }
     }
 
-    public void createSensor(Boolean istHeldtemp){
+    public void createSensor(){
         sensorCircleShape = new CircleShape();
-        this.istHeld=istHeldtemp;
         sensorCircleShape.setRadius(4 / AnimaRPG.PPM);
         Vector2 sensorRichtungsVector;
         switch (getCurrentRichtung()) {
@@ -434,7 +464,7 @@ public class HumanoideSprites extends Sprite {
         }
         sensorCircleShape.setPosition(sensorRichtungsVector);
         FixtureDef fdefSensor = new FixtureDef();
-        if(istHeld) {
+        if(this.istHeld) {
             fdefSensor.filter.categoryBits = AnimaRPG.HERO_SENSOR;
             fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT;
         }
@@ -469,7 +499,7 @@ public class HumanoideSprites extends Sprite {
         }
         sensorCircleShape.setPosition(richtungsVector);
         FixtureDef fdefSensor = new FixtureDef();
-        if(istHeld) {
+        if(this.istHeld) {
             fdefSensor.filter.categoryBits = AnimaRPG.HERO_SENSOR;
             fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT;
         }
@@ -511,11 +541,19 @@ public class HumanoideSprites extends Sprite {
     }
 
     public void setCurrentMana(int currentMana) {
+        Gdx.app.log("Übergeben:",""+currentMana);
+
         if (currentMana <= 0) {
+            Gdx.app.log("11111:",""+currentMana);
+
             this.currentMana = 0;
         } else if (currentMana > maxMana) {
+            Gdx.app.log("22222:",""+currentMana);
+
             this.currentMana = maxMana;
         } else {
+            Gdx.app.log("33333:",""+currentMana);
+
             this.currentMana = currentMana;
         }
     }
@@ -524,8 +562,10 @@ public class HumanoideSprites extends Sprite {
     }
 
     public void setMaxMana(int maxMana) {
-        setCurrentMana(getCurrentMana()+(maxMana-this.maxMana));
         this.maxMana = maxMana;
+        setCurrentMana(maxMana);
+
+        Gdx.app.log("ManaMax:"+this.maxMana,"Current:"+this.currentMana);
     }
 
     public int getRegMana() {

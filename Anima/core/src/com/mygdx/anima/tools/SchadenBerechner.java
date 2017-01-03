@@ -23,18 +23,17 @@ public class SchadenBerechner {
                 verursachterSchaden=verursacher.getSchadenFern()-(erleidender.getRuestung()/3); break;
             case 3: //Zauberschaden
                 verursachterSchaden=verursacher.getSchadenZauber()-erleidender.getZauberwiderstand(); break;
+            case 4: //Heilung
+                verursachterSchaden=-(int)(verursacher.getSchadenZauber()*1.5); break;
             default: verursachterSchaden=2;break;
         }
-        if(verursachterSchaden<2)
-        {
-            verursachterSchaden=2;
+        if(verursachterSchaden<2 &&verursachterSchaden>=0) {
+            verursachterSchaden = 2;
         }
-            Gdx.app.log("Wert","SCahden da:"+verursachterSchaden);
         if(erleidender!=null){
             Gdx.app.log("Wert","erleidender da");
 
-        }//if(held.b2body!=null){
-            Gdx.app.log("Wert","Body da");
+        }
 
 //        Gdx.app.log("Wert",""+verursachterSchaden+" "+ erleidender.toString()+"body:"+ held.b2body.getPosition());
         new SchadenLabel(verursachterSchaden,erleidender,getHeld().b2body.getPosition());

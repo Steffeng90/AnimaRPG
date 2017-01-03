@@ -87,8 +87,7 @@ public class AnzeigenDisplay implements Disposable {
     @Override
     public void dispose()
         {
-        stage.dispose();
-        this.dispose();}
+        stage.dispose();}
     public void resize(int width,int height){
           viewport.update(width,height);
         }

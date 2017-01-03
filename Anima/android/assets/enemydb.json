@@ -1,0 +1,6 @@
+﻿{"enemy":[
+  {"id":"raider-1","kategorie":1,"maxhp":"30","maxmana":0,"regMana":0,"ep":10,"speed":5,"schadenNah":5,"schadenfern":0,"schadenzauber":0,"ruestung":4,"boundsX":42,"boundsY":42,"castSpeed":0,"bowSpeed":0,"meleeSpeed":1,"thrustSpeed":0},
+  {"id":"raider-2","kategorie":2,"maxhp":"25","maxmana":0,"regMana":0,"ep":14,"speed":5,"schadenNah":0,"schadenfern":10,"schadenzauber":0,"ruestung":2,"boundsX":42,"boundsY":42,"castSpeed":0,"bowSpeed":3,"meleeSpeed":0,"thrustSpeed":0},
+  {"id":"raider-3","kategorie":3,"maxhp":"15","maxmana":20,"regMana":1,"ep":12,"speed":3,"schadenNah":0,"schadenfern":0,"schadenzauber":10,"ruestung":4,"boundsX":42,"boundsY":42,"castSpeed":1,"bowSpeed":0,"meleeSpeed":0,"thrustSpeed":0}
+]
+}

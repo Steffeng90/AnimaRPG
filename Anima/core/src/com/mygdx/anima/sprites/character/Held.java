@@ -6,19 +6,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
 import com.mygdx.anima.sprites.character.items.InventarList;
 import com.mygdx.anima.tools.SchadenBerechner;
 
 import static com.mygdx.anima.AnimaRPG.setHeld;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -35,7 +33,7 @@ public class Held extends HumanoideSprites{
     spriteStock="character/female_stock.png",
     spriteSword="character/female_sword.png",
     spriteBogen="character/female_bogen.png";
-    public boolean isHit;
+    public boolean isHitbyMelee,isHitbyBow,isHitbyCast,isHitbyThrust;
     public Enemy treffenderEnemy;
     private InventarList heldenInventar;
     //Dieser Wert wird über Methoden übergeben, um den Held neu zu positionieren, bei Kartenwechsel
@@ -93,22 +91,22 @@ public class Held extends HumanoideSprites{
         characterTimer=0;
         setHeld(this);
 }
-    public TextureRegion getFrame(float dt) {
+   /* public TextureRegion getFrame(float dt) {
         return super.getFrame(dt);
-    }
+    }*/
     public void createHeroBody(Vector2 heldPosition){
         BodyDef bdef=new BodyDef();
         bdef.position.set(heldPosition);
         bdef.type=BodyDef.BodyType.DynamicBody;
         b2body=world.createBody(bdef);
-        createSensor(true);
+        createSensor();
         FixtureDef fdef=new FixtureDef();
         CircleShape shape=new CircleShape();
         shape.setRadius(7/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
         fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
-                | AnimaRPG.ARROW_BIT;
+                | AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
     }
@@ -127,9 +125,10 @@ public class Held extends HumanoideSprites{
             genugEP=false;
             stufenAufstieg();
         }
-        if(isHit){
-            getsHit(treffenderEnemy);
-            isHit=false;}
+        if(isHitbyMelee){getsHitbyMelee(treffenderEnemy);isHitbyMelee=false;}
+        if(isHitbyBow){getsHitbyBow(treffenderEnemy);isHitbyBow=false;}
+        if(isHitbyCast){getsHitbyCast(treffenderEnemy);isHitbyCast=false;}
+        if(isHitbyThrust){getsHitbyThrust(treffenderEnemy);isHitbyThrust=false;}
         if(!runMeleeAnimation && meleeExists){
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;}
@@ -187,7 +186,7 @@ public class Held extends HumanoideSprites{
     {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
         Gdx.app.log("MinusMAna","");
         setCurrentMana(getCurrentMana()-5);
-        new Zauber(this);}
+        new Nova(this);}
     }
     public void bowAttack()
     {   if(currentState==State.STANDING |currentState==State.WALKING)
@@ -215,7 +214,7 @@ public class Held extends HumanoideSprites{
                 startVector = new Vector2(0, 0);
                 flugVector = new Vector2(10, 10);break;
         }
-        new Arrow(world,screen,currentRichtung,startVector,flugVector);
+        new Arrow(world,screen,currentRichtung,startVector,flugVector,this);
     }}
     public void setObject(boolean inReichweite,InteraktivesObjekt io){
         objectInReichweite=inReichweite;
@@ -231,11 +230,18 @@ public class Held extends HumanoideSprites{
     public void spriteBogen(){
         updateTextures(spriteBogen);
     }
-    public void getsHit(Enemy enemy){
-        getsDamaged(1,enemy);
+    public void getsHitbyMelee(Enemy enemy){
+        if(enemy!=null){getsDamaged(1,enemy);}
+    }
+    public void getsHitbyBow(Enemy enemy){getsDamaged(2,enemy);}
+    public void getsHitbyCast(Enemy enemy){
+        getsDamaged(3,enemy);
+    }
+    public void getsHitbyThrust(Enemy enemy){
+        getsDamaged(4,enemy);
     }
     public void getsDamaged(int schadensTyp,Enemy enemy){
-        int verursachterSchaden;
+        if(enemy==null){Gdx.app.log("Gegner ist null","");}
         SchadenBerechner.berechneSchaden(schadensTyp,this,enemy);
     }
     //die Methode prüft, ob gerade eine Aktion oder Animation ausgeführt wird und gibt Boolean zurück
@@ -244,11 +250,9 @@ public class Held extends HumanoideSprites{
             return true;
         return false;
     }
-
     public InventarList getHeldenInventar() {
         return heldenInventar;
     }
-
 
     //Getter und Setter für alle Attribute
     public void setHeldenInventar(InventarList heldenInventar) {
@@ -257,8 +261,6 @@ public class Held extends HumanoideSprites{
     public TextureRegion getProfilbild(){
         return standingDownSprite;
     }
-
-
 
     public synchronized int getCurrentErfahrung() {
         return currentErfahrung;

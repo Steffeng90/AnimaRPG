@@ -92,10 +92,6 @@ public class ItemGenerator {
         }
         return new ItemSprite(screen, x, y, vector, itemName);
     }
-    private static Itemtyp setItemID(String type) {
-        return Itemtyp.valueOf(type);
-
-    }
 
 
     }

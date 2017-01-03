@@ -81,7 +81,7 @@ public class Menu implements Screen {
         reiterTable.setPosition(0, height);
         //Button erzeugen
         TextButton charakterReiterButton= new TextButton("Charakter", skin);
-        TextButton skillReiterButton= new TextButton("Zauber & Talente", skin);
+        TextButton skillReiterButton= new TextButton("Nova & Talente", skin);
         TextButton inventarReiterButton= new TextButton("Ausruestung", skin);
         TextButton nutzbareItemsReiterButton= new TextButton("Benutzbar", skin);
 

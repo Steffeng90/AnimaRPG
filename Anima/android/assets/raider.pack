@@ -1,0 +1,68 @@
+
+raider.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+raider-1-melee
+  rotate: false
+  xy: 1, 649
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+raider-1-walk
+  rotate: false
+  xy: 1, 391
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+raider-2-bow
+  rotate: false
+  xy: 835, 649
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+raider-2-walk
+  rotate: false
+  xy: 1, 133
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+raider-3-cast
+  rotate: false
+  xy: 835, 391
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+raider-3-walk
+  rotate: false
+  xy: 835, 133
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+raider-1-die
+  rotate: false
+  xy: 1, 67
+  size: 832, 64
+  orig: 832, 64
+  offset: 0, 0
+  index: -1
+raider-2-die
+  rotate: false
+  xy: 1, 1
+  size: 832, 64
+  orig: 832, 64
+  offset: 0, 0
+  index: -1
+raider-3-die
+  rotate: false
+  xy: 835, 67
+  size: 832, 64
+  orig: 832, 64
+  offset: 0, 0
+  index: -1

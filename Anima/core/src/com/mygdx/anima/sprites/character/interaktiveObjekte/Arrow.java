@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 
 /**
@@ -29,6 +30,7 @@ public class Arrow extends Sprite {
     public Body b2body;
     public Vector2 startVector,flugVector;
     public HumanoideSprites.Richtung richtung;
+    public HumanoideSprites erzeuger;
     Fixture arrowFixture;
     public boolean setToDestroy,destroyed;
     TextureRegion pfeilLinks,pfeilRechts,pfeilUp,pfeilDown;
@@ -38,13 +40,14 @@ public class Arrow extends Sprite {
 
 
 
-    public Arrow(World world, Playscreen screen, HumanoideSprites.Richtung richtung,Vector2 startVector,Vector2 flugVector) {
+    public Arrow(World world, Playscreen screen, HumanoideSprites.Richtung richtung,Vector2 startVector,Vector2 flugVector,HumanoideSprites erzeuger) {
         super();
         this.world=world;
         this.screen=screen;
         this.richtung = richtung;
         this.startVector=startVector;
         this.flugVector=flugVector;
+        this.erzeuger=erzeuger;
         setToDestroy=false;
         destroyed=false;
         laenge=8;breite=2;
@@ -71,7 +74,13 @@ public class Arrow extends Sprite {
         }
         FixtureDef fdefAttack = new FixtureDef();
         fdefAttack.filter.categoryBits = AnimaRPG.ARROW_BIT;
-        fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT| AnimaRPG.GEBIETSWECHSEL_BIT;
+        if(erzeuger instanceof Held) {
+            fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.GEBIETSWECHSEL_BIT;
+        }
+        else{
+            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.GEBIETSWECHSEL_BIT;
+
+        }
         fdefAttack.shape = shape;
         arrowFixture = b2body.createFixture(fdefAttack);
         arrowFixture.setUserData(this);
