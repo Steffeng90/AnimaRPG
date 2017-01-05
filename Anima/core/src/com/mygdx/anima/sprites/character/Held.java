@@ -45,7 +45,7 @@ public class Held extends HumanoideSprites{
     private int schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,staerke,
     geschick,zauberkraft,currentErfahrung,currentLevel,nextLevelUp;
 
-    float characterTimer;
+
 
     public Held(Playscreen screen,Vector2 spielerPosition)
     {
@@ -71,7 +71,7 @@ public class Held extends HumanoideSprites{
             // Gdx.app.log("Stufe "+i+" EPWert:",""+erfahrungsstufen[i]);
         }
 
-        setMaxHitpoints(125);
+        setMaxHitpoints(1000);
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
         setCurrentMana(getMaxMana());
@@ -83,12 +83,12 @@ public class Held extends HumanoideSprites{
         setStaerke(10);
         setGeschick(12);
         setZauberkraft(8);
-        setSchadenNah();
-        setSchadenFern();
-        setSchadenZauber(15);
-        setRuestung();
+        setSchadenNah(10);
+        setSchadenFern(10);
+        setSchadenZauber(12);
+        setRuestung(3);
         setZauberwiderstand(11);
-        characterTimer=0;
+        regenerationTimer=0;
         setHeld(this);
 }
    /* public TextureRegion getFrame(float dt) {
@@ -112,13 +112,7 @@ public class Held extends HumanoideSprites{
     }
     public void update(float dt)
     {
-        characterTimer+=dt;
         setSpielzeit(dt);
-        if(characterTimer>=3 && getCurrentMana()<getMaxMana()){
-            Gdx.app.log("PlusMAna","");
-
-            setCurrentMana(getCurrentMana()+getRegMana());
-            characterTimer=0;}
         super.update(dt);
         setRegion(getFrame(dt));
         if(genugEP){
@@ -129,12 +123,9 @@ public class Held extends HumanoideSprites{
         if(isHitbyBow){getsHitbyBow(treffenderEnemy);isHitbyBow=false;}
         if(isHitbyCast){getsHitbyCast(treffenderEnemy);isHitbyCast=false;}
         if(isHitbyThrust){getsHitbyThrust(treffenderEnemy);isHitbyThrust=false;}
-        if(!runMeleeAnimation && meleeExists){
-            b2body.destroyFixture(meleeFixture);
-            meleeExists=false;}
         if(!runCasting && castExists){
             castExists=false;}
-        if(!destroyed)
+        else if(!destroyed)
             setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
     }
     public Richtung getCurrentRichtung(){
@@ -147,8 +138,8 @@ public class Held extends HumanoideSprites{
     public void meleeAttack()
     {   if(!meleeExists && !runMeleeAnimation && !runArchery && !runCasting) {
        // updateTextures(spriteSword);
-        CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(15 / AnimaRPG.PPM);
+       // CircleShape circleShape = new CircleShape();
+        //circleShape.setRadius(15 / AnimaRPG.PPM);
         Vector2 richtungsVector;
 
         switch (getCurrentRichtung()) {
@@ -171,7 +162,9 @@ public class Held extends HumanoideSprites{
                 break;
 
         }
-        circleShape.setPosition(richtungsVector);
+        meleeFixtureDefinieren(richtungsVector);
+        // TODO ALle FixturesErzeugungenn (Melee,Bow, Cast und Thrust, in HumanoideSprites als Methode auslagern.
+        /*circleShape.setPosition(richtungsVector);
         FixtureDef fdefAttack = new FixtureDef();
         fdefAttack.filter.categoryBits = AnimaRPG.HERO_WEAPON_BIT;
         fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;
@@ -180,7 +173,7 @@ public class Held extends HumanoideSprites{
         meleeFixture = b2body.createFixture(fdefAttack);
         meleeFixture.setUserData(this);
         runMeleeAnimation = true;
-        meleeExists= true;
+        meleeExists= true;*/
     }}
     public void castAttack()
     {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
@@ -193,28 +186,28 @@ public class Held extends HumanoideSprites{
         {
         runArchery= true;
 
-        Vector2 startVector, flugVector;
+        // Vector2 startVector, flugVector;
         Vector2 koerper=b2body.getPosition();
         switch (getCurrentRichtung()) {
             //Hier sind bei Y immer schon mind. -5 Abzug, weil man es ein bisschen nach unten ziehen muss, um die Mitte der Bodentexture und nicht
             // die der Grafikmitte zu treffen
             case Rechts:
-                startVector = new Vector2(koerper.x+20 / AnimaRPG.PPM,koerper.y -8 / AnimaRPG.PPM);
-                flugVector = new Vector2(200 / AnimaRPG.PPM, 0);break;
+                arrowStartVector = new Vector2(koerper.x+20 / AnimaRPG.PPM,koerper.y -8 / AnimaRPG.PPM);
+                arrowFlugVector = new Vector2(200 / AnimaRPG.PPM, 0);break;
             case Links:
-                startVector = new Vector2(koerper.x-20 / AnimaRPG.PPM,koerper.y-8 / AnimaRPG.PPM);
-                flugVector = new Vector2(-200 / AnimaRPG.PPM, 0);break;
+                arrowStartVector = new Vector2(koerper.x-20 / AnimaRPG.PPM,koerper.y-8 / AnimaRPG.PPM);
+                arrowFlugVector = new Vector2(-200 / AnimaRPG.PPM, 0);break;
             case Oben:
-                startVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
-                flugVector = new Vector2(0, 200 / AnimaRPG.PPM);break;
+                arrowStartVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
+                arrowFlugVector = new Vector2(0, 200 / AnimaRPG.PPM);break;
             case Unten:
-                startVector = new Vector2(koerper.x,koerper.y -33 / AnimaRPG.PPM);
-                flugVector = new Vector2(0, -200 / AnimaRPG.PPM);break;
+                arrowStartVector = new Vector2(koerper.x,koerper.y -33 / AnimaRPG.PPM);
+                arrowFlugVector = new Vector2(0, -200 / AnimaRPG.PPM);break;
             default:
-                startVector = new Vector2(0, 0);
-                flugVector = new Vector2(10, 10);break;
+                arrowStartVector = new Vector2(0, 0);
+                arrowFlugVector = new Vector2(10, 10);break;
         }
-        new Arrow(world,screen,currentRichtung,startVector,flugVector,this);
+        // new Arrow(world,screen,currentRichtung,startVector,flugVector,this);
     }}
     public void setObject(boolean inReichweite,InteraktivesObjekt io){
         objectInReichweite=inReichweite;

@@ -45,14 +45,6 @@ public class RaiderArcher extends Enemy
         super.update(hero,dt);
 
     }
-    public void create(){
-        super.create();
-    }
-    public void setCurrentRichtung(int richtung)
-    {
-        super.setCurrentRichtung(richtung);
-    }
-
     public void coordinateWalking(Held hero, float dt){
         if(((getX()-hero.getX())<0.05f && (getX()-hero.getX())>-0.05f)|| ((getY()-hero.getY())<0.05f && (getY()-hero.getY())>-0.05f)) {
             velocity.x = 0;
@@ -120,93 +112,39 @@ public class RaiderArcher extends Enemy
         velocity.x=v2.x/10;
         velocity.y=v2.y/10;
     }
-    public void getsHit(){ getsDamaged(2);};
     @Override
     public void attack()
         {   if(currentState==State.STANDING |currentState==State.WALKING)
-        {
-            runArchery= true;
-
-            Vector2 startVector, flugVector;
+        {runArchery= true;
+           // Vector2 startVector, flugVector;
             Vector2 koerper=b2body.getPosition();
             switch (getCurrentRichtung()) {
                 //Hier sind bei Y immer schon mind. -5 Abzug, weil man es ein bisschen nach unten ziehen muss, um die Mitte der Bodentexture und nicht
                 // die der Grafikmitte zu treffen
                 case Rechts:
-                    startVector = new Vector2(koerper.x+20 / AnimaRPG.PPM,koerper.y -8 / AnimaRPG.PPM);
-                    flugVector = new Vector2(200 / AnimaRPG.PPM, 0);break;
+                    arrowStartVector = new Vector2(koerper.x+20 / AnimaRPG.PPM,koerper.y -8 / AnimaRPG.PPM);
+                    arrowFlugVector = new Vector2(200 / AnimaRPG.PPM, 0);break;
                 case Links:
-                    startVector = new Vector2(koerper.x-20 / AnimaRPG.PPM,koerper.y-8 / AnimaRPG.PPM);
-                    flugVector = new Vector2(-200 / AnimaRPG.PPM, 0);break;
+                    arrowStartVector = new Vector2(koerper.x-20 / AnimaRPG.PPM,koerper.y-8 / AnimaRPG.PPM);
+                    arrowFlugVector = new Vector2(-200 / AnimaRPG.PPM, 0);break;
                 case Oben:
-                    startVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
-                    flugVector = new Vector2(0, 200 / AnimaRPG.PPM);break;
+                    arrowStartVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
+                    arrowFlugVector = new Vector2(0, 200 / AnimaRPG.PPM);break;
                 case Unten:
-                    startVector = new Vector2(koerper.x,koerper.y -33 / AnimaRPG.PPM);
-                    flugVector = new Vector2(0, -200 / AnimaRPG.PPM);break;
+                    arrowStartVector = new Vector2(koerper.x,koerper.y -33 / AnimaRPG.PPM);
+                    arrowFlugVector = new Vector2(0, -200 / AnimaRPG.PPM);break;
                 default:
-                    startVector = new Vector2(0, 0);
-                    flugVector = new Vector2(10, 10);break;
+                    arrowStartVector = new Vector2(0, 0);
+                    arrowFlugVector = new Vector2(10, 10);break;
             }
-            new Arrow(world,screen,currentRichtung,startVector,flugVector,this);
+           // new Arrow(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
         }}
 
-    public void getsHit(Held hero){
-        vonFeedbackbetroffen=true;
-        getsDamaged(1);
-        //Links
-        float feedback=1.5f;
-        if(hero.getX()<getX() ){
-            // Runter
-            if(hero.getY()<getY()){
-                changeVelocity(new Vector2(feedback,feedback));
-            }
-            // Hoch
-            else{
-                changeVelocity(new Vector2(feedback,-feedback));
-            }}
-        // Rechts
-        else {
-            // Runter
-            if (hero.getY() < getY()) {
-                changeVelocity(new Vector2(-feedback,feedback));
-            }
-            // Hoch
-            else{
-                changeVelocity(new Vector2(-feedback,-feedback));
-            }
-        }
-    }
-    public void readyToDie(){
-        super.readyToDie();
-    }
-    public void draw(Batch batch){
-        if(!dead || stateTimer< 3)
-            super.draw(batch);
-    }
     @Override
     public void createSensor(){
         bowSensor= new PolygonShape();
-        bowSensor.setAsBox(8/AnimaRPG.PPM,200/AnimaRPG.PPM);
+        bowSensor.setAsBox(10/AnimaRPG.PPM,200/AnimaRPG.PPM);
         Vector2 sensorRichtungsVector;
-        switch (getCurrentRichtung()) {
-            case Rechts:
-                sensorRichtungsVector = new Vector2(5 / AnimaRPG.PPM, -8 / AnimaRPG.PPM);
-                break;
-            case Links:
-                sensorRichtungsVector = new Vector2(-5 / AnimaRPG.PPM, -8 / AnimaRPG.PPM);
-                break;
-            case Oben:
-                sensorRichtungsVector = new Vector2(0, 5 / AnimaRPG.PPM);
-                break;
-            case Unten:
-                sensorRichtungsVector = new Vector2(0, -5 / AnimaRPG.PPM);
-                break;
-            default:
-                sensorRichtungsVector = new Vector2(0, 0);
-                break;
-
-        }
         FixtureDef fdefSensor = new FixtureDef();
             fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;
             fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT;
@@ -223,16 +161,14 @@ public class RaiderArcher extends Enemy
         b2body.destroyFixture(sensorFixture);
         switch (getCurrentRichtung()) {
             case Rechts:
-            case Links:bowSensor.setAsBox(200/AnimaRPG.PPM,8/AnimaRPG.PPM);
+            case Links:bowSensor.setAsBox(200/AnimaRPG.PPM,10/AnimaRPG.PPM);
                 break;
             case Oben:
-            case Unten:bowSensor.setAsBox(8/AnimaRPG.PPM,200/AnimaRPG.PPM);
+            case Unten:bowSensor.setAsBox(10/AnimaRPG.PPM,200/AnimaRPG.PPM);
                 break;
             default:
                 break;
         }
-
-
         FixtureDef fdefSensor = new FixtureDef();
             fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;
             fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT;

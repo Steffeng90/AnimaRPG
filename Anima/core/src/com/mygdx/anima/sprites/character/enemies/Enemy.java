@@ -2,6 +2,7 @@ package com.mygdx.anima.sprites.character.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -28,7 +29,12 @@ import static jdk.nashorn.internal.objects.NativeString.substring;
 
 public abstract class Enemy extends HumanoideSprites{
 
-    public boolean enemyInReichweite,vonFeedbackbetroffen, zaubereHeilung;;
+    public boolean
+            // enemyInReichweite, wird true, wenn Held den ENEMY_ATTACK_SENSOR betritt
+            enemyInReichweite,vonFeedbackbetroffen,
+    // enemyNear, wird true, wenn Held den ENEMY_HEAL_SENSOR betritt
+
+            enemyNear;
     public int erfahrung;
     public String quelle;
     public TextureAtlas atlas;
@@ -87,7 +93,6 @@ public abstract class Enemy extends HumanoideSprites{
 
     public void update(Held hero, float dt){
         super.update(dt);
-
         if(!runMeleeAnimation && meleeExists){
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;
@@ -96,7 +101,6 @@ public abstract class Enemy extends HumanoideSprites{
             attack();
         }
         setRegion(getFrame(dt));
-
     }
     public void readyToDie(){super.readyToDie();
         giveErfahrung();
@@ -238,7 +242,8 @@ public abstract class Enemy extends HumanoideSprites{
                 break;
 
         }
-        circleShape.setPosition(richtungsVector);
+        meleeFixtureDefinieren(richtungsVector);
+/*        circleShape.setPosition(richtungsVector);
         FixtureDef fdefAttack = new FixtureDef();
         fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
         fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT;
@@ -247,12 +252,18 @@ public abstract class Enemy extends HumanoideSprites{
         meleeFixture = this.b2body.createFixture(fdefAttack);
         meleeFixture.setUserData(this);
         runMeleeAnimation = true;
-        meleeExists = true;
+        meleeExists = true;*/
     }
     public void changeVelocity(Vector2 v2){
+
         velocity.x+=v2.x;
         velocity.y+=v2.y;
+        /*if(velocity.x>=getGeschwindigkeitLaufen()/10){velocity.x=getGeschwindigkeitLaufen()/10;}
+        else if(velocity.x<=-getGeschwindigkeitLaufen()/10){velocity.x=-getGeschwindigkeitLaufen()/10;}
+        if(velocity.y>=getGeschwindigkeitLaufen()/10){velocity.y=getGeschwindigkeitLaufen()/10;}
+        else if(velocity.y<=-getGeschwindigkeitLaufen()/10){velocity.y=-getGeschwindigkeitLaufen()/10;}*/
     }
+
     public void getsHitbySpell(Zauber z) {
         if (z instanceof Nova) {
             vonFeedbackbetroffen = true;
@@ -274,8 +285,42 @@ public abstract class Enemy extends HumanoideSprites{
         } else if (z instanceof HeilzauberAOE){
             getsHealed(z);        }
     }
-    public abstract void getsHit();
-    public abstract void getsHit(Held hero);
+    public void getsHitbyBow(){
+        getsDamaged(2);
+    }
+    public void getsHitbySword(Held hero){
+        vonFeedbackbetroffen = true;
+        hitByFeedback = true;
+
+        getsDamaged(1);
+        //Links
+        float feedback = 3f;
+        if (hero.getX() < getX()) {
+            // Runter
+            if (hero.getY() < getY()) {
+                changeVelocity(new Vector2(feedback, feedback));
+            }
+            // Hoch
+            else {
+                changeVelocity(new Vector2(feedback, -feedback));
+            }
+        }
+        // Rechts
+        else {
+            // Runter
+            if (hero.getY() < getY()) {
+                changeVelocity(new Vector2(-feedback, feedback));
+            }
+            // Hoch
+            else {
+                changeVelocity(new Vector2(-feedback, -feedback));
+            }
+        }
+    }
+
+    public void getsHitbyThrust(Held hero){
+        //nochnicht definiert
+    }
 
     public void getsDamaged(int schadensTyp){
         SchadenBerechner.berechneSchaden(schadensTyp,this,getHeld());
@@ -298,6 +343,10 @@ public abstract class Enemy extends HumanoideSprites{
     }
     public void heilen(){}
 
+    public void draw(Batch batch) {
+        if (!dead || stateTimer < 3)
+            super.draw(batch);
+    }
 }
 
 

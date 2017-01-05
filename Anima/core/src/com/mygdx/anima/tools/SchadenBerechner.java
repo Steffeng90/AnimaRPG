@@ -14,27 +14,28 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
 public class SchadenBerechner {
     public static void  berechneSchaden(int schadensTyp, HumanoideSprites erleidender, HumanoideSprites verursacher){
         int verursachterSchaden;
-
         switch(schadensTyp)
         {
             case 1: //Nahkampf
-                verursachterSchaden=verursacher.getSchadenNah()-(erleidender.getRuestung()/2); break;
+                verursachterSchaden=verursacher.getSchadenNah()-(int)(erleidender.getRuestung()/2);
+                if(verursachterSchaden<2) {
+                    verursachterSchaden = 2;
+                } break;
             case 2: //Fernkampf
-                verursachterSchaden=verursacher.getSchadenFern()-(erleidender.getRuestung()/3); break;
+                verursachterSchaden=verursacher.getSchadenFern()-(int)(erleidender.getRuestung()/3);
+                if(verursachterSchaden<2) {
+                    verursachterSchaden = 2;
+                } break;
             case 3: //Zauberschaden
-                verursachterSchaden=verursacher.getSchadenZauber()-erleidender.getZauberwiderstand(); break;
+                verursachterSchaden=verursacher.getSchadenZauber()-(int)(erleidender.getZauberwiderstand()/2);
+                if(verursachterSchaden<2) {
+                    verursachterSchaden = 2;
+                } break;
             case 4: //Heilung
                 verursachterSchaden=-(int)(verursacher.getSchadenZauber()*1.5); break;
-            default: verursachterSchaden=2;break;
+            default:
+                Gdx.app.log("Defaul Scahden vergeben","");verursachterSchaden=2;break;
         }
-        if(verursachterSchaden<2 &&verursachterSchaden>=0) {
-            verursachterSchaden = 2;
-        }
-        if(erleidender!=null){
-            Gdx.app.log("Wert","erleidender da");
-
-        }
-
 //        Gdx.app.log("Wert",""+verursachterSchaden+" "+ erleidender.toString()+"body:"+ held.b2body.getPosition());
         new SchadenLabel(verursachterSchaden,erleidender,getHeld().b2body.getPosition());
         erleidender.setCurrentHitpoints(erleidender.getCurrentHitpoints()-verursachterSchaden);

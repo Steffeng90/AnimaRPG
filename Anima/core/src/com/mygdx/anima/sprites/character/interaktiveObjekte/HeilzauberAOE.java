@@ -56,7 +56,7 @@ public HeilzauberAOE(Enemy enemy,Playscreen screen) {
     this.world=screen.getWorld();
     this.screen=screen;
     bdef=new BodyDef();
-    bdef.position.set(zaubernder.b2body.getPosition().x,zaubernder.b2body.getPosition().y);
+    bdef.position.set(zaubernder.b2body.getPosition().x,zaubernder.b2body.getPosition().y+7/AnimaRPG.PPM);
     bdef.type = BodyDef.BodyType.DynamicBody;
     b2body =world.createBody(bdef);
     b2body.setActive(true);
@@ -65,25 +65,27 @@ public HeilzauberAOE(Enemy enemy,Playscreen screen) {
     stateTimer=0;
     zauberQuelle = new Texture("objekte/heilung.png");
 
-    setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,75 / AnimaRPG.PPM,75/ AnimaRPG.PPM);
+    setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,100 / AnimaRPG.PPM,100/ AnimaRPG.PPM);
     frames = new Array<TextureRegion>();
 
-    frames.add(new TextureRegion(zauberQuelle, 0,0,32, 34));
-    frames.add(new TextureRegion(zauberQuelle,33,0, 36, 34));
-    frames.add(new TextureRegion(zauberQuelle,69 ,0, 26,49));
-    frames.add(new TextureRegion(zauberQuelle, 112,0, 13, 39));
-    frames.add(new TextureRegion(zauberQuelle, 151, 0, 25, 40));
-    frames.add(new TextureRegion(zauberQuelle, 191, 0, 25, 41));
+    frames.add(new TextureRegion(zauberQuelle, 0,0,35, 45));
+    frames.add(new TextureRegion(zauberQuelle,35,0, 36, 45));
+    frames.add(new TextureRegion(zauberQuelle,71 ,0, 43,45));
+    frames.add(new TextureRegion(zauberQuelle, 114,0, 39, 45));
+    frames.add(new TextureRegion(zauberQuelle, 153, 0, 40, 45));
+    frames.add(new TextureRegion(zauberQuelle, 193, 0, 42, 45));
+    frames.add(new TextureRegion(zauberQuelle, 235, 0, 47, 45));
 
-    zauber = new Animation(.18f, frames);
+
+    zauber = new Animation(0.1f, frames);
     frames.clear();
     zaubernder.runCasting = true;
     zaubernder.castExists = true;
 
     CircleShape circleShape = new CircleShape();
     circleShape.setRadius(radius / AnimaRPG.PPM);
-    // circleShape.setPosition(new Vector2(0,0));
-     fdefAttack = new FixtureDef();
+    // circleShape.setPosition(new Vector2(0,100/AnimaRPG.PPM));
+    fdefAttack = new FixtureDef();
     fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_CAST_HEAL;
     fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;
     fdefAttack.shape = circleShape;

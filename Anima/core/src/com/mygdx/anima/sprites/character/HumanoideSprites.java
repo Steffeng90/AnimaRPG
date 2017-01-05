@@ -15,12 +15,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 
 /**
  * Created by Steffen on 13.11.2016.
  */
 
 public class HumanoideSprites extends Sprite {
+    public Playscreen screen;
     public World world;
     public Body b2body;
     public float stateTimer;
@@ -41,8 +43,14 @@ public class HumanoideSprites extends Sprite {
     public Texture spriteQuelle;
     public Vector2 velocity;
 
-    public Fixture meleeFixture,castFixture, sensorFixture;
+    //Fixturen und ihre Trigger
+    //(Der FixtureTrigger wird genutzt,damit eine Fixture nur einmal erzeugt wird, wenn die Animation mehrals 80% durch ist
+    public Fixture meleeFixture,castFixture,bowFixture,thrustfixtureErzeugen,sensorFixture;
+    public boolean meleeFixtureErzeugen,castFixtureErzeugen,bowFixtureErzeugen,thrustFixtureErzeugen, triggerFixture;
+    FixtureDef fdefAttack;
     CircleShape sensorCircleShape;
+    public Vector2 arrowStartVector,arrowFlugVector;
+
     public boolean meleeExists, castExists;
     public boolean runMeleeAnimation,istHeld,runArchery,runCasting,hitByFeedback;
     public boolean runDying,dead,destroyed;
@@ -57,10 +65,11 @@ public class HumanoideSprites extends Sprite {
     public int hoehe;
     public static int framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13;
     public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
-
+    float regenerationTimer;
     //Konstruktor für Enemies
     public HumanoideSprites(Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,int boundsX,int boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
         this.world = screen.getWorld();
+        this.screen=screen;
         setMaxHitpoints(maxhp);
         setMaxMana(maxmana);
         setRegMana(regMana);
@@ -84,6 +93,7 @@ public class HumanoideSprites extends Sprite {
         meleeExists=false;
         breite=64;
         hoehe=64;
+        triggerFixture=true;
         setBounds(0, 0, boundsX / AnimaRPG.PPM, boundsY/ AnimaRPG.PPM);
         //setRegion(standingDownSprite);
     }
@@ -92,18 +102,26 @@ public class HumanoideSprites extends Sprite {
     public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
         this.world = screen.getWorld();
         this.istHeld=istHeld;
+        triggerFixture=true;
+        this.bowSpeed=1f;
+        this.meleeSpeed=0.5f;
+        this.castSpeed=2f;
+        this.thrustSpeed=2;
 
         currentState = State.STANDING;
         previousState = State.STANDING;
         currentRichtung = Richtung.Unten;
         stateTimer = 0;
         runMeleeAnimation=false;
+        triggerFixture=true;
         runDying=false;
         meleeExists=false;
         breite=64;
         hoehe=64;
-            hitdauer=wertHeld;
-            //Animationen erstellen
+            //hitdauer=wertHeld;
+        hitdauer=1;
+
+        //Animationen erstellen
             updateTextures(quelle);
             setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
             setRegion(standingDownSprite);
@@ -138,62 +156,62 @@ public class HumanoideSprites extends Sprite {
         for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle,i* breite, 768, breite, hoehe));
         }
-        UpMelee = new Animation(hitdauer, frames);
+        UpMelee = new Animation(meleeSpeed/framesSchwert, frames);
         frames.clear();
         for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle, i*breite,896, breite, hoehe));
         }
-        DownMelee = new Animation(hitdauer, frames);
+        DownMelee = new Animation(meleeSpeed/framesSchwert, frames);
         frames.clear();
         for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle, i * breite, 832, breite, hoehe));
         }
-        LeftMelee= new Animation(hitdauer, frames);
+        LeftMelee= new Animation(meleeSpeed/framesSchwert, frames);
         frames.clear();
         for (int i = 0; i < framesSchwert; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 960, breite, hoehe));
         }
-        RightMelee = new Animation(hitdauer, frames);
+        RightMelee = new Animation(meleeSpeed/framesSchwert, frames);
         frames.clear();
         for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1024, breite, hoehe));
         }
-        UpBow = new Animation(0.05f, frames);
+        UpBow = new Animation(bowSpeed/frameArcher, frames);
         frames.clear();
         for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1152, breite, hoehe));
         }
-        DownBow = new Animation(0.05f, frames);
+        DownBow = new Animation(bowSpeed/frameArcher, frames);
         frames.clear();
         for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1216, breite, hoehe));
         }
-        RightBow = new Animation(0.05f, frames);
+        RightBow = new Animation(bowSpeed/frameArcher, frames);
         frames.clear();
         for (int i = 0; i < frameArcher; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 1088, breite, hoehe));
         }
-        LeftBow = new Animation(0.05f, frames);
+        LeftBow = new Animation(bowSpeed/frameArcher, frames);
         frames.clear();
         for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 0, breite, hoehe));
         }
-        UpCast = new Animation(0.18f, frames);
+        UpCast = new Animation(castSpeed/framesCast, frames);
         frames.clear();
         for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 128, breite, hoehe));
         }
-        DownCast= new Animation(0.18f, frames);
+        DownCast= new Animation(castSpeed/framesCast, frames);
         frames.clear();
         for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 192, breite, hoehe));
         }
-        RightCast = new Animation(0.18f, frames);
+        RightCast = new Animation(castSpeed/framesCast, frames);
         frames.clear();
         for (int i = 0; i < framesCast; i++) {
             frames.add(new TextureRegion(spriteQuelle, i *breite, 64, breite, hoehe));
         }
-        LeftCast = new Animation(0.18f, frames);
+        LeftCast = new Animation(castSpeed/framesCast, frames);
 
         frames.clear();
         for (int i = 0; i < framesDie; i++) {
@@ -269,23 +287,31 @@ public class HumanoideSprites extends Sprite {
                 switch (currentRichtung) {
                     case Links:
                         region = LeftMelee.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=LeftMelee.getAnimationDuration()*0.3)
+                        {meleeFixtureErzeugen=true;triggerFixture =false;}
                         if(LeftMelee.isAnimationFinished(stateTimer))
-                            runMeleeAnimation=false;
+                        {runMeleeAnimation=false;}
                         break;
                     case Rechts:
                         region = RightMelee.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=RightMelee.getAnimationDuration()*0.3)
+                        {meleeFixtureErzeugen=true;triggerFixture =false;}
                         if(RightMelee.isAnimationFinished(stateTimer))
-                            runMeleeAnimation=false;
+                        {runMeleeAnimation=false;}
                         break;
                     case Oben:
                         region = UpMelee.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=UpMelee.getAnimationDuration()*0.3)
+                        {meleeFixtureErzeugen=true;triggerFixture =false;}
                         if(UpMelee.isAnimationFinished(stateTimer))
-                            runMeleeAnimation=false;
+                        {runMeleeAnimation=false;}
                         break;
                     case Unten:
                         region = DownMelee.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=DownMelee.getAnimationDuration()*0.3)
+                        {meleeFixtureErzeugen=true;triggerFixture =false;}
                         if(DownMelee.isAnimationFinished(stateTimer))
-                            runMeleeAnimation=false;
+                        {runMeleeAnimation=false;}
                         break;
                     default:
                         region = standingDownSprite;
@@ -296,23 +322,31 @@ public class HumanoideSprites extends Sprite {
                 switch (currentRichtung) {
                     case Links:
                         region = LeftBow.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=LeftBow.getAnimationDuration()*0.8)
+                            {bowFixtureErzeugen=true;triggerFixture =false;}
                         if(LeftBow.isAnimationFinished(stateTimer))
-                            runArchery=false;
+                            {runArchery=false;triggerFixture=true;}
                         break;
                     case Rechts:
                         region = RightBow.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=RightBow.getAnimationDuration()*0.8)
+                            {bowFixtureErzeugen=true;triggerFixture =false;}
                         if(RightBow.isAnimationFinished(stateTimer))
-                            runArchery=false;
+                            {runArchery=false;triggerFixture=true;}
                         break;
                     case Oben:
                         region = UpBow.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=UpBow.getAnimationDuration()*0.8)
+                            {bowFixtureErzeugen=true;triggerFixture =false;}
                         if(UpBow.isAnimationFinished(stateTimer))
-                            runArchery=false;
+                            {runArchery=false;triggerFixture=true;}
                         break;
                     case Unten:
                         region = DownBow.getKeyFrame(stateTimer, true);
+                        if(triggerFixture && stateTimer>=DownBow.getAnimationDuration()*0.8)
+                            {bowFixtureErzeugen=true;triggerFixture =false;}
                         if(DownBow.isAnimationFinished(stateTimer))
-                        {runArchery=false;}
+                            {runArchery=false;triggerFixture=true;}
                         break;
                     default:
                         region = standingDownSprite;
@@ -364,10 +398,7 @@ public class HumanoideSprites extends Sprite {
                         region = standingDownSprite;
                         break;
                 }
-                if(stateTimer>=1)
-                {
-                    hitByFeedback=false;
-                }
+                if(stateTimer>=1){hitByFeedback=false;}
                 break;
             default:
                 region = standingDownSprite;
@@ -419,6 +450,22 @@ public class HumanoideSprites extends Sprite {
         if(getCurrentRichtung()!=getPreviousRichtung() && !destroyed) {
             sensorAnpassen();
         }
+        if(meleeFixtureErzeugen){meleeFixtureErzeugen=false;meleeFixtureErzeugen();
+            Gdx.app.log("melee erzeugen!!","");}
+        else if(bowFixtureErzeugen){bowFixtureErzeugen=false;
+            new Arrow(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
+
+            Gdx.app.log("arrow erzeugen!!","");}
+        if(!runMeleeAnimation && meleeExists){
+            b2body.destroyFixture(meleeFixture);
+            meleeExists=false;triggerFixture=true;
+            Gdx.app.log("melee loeschen!!","");}
+       //s else(bowFixtureErzeugen){
+        regenerationTimer+=dt;
+        if(regenerationTimer>=3 && getCurrentMana()<getMaxMana()){
+            Gdx.app.log("PlusMAna",""+getRegMana());
+            setCurrentMana(getCurrentMana()+getRegMana());
+            regenerationTimer=0;}
         }
     public void setCurrentRichtung(int richtung) {
         previousRichtung=currentRichtung;
@@ -477,6 +524,25 @@ public class HumanoideSprites extends Sprite {
         sensorFixture= b2body.createFixture(fdefSensor);
         sensorFixture.setUserData(this);
     }
+    public void meleeFixtureDefinieren(Vector2 richtungsVector){
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(15 / AnimaRPG.PPM);
+        circleShape.setPosition(richtungsVector);
+         fdefAttack = new FixtureDef();
+        if(istHeld){fdefAttack.filter.categoryBits = AnimaRPG.HERO_WEAPON_BIT;
+                    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;}
+        else{       fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
+                    fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT;}
+        fdefAttack.shape = circleShape;
+        fdefAttack.isSensor = true;
+        runMeleeAnimation = true;
+
+    }
+    public void meleeFixtureErzeugen(){
+        meleeFixture = b2body.createFixture(fdefAttack);
+        meleeFixture.setUserData(this);
+        meleeExists= true;
+    }
     public void sensorAnpassen(){
         b2body.destroyFixture(sensorFixture);
         Vector2 richtungsVector;
@@ -515,7 +581,7 @@ public class HumanoideSprites extends Sprite {
     public int getCurrentHitpoints() {
         return currentHitpoints;
     }
-
+    public float getCurrentHitpointsPercent(){ return ((float)currentHitpoints/(float)maxHitpoints);}
     public void setCurrentHitpoints(int currentHitpoints) {
         if(currentHitpoints<=0){
             readyToDie();
@@ -526,14 +592,16 @@ public class HumanoideSprites extends Sprite {
         else{
             this.currentHitpoints = currentHitpoints;
         }
+        Gdx.app.log("Max:"+getMaxHitpoints(),"Curr:"+getCurrentHitpoints());
     }
     public int getMaxHitpoints() {
         return maxHitpoints;
     }
 
     public void setMaxHitpoints(int maxHitpoints) {
-        setCurrentHitpoints(getCurrentHitpoints()+(maxHitpoints-this.maxHitpoints));
+        int temp=this.maxHitpoints;
         this.maxHitpoints = maxHitpoints;
+        setCurrentHitpoints(getCurrentHitpoints()+(maxHitpoints-temp));
     }
 
     public int getCurrentMana() {
@@ -541,19 +609,12 @@ public class HumanoideSprites extends Sprite {
     }
 
     public void setCurrentMana(int currentMana) {
-        Gdx.app.log("Übergeben:",""+currentMana);
 
         if (currentMana <= 0) {
-            Gdx.app.log("11111:",""+currentMana);
-
             this.currentMana = 0;
         } else if (currentMana > maxMana) {
-            Gdx.app.log("22222:",""+currentMana);
-
             this.currentMana = maxMana;
         } else {
-            Gdx.app.log("33333:",""+currentMana);
-
             this.currentMana = currentMana;
         }
     }
@@ -565,7 +626,6 @@ public class HumanoideSprites extends Sprite {
         this.maxMana = maxMana;
         setCurrentMana(maxMana);
 
-        Gdx.app.log("ManaMax:"+this.maxMana,"Current:"+this.currentMana);
     }
 
     public int getRegMana() {

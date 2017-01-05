@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class RaiderHealer extends Enemy {
     ArrayList<Enemy> enemiesInRange;
     Playscreen screen;
+    Boolean zaubereHeilung;
 
     public RaiderHealer(Playscreen screen, float x, float y, String id, int maxhp, int maxmana, int regMana, int ep, int speed, int schadenNah, int schadenfern, int schadenzauber, int ruestung, int boundsX, int boundsY, float castSpeed, float bowSpeed, float meleeSpeed, float thrustSpeed) {
         super(screen, x, y, id, maxhp, maxmana, regMana, ep, speed, schadenNah, schadenfern, schadenzauber, ruestung, boundsX, boundsY, castSpeed, bowSpeed, meleeSpeed, thrustSpeed);
@@ -33,18 +34,22 @@ public class RaiderHealer extends Enemy {
     @Override
     public void update(Held hero, float dt) {
         stateTimer += dt;
-
+        for(Enemy e:enemiesInRange){
+            if((e.getCurrentHitpointsPercent()<0.5) && !runCasting){zaubereHeilung=true;}
+        }
         super.update(hero, dt);
 
         if (vonFeedbackbetroffen) {
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             vonFeedbackbetroffen = false;}
-            else if(zaubereHeilung)
-            {heilen();Gdx.app.log("Heilendurchführen","unknown");
+        if(!runCasting && castExists){
+            castExists=false;}
+        else if(zaubereHeilung && !runCasting && !castExists){
                 zaubereHeilung=false;
+                heilen();
             }
-            else if (!dead && !runDying && !runMeleeAnimation &&!runCasting) {
+        else if (!dead && !runDying && !runMeleeAnimation &&!runCasting) {
             coordinateWalking(hero, dt);
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -52,22 +57,8 @@ public class RaiderHealer extends Enemy {
             b2body.setLinearVelocity(new Vector2(0, 0));
         }
     }
-
-    public void create() {
-        super.create();
-    }
-
-    public void setCurrentRichtung(int richtung) {
-        super.setCurrentRichtung(richtung);
-    }
-
-    public void changeVelocity(Vector2 v2) {
-        velocity.x += v2.x;
-        velocity.y += v2.y;
-    }
-
     public void coordinateWalking(Held hero, float dt) {
-        if (hero.getX() < getX()) {
+        /*if (hero.getX() < getX()) {
             // Runter
             if (hero.getY() < getY()) {
 
@@ -108,7 +99,7 @@ public class RaiderHealer extends Enemy {
                     setCurrentRichtung(1);
                 }
             }
-        }
+        }*/
     }
 
     public void walkingVelo(Held hero, Vector2 v2) {
@@ -124,46 +115,6 @@ public class RaiderHealer extends Enemy {
             velocity.y += v2.y;
 
     }
-
-    public void getsHit() {
-        getsDamaged(2);
-    }
-    public void getsHit(Held hero) {
-        vonFeedbackbetroffen = true;
-        getsDamaged(1);
-        //Links
-        float feedback = 1.5f;
-        if (hero.getX() < getX()) {
-            // Runter
-            if (hero.getY() < getY()) {
-                changeVelocity(new Vector2(feedback, feedback));
-            }
-            // Hoch
-            else {
-                changeVelocity(new Vector2(feedback, -feedback));
-            }
-        }
-        // Rechts
-        else {
-            // Runter
-            if (hero.getY() < getY()) {
-                changeVelocity(new Vector2(-feedback, feedback));
-            }
-            // Hoch
-            else {
-                changeVelocity(new Vector2(-feedback, -feedback));
-            }
-        }
-    }
-    public void readyToDie() {
-        super.readyToDie();
-    }
-
-    public void draw(Batch batch) {
-        if (!dead || stateTimer < 3)
-            super.draw(batch);
-    }
-
     @Override
     public void createSensor() {
         CircleShape circleShape = new CircleShape();
@@ -171,7 +122,7 @@ public class RaiderHealer extends Enemy {
 
         FixtureDef fdefSensor = new FixtureDef();
         fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_HEAL_SENSOR;
-        fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT;
+        fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.ENEMY_SEARCH_HEALER;
         fdefSensor.shape = circleShape;
         fdefSensor.isSensor = true;
         sensorFixture = b2body.createFixture(fdefSensor);
@@ -180,19 +131,23 @@ public class RaiderHealer extends Enemy {
     }
     @Override
     public void sensorAnpassen(){
-
     }
     @Override
     public void heilen() {
         {
-            Gdx.app.log("MinusMAna", ""+getCurrentMana());
 
             if ((currentState == State.STANDING | currentState == State.WALKING) && getCurrentMana() >= 5) {
-                Gdx.app.log("MinusMAna", "");
                 setCurrentMana(getCurrentMana() - 5);
                 new HeilzauberAOE(this, screen);
                 runCasting=true;
             }
         }
+    }
+
+    public void removeEnemieInRange(Enemy e) {
+        enemiesInRange.remove(e);
+    }
+    public void addEnemieInRange(Enemy e) {
+        enemiesInRange.add(e);
     }
 }

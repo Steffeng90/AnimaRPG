@@ -40,6 +40,7 @@ public class AnimaRPG extends Game {
 	public static final short GEBIETSWECHSEL_BIT=4096;
 	public static final short ENEMY_HEAL_SENSOR=8192;
 	public static final short ENEMY_CAST_HEAL=16384;
+	public static final short ENEMY_SEARCH_HEALER=3;
 
 
 	public static SpriteBatch batch;

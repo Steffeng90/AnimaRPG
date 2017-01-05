@@ -10,6 +10,8 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.raider.Raider;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
@@ -32,9 +34,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_WEAPON_BIT)
-                    ((Enemy)fixB.getUserData()).getsHit((Held)fixA.getUserData());
+                    ((Enemy)fixB.getUserData()).getsHitbySword((Held)fixA.getUserData());
                 else
-                    ((Enemy)fixA.getUserData()).getsHit((Held)fixB.getUserData());
+                    ((Enemy)fixA.getUserData()).getsHitbySword((Held)fixB.getUserData());
                 break;
             case AnimaRPG.HERO_SENSOR | AnimaRPG.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_SENSOR){
@@ -78,10 +80,10 @@ public class WorldContactListener implements ContactListener {
 
             case AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
-                {   ((Enemy)fixB.getUserData()).getsHit();
+                {   ((Enemy)fixB.getUserData()).getsHitbyBow();
                     ((Arrow)fixA.getUserData()).setToDestroy=true;}
                 else
-                {   ((Enemy)fixA.getUserData()).getsHit();
+                {   ((Enemy)fixA.getUserData()).getsHitbyBow();
                     ((Arrow)fixB.getUserData()).setToDestroy=true;}
                 break;
             case AnimaRPG.HERO_CAST_BIT | AnimaRPG.ENEMY_BIT:
@@ -101,22 +103,30 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
-                {if((((Enemy)fixB.getUserData()).getMaxHitpoints()-((Enemy)fixB.getUserData()).getCurrentHitpoints())>((Enemy)fixA.getUserData()).getSchadenZauber()*1.5)
-                    {((Enemy)fixA.getUserData()).zaubereHeilung=true;}}
+                {{((RaiderHealer)fixA.getUserData()).addEnemieInRange((Enemy)fixB.getUserData());}}
                     else
-                { if((((Enemy)fixA.getUserData()).getMaxHitpoints()-((Enemy)fixA.getUserData()).getCurrentHitpoints())>((Enemy)fixB.getUserData()).getSchadenZauber()*1.5)
-                    ((Enemy)fixB.getUserData()).zaubereHeilung=true;}
+                {{((RaiderHealer)fixB.getUserData()).addEnemieInRange((Enemy)fixA.getUserData());}}
                 break;
             case AnimaRPG.ENEMY_CAST_HEAL | AnimaRPG.ENEMY_BIT:
-                if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_CAST_BIT)
+                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_CAST_HEAL)
                     ((Enemy)fixB.getUserData()).getsHitbySpell((Zauber)fixA.getUserData());
                 else
                     ((Enemy)fixA.getUserData()).getsHitbySpell((Zauber)fixB.getUserData());
                 break;
+            case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.HERO_BIT:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
+                {((Enemy)fixA.getUserData()).enemyNear=true;}
+                else{((Enemy)fixB.getUserData()).enemyNear=true;}
+                break;
+            case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_SEARCH_HEALER:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_SEARCH_HEALER)
+                {if(((RaiderHealer) fixB.getUserData()).getCurrentMana()>=4){((Raider)fixA.getUserData()).healer=(RaiderHealer) fixB.getUserData();}}
+                else{
+                if(((RaiderHealer) fixA.getUserData()).getCurrentMana()>=4){((Raider)fixB.getUserData()).healer=(RaiderHealer) fixA.getUserData();}}
+                break;
             default:
                 //Gdx.app.log("undefined","unknown");
                 break;
-
         }
     }
 
@@ -127,7 +137,6 @@ public class WorldContactListener implements ContactListener {
         int cDef=fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
         switch(cDef) {
             case AnimaRPG.HERO_SENSOR | AnimaRPG.OBJECT_BIT:
-             //   Gdx.app.log("Object verlässt Reichweite","unknown");
                 if (fixA.getFilterData().categoryBits == AnimaRPG.HERO_SENSOR){
                     ((Held) fixA.getUserData()).setObject(false,null);}
                 else{
@@ -142,13 +151,19 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
-                {   //((Held)fixB.getUserData()).isHit=false;
-                    ((Held)fixB.getUserData()).treffenderEnemy=null;}
-
+                    {((Held)fixB.getUserData()).treffenderEnemy=null;}
+                else{((Held)fixA.getUserData()).treffenderEnemy=null;}
+                break;
+            case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.HERO_BIT:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
+                {((Enemy)fixA.getUserData()).enemyNear=false;}
+                else{((Enemy)fixB.getUserData()).enemyNear=false;}
+                break;
+            case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_BIT:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
+                {{((RaiderHealer)fixA.getUserData()).removeEnemieInRange((Enemy)fixB.getUserData());}}
                 else
-                {   //w((Held)fixA.getUserData()).isHit=false;
-                    ((Held)fixA.getUserData()).treffenderEnemy=null;}
-                //((Held)fixA.getUserData()).getsHit((Enemy)fixB.getUserData());
+                {{((RaiderHealer)fixB.getUserData()).removeEnemieInRange((Enemy)fixA.getUserData());}}
                 break;
         }
     }

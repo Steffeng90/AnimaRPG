@@ -31,17 +31,22 @@ public class Schatztruhe extends InteraktivesObjekt {
     public float stateTimer;
     public String inhalt;
 
-    public Schatztruhe(Playscreen screen, float x, float y,String inhalt){
+
+    public Schatztruhe(Playscreen screen, float x, float y,int truhenTyp,String inhalt){
         super(screen,x,y);
         this.inhalt=inhalt;
-        spriteQuelle=new Texture("objekte/schatztruhe.png");
-        spriteOpen=new TextureRegion(spriteQuelle,0,224, 32,32);
-                spriteClose=new TextureRegion(spriteQuelle,0,128, 32,32);
         defineItem();
+        int xAuswahlBereich;
+        if(truhenTyp==1){xAuswahlBereich=0;}
+        else{xAuswahlBereich=192;}
+
+        spriteQuelle=new Texture("objekte/schatztruhe.png");
+        spriteOpen=new TextureRegion(spriteQuelle,xAuswahlBereich,224, 32,32);
+                spriteClose=new TextureRegion(spriteQuelle,xAuswahlBereich,128, 32,32);
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 1; i < 4; i++) {
-            frames.add(new TextureRegion(spriteQuelle, 0, i*32+128, 32, 32));
+            frames.add(new TextureRegion(spriteQuelle, xAuswahlBereich, i*32+128, 32, 32));
         }
         openTruhe = new Animation(0.1f, frames);
         frames.clear();

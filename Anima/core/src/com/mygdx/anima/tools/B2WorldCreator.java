@@ -139,8 +139,9 @@ public class B2WorldCreator {
             if (map.getLayers().get("schatztruhen") != null) {
                 for (MapObject object : map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
                     String inhalt = (String) object.getProperties().get("Inhalt");
+                    int typ=Integer.valueOf((String) object.getProperties().get("typ"));
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    allSchatztruhen.add(new Schatztruhe(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM, inhalt));
+                    allSchatztruhen.add(new Schatztruhe(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ, inhalt));
                 }
             }
             if (screen.getSpieler() != null) {
