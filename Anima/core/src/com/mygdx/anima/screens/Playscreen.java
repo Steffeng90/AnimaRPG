@@ -84,7 +84,7 @@ public class Playscreen implements Screen{
 
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
-        b2dr = new Box2DDebugRenderer();
+        // b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         spieler = new Held(this,spielerPosition);
         controller = new Controller(game);
@@ -177,7 +177,7 @@ public class Playscreen implements Screen{
         //karte rendern
         renderer.render();
         // Render-Linien
-        b2dr.render(world, gamecam.combined);
+        // b2dr.render(world, gamecam.combined);
 
         //Zeigt den Controller nur bei Android an:
         //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
@@ -378,7 +378,7 @@ public class Playscreen implements Screen{
         //itemWindow.dispose();
         //levelUpWindow.dispose();
         anzeige.dispose();
-        b2dr.dispose();
+        // b2dr.dispose();
         controller.dispose();
     }
     //Getter und Setter, selbstgeschrieben
