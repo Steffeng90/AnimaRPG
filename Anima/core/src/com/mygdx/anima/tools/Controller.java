@@ -4,19 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Menu;
+import com.mygdx.anima.screens.actors.MyButton;
+
+import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 18.11.2016.
@@ -26,8 +32,14 @@ public class Controller {
     AnimaRPG game;
     Viewport viewport;
     private Stage stage;
+    public static boolean updateDurchfuehren;
     boolean upPressed,downPressed,leftPressed,rightPressed,
-    meleePressed,bowPressed,castPressed, usePressed;
+    meleePressed,bowPressed,castPressed, usePressed ;
+    ImageButton weaponButton;
+    ImageButton.ImageButtonStyle style;
+    Table tableRechts;
+
+
     OrthographicCamera cam;
     private Touchpad touchpad;
     SpriteBatch batch;
@@ -42,6 +54,7 @@ public class Controller {
         stage=new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
         buttonSize=25;
+        updateDurchfuehren=false;
 
         Table tableLeft=new Table();
         tableLeft.left().bottom();
@@ -137,9 +150,60 @@ public class Controller {
        // touchpad.
         stage.addActor(touchpad);
 
+        tableRechts=rechteTabelleZeichnen();
+        stage.addActor((tableRechts));
+
+        Image inventarImg=new Image(new Texture("ui-skin/inventar.png"));
+        inventarImg.setSize(buttonSize,buttonSize);
+        inventarImg.addListener(new InputListener(){
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.getScreen().pause();
+                game.changeScreen(new Menu(game));
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        inventarImg.setPosition(AnimaRPG.W_WIDTH-buttonSize,AnimaRPG.W_Height-buttonSize);
+        stage.addActor(inventarImg);
+    }
+    public Table rechteTabelleZeichnen(){
         Table tableRight=new Table();
 
         Image meleeImg=new Image(new Texture("ui-skin/action_melee.png"));
+        meleeImg.setSize(buttonSize,buttonSize);
+        meleeImg.addListener(new InputListener(){
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                meleePressed=false;
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                meleePressed=true;
+                return true;
+            }
+        });
+
+        SpriteDrawable background = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage.png"))));
+        SpriteDrawable icon_up = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_sword.png"))));
+        SpriteDrawable icon_down = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/action_use.png"))));
+
+        // Test für Dynamische Buttons#
+        if(getHeld().getHeldenInventar().getAngelegtWaffeNah()!=null) {
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background;
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getHeldenInventar().getAngelegtWaffeNah().getGrafikButton()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getHeldenInventar().getAngelegtWaffeNah().getGrafikButton()));
+            // style.unpressedOffsetY = -20; // to "not" center the icon
+            // style.unpressedOffsetX = -30; // to "not" center the icon
+
+            weaponButton = new ImageButton(style);
+        }
         meleeImg.setSize(buttonSize,buttonSize);
         meleeImg.addListener(new InputListener(){
             @Override
@@ -204,7 +268,8 @@ public class Controller {
         tableRight.padLeft(280);
         tableRight.add();
         tableRight.add(meleeImg).size(meleeImg.getWidth(),meleeImg.getHeight());
-        tableRight.add();
+        if(getHeld().getHeldenInventar().getAngelegtWaffeNah()!=null){tableRight.add(weaponButton).size(meleeImg.getWidth(),meleeImg.getHeight());}
+        else{tableRight.add();}
         tableRight.row().pad(0,0,0,0);
         tableRight.add(bowImg).size(bowImg.getWidth(),bowImg.getHeight());
         tableRight.add();
@@ -214,28 +279,19 @@ public class Controller {
         tableRight.add(useImg).size(useImg.getWidth(),useImg.getHeight());
         tableRight.add();
         tableRight.left().bottom();
+        return tableRight;
 
-        stage.addActor(tableRight);
-
-        Image inventarImg=new Image(new Texture("ui-skin/inventar.png"));
-        inventarImg.setSize(buttonSize,buttonSize);
-        inventarImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.getScreen().pause();
-                game.changeScreen(new Menu(game));
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        inventarImg.setPosition(AnimaRPG.W_WIDTH-buttonSize,AnimaRPG.W_Height-buttonSize);
-        stage.addActor(inventarImg);
     }
     public void draw(){
         stage.draw();
+    }
+    public void update(){
+        if(updateDurchfuehren){
+            updateDurchfuehren=false;
+            tableRechts.clear();
+            tableRechts=rechteTabelleZeichnen();
+            stage.addActor((tableRechts));
+        }
     }
     public boolean isUpPressed() {
         return upPressed;

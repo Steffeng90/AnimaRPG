@@ -1,7 +1,6 @@
 package com.mygdx.anima.sprites.character.enemies.raider;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -10,8 +9,6 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
 
 import java.util.ArrayList;
 

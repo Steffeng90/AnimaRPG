@@ -16,10 +16,9 @@ import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
 import com.mygdx.anima.tools.SchadenBerechner;
 
-import static com.mygdx.anima.AnimaRPG.ENEMY_CAST_HEAL;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static jdk.nashorn.internal.objects.NativeString.substring;
 
@@ -43,6 +42,7 @@ public abstract class Enemy extends HumanoideSprites{
     {
         super(screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
         setPosition(x,y);
+        setErfahrung(ep);
         quelle=id;
         create();
         velocity=new Vector2(0.2f,0.2f);
@@ -264,7 +264,7 @@ public abstract class Enemy extends HumanoideSprites{
         else if(velocity.y<=-getGeschwindigkeitLaufen()/10){velocity.y=-getGeschwindigkeitLaufen()/10;}*/
     }
 
-    public void getsHitbySpell(Zauber z) {
+    public void getsHitbySpell(ZauberFixture z) {
         if (z instanceof Nova) {
             vonFeedbackbetroffen = true;
             hitByFeedback = true;
@@ -325,7 +325,7 @@ public abstract class Enemy extends HumanoideSprites{
     public void getsDamaged(int schadensTyp){
         SchadenBerechner.berechneSchaden(schadensTyp,this,getHeld());
     }
-    public void getsHealed(Zauber z){
+    public void getsHealed(ZauberFixture z){
         SchadenBerechner.berechneSchaden(4,this,z.zaubernder);
     }
 

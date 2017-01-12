@@ -165,7 +165,6 @@ public class InventarReiter extends Group {
             ArrayList<WaffeNah> liste = getHeld().getHeldenInventar().getWaffenNahList();
             size = liste.size();
             for (int i = 0; i < size; i++) {
-                if(auswahlItem!=null){auswahlItem=liste.get(i);}
                 if ((i) % 5 == 0) {
                     inventarRechts.row();
                 }

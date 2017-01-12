@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
+import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.listener.ReiterButtonListener;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -42,7 +43,6 @@ public class Menu implements Screen {
         changeReiter=false;
 
         this.viewport = new FitViewport(width, height, new OrthographicCamera());
-        //  BitmapFont bf=new BitmapFont(Gdx.files.internal("default.fnt"),true);
         stage = new Stage(viewport, game.batch);
         stage.addActor(reiterButtonsErzeugen());
         stage.addActor(new CharakterReiter(this));
@@ -68,7 +68,9 @@ public class Menu implements Screen {
         inventarImg.setSize(50, 50);
         inventarImg.addListener(new InputListener() {
             @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {getHeld().getHeldenInventar().resetAuswahl();game.closeScreen();dispose();}
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Controller.updateDurchfuehren=true;
+                getHeld().getHeldenInventar().resetAuswahl();game.closeScreen();dispose();}
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}});
         inventarImg.setPosition(width - 50, height - 50);
@@ -81,7 +83,7 @@ public class Menu implements Screen {
         reiterTable.setPosition(0, height);
         //Button erzeugen
         TextButton charakterReiterButton= new TextButton("Charakter", skin);
-        TextButton skillReiterButton= new TextButton("Nova & Talente", skin);
+        TextButton skillReiterButton= new TextButton("ZauberFixture", skin);
         TextButton inventarReiterButton= new TextButton("Ausruestung", skin);
         TextButton nutzbareItemsReiterButton= new TextButton("Benutzbar", skin);
 

@@ -7,6 +7,7 @@ import com.mygdx.anima.screens.Menu;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
+import com.mygdx.anima.screens.menuReiter.ZauberReiter;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.items.Armor;
 import com.mygdx.anima.sprites.character.items.Item;
@@ -29,7 +30,7 @@ public class ReiterButtonListener extends InputListener {
         switch (auswahl){
             //Charakterreiter
             case 1:        menu.setAnzeigeGroup(new CharakterReiter(menu));break;
-            case 2:        menu.setAnzeigeGroup(null);break;
+            case 2:        menu.setAnzeigeGroup(new ZauberReiter(menu));break;
             case 3:        menu.setAnzeigeGroup(new InventarReiter(menu));break;
             case 4:        menu.setAnzeigeGroup(new GegenstandReiter(menu));break;
         }

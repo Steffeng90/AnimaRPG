@@ -31,11 +31,10 @@ public class InventarListener extends InputListener {
             if(posi.x-x<10 && posi.x-x>-10 && posi.y-y<10 && posi.y-y>-10){
                 getHeld().getHeldenInventar().resetAuswahl();
             // Vorrige Auswahl wird auf ausgewählt false gesetzt
-            if(inv.auswahlItem!=null)
-                inv.auswahlItem.setAusgewaehlt(false);
+            if(inv.auswahlItem!=null){
+                inv.auswahlItem.setAusgewaehlt(false);}
             inv.auswahlItem=tempItem;
-            if(tempItem.isAngelegt())
-            {
+            if(tempItem.isAngelegt()){
                 inv.inventarRechts.clear();
                 inv.zeigeItems();
             }

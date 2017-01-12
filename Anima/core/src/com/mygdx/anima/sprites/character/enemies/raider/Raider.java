@@ -1,7 +1,5 @@
 package com.mygdx.anima.sprites.character.enemies.raider;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -11,8 +9,7 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -103,7 +100,7 @@ public class Raider extends Enemy
             velocity.y+=v2.y;
     }
     @Override
-    public void getsHealed(Zauber z){
+    public void getsHealed(ZauberFixture z){
         super.getsHealed(z);
         healer=null;
     }

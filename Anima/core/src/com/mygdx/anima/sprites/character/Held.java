@@ -14,6 +14,7 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
 import com.mygdx.anima.sprites.character.items.InventarList;
+import com.mygdx.anima.sprites.character.zauber.ZauberList;
 import com.mygdx.anima.tools.SchadenBerechner;
 
 import static com.mygdx.anima.AnimaRPG.setHeld;
@@ -36,6 +37,7 @@ public class Held extends HumanoideSprites{
     public boolean isHitbyMelee,isHitbyBow,isHitbyCast,isHitbyThrust;
     public Enemy treffenderEnemy;
     private InventarList heldenInventar;
+    private ZauberList zauberList;
     //Dieser Wert wird über Methoden übergeben, um den Held neu zu positionieren, bei Kartenwechsel
     private Vector2 heldPosition;
     //Statistik-Werte
@@ -59,6 +61,7 @@ public class Held extends HumanoideSprites{
         objectInReichweite=false;
 
         heldenInventar=new InventarList();
+        zauberList=new ZauberList();
 
         // Gameplay-Variablen
         int Startwert=100;
@@ -75,7 +78,7 @@ public class Held extends HumanoideSprites{
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
         setCurrentMana(getMaxMana());
-        setRegMana(1);
+        setRegMana(15);
         setCurrentLevel(1);
         setCurrentErfahrung(0);
         setNextLevelUp(1);
@@ -179,7 +182,13 @@ public class Held extends HumanoideSprites{
     {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
         Gdx.app.log("MinusMAna","");
         setCurrentMana(getCurrentMana()-5);
-        new Nova(this);}
+        new Nova();}
+    }
+    public void castBlitz()
+    {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
+        Gdx.app.log("MinusMAna","");
+        setCurrentMana(getCurrentMana()-5);
+        new Nova();}
     }
     public void bowAttack()
     {   if(currentState==State.STANDING |currentState==State.WALKING)
@@ -246,6 +255,7 @@ public class Held extends HumanoideSprites{
     public InventarList getHeldenInventar() {
         return heldenInventar;
     }
+    public ZauberList getZauberList() { return zauberList;}
 
     //Getter und Setter für alle Attribute
     public void setHeldenInventar(InventarList heldenInventar) {

@@ -1,0 +1,7 @@
+{"zauber":[
+  // Staerkungszauber (kat=1)
+  {"id":"staerkung1","name":"Schutzschild","kategorie":1,"vectorX":12,"vectorY":20,"effektivitaet":10,"manakosten":4,"zauberZeit":1.5,"zauberDauer":30,"beschreibung":"Erhöht eure Verteidung\n um 30%."},
+
+  // Schadenzauber (kat=2)
+  {"id":"schaden1","name":"Energie-Nova","kategorie":2,"vectorX":3,"vectorY":16,"effektivitaet":15,"manakosten":5,"zauberZeit":1.0,"zauberDauer":0,"beschreibung":"Ihr bündelt reines Mana in \neurer Umgebung und bringt \nes zur Explosion, wodurch \nalle Gegner im Umfeld \nSchaden erleiden."}
+]}

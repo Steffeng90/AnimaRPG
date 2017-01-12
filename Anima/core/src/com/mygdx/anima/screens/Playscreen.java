@@ -28,8 +28,10 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
+import com.mygdx.anima.sprites.character.items.WaffeNah;
+import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.KartenManager;
@@ -87,12 +89,19 @@ public class Playscreen implements Screen{
         // b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         spieler = new Held(this,spielerPosition);
+        getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),1,4));
+
         controller = new Controller(game);
         anzeige = new AnzeigenDisplay(game.batch, spieler);
         bf=new BitmapFont(Gdx.files.internal("ui-skin/default.fnt"));
         bf.setColor(Color.BLUE);
         bf.setUseIntegerPositions(false);
         bf.getData().setScale(1f/AnimaRPG.W_WIDTH,1f/AnimaRPG.W_Height);
+
+        //TestZauber erzeugen
+        ZauberGenerator.generateZauber("staerkung1");
+        ZauberGenerator.generateZauber("schaden1");
+
 
         //Testitems erzeugen:
 /*
@@ -111,7 +120,6 @@ public class Playscreen implements Screen{
         getSpieler().getHeldenInventar().add(new Armor("Ruessi3","armor",new Vector2(5,13),15,123));
         getSpieler().getHeldenInventar().add(new Armor("Ruessi14","armor",new Vector2(5,13),15,132));
         getSpieler().getHeldenInventar().add(new WaffeNah("Test1", "nahkampf", new Vector2(0,5),15,2));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),1,4));
         getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),12,5));
         getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),32,5));
         getSpieler().getHeldenInventar().add(new WaffeNah("Test5", "nahkampf", new Vector2(4,5),23,182));
@@ -197,11 +205,11 @@ public class Playscreen implements Screen{
                 arrow.draw(game.batch);
             }
         }
-        if (Zauber.getAllZauber().size > 0) {
+        if (ZauberFixture.getAllZauber().size > 0) {
 
-            for (Zauber zauber : Nova.getAllZauber()) {
-                if (!zauber.destroyed) {
-                    zauber.draw(game.batch);
+            for (ZauberFixture zauberFixture : Nova.getAllZauber()) {
+                if (!zauberFixture.destroyed) {
+                    zauberFixture.draw(game.batch);
                 }
             }
         }
@@ -270,6 +278,9 @@ public class Playscreen implements Screen{
     public void handleInput(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
             spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
+
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
+            spieler.castBlitz();spieler.b2body.setLinearVelocity(0, 0);
 
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
             spieler.useObject();spieler.b2body.setLinearVelocity(0, 0);
@@ -346,16 +357,16 @@ public class Playscreen implements Screen{
                     }
                 }
 
-                for (Zauber zauber : Nova.getAllZauber()) {
-                    if (!zauber.destroyed) {
-                        zauber.update(dt);
+                for (ZauberFixture zauberFixture : Nova.getAllZauber()) {
+                    if (!zauberFixture.destroyed) {
+                        zauberFixture.update(dt);
                     } else {
-                        zauber.remove();
+                        zauberFixture.remove();
                     }
                 }
                 if (!spieler.destroyed)
                     spieler.update(dt);
-
+                controller.update();
     }
     @Override
     public void resize(int width, int height) {

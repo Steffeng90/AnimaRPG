@@ -10,17 +10,17 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.sprites.character.HumanoideSprites;
 
-import static com.badlogic.gdx.Input.Keys.H;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 19.11.2016.
  */
 
-public class Nova extends ZauberFixture {
+public class Blitz extends ZauberFixture {
 
-public Nova() {
+public Blitz(HumanoideSprites.Richtung richtung) {
     this.zaubernder=getHeld();
     this.world=zaubernder.world;
     this.screen=zaubernder.screen;
@@ -34,25 +34,20 @@ public Nova() {
     radius=60;
     stateTimer=0;
     rueckstoss=3;
-
-    zauberQuelle = new Texture("objekte/energieNova.png");
-    initialTexture=new TextureRegion(zauberQuelle,13, 463, laenge, breite);
+    zauberQuelle = new Texture("objekte/blitz.png");
+    richtungBestimmen(getHeld());
+    initialTexture=new TextureRegion(zauberQuelle,0, 0, 20, 17);
     setRegion(initialTexture);
-    setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,120 / AnimaRPG.PPM,120/ AnimaRPG.PPM);
+    setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,(radius*2) / AnimaRPG.PPM,(radius*2)/ AnimaRPG.PPM);
 
     // setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,75 / AnimaRPG.PPM,75/ AnimaRPG.PPM);
     frames = new Array<TextureRegion>();
-
-    frames.add(new TextureRegion(zauberQuelle, 5, 11, 16, 16));
-    frames.add(new TextureRegion(zauberQuelle,24,10, 20, 20));
-    frames.add(new TextureRegion(zauberQuelle,47 , 7, 26, 24));
-    frames.add(new TextureRegion(zauberQuelle, 77,13, 13, 13));
-    frames.add(new TextureRegion(zauberQuelle, 95, 7, 25, 24));
-    frames.add(new TextureRegion(zauberQuelle, 125, 7, 25, 24));
-    frames.add(new TextureRegion(zauberQuelle, 154, 7, 25, 24));
-    frames.add(new TextureRegion(zauberQuelle, 188, 3, 31, 30));
-    frames.add(new TextureRegion(zauberQuelle, 229, 3, 33, 31));
-    frames.add(new TextureRegion(zauberQuelle, 272, 2, 36, 33));
+    frames.add(new TextureRegion(zauberQuelle, 0, 0, 20, 17));
+    frames.add(new TextureRegion(zauberQuelle, 20, 0, 25, 17));
+    frames.add(new TextureRegion(zauberQuelle, 44, 0, 37, 17));
+    frames.add(new TextureRegion(zauberQuelle, 81, 0, 59, 17));
+    frames.add(new TextureRegion(zauberQuelle, 130, 0, 46, 17));
+    frames.add(new TextureRegion(zauberQuelle, 176, 0, 52, 17));
 
     zauber = new Animation(.1f, frames);
     frames.clear();

@@ -159,6 +159,4 @@ public class InventarList {
             this.angelegtRuestung = angelegtRuestung;angelegtRuestung.setAngelegt(true);}
         else{this.angelegtRuestung=null;}
         getHeld().setRuestung();}
-
-
 }

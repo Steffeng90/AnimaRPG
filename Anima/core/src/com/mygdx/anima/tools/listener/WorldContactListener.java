@@ -15,8 +15,7 @@ import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Zauber;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -88,9 +87,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.HERO_CAST_BIT | AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_CAST_BIT)
-                    ((Enemy)fixB.getUserData()).getsHitbySpell((Zauber)fixA.getUserData());
+                    ((Enemy)fixB.getUserData()).getsHitbySpell((ZauberFixture)fixA.getUserData());
                 else
-                    ((Enemy)fixA.getUserData()).getsHitbySpell((Zauber)fixB.getUserData());
+                    ((Enemy)fixA.getUserData()).getsHitbySpell((ZauberFixture)fixB.getUserData());
                 break;
             case AnimaRPG.HERO_BIT | AnimaRPG.GEBIETSWECHSEL_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.GEBIETSWECHSEL_BIT){
@@ -109,9 +108,9 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.ENEMY_CAST_HEAL | AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_CAST_HEAL)
-                    ((Enemy)fixB.getUserData()).getsHitbySpell((Zauber)fixA.getUserData());
+                    ((Enemy)fixB.getUserData()).getsHitbySpell((ZauberFixture)fixA.getUserData());
                 else
-                    ((Enemy)fixA.getUserData()).getsHitbySpell((Zauber)fixB.getUserData());
+                    ((Enemy)fixA.getUserData()).getsHitbySpell((ZauberFixture)fixB.getUserData());
                 break;
             case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)

@@ -1,55 +1,21 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
-
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
-import static com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE.allZauber;
 
 /**
  * Created by Steffen on 19.11.2016.
  */
 
-public class HeilzauberAOE extends Zauber {
+public class HeilzauberAOE extends ZauberFixture {
 
 public HeilzauberAOE(Enemy enemy,Playscreen screen) {
     this.zaubernder=enemy;
@@ -60,10 +26,9 @@ public HeilzauberAOE(Enemy enemy,Playscreen screen) {
     bdef.type = BodyDef.BodyType.DynamicBody;
     b2body =world.createBody(bdef);
     b2body.setActive(true);
-
     radius=38;
     stateTimer=0;
-    zauberQuelle = new Texture("objekte/heilung.png");
+    zauberQuelle = new Texture("objekte/heilung_versuch2.png");
 
     setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,100 / AnimaRPG.PPM,100/ AnimaRPG.PPM);
     frames = new Array<TextureRegion>();
@@ -93,7 +58,7 @@ public HeilzauberAOE(Enemy enemy,Playscreen screen) {
 
     setToDestroy=false;
     destroyed=false;
-    Zauber.allZauber.add(this);
+    ZauberFixture.allZauber.add(this);
 }
 
 }
