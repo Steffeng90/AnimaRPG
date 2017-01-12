@@ -15,6 +15,7 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
 import com.mygdx.anima.sprites.character.items.InventarList;
 import com.mygdx.anima.sprites.character.zauber.ZauberList;
+import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.SchadenBerechner;
 
 import static com.mygdx.anima.AnimaRPG.setHeld;
@@ -221,6 +222,7 @@ public class Held extends HumanoideSprites{
     public void setObject(boolean inReichweite,InteraktivesObjekt io){
         objectInReichweite=inReichweite;
         object=io;
+        Controller.useUpdate=true;
     }
     public void useObject(){
         if(object!=null)

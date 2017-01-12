@@ -3,9 +3,9 @@ package com.mygdx.anima.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,13 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Menu;
-import com.mygdx.anima.screens.actors.MyButton;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
@@ -32,17 +30,15 @@ public class Controller {
     AnimaRPG game;
     Viewport viewport;
     private Stage stage;
-    public static boolean updateDurchfuehren;
+    public static boolean updateDurchfuehren,useUpdate;
     boolean upPressed,downPressed,leftPressed,rightPressed,
     meleePressed,bowPressed,castPressed, usePressed ;
-    ImageButton weaponButton;
+    ImageButton meleeButton,useButton,bowButton,cast1Button,cast2Button,cast3Button,cast4Button;
     ImageButton.ImageButtonStyle style;
     Table tableRechts;
 
-
     OrthographicCamera cam;
     private Touchpad touchpad;
-    SpriteBatch batch;
     public int buttonSize;
     Skin skin=new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
 
@@ -56,231 +52,163 @@ public class Controller {
         buttonSize=25;
         updateDurchfuehren=false;
 
-        Table tableLeft=new Table();
-        tableLeft.left().bottom();
-
-        Image upImg=new Image(new Texture("ui-skin/pfeil_oben.png"));
-        upImg.setSize(buttonSize,buttonSize);
-        upImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                upPressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                upPressed=true;
-                return true;
-            }
-        });
-
-
-        Image downImg=new Image(new Texture("ui-skin/pfeil_unten.png"));
-        downImg.setSize(buttonSize,buttonSize);
-        downImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed=true;
-                return true;
-            }
-        });
-        Image leftImg=new Image(new Texture("ui-skin/pfeil_links.png"));
-        leftImg.setSize(buttonSize,buttonSize);
-        leftImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                leftPressed=true;
-                return true;
-            }
-        });
-        Image rightImg=new Image(new Texture("ui-skin/pfeil_rechts.png"));
-        rightImg.setSize(buttonSize,buttonSize);
-        rightImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                rightPressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                rightPressed=true;
-                return true;
-            }
-        });
-        tableLeft.add();
-        tableLeft.add(upImg).size(upImg.getWidth(),upImg.getHeight());
-        tableLeft.add();
-        tableLeft.row().pad(0,0,0,0);
-        tableLeft.add(leftImg).size(leftImg.getWidth(),leftImg.getHeight());
-        tableLeft.add();
-        tableLeft.add(rightImg).size(rightImg.getWidth(),rightImg.getHeight());
-        tableLeft.row().padBottom(0);
-        tableLeft.add();
-        tableLeft.add(downImg).size(downImg.getWidth(),downImg.getHeight());
-        //tableLeft.add();
-       // stage.addActor(tableLeft);
-
-        /*Touchpad touchpad;
-        Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
-        touchpad = new Touchpad(20f, skin);
-        touchpad.setBounds(15, 15, 100, 100);
-        tableLeft.add(touchpad);*/
-
-        Touchpad.TouchpadStyle touchpadStyle = new Touchpad.TouchpadStyle();
-        //touchpadStyle.knob=skin.getDrawable("knob");
-        //touchpadStyle.background=skin.getDrawable("background");
-
-        //        touchpad = new Touchpad(10, touchpadStyle);
-
         touchpad = new Touchpad(10, skin);
         skin.add("touchBackground",new Texture("touchBackground.png"));
         touchpad.getStyle().background=skin.getDrawable("touchBackground");
 
         touchpad.setBounds(0, 0,60, 60);
-       // touchpad.
         stage.addActor(touchpad);
-
+        rechteTabelleDefinieren();
         tableRechts=rechteTabelleZeichnen();
         stage.addActor((tableRechts));
 
         Image inventarImg=new Image(new Texture("ui-skin/inventar.png"));
         inventarImg.setSize(buttonSize,buttonSize);
         inventarImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.getScreen().pause();
-                game.changeScreen(new Menu(game));
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
+                game.changeScreen(new Menu(game));}
+            @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;}});
         inventarImg.setPosition(AnimaRPG.W_WIDTH-buttonSize,AnimaRPG.W_Height-buttonSize);
         stage.addActor(inventarImg);
     }
-    public Table rechteTabelleZeichnen(){
-        Table tableRight=new Table();
-
-        Image meleeImg=new Image(new Texture("ui-skin/action_melee.png"));
-        meleeImg.setSize(buttonSize,buttonSize);
-        meleeImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                meleePressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                meleePressed=true;
-                return true;
-            }
-        });
-
+    public void rechteTabelleDefinieren() {
         SpriteDrawable background = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage.png"))));
-        SpriteDrawable icon_up = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_sword.png"))));
-        SpriteDrawable icon_down = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/action_use.png"))));
-
+        SpriteDrawable background_aktiv = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage_aktiv.png"))));
         // Test für Dynamische Buttons#
-        if(getHeld().getHeldenInventar().getAngelegtWaffeNah()!=null) {
+        if (getHeld().getHeldenInventar().getAngelegtWaffeNah() != null) {
             style = new ImageButton.ImageButtonStyle();
             style.up = background;
-            style.down = background;
+            style.down = background_aktiv;
             style.imageUp = new SpriteDrawable(new Sprite(getHeld().getHeldenInventar().getAngelegtWaffeNah().getGrafikButton()));
             style.imageDown = new SpriteDrawable(new Sprite(getHeld().getHeldenInventar().getAngelegtWaffeNah().getGrafikButton()));
-            // style.unpressedOffsetY = -20; // to "not" center the icon
-            // style.unpressedOffsetX = -30; // to "not" center the icon
-
-            weaponButton = new ImageButton(style);
-        }
-        meleeImg.setSize(buttonSize,buttonSize);
-        meleeImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                meleePressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                meleePressed=true;
-                return true;
-            }
-        });
-        Image bowImg=new Image(new Texture("ui-skin/action_bow.png"));
-        bowImg.setSize(buttonSize,buttonSize);
-        bowImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                bowPressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                bowPressed=true;
-                return true;
-            }
-        });
-        Image castImg=new Image(new Texture("ui-skin/action_cast.png"));
-        castImg.setSize(buttonSize,buttonSize);
-        castImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                castPressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                castPressed=true;
-                Gdx.app.log("Cast","");
-
-                return true;
-
-            }
-        });
-        Image useImg=new Image(new Texture("ui-skin/action_use.png"));
-        useImg.setSize(buttonSize,buttonSize);
-        useImg.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                usePressed=false;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                usePressed=true;
-                return true;
-            }
-        });
+            meleeButton = new ImageButton(style);
+            meleeButton.setSize(buttonSize, buttonSize);
+            meleeButton.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {meleePressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {meleePressed = true;return true;}
+            });}
+        if (getHeld().getHeldenInventar().getAngelegtWaffeFern() != null) {
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background_aktiv;
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getHeldenInventar().getAngelegtWaffeFern().getGrafikButton()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getHeldenInventar().getAngelegtWaffeFern().getGrafikButton()));
+            bowButton = new ImageButton(style);
+            bowButton.setSize(buttonSize, buttonSize);
+            bowButton.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {bowPressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {bowPressed = true;return true;}
+            });}
+        if (getHeld().getZauberList().getZauberslot1() != null) {
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background_aktiv;
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot1().getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot1().getSlotGrafik()));
+            cast1Button = new ImageButton(style);
+            cast1Button.setSize(buttonSize, buttonSize);
+            cast1Button.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+            });}
+        if (getHeld().getZauberList().getZauberslot2() != null) {
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background_aktiv;
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot2().getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot2().getSlotGrafik()));
+            cast2Button = new ImageButton(style);
+            cast2Button.setSize(buttonSize, buttonSize);
+            cast2Button.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+            });}
+        if (getHeld().getZauberList().getZauberslot3() != null) {
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background_aktiv;
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot3().getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot3().getSlotGrafik()));
+            cast3Button = new ImageButton(style);
+            cast3Button.setSize(buttonSize, buttonSize);
+            cast3Button.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+            });}
+        if (getHeld().getZauberList().getZauberslot4() != null) {
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background_aktiv;
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot4().getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot4().getSlotGrafik()));
+            cast4Button = new ImageButton(style);
+            cast4Button.setSize(buttonSize, buttonSize);
+            cast4Button.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+            });}
+            if(true){
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background_aktiv;
+            style.imageUp = new SpriteDrawable(new Sprite((new TextureRegion(new Texture("objekte/icons_for_rpg.png"), 8 * 34, 29 * 34, 34, 34))));
+            style.imageDown = new SpriteDrawable(new Sprite((new TextureRegion(new Texture("objekte/icons_for_rpg.png"), 8 * 34, 29 * 34, 34, 34))));
+            useButton = new ImageButton(style);
+            useButton.setSize(buttonSize, buttonSize);
+            useButton.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {usePressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {usePressed = true;return true;}
+            });}
+    }
+    public Table rechteTabelleZeichnen(){
+        Table tableRight = new Table();
         //Pad bei 320 Breite
         //tableRight.padLeft(240);
         //Pad bei 360 Breite
-        tableRight.padLeft(280);
-        tableRight.add();
-        tableRight.add(meleeImg).size(meleeImg.getWidth(),meleeImg.getHeight());
-        if(getHeld().getHeldenInventar().getAngelegtWaffeNah()!=null){tableRight.add(weaponButton).size(meleeImg.getWidth(),meleeImg.getHeight());}
-        else{tableRight.add();}
-        tableRight.row().pad(0,0,0,0);
-        tableRight.add(bowImg).size(bowImg.getWidth(),bowImg.getHeight());
-        tableRight.add();
-        tableRight.add(castImg).size(castImg.getWidth(),castImg.getHeight());
-        tableRight.row().padBottom(0);
-        tableRight.add();
-        tableRight.add(useImg).size(useImg.getWidth(),useImg.getHeight());
-        tableRight.add();
+        tableRight.padLeft(270);
+        tableRight.row().pad(5,0,5,5);
+        tableRight.add().size(buttonSize,buttonSize);;
+        tableRight.add().size(buttonSize,buttonSize);;
+
+        if (getHeld().getZauberList().getZauberslot4()!=null) {
+            tableRight.add(cast4Button).size(buttonSize,buttonSize);
+        } else {tableRight.add().size(buttonSize,buttonSize);}
+        tableRight.row().pad(5,0,5,5);
+        tableRight.add().size(buttonSize,buttonSize);;
+        tableRight.add().size(buttonSize,buttonSize);;
+        if (getHeld().getZauberList().getZauberslot3()!=null) {
+            tableRight.add(cast3Button).size(buttonSize,buttonSize);
+        } else {tableRight.add().size(buttonSize,buttonSize);}
+        tableRight.row().pad(5,0,5,5);
+        tableRight.add().size(buttonSize,buttonSize);;
+        tableRight.add().size(buttonSize,buttonSize);;
+
+        if (getHeld().getZauberList().getZauberslot2()!=null) {
+            tableRight.add(cast2Button).size(buttonSize,buttonSize);
+        } else {tableRight.add().size(buttonSize,buttonSize);}
+        tableRight.row().pad(5,0,5,5);
+        tableRight.add().size(buttonSize,buttonSize);;
+        tableRight.add().size(buttonSize,buttonSize);;
+
+        if (getHeld().getZauberList().getZauberslot1()!=null) {
+            tableRight.add(cast1Button).size(buttonSize,buttonSize);
+        } else {        tableRight.add().size(buttonSize,buttonSize);;
+        }
+        // Platz für SpeerAttacke
+        tableRight.row().pad(5,0,5,5);
+        if (getHeld().objectInReichweite) {
+            tableRight.add(useButton).size(buttonSize,buttonSize);
+        } else {        tableRight.add().size(buttonSize,buttonSize);}
+        if (getHeld().getHeldenInventar().getAngelegtWaffeFern() != null) {
+            tableRight.add(bowButton).size(buttonSize,buttonSize);
+        } else {        tableRight.add().size(buttonSize,buttonSize);}
+        if (getHeld().getHeldenInventar().getAngelegtWaffeNah() != null) {
+            tableRight.add(meleeButton).size(buttonSize,buttonSize);
+        } else {        tableRight.add().size(buttonSize,buttonSize);}
         tableRight.left().bottom();
         return tableRight;
-
     }
     public void draw(){
         stage.draw();
@@ -288,6 +216,13 @@ public class Controller {
     public void update(){
         if(updateDurchfuehren){
             updateDurchfuehren=false;
+            tableRechts.clear();
+            rechteTabelleDefinieren();
+            tableRechts=rechteTabelleZeichnen();
+            stage.addActor((tableRechts));
+        }
+        else if(useUpdate){
+            useUpdate=false;
             tableRechts.clear();
             tableRechts=rechteTabelleZeichnen();
             stage.addActor((tableRechts));

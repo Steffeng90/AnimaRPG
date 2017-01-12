@@ -15,6 +15,7 @@ import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
 
 /**
@@ -39,9 +40,11 @@ public class WorldContactListener implements ContactListener {
                 break;
             case AnimaRPG.HERO_SENSOR | AnimaRPG.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_SENSOR){
-                    ((Held) fixA.getUserData()).setObject(true,((InteraktivesObjekt) fixB.getUserData()));}
+                    if(fixB.getUserData() instanceof Schatztruhe && ((Schatztruhe) fixB.getUserData()).closed==false){}
+                    else{((Held) fixA.getUserData()).setObject(true,((InteraktivesObjekt) fixB.getUserData()));}}
                 else{
-                    ((Held) fixB.getUserData()).setObject(true,((InteraktivesObjekt) fixA.getUserData()));}
+                    if(fixA.getUserData() instanceof Schatztruhe && ((Schatztruhe) fixA.getUserData()).closed==false){}
+                    else{((Held) fixB.getUserData()).setObject(true,((InteraktivesObjekt) fixA.getUserData()));}}
                 break;
             case AnimaRPG.ENEMY_SENSOR | AnimaRPG.HERO_BIT:
                 Gdx.app.log("Held im Sensor","");

@@ -35,7 +35,9 @@ public class Raider extends Enemy
             vonFeedbackbetroffen=false;
         }
         else if(!dead && !runDying && !runMeleeAnimation){
-            if(healer!=null){coordinateWalking(healer, dt);}
+            if(healer!=null){
+                b2body.setLinearVelocity(new Vector2(0,0));
+                coordinateWalking(healer, dt);}
             else{coordinateWalking(hero, dt);}
         b2body.setLinearVelocity(velocity);
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -55,33 +57,33 @@ public class Raider extends Enemy
         }
     }
 
-    public void coordinateWalking(HumanoideSprites hero, float dt){
-        if(hero.getX()<getX() ){
+    public void coordinateWalking(HumanoideSprites zielSprite, float dt){
+        if(zielSprite.getX()<getX() ){
             // Runter
-            if(hero.getY()<getY()){
+            if(zielSprite.getY()<getY()){
 
-                walkingVelo(hero,new Vector2(-getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
-                if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(3);}
+                walkingVelo(zielSprite,new Vector2(-getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
+                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(3);}
                 else{ setCurrentRichtung(0);}
             }
             // Hoch
             else{
-                walkingVelo(hero,new Vector2(-getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
-                if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(2);}
+                walkingVelo(zielSprite,new Vector2(-getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
+                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(2);}
                 else{setCurrentRichtung(0);}
             }}
         // Rechts
         else {
             // Runter
-            if (hero.getY() < getY()) {
-                walkingVelo(hero,new Vector2(getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
-                if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(3);}
+            if (zielSprite.getY() < getY()) {
+                walkingVelo(zielSprite,new Vector2(getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
+                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(3);}
                 else{setCurrentRichtung(1);}
             }
             // Hoch
             else{
-                walkingVelo(hero,new Vector2(getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
-                if((Math.abs(hero.getX()-getX())<=Math.abs(hero.getY()-getY()))){ setCurrentRichtung(2);}
+                walkingVelo(zielSprite,new Vector2(getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
+                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(2);}
                 else{setCurrentRichtung(1);}
             }
         }
