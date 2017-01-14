@@ -1,4 +1,4 @@
-package com.mygdx.anima.sprites.character.interaktiveObjekte;
+package com.mygdx.anima.sprites.character.zauber.fixtures;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,18 +9,17 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.sprites.character.Held;
 
-import static com.badlogic.gdx.Input.Keys.H;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
  * Created by Steffen on 19.11.2016.
  */
 
-public class Nova extends ZauberFixture {
+public class Nova extends com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture {
 
-public Nova() {
+public Nova(float zauberFixture) {
+    super(zauberFixture);
     this.zaubernder=getHeld();
     this.world=zaubernder.world;
     this.screen=zaubernder.screen;
@@ -62,7 +61,7 @@ public Nova() {
     CircleShape circleShape = new CircleShape();
     circleShape.setRadius(radius / AnimaRPG.PPM);
     circleShape.setPosition(new Vector2(0,0));
-     fdefAttack = new FixtureDef();
+    fdefAttack = new FixtureDef();
     fdefAttack.filter.categoryBits = AnimaRPG.HERO_CAST_BIT;
     fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;
     fdefAttack.shape = circleShape;
@@ -70,6 +69,6 @@ public Nova() {
 
     setToDestroy=false;
     destroyed=false;
-    ZauberFixture.allZauber.add(this);
+    com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture.allZauber.add(this);
 }
 }

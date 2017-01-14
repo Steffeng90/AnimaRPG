@@ -59,14 +59,14 @@ public class ZauberReiter extends Group {
         slotTable.setPosition(reiterWidth, height);
         slotTable.add(zauberslot).size(invLinksWidth/4,invLinksWidth/4).colspan(4).size(invLinksWidth, height/16);
         slotTable.row();
-        if(getHeld().getZauberList().getZauberslot1()==null && getHeld().getZauberList().getZauberslot2()==null && getHeld().getZauberList().getZauberslot3()==null && getHeld().getZauberList().getZauberslot4()==null)
+        if(getHeld().getZauberList().getZauberslot(1)==null && getHeld().getZauberList().getZauberslot(2)==null && getHeld().getZauberList().getZauberslot(3)==null && getHeld().getZauberList().getZauberslot(4)==null)
         {
             slotTable.add(new Label("", menu.getSkin())).size(invLinksWidth/4,invLinksWidth/4).colspan(2); slotTable.row();
         }else{
-        if(getHeld().getZauberList().getZauberslot1()!=null){Image img1=new Image(getHeld().getZauberList().getZauberslot1().getSlotGrafik());slotTable.add(img1).size(invLinksWidth/4,invLinksWidth/4);}
-        if(getHeld().getZauberList().getZauberslot2()!=null){Image img2=new Image(getHeld().getZauberList().getZauberslot2().getSlotGrafik());slotTable.add(img2).size(invLinksWidth/4,invLinksWidth/4);}
-        if(getHeld().getZauberList().getZauberslot3()!=null){Image img3=new Image(getHeld().getZauberList().getZauberslot3().getSlotGrafik());slotTable.add(img3).size(invLinksWidth/4,invLinksWidth/4);}
-        if(getHeld().getZauberList().getZauberslot4()!=null){Image img4=new Image(getHeld().getZauberList().getZauberslot4().getSlotGrafik());slotTable.add(img4).size(invLinksWidth/4,invLinksWidth/4);}
+        if(getHeld().getZauberList().getZauberslot(1)!=null){Image img1=new Image(getHeld().getZauberList().getZauberslot(1).getSlotGrafik());slotTable.add(img1).size(invLinksWidth/4,invLinksWidth/4);}
+        if(getHeld().getZauberList().getZauberslot(2)!=null){Image img2=new Image(getHeld().getZauberList().getZauberslot(2).getSlotGrafik());slotTable.add(img2).size(invLinksWidth/4,invLinksWidth/4);}
+        if(getHeld().getZauberList().getZauberslot(3)!=null){Image img3=new Image(getHeld().getZauberList().getZauberslot(3).getSlotGrafik());slotTable.add(img3).size(invLinksWidth/4,invLinksWidth/4);}
+        if(getHeld().getZauberList().getZauberslot(4)!=null){Image img4=new Image(getHeld().getZauberList().getZauberslot(4).getSlotGrafik());slotTable.add(img4).size(invLinksWidth/4,invLinksWidth/4);}
         }
         inventarLinks.add(slotTable).colspan(2);
         inventarLinks.row();

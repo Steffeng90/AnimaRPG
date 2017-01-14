@@ -26,9 +26,9 @@ import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
+import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
+import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
 import com.mygdx.anima.sprites.character.items.WaffeNah;
 import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
@@ -86,7 +86,7 @@ public class Playscreen implements Screen{
 
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
-        // b2dr = new Box2DDebugRenderer();
+        b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         spieler = new Held(this,spielerPosition);
         getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),1,4));
@@ -100,6 +100,7 @@ public class Playscreen implements Screen{
 
         //TestZauber erzeugen
         ZauberGenerator.generateZauber("staerkung1");
+        ZauberGenerator.generateZauber("schaden2");
         ZauberGenerator.generateZauber("schaden1");
 
 
@@ -185,7 +186,7 @@ public class Playscreen implements Screen{
         //karte rendern
         renderer.render();
         // Render-Linien
-        // b2dr.render(world, gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
         //Zeigt den Controller nur bei Android an:
         //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
@@ -279,9 +280,6 @@ public class Playscreen implements Screen{
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
             spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
 
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.X)) {
-            spieler.castBlitz();spieler.b2body.setLinearVelocity(0, 0);
-
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
             spieler.useObject();spieler.b2body.setLinearVelocity(0, 0);
 
@@ -294,8 +292,14 @@ public class Playscreen implements Screen{
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()) {
             spieler.bowAttack();spieler.b2body.setLinearVelocity(0, 0);
 
-        } else if (controller.isCastPressed()) {
-            spieler.castAttack();spieler.b2body.setLinearVelocity(0, 0);
+        } else if (controller.isCast1Pressed()) {
+            spieler.castAttack(1);spieler.b2body.setLinearVelocity(0, 0);
+        }else if (controller.isCast2Pressed()) {
+            spieler.castAttack(2);spieler.b2body.setLinearVelocity(0, 0);
+        }else if (controller.isCast3Pressed()) {
+            spieler.castAttack(3);spieler.b2body.setLinearVelocity(0, 0);
+        }else if (controller.isCast4Pressed()) {
+            spieler.castAttack(4);spieler.b2body.setLinearVelocity(0, 0);
         }
         else if (spieler.actionInProgress()) {
             float xAchse=controller.getTouchpad().getKnobPercentX()*spieler.getGeschwindigkeitLaufen();
@@ -389,7 +393,7 @@ public class Playscreen implements Screen{
         //itemWindow.dispose();
         //levelUpWindow.dispose();
         anzeige.dispose();
-        // b2dr.dispose();
+        b2dr.dispose();
         controller.dispose();
     }
     //Getter und Setter, selbstgeschrieben

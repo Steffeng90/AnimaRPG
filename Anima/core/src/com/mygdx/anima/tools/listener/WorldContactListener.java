@@ -16,7 +16,7 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
+import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 
 /**
  * Created by Steffen on 13.11.2016.

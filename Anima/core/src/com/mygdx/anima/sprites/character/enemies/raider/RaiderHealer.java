@@ -8,7 +8,7 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE;
+import com.mygdx.anima.sprites.character.zauber.fixtures.HeilzauberAOE;
 
 import java.util.ArrayList;
 

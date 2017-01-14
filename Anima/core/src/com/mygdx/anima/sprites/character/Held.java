@@ -10,9 +10,8 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
+import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.items.InventarList;
 import com.mygdx.anima.sprites.character.zauber.ZauberList;
 import com.mygdx.anima.tools.Controller;
@@ -129,8 +128,9 @@ public class Held extends HumanoideSprites{
         if(isHitbyThrust){getsHitbyThrust(treffenderEnemy);isHitbyThrust=false;}
         if(!runCasting && castExists){
             castExists=false;}
-        else if(!destroyed)
-            setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
+        else if(!destroyed){
+            //setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getHeight()/2);
+        }
     }
     public Richtung getCurrentRichtung(){
         return super.getCurrentRichtung();
@@ -179,18 +179,18 @@ public class Held extends HumanoideSprites{
         runMeleeAnimation = true;
         meleeExists= true;*/
     }}
-    public void castAttack()
+    public void castAttack(int slotNr)
+    {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=getZauberList().getZauberslot(slotNr).getManakosten()){
+        Gdx.app.log("MinusMAna","");
+        setCurrentMana(getCurrentMana()-getZauberList().getZauberslot(slotNr).getManakosten());
+        getZauberList().getZauberslot(slotNr).fixtureErzeugen(currentRichtung);}
+    }
+   /*public void castBlitz()
     {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
         Gdx.app.log("MinusMAna","");
         setCurrentMana(getCurrentMana()-5);
         new Nova();}
-    }
-    public void castBlitz()
-    {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
-        Gdx.app.log("MinusMAna","");
-        setCurrentMana(getCurrentMana()-5);
-        new Nova();}
-    }
+    }*/
     public void bowAttack()
     {   if(currentState==State.STANDING |currentState==State.WALKING)
         {

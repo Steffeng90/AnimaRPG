@@ -1,4 +1,4 @@
-package com.mygdx.anima.sprites.character.interaktiveObjekte;
+package com.mygdx.anima.sprites.character.zauber.fixtures;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -21,6 +21,8 @@ import com.mygdx.anima.sprites.character.HumanoideSprites;
  */
 
 public class ZauberFixture extends Sprite {
+    public static Array<ZauberFixture> allZauber=new Array<ZauberFixture>();
+
     protected Playscreen screen;
     protected World world;
     public Body b2body;
@@ -30,14 +32,16 @@ public class ZauberFixture extends Sprite {
     TextureRegion initialTexture;
     Array<TextureRegion> frames;
     int laenge, breite;
-    public float stateTimer,rueckstoss;
+    public float stateTimer,rueckstoss, zauberFixtureTimer;
     int radius;
     //Refernz auf Held:
     public HumanoideSprites zaubernder;
     public boolean setToDestroy,destroyed,fixtureErzeugen,fixtureistErzeugt;
     FixtureDef fdefAttack;
     Vector2 zauberStartVector,zauberFlugVector;
-    public static Array<ZauberFixture> allZauber=new Array<ZauberFixture>();
+    public ZauberFixture(float zauberFixtureTimer){
+        this.zauberFixtureTimer=zauberFixtureTimer;
+    }
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
@@ -73,10 +77,8 @@ public class ZauberFixture extends Sprite {
         TextureRegion region;
         stateTimer = stateTimer + dt;
         region= zauber.getKeyFrame(stateTimer,false);
-        if(!fixtureistErzeugt && stateTimer>=zauber.getAnimationDuration()*0.8)
+        if(!fixtureistErzeugt && stateTimer>=zauber.getAnimationDuration()*zauberFixtureTimer)
             fixtureErzeugen=true;
-
-
         if(zauber.isAnimationFinished(stateTimer))
             setToDestroy=true;
         return region;

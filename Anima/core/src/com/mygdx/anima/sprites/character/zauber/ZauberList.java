@@ -59,16 +59,13 @@ public class ZauberList {
             case 4: zauberslot4=zauber;break;
         }
     }
-    public ZauberEntity getZauberslot4() {
-        return zauberslot4;
-    }
-    public ZauberEntity getZauberslot1() {
-        return zauberslot1;
-    }
-    public ZauberEntity getZauberslot2() {
-        return zauberslot2;
-    }
-    public ZauberEntity getZauberslot3() {
-        return zauberslot3;
+    public ZauberEntity getZauberslot(int slotNummer){
+        switch(slotNummer){
+            case 1: return zauberslot1;
+            case 2: return zauberslot2;
+            case 3: return zauberslot3;
+            case 4: return zauberslot4;
+            default: return zauberslot1;
+        }
     }
 }

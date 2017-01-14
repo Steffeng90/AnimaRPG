@@ -39,7 +39,7 @@ public class ZauberGenerator {
     private static Vector2 vector;
     //Kategorie 1: Staerkung, 2: Schaden
     private static int kategorie,effektivitaet, manakosten;
-    private static float zauberZeit, zauberDauer;
+    private static float zauberZeit, zauberDauer,zauberFixtureTimer;
 
     public static void generateZauber(String typ) {
         Gson gson = new Gson();
@@ -60,14 +60,14 @@ public class ZauberGenerator {
                     zauberDauer=zauber.get("zauberDauer").getAsFloat();
                     kategorie = zauber.get("kategorie").getAsInt();
                     beschreibung=zauber.get("beschreibung").getAsString();
-
+                    zauberFixtureTimer=zauber.get("zauberFixtureTimer").getAsFloat();
 
                switch (kategorie){
                     case 1:
-                        getHeld().getZauberList().addZauber(new ZauberEntity(zauberName,"staerkung", vector, effektivitaet, manakosten, zauberZeit, zauberDauer,beschreibung));
+                        getHeld().getZauberList().addZauber(new ZauberEntity(zauberName,"staerkung", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
                         break;
                     case 2:
-                        getHeld().getZauberList().addZauber(new ZauberEntity(zauberName,"schaden", vector, effektivitaet, manakosten, zauberZeit, zauberDauer,beschreibung));
+                        getHeld().getZauberList().addZauber(new ZauberEntity(zauberName,"schaden", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
                         break;
                 }
                 break;}

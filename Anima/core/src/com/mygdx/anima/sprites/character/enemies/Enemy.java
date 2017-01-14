@@ -14,9 +14,10 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.HeilzauberAOE;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
+import com.mygdx.anima.sprites.character.zauber.fixtures.Blitz;
+import com.mygdx.anima.sprites.character.zauber.fixtures.HeilzauberAOE;
+import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
+import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.tools.SchadenBerechner;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -32,12 +33,10 @@ public abstract class Enemy extends HumanoideSprites{
             // enemyInReichweite, wird true, wenn Held den ENEMY_ATTACK_SENSOR betritt
             enemyInReichweite,vonFeedbackbetroffen,
     // enemyNear, wird true, wenn Held den ENEMY_HEAL_SENSOR betritt
-
             enemyNear;
     public int erfahrung;
     public String quelle;
     public TextureAtlas atlas;
-
     public Enemy(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,int boundsX,int boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed)
     {
         super(screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
@@ -53,21 +52,6 @@ public abstract class Enemy extends HumanoideSprites{
         atlas = new TextureAtlas(id.substring(0,id.length()-2)+".pack");
         animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false);
         setRegion(standingDownSprite);
-
-     /*   setMaxHitpoints(10);
-        setCurrentHitpoints(getMaxHitpoints());
-        setMaxMana(15);
-        setCurrentMana(getMaxMana());
-        setRegMana(5);
-        setErfahrung(25);
-        setGeschwindigkeitLaufen(15);
-        setSchadenNah(5);
-        setSchadenFern(4);
-        setSchadenZauber(15);
-        setRuestung(4);
-        animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false);
-        setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-        setRegion(standingDownSprite);*/
     }
 
     public void create(){
@@ -82,8 +66,6 @@ public abstract class Enemy extends HumanoideSprites{
         CircleShape shape=new CircleShape();
         shape.setRadius(7/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
-        //PolygonShape shape=new PolygonShape();
-        //shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(0,-10/AnimaRPG.PPM),0);
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
         fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
         | AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_CAST_HEAL;
@@ -93,11 +75,12 @@ public abstract class Enemy extends HumanoideSprites{
 
     public void update(Held hero, float dt){
         super.update(dt);
-        if(!runMeleeAnimation && meleeExists){
+        /*if(!runMeleeAnimation && meleeExists){
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;
         }
-        else if(enemyInReichweite && !runMeleeAnimation &&!destroyed){
+        else */
+        if(enemyInReichweite && !runMeleeAnimation &&!destroyed){
             attack();
         }
         setRegion(getFrame(dt));
@@ -267,6 +250,7 @@ public abstract class Enemy extends HumanoideSprites{
     public void getsHitbySpell(ZauberFixture z) {
         if (z instanceof Nova) {
             vonFeedbackbetroffen = true;
+            // setFeedbackDauer=z.getFeedbackDauer();
             hitByFeedback = true;
             Held tempHeld =(Held) z.zaubernder;
             getsDamaged(3);
@@ -284,6 +268,19 @@ public abstract class Enemy extends HumanoideSprites{
             }
         } else if (z instanceof HeilzauberAOE){
             getsHealed(z);        }
+        else if(z instanceof Blitz){
+            vonFeedbackbetroffen = true;
+            // setFeedbackDauer=z.getFeedbackDauer();
+            hitByFeedback = true;
+            Held tempHeld =(Held) z.zaubernder;
+            getsDamaged(3);
+            if (tempHeld.getX() < getX()) {
+                // Runter
+                if (tempHeld.getY() < getY()) {changeVelocity(new Vector2(z.rueckstoss, z.rueckstoss));}
+                // Hoch
+                else {changeVelocity(new Vector2(z.rueckstoss, -z.rueckstoss));}
+            }
+        }
     }
     public void getsHitbyBow(){
         getsDamaged(2);

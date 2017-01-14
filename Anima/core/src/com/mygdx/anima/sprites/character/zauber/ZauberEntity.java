@@ -3,11 +3,7 @@ package com.mygdx.anima.sprites.character.zauber;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Blitz;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Nova;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
 
 /**
  * Created by Steffen on 01.12.2016.
@@ -24,15 +20,17 @@ public class ZauberEntity {
     private TextureRegion grafikNichts,grafikAusgewaehlt,grafikAngelegt;
     private String name,beschreibung;
     private int effektivitaet, manakosten;
-    private float zauberZeit, zauberDauer;
+    // zauberFixtureTimer beschreibt die Prozent zu denen die Cast-Animation abgelaufen sein muss, also bei 0.8 wird der zauber erzeugt
+    private float zauberZeit, zauberDauer, feedbackDauer ,zauberFixtureTimer;
     private boolean angelegt,ausgewaehlt;
     private int grafikPosX,grafikPosY;
-    private ZauberFixture zauberFixture;
+    private com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture zauberFixture;
 
-    public ZauberEntity(String name, String kategorieString, Vector2 grafikposi, int effektivitaet, int manakosten,float zauberZeit,float zauberDauer,String beschreibung) {
+    public ZauberEntity(String name, String kategorieString, Vector2 grafikposi, int effektivitaet, int manakosten,float zauberFixtureTimer,float zauberZeit,float zauberDauer,String beschreibung) {
         setName(name);
         grafikPosX = (int) grafikposi.x;
         grafikPosY = (int) grafikposi.y;
+        this.zauberFixtureTimer=zauberFixtureTimer;
         ausgewaehlt=false;
         angelegt=false;
         setGrafiken(new TextureRegion(spriteQuelle_weiss, grafikPosX * 34, grafikPosY * 34, 34, 34),
@@ -77,14 +75,13 @@ public class ZauberEntity {
     }
     public void fixtureErzeugen(HumanoideSprites.Richtung richtung){
         if(name.equals("Energie-Nova")){
-            new Nova();// TODO RICHTIG zuordnene
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Nova(zauberFixtureTimer);
         }
         else if(name.equals("Blitz")){
-            new Blitz(richtung);
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Blitz(richtung,zauberFixtureTimer);
         }
     }
     public TextureRegion getSlotGrafik(){return grafikNichts;}
-    public String getItemKategorie() {return itemKategorie.toString();}
     public boolean isStaerkung(){
         if(itemKategorie== kategorie.staerkung)
             return true;
@@ -148,7 +145,8 @@ public class ZauberEntity {
     public String getBeschreibung() {return beschreibung;}
     public void setBeschreibung(String beschreibung) {this.beschreibung = beschreibung;}
 
-    public ZauberFixture getZauberFixture() {return zauberFixture;}
+    public com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture getZauberFixture() {return zauberFixture;}
 
-    public void setZauberFixture(ZauberFixture zauberFixture) {this.zauberFixture = zauberFixture;}
+    public void setZauberFixture(com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture zauberFixture) {this.zauberFixture = zauberFixture;}
+
 }

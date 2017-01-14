@@ -32,7 +32,7 @@ public class Controller {
     private Stage stage;
     public static boolean updateDurchfuehren,useUpdate;
     boolean upPressed,downPressed,leftPressed,rightPressed,
-    meleePressed,bowPressed,castPressed, usePressed ;
+    meleePressed,bowPressed,cast1Pressed,cast2Pressed,cast3Pressed,cast4Pressed, usePressed ;
     ImageButton meleeButton,useButton,bowButton,cast1Button,cast2Button,cast3Button,cast4Button;
     ImageButton.ImageButtonStyle style;
     Table tableRechts;
@@ -101,53 +101,53 @@ public class Controller {
                 @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {bowPressed = false;}
                 @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {bowPressed = true;return true;}
             });}
-        if (getHeld().getZauberList().getZauberslot1() != null) {
+        if (getHeld().getZauberList().getZauberslot(1) != null) {
             style = new ImageButton.ImageButtonStyle();
             style.up = background;
             style.down = background_aktiv;
-            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot1().getSlotGrafik()));
-            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot1().getSlotGrafik()));
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(1).getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(1).getSlotGrafik()));
             cast1Button = new ImageButton(style);
             cast1Button.setSize(buttonSize, buttonSize);
             cast1Button.addListener(new InputListener() {
-                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
-                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {cast1Pressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {cast1Pressed = true;return true;}
             });}
-        if (getHeld().getZauberList().getZauberslot2() != null) {
+        if (getHeld().getZauberList().getZauberslot(2) != null) {
             style = new ImageButton.ImageButtonStyle();
             style.up = background;
             style.down = background_aktiv;
-            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot2().getSlotGrafik()));
-            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot2().getSlotGrafik()));
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(2).getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(2).getSlotGrafik()));
             cast2Button = new ImageButton(style);
             cast2Button.setSize(buttonSize, buttonSize);
             cast2Button.addListener(new InputListener() {
-                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
-                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {cast2Pressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {cast2Pressed = true;return true;}
             });}
-        if (getHeld().getZauberList().getZauberslot3() != null) {
+        if (getHeld().getZauberList().getZauberslot(3) != null) {
             style = new ImageButton.ImageButtonStyle();
             style.up = background;
             style.down = background_aktiv;
-            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot3().getSlotGrafik()));
-            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot3().getSlotGrafik()));
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(3).getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(3).getSlotGrafik()));
             cast3Button = new ImageButton(style);
             cast3Button.setSize(buttonSize, buttonSize);
             cast3Button.addListener(new InputListener() {
-                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
-                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {cast3Pressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {cast3Pressed = true;return true;}
             });}
-        if (getHeld().getZauberList().getZauberslot4() != null) {
+        if (getHeld().getZauberList().getZauberslot(4) != null) {
             style = new ImageButton.ImageButtonStyle();
             style.up = background;
             style.down = background_aktiv;
-            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot4().getSlotGrafik()));
-            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot4().getSlotGrafik()));
+            style.imageUp = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(4).getSlotGrafik()));
+            style.imageDown = new SpriteDrawable(new Sprite(getHeld().getZauberList().getZauberslot(4).getSlotGrafik()));
             cast4Button = new ImageButton(style);
             cast4Button.setSize(buttonSize, buttonSize);
             cast4Button.addListener(new InputListener() {
-                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {castPressed = false;}
-                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {castPressed = true;return true;}
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {cast4Pressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {cast4Pressed = true;return true;}
             });}
             if(true){
             style = new ImageButton.ImageButtonStyle();
@@ -172,27 +172,27 @@ public class Controller {
         tableRight.add().size(buttonSize,buttonSize);;
         tableRight.add().size(buttonSize,buttonSize);;
 
-        if (getHeld().getZauberList().getZauberslot4()!=null) {
+        if (getHeld().getZauberList().getZauberslot(4)!=null) {
             tableRight.add(cast4Button).size(buttonSize,buttonSize);
         } else {tableRight.add().size(buttonSize,buttonSize);}
         tableRight.row().pad(5,0,5,5);
         tableRight.add().size(buttonSize,buttonSize);;
         tableRight.add().size(buttonSize,buttonSize);;
-        if (getHeld().getZauberList().getZauberslot3()!=null) {
+        if (getHeld().getZauberList().getZauberslot(3)!=null) {
             tableRight.add(cast3Button).size(buttonSize,buttonSize);
         } else {tableRight.add().size(buttonSize,buttonSize);}
         tableRight.row().pad(5,0,5,5);
         tableRight.add().size(buttonSize,buttonSize);;
         tableRight.add().size(buttonSize,buttonSize);;
 
-        if (getHeld().getZauberList().getZauberslot2()!=null) {
+        if (getHeld().getZauberList().getZauberslot(2)!=null) {
             tableRight.add(cast2Button).size(buttonSize,buttonSize);
         } else {tableRight.add().size(buttonSize,buttonSize);}
         tableRight.row().pad(5,0,5,5);
         tableRight.add().size(buttonSize,buttonSize);;
         tableRight.add().size(buttonSize,buttonSize);;
 
-        if (getHeld().getZauberList().getZauberslot1()!=null) {
+        if (getHeld().getZauberList().getZauberslot(1)!=null) {
             tableRight.add(cast1Button).size(buttonSize,buttonSize);
         } else {        tableRight.add().size(buttonSize,buttonSize);;
         }
@@ -252,10 +252,18 @@ public class Controller {
         return bowPressed;
     }
 
-    public boolean isCastPressed() {
-        return castPressed;
+    public boolean isCast1Pressed() {
+        return cast1Pressed;
     }
-
+    public boolean isCast2Pressed() {
+        return cast2Pressed;
+    }
+    public boolean isCast3Pressed() {
+        return cast3Pressed;
+    }
+    public boolean isCast4Pressed() {
+        return cast4Pressed;
+    }
     public boolean isUsePressed() {
         return usePressed;
     }

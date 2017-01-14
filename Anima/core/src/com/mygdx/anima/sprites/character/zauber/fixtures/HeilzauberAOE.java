@@ -1,4 +1,4 @@
-package com.mygdx.anima.sprites.character.interaktiveObjekte;
+package com.mygdx.anima.sprites.character.zauber.fixtures;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,9 +15,10 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
  * Created by Steffen on 19.11.2016.
  */
 
-public class HeilzauberAOE extends ZauberFixture {
+public class HeilzauberAOE extends com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture {
 
 public HeilzauberAOE(Enemy enemy,Playscreen screen) {
+    super(0.8f);
     this.zaubernder=enemy;
     this.world=screen.getWorld();
     this.screen=screen;
@@ -58,7 +59,7 @@ public HeilzauberAOE(Enemy enemy,Playscreen screen) {
 
     setToDestroy=false;
     destroyed=false;
-    ZauberFixture.allZauber.add(this);
+    com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture.allZauber.add(this);
 }
 
 }

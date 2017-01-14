@@ -9,7 +9,7 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.ZauberFixture;
+import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -29,21 +29,21 @@ public class Raider extends Enemy
         stateTimer +=dt;
         super.update(hero,dt);
 
-        if(vonFeedbackbetroffen){
-            b2body.setLinearVelocity(velocity);
-            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-            vonFeedbackbetroffen=false;
+        if(hitByFeedback){
+            if(vonFeedbackbetroffen){b2body.setLinearVelocity(velocity);
+            //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+            vonFeedbackbetroffen=false;}
         }
         else if(!dead && !runDying && !runMeleeAnimation){
             if(healer!=null){
-                b2body.setLinearVelocity(new Vector2(0,0));
+                //b2body.setLinearVelocity(new Vector2(0,0));
                 coordinateWalking(healer, dt);}
             else{coordinateWalking(hero, dt);}
-        b2body.setLinearVelocity(velocity);
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+            b2body.setLinearVelocity(velocity);
+        //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         }
         else if(b2body!=null){ b2body.setLinearVelocity(new Vector2(0,0));}
-        if(healSensorActive==false && getCurrentHitpointsPercent()<0.5){
+        if(healSensorActive==false && getCurrentHitpointsPercent()<0.5 && !dead){
             createHealerSensor();
              b2body.setLinearVelocity(new Vector2(0,0));
         }
@@ -55,10 +55,27 @@ public class Raider extends Enemy
                 healSensorActive=false;
             }
         }
-    }
 
+    }
     public void coordinateWalking(HumanoideSprites zielSprite, float dt){
-        if(zielSprite.getX()<getX() ){
+        Vector2 einheitsvector=new Vector2(zielSprite.getX()-getX(),zielSprite.getY()-getY());
+        float einheitsZahl=1/(float)Math.sqrt(Math.pow(einheitsvector.x,2)+Math.pow(einheitsvector.y,2));
+        einheitsvector.x=einheitsZahl*einheitsvector.x;
+        einheitsvector.y=einheitsZahl*einheitsvector.y;
+        walkingVelo(zielSprite,new Vector2(einheitsvector.x*getGeschwindigkeitLaufen(),einheitsvector.y*getGeschwindigkeitLaufen()));
+        if(einheitsvector.y>0 && einheitsvector.y> Math.abs(einheitsvector.x)){ setCurrentRichtung(2);}
+        else if(einheitsvector.x>0 && einheitsvector.x> Math.abs(einheitsvector.y)){ setCurrentRichtung(1);}
+        else if(einheitsvector.y<0 && Math.abs(einheitsvector.y)> Math.abs(einheitsvector.x)){ setCurrentRichtung(3);}
+        else { setCurrentRichtung(0);}
+
+
+        //float winkel=xDistanz/yDistanz;
+        //float xStrecke=1-winkel;
+        //float yStrecke=winkel;
+        //velocity.x=xStrecke*getGeschwindigkeitLaufen()/10;
+        //velocity.y=yStrecke*getGeschwindigkeitLaufen()/10;
+//Gdx.app.log("WInkeL",""+winkel);
+        /*if(zielSprite.getX()<getX() ){
             // Runter
             if(zielSprite.getY()<getY()){
 
@@ -86,20 +103,21 @@ public class Raider extends Enemy
                 if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(2);}
                 else{setCurrentRichtung(1);}
             }
-        }
+        }*/
     }
     public void walkingVelo(HumanoideSprites hero,Vector2 v2){
         v2.x=v2.x/10;
         v2.y=v2.y/10;
 
-        if((getX()-hero.getX())<0.05f && (getX()-hero.getX())>-0.05f){
+        if((getX()-hero.getX())<0.1f && (getX()-hero.getX())>-0.1f){
             velocity.x=0;
-        }else if((velocity.x>-0.3f && velocity.x<0.3f) || (velocity.x>=0.3f && v2.x<0) || (velocity.x<=-0.3f && v2.x>0))
-            velocity.x+=v2.x;
-        if((getY()-hero.getY())<0.05f && (getY()-hero.getY())>-0.05f){
+        }else
+        if((velocity.x>-getGeschwindigkeitLaufen()/10 && velocity.x<getGeschwindigkeitLaufen()/10) || (velocity.x>=getGeschwindigkeitLaufen()/10 && v2.x<0) || (velocity.x<=-getGeschwindigkeitLaufen()/10 && v2.x>0))
+            velocity.x=v2.x;
+        if((getY()-hero.getY())<0.15f && (getY()-hero.getY())>-0.15f){
             velocity.y=0;
-        }else if((velocity.y>-0.3f &&velocity.y<0.3f) || (velocity.y>=0.3f && v2.y<0) || (velocity.y<=-0.3f && v2.y>0))
-            velocity.y+=v2.y;
+        }else if((velocity.y>-getGeschwindigkeitLaufen()/10 &&velocity.y<getGeschwindigkeitLaufen()/10) || (velocity.y>=getGeschwindigkeitLaufen()/10 && v2.y<0) || (velocity.y<=-getGeschwindigkeitLaufen()/10 && v2.y>0))
+            velocity.y=v2.y;
     }
     @Override
     public void getsHealed(ZauberFixture z){
@@ -107,6 +125,7 @@ public class Raider extends Enemy
         healer=null;
     }
     public void createHealerSensor() {
+        if(!dead){
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(200 / AnimaRPG.PPM);
 
@@ -117,6 +136,6 @@ public class Raider extends Enemy
         fdefSensor.isSensor = true;
         healSensorFixture = b2body.createFixture(fdefSensor);
         healSensorFixture.setUserData(this);
-        healSensorActive=true;
+        healSensorActive=true;}
     }
 }
