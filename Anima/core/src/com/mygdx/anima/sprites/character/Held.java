@@ -1,6 +1,7 @@
 package com.mygdx.anima.sprites.character;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,12 +12,14 @@ import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.items.InventarList;
 import com.mygdx.anima.sprites.character.zauber.ZauberList;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.SchadenBerechner;
 
+import static com.badlogic.gdx.Gdx.app;
 import static com.mygdx.anima.AnimaRPG.setHeld;
 
 /**
@@ -46,8 +49,8 @@ public class Held extends HumanoideSprites{
 
     private int schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,staerke,
     geschick,zauberkraft,currentErfahrung,currentLevel,nextLevelUp;
-
-
+    Sound walkingSound;
+    Boolean soundLoopAktiv;
 
     public Held(Playscreen screen,Vector2 spielerPosition)
     {
@@ -73,7 +76,8 @@ public class Held extends HumanoideSprites{
             erfahrungsstufen[i]=lastWert;
             // Gdx.app.log("Stufe "+i+" EPWert:",""+erfahrungsstufen[i]);
         }
-
+        soundLoopAktiv=false;
+        walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
         setMaxHitpoints(1000);
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
@@ -118,6 +122,17 @@ public class Held extends HumanoideSprites{
         setSpielzeit(dt);
         super.update(dt);
         setRegion(getFrame(dt));
+        app.log("CurrentState",""+currentState);
+
+        if(currentState==State.WALKING && soundLoopAktiv==false){
+            soundLoopAktiv=true;
+         walkingSound.loop();
+        }
+        else if(currentState!=State.WALKING && soundLoopAktiv==true){
+            Gdx.aaaaapp.log("Stehen","");
+            soundLoopAktiv=false;
+            walkingSound.stop();
+        }
         if(genugEP){
             genugEP=false;
             stufenAufstieg();
@@ -181,7 +196,7 @@ public class Held extends HumanoideSprites{
     }}
     public void castAttack(int slotNr)
     {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=getZauberList().getZauberslot(slotNr).getManakosten()){
-        Gdx.app.log("MinusMAna","");
+        app.log("MinusMAna","");
         setCurrentMana(getCurrentMana()-getZauberList().getZauberslot(slotNr).getManakosten());
         getZauberList().getZauberslot(slotNr).fixtureErzeugen(currentRichtung);}
     }
@@ -245,7 +260,8 @@ public class Held extends HumanoideSprites{
         getsDamaged(4,enemy);
     }
     public void getsDamaged(int schadensTyp,Enemy enemy){
-        if(enemy==null){Gdx.app.log("Gegner ist null","");}
+        if(enemy==null){
+            app.log("Gegner ist null","");}
         SchadenBerechner.berechneSchaden(schadensTyp,this,enemy);
     }
     //die Methode prüft, ob gerade eine Aktion oder Animation ausgeführt wird und gibt Boolean zurück
@@ -393,7 +409,7 @@ public class Held extends HumanoideSprites{
     }
     public synchronized void stufenAufstieg(){
         //TODO Idee: Werte 2,2,1 aufteilen und LP + 5-12 und MP + 2-3
-        Gdx.app.log("Stufenaufstieg","");
+        app.log("Stufenaufstieg","");
         setCurrentLevel(getCurrentLevel()+1);
 
         // Zufällige verteilung der Werte auf Stärke, Geschick, und Zauberkraft

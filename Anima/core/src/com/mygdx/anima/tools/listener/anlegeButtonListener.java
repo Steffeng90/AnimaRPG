@@ -1,5 +1,6 @@
 package com.mygdx.anima.tools.listener;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.anima.AnimaRPG;
@@ -32,6 +33,8 @@ public class anlegeButtonListener extends InputListener {
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if (item.isAngelegt()) {
+            AnimaRPG.assetManager.get("audio/sounds/ausziehen.wav", Sound.class).play();
+
             item.setAngelegt(false);
             switch(temp)
             {
@@ -42,7 +45,9 @@ public class anlegeButtonListener extends InputListener {
             }}
 
             else{
-        switch(temp)
+            AnimaRPG.assetManager.get("audio/sounds/anziehen.wav", Sound.class).play();
+
+            switch(temp)
         {
             case nahkampf: held.getHeldenInventar().setAngelegtWaffeNah((WaffeNah)item);break;
             case fernkampf: held.getHeldenInventar().setAngelegtWaffeFern((WaffeFern)item);break;

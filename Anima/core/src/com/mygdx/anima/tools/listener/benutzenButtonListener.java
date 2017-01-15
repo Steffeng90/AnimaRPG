@@ -1,5 +1,6 @@
 package com.mygdx.anima.tools.listener;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.anima.AnimaRPG;
@@ -28,6 +29,7 @@ public class benutzenButtonListener extends InputListener {
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
        benutzbar.benutzen();
+
         reiter.inventarRechts.clear();
         reiter.inventarLinks.clear();
         reiter.zeigeItems();

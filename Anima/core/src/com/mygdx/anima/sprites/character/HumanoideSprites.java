@@ -426,7 +426,7 @@ public class HumanoideSprites extends Sprite {
         else if(runMeleeAnimation)
             return State.MELEE;
         else if(velocity.x == 0 && velocity.y == 0)
-            return State.STANDING;
+            {return State.STANDING;}
         else
             return State.WALKING;
     }

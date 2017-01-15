@@ -3,6 +3,7 @@ package com.mygdx.anima.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -83,6 +84,12 @@ public class Playscreen implements Screen{
 
         gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
         setCurrentGameState(GameState.RUN);
+
+        // Musik
+        Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        music.play();
 
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());

@@ -1,5 +1,6 @@
 package com.mygdx.anima.tools.listener;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.anima.AnimaRPG;
@@ -27,6 +28,8 @@ public class ReiterButtonListener extends InputListener {
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        AnimaRPG.assetManager.get("audio/sounds/reiter_wechsel.ogg", Sound.class).play();
+
         switch (auswahl){
             //Charakterreiter
             case 1:        menu.setAnzeigeGroup(new CharakterReiter(menu));break;

@@ -2,6 +2,7 @@ package com.mygdx.anima.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -70,6 +71,7 @@ public class Menu implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Controller.updateDurchfuehren=true;
+                AnimaRPG.assetManager.get("audio/sounds/turn_page.wav", Sound.class).play();
                 getHeld().getHeldenInventar().resetAuswahl();game.closeScreen();dispose();}
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}});

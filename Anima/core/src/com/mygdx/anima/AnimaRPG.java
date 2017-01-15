@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
@@ -46,14 +47,21 @@ public class AnimaRPG extends Game {
 	public static SpriteBatch batch;
 	public static Screen currentScreen, previousScreen;
 	private static Held held;
-	public static AssetManager aManager;
+	public static AssetManager assetManager;
+
 	@Override
 	public void create() {
-		aManager=new AssetManager();
-		Gdx.files.getLocalStoragePath();
-		//aManager.load("objekte/itemdb.json);
-//		aManager.load("objekte/itemdb.json", Gson.class);
-		aManager.finishLoading();
+		assetManager = new AssetManager();
+		assetManager.load("audio/music/little town - orchestral.ogg", Music.class);
+		assetManager.load("audio/sounds/anziehen.wav", Sound.class);
+		assetManager.load("audio/sounds/ausziehen.wav", Sound.class);
+		assetManager.load("audio/sounds/reiter_wechsel.ogg", Sound.class);
+		assetManager.load("audio/sounds/walk.ogg", Sound.class);
+
+		assetManager.load("audio/sounds/turn_page.wav", Sound.class);
+
+
+		assetManager.finishLoading();
 
 		batch = new SpriteBatch();
 		currentScreen=new Playscreen(this);
