@@ -2,6 +2,7 @@ package com.mygdx.anima.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,7 +39,9 @@ public class LevelUpInfo implements Disposable {
     private float infoWidth,infoHeight;
 
     public LevelUpInfo(Playscreen screen, SpriteBatch sb,int level, int stark,int gesch,int zaub,int hp,int mana){
-       this.screen=screen;
+        AnimaRPG.assetManager.get("audio/sounds/levelUp.wav", Sound.class).play();
+
+        this.screen=screen;
         infoWidth=(float)(AnimaRPG.W_WIDTH*2);
                 infoHeight=(float)(AnimaRPG.W_Height*2);
         viewport = new FitViewport(infoWidth,infoHeight, new OrthographicCamera());

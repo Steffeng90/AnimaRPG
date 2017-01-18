@@ -12,14 +12,14 @@ import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
-import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
-import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.items.InventarList;
+import com.mygdx.anima.sprites.character.zauber.ZauberEntity;
 import com.mygdx.anima.sprites.character.zauber.ZauberList;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.SchadenBerechner;
 
 import static com.badlogic.gdx.Gdx.app;
+import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.setHeld;
 
 /**
@@ -31,30 +31,27 @@ public class Held extends HumanoideSprites{
     private int[] erfahrungsstufen;
     public InteraktivesObjekt object;
     public Playscreen screen;
-    public boolean waffe=false;
     public boolean heldErstellt=false;
-    public static String spriteNude="character/female_stock.png",
-    spriteStock="character/female_stock.png",
-    spriteSword="character/female_sword.png",
-    spriteBogen="character/female_bogen.png";
+    public static String einseins="character/43";
     public boolean isHitbyMelee,isHitbyBow,isHitbyCast,isHitbyThrust;
     public Enemy treffenderEnemy;
     private InventarList heldenInventar;
     private ZauberList zauberList;
+    private int aktuellerZauberInt;
     //Dieser Wert wird über Methoden übergeben, um den Held neu zu positionieren, bei Kartenwechsel
     private Vector2 heldPosition;
     //Statistik-Werte
 
-    private float spielzeit,geschwindigkeitLaufen;
+    private float spielzeit;
 
-    private int schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,staerke,
-    geschick,zauberkraft,currentErfahrung,currentLevel,nextLevelUp;
+    private int schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,staerke,gesamtZauberwiderstand,gesamtZauberkraft,gesamtManaReg,gesamtLPReg,
+    gesamtLaufgeschwindigkeit,geschick,zauberkraft,currentErfahrung,currentLevel,nextLevelUp,basicLaufgeschw,basicAngrGeschw;
     Sound walkingSound;
     Boolean soundLoopAktiv;
 
     public Held(Playscreen screen,Vector2 spielerPosition)
     {
-        super(screen,spriteBogen,true);
+        super(screen,einseins,true);
         this.screen=screen;
         heldPosition=spielerPosition;
 
@@ -77,7 +74,9 @@ public class Held extends HumanoideSprites{
             // Gdx.app.log("Stufe "+i+" EPWert:",""+erfahrungsstufen[i]);
         }
         soundLoopAktiv=false;
-        walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
+        //walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
+        walkingSound=AnimaRPG.assetManager.get("audio/sounds/laufen.mp3", Sound.class);
+
         setMaxHitpoints(1000);
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
@@ -86,7 +85,8 @@ public class Held extends HumanoideSprites{
         setCurrentLevel(1);
         setCurrentErfahrung(0);
         setNextLevelUp(1);
-        setGeschwindigkeitLaufen(20); // 10 ist guter Startwert
+        basicAngrGeschw=40;// 10 ist guter Startwert
+        setBasicLaufgeschw(10);
         setStaerke(10);
         setGeschick(12);
         setZauberkraft(8);
@@ -95,6 +95,7 @@ public class Held extends HumanoideSprites{
         setSchadenZauber(12);
         setRuestung(3);
         setZauberwiderstand(11);
+        updateAlleWerte();
         regenerationTimer=0;
         setHeld(this);
 }
@@ -109,27 +110,34 @@ public class Held extends HumanoideSprites{
         createSensor();
         FixtureDef fdef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(7/AnimaRPG.PPM);
+        shape.setRadius(7.5f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
         fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
-                | AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR;
+                | ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
+        // Oberkörpershape
+        shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
+        fdef.filter.categoryBits=AnimaRPG.HERO_OBERKOERPER;
+        fdef.filter.maskBits=AnimaRPG.ENEMY_ATTACK | ARROW_BIT;
+        fdef.isSensor=true;
+        fdef.shape=shape;
+        b2body.createFixture(fdef).setUserData(this);
+
     }
     public void update(float dt)
     {
         setSpielzeit(dt);
         super.update(dt);
         setRegion(getFrame(dt));
-        app.log("CurrentState",""+currentState);
 
         if(currentState==State.WALKING && soundLoopAktiv==false){
             soundLoopAktiv=true;
-         walkingSound.loop();
+         walkingSound.loop(0.2f);
+            Gdx.app.log("AKtiv","");
         }
         else if(currentState!=State.WALKING && soundLoopAktiv==true){
-            Gdx.aaaaapp.log("Stehen","");
             soundLoopAktiv=false;
             walkingSound.stop();
         }
@@ -160,6 +168,8 @@ public class Held extends HumanoideSprites{
        // CircleShape circleShape = new CircleShape();
         //circleShape.setRadius(15 / AnimaRPG.PPM);
         Vector2 richtungsVector;
+        AnimaRPG.assetManager.get("audio/sounds/sword_swing.mp3", Sound.class).play(0.5f);
+
 
         switch (getCurrentRichtung()) {
             //Hier sind bei Y immer schon mind. -5 Abzug, weil man es ein bisschen nach unten ziehen muss, um die Mitte der Bodentexture und nicht
@@ -196,8 +206,8 @@ public class Held extends HumanoideSprites{
     }}
     public void castAttack(int slotNr)
     {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=getZauberList().getZauberslot(slotNr).getManakosten()){
-        app.log("MinusMAna","");
         setCurrentMana(getCurrentMana()-getZauberList().getZauberslot(slotNr).getManakosten());
+        setAktuellerZauberInt(slotNr);
         getZauberList().getZauberslot(slotNr).fixtureErzeugen(currentRichtung);}
     }
    /*public void castBlitz()
@@ -210,6 +220,7 @@ public class Held extends HumanoideSprites{
     {   if(currentState==State.STANDING |currentState==State.WALKING)
         {
         runArchery= true;
+        //    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
 
         // Vector2 startVector, flugVector;
         Vector2 koerper=b2body.getPosition();
@@ -223,7 +234,8 @@ public class Held extends HumanoideSprites{
                 arrowStartVector = new Vector2(koerper.x-20 / AnimaRPG.PPM,koerper.y-8 / AnimaRPG.PPM);
                 arrowFlugVector = new Vector2(-200 / AnimaRPG.PPM, 0);break;
             case Oben:
-                arrowStartVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
+               // arrowStartVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
+                arrowStartVector = new Vector2(koerper.x,koerper.y +23 / AnimaRPG.PPM);
                 arrowFlugVector = new Vector2(0, 200 / AnimaRPG.PPM);break;
             case Unten:
                 arrowStartVector = new Vector2(koerper.x,koerper.y -33 / AnimaRPG.PPM);
@@ -243,12 +255,12 @@ public class Held extends HumanoideSprites{
         if(object!=null)
             object.use(this);
     }
-    public void spriteWechsel(){
+  /*  public void spriteWechsel(){
         updateTextures(spriteSword);
             }
     public void spriteBogen(){
         updateTextures(spriteBogen);
-    }
+    }*/
     public void getsHitbyMelee(Enemy enemy){
         if(enemy!=null){getsDamaged(1,enemy);}
     }
@@ -320,14 +332,6 @@ public class Held extends HumanoideSprites{
         this.spielzeit += spielzeit;
     }
 
-    public float getGeschwindigkeitLaufen() {
-        return geschwindigkeitLaufen;
-    }
-
-    public void setGeschwindigkeitLaufen(float geschwindigkeitLaufen) {
-        this.geschwindigkeitLaufen = geschwindigkeitLaufen;
-    }
-
     public int getSchadenNah() {
         return schadenNah;
     }
@@ -359,15 +363,67 @@ public class Held extends HumanoideSprites{
     }
 
     public int getRuestung() {
+
         return ruestung;
     }
 
-    public void setRuestung() {
-        if(getHeldenInventar().getAngelegtRuestung()!=null)
-        {this.ruestung=getHeldenInventar().getAngelegtRuestung().getRuestung();
-        }else{this.ruestung = 0;}
+    public void updateRuestung() {
+        int w1=0,w2=0,w3=0;
+        if(getHeldenInventar().getAngelegtRuestung()!=null){ w1=getHeldenInventar().getAngelegtRuestung().getRuestung();}
+        if(getHeldenInventar().getAngelegtSchuhe()!=null) {w2=getHeldenInventar().getAngelegtSchuhe().getRuestung();}
+        if(getHeldenInventar().getAngelegtHandschuhe()!=null){w3=getHeldenInventar().getAngelegtHandschuhe().getRuestung();}
+
+        ruestung=w1+w2+w3;
     }
 
+    public int getGesamtManaReg() {
+        return gesamtManaReg;
+    }
+    public void updateGesamtManaReg(){
+        if(getHeldenInventar().getAngelegtAmulett()!=null){
+            gesamtManaReg=getRegMana()+getHeldenInventar().getAngelegtAmulett().getManareg();
+        }
+        else {gesamtManaReg=getRegMana();}
+    }
+    public int getGesamtLPReg() {
+        return gesamtLPReg;
+    }
+    public void updateGesamtLPReg(){
+        if(getHeldenInventar().getAngelegtRuestung()!=null){
+            gesamtLPReg=getRegHitpoints()+getHeldenInventar().getAngelegtRuestung().getLpReg();
+        }
+        else {gesamtLPReg=getRegHitpoints();}
+    }
+    public void updateAlleWerte(){
+        updateGesamtLPReg();
+        updateLaufgeschwindigkeit();
+        updateGesamtManaReg();
+        updateGesamtZauberkraft();
+        updateGesamtZauberwiderstand();
+        updateRuestung();
+        updateAngriffsgeschw();
+        int w1=1,w2=1;
+        float zeit1=0,zeit2=0,zeit3=0,zeit4=0;
+        if(getHeldenInventar().getAngelegtRuestung()!=null){
+            w1=getHeldenInventar().getAngelegtRuestung().getOptikStufe();
+        }
+        if(getHeldenInventar().getAngelegtSchuhe()!=null){
+            w2=getHeldenInventar().getAngelegtSchuhe().getOptikStufe();
+        }
+        if( getZauberList().getZauberslot(1)!=null){
+            zeit1=getZauberList().getZauberslot(1).getZauberZeit();
+        }
+        if( getZauberList().getZauberslot(2)!=null){
+            zeit2=getZauberList().getZauberslot(2).getZauberZeit();
+        }
+        if( getZauberList().getZauberslot(3)!=null){
+            zeit3=getZauberList().getZauberslot(3).getZauberZeit();
+        }
+        if( getZauberList().getZauberslot(3)!=null){
+            zeit4=getZauberList().getZauberslot(3).getZauberZeit();
+        }
+        updateTextures("character/"+w1+""+w2,getAngriffgeschwindigkeit(),getGeschwindigkeitLaufen(),zeit1,zeit2,zeit3,zeit4);
+    };
     public int getStaerke() {
         return staerke;
     }
@@ -398,6 +454,32 @@ public class Held extends HumanoideSprites{
 
     public void setZauberwiderstand(int zauberwiderstand) {
         this.zauberwiderstand = zauberwiderstand;
+    }
+    public int getGesamtZauberwiderstand() {
+        return gesamtZauberwiderstand;
+    }
+    public void updateGesamtZauberwiderstand(){
+        if(getHeldenInventar().getAngelegtAmulett()!=null){
+            gesamtZauberwiderstand=zauberwiderstand+getHeldenInventar().getAngelegtAmulett().getZauberwiderstand();}
+        else{
+            gesamtZauberwiderstand=zauberwiderstand;
+        }
+    }
+    public int getGesamtZauberkraft() {
+        return gesamtZauberkraft;
+    }
+    public void updateGesamtZauberkraft(){
+        if(getHeldenInventar().getAngelegtHelm()!=null){
+            gesamtZauberkraft=zauberkraft+getHeldenInventar().getAngelegtHelm().getZauberkraft();}
+        else { gesamtZauberkraft=zauberkraft;}
+    }
+
+    public void updateLaufgeschwindigkeit() {
+        if(getHeldenInventar().getAngelegtSchuhe()!=null){
+        this.setGeschwindigkeitLaufen(getBasicLaufgeschw()+getHeldenInventar().getAngelegtSchuhe().getLaufgeschwindigkeit());}
+        else{
+            this.setGeschwindigkeitLaufen(getBasicLaufgeschw());
+        }
     }
 
     public Vector2 getHeldPosition() {
@@ -443,5 +525,29 @@ public class Held extends HumanoideSprites{
         }
         setMaxMana(getMaxMana() + 2);
         screen.setLevelUpWindow(new LevelUpInfo(screen,AnimaRPG.batch,currentLevel,stark,gesch,zaub,hp,mana));
+    }
+
+    public void updateAngriffsgeschw() {
+        if(getHeldenInventar().getAngelegtHandschuhe()!=null){
+            setAngriffgeschwindigkeit(basicAngrGeschw+getHeldenInventar().getAngelegtHandschuhe().getAngriffgeschwindigkeit());
+        }else {
+            setAngriffgeschwindigkeit(basicAngrGeschw);
+        }
+    }
+
+    public int getBasicLaufgeschw() {
+        return basicLaufgeschw;
+    }
+
+    public void setBasicLaufgeschw(int basicLaufgeschw) {
+        this.basicLaufgeschw = basicLaufgeschw;
+    }
+
+    public int getAktuellerZauberInt() {
+        return aktuellerZauberInt;
+    }
+
+    public void setAktuellerZauberInt(int aktuellerZauber) {
+        this.aktuellerZauberInt = aktuellerZauber;
     }
 }

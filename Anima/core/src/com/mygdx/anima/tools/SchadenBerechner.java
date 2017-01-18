@@ -16,6 +16,7 @@ public class SchadenBerechner {
         int verursachterSchaden;
         switch(schadensTyp)
         {
+            // TODO wennn viele auf Held schlagen wird oft eine NPE erzeugen -> Treffen werden in Array eingearbeitet und ausgelesen / abgearbeitet
             case 1: //Nahkampf
                 verursachterSchaden=verursacher.getSchadenNah()-(int)(erleidender.getRuestung()/2);
                 if(verursachterSchaden<2) {

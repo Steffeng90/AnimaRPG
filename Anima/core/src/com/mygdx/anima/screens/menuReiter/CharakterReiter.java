@@ -74,8 +74,14 @@ public class CharakterReiter extends Group {
         charRechts.add(new Label("Lebenspunkte:",menu.getSkin())).size(attributWidth,zeilenHeight);
         charRechts.add(createAttributLabel(held.getCurrentHitpoints(),held.getMaxHitpoints())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
+        charRechts.add(new Label("Lebenspunkte-Regeneration:",menu.getSkin())).size(attributWidth,zeilenHeight);
+        charRechts.add(createAttributLabel(held.getGesamtLPReg())).size(zahlenwertWidth,zeilenHeight);
+        charRechts.row();
         charRechts.add(new Label("Manapunkte:",menu.getSkin())).size(attributWidth,zeilenHeight);
         charRechts.add(createAttributLabel(held.getCurrentMana(),held.getMaxMana())).size(zahlenwertWidth,zeilenHeight);
+        charRechts.row();
+        charRechts.add(new Label("Mana-Regeneration:",menu.getSkin())).size(attributWidth,zeilenHeight);
+        charRechts.add(createAttributLabel(held.getGesamtManaReg())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
         charRechts.add(new Label("Kraft:",menu.getSkin())).size(attributWidth,zeilenHeight);
         charRechts.add(createAttributLabel(held.getStaerke())).size(zahlenwertWidth,zeilenHeight);
@@ -84,13 +90,13 @@ public class CharakterReiter extends Group {
         charRechts.add(createAttributLabel(held.getGeschick())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
         charRechts.add(new Label("Zauberkraft:",menu.getSkin())).size(attributWidth,zeilenHeight);
-        charRechts.add(createAttributLabel(held.getZauberkraft())).size(zahlenwertWidth,zeilenHeight);
+        charRechts.add(createAttributLabel(held.getGesamtZauberkraft())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
         charRechts.add(new Label("Laufgeschwindigkeit:",menu.getSkin())).size(attributWidth,zeilenHeight);
         charRechts.add(createAttributLabel((int)held.getGeschwindigkeitLaufen())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
 
-        charRechts.add(new Label("Kampf-Werte", menu.getSkin())).colspan(2);
+        charRechts.add(new Label("Kampf-Werte", menu.getSkin())).size(attributWidth,50).colspan(2);
         charRechts.row();
         charRechts.add(new Label("Nahkampfschaden:",menu.getSkin())).size(attributWidth,zeilenHeight);
         charRechts.add(createAttributLabel(held.getSchadenNah())).size(zahlenwertWidth,zeilenHeight);
@@ -98,6 +104,7 @@ public class CharakterReiter extends Group {
         charRechts.add(new Label("Fernkampfschaden:",menu.getSkin())).size(attributWidth,zeilenHeight);
         charRechts.add(createAttributLabel(held.getSchadenFern())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
+
         charRechts.add(new Label("Zauberschaden:",menu.getSkin())).size(attributWidth,zeilenHeight);
         charRechts.add(createAttributLabel(held.getSchadenZauber())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
@@ -105,7 +112,10 @@ public class CharakterReiter extends Group {
         charRechts.add(createAttributLabel(held.getRuestung())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
         charRechts.add(new Label("Zauberwiderstand:",menu.getSkin())).size(attributWidth,zeilenHeight);
-        charRechts.add(createAttributLabel(held.getZauberwiderstand())).size(zahlenwertWidth,zeilenHeight);
+        charRechts.add(createAttributLabel(held.getGesamtZauberwiderstand())).size(zahlenwertWidth,zeilenHeight);
+        charRechts.row();
+        charRechts.add(new Label("Angriffsgeschwindigkeit:",menu.getSkin())).size(attributWidth,zeilenHeight);
+        charRechts.add(createAttributLabel((int)held.getAngriffgeschwindigkeit())).size(zahlenwertWidth,zeilenHeight);
         charRechts.row();
 
         ScrollPane scrollPane = new ScrollPane(charRechts, menu.getSkin());

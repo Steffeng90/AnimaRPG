@@ -6,17 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.items.Armor;
-import com.mygdx.anima.sprites.character.items.Benutzbar;
-import com.mygdx.anima.sprites.character.items.ItemSprite;
-import com.mygdx.anima.sprites.character.items.WaffeFern;
-import com.mygdx.anima.sprites.character.items.WaffeNah;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
-import static com.mygdx.anima.sprites.character.zauber.ZauberEntity.kategorie.schaden;
 
 /*
 import static com.mygdx.anima.sprites.character.items.ItemGenerator.ruestung;

@@ -20,6 +20,7 @@ import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.tools.SchadenBerechner;
 
+import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static jdk.nashorn.internal.objects.NativeString.substring;
 
@@ -36,7 +37,6 @@ public abstract class Enemy extends HumanoideSprites{
             enemyNear;
     public int erfahrung;
     public String quelle;
-    public TextureAtlas atlas;
     public Enemy(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,int boundsX,int boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed)
     {
         super(screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
@@ -64,13 +64,20 @@ public abstract class Enemy extends HumanoideSprites{
 
         FixtureDef fdef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(7/AnimaRPG.PPM);
+        shape.setRadius(7.5f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
         fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
         | AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_CAST_HEAL;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
+
+        shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
+        fdef.filter.categoryBits=AnimaRPG.ENEMY_OBERKOERPER;
+        fdef.filter.maskBits=AnimaRPG.HERO_WEAPON_BIT | ARROW_BIT;
+        fdef.isSensor=true;
+        fdef.shape=shape;
+        b2body.createFixture(fdef).setUserData(this);;
     }
 
     public void update(Held hero, float dt){
@@ -128,22 +135,22 @@ public abstract class Enemy extends HumanoideSprites{
             for (int i = 0; i < framesSchwert; i++) {
                 frames.add(new TextureRegion(meleeQuelle, i * breite, 0, breite, hoehe));
             }
-            UpMelee = new Animation(meleeSpeed/framesSchwert, frames);
+            UpMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
             frames.clear();
             for (int i = 0; i < framesSchwert; i++) {
                 frames.add(new TextureRegion(meleeQuelle, i * breite, 128, breite, hoehe));
             }
-            DownMelee = new Animation(meleeSpeed/framesSchwert, frames);
+            DownMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
             frames.clear();
             for (int i = 0; i < framesSchwert; i++) {
                 frames.add(new TextureRegion(meleeQuelle, i * breite, 64, breite, hoehe));
             }
-            LeftMelee = new Animation(meleeSpeed/framesSchwert, frames);
+            LeftMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
             frames.clear();
             for (int i = 0; i < framesSchwert; i++) {
                 frames.add(new TextureRegion(meleeQuelle, i * breite, 192, breite, hoehe));
             }
-            RightMelee = new Animation(meleeSpeed/framesSchwert, frames);
+            RightMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
             frames.clear();
         }
         if(bow>0) {
@@ -151,22 +158,22 @@ public abstract class Enemy extends HumanoideSprites{
             for (int i = 0; i < frameArcher; i++) {
                 frames.add(new TextureRegion(bowQuelle, i * breite, 0, breite, hoehe));
             }
-            UpBow = new Animation(bowSpeed/frameArcher, frames);
+            UpBow1 = new Animation(bowSpeed/frameArcher, frames);
             frames.clear();
             for (int i = 0; i < frameArcher; i++) {
                 frames.add(new TextureRegion(bowQuelle, i * breite, 128, breite, hoehe));
             }
-            DownBow = new Animation(bowSpeed/frameArcher, frames);
+            DownBow1 = new Animation(bowSpeed/frameArcher, frames);
             frames.clear();
             for (int i = 0; i < frameArcher; i++) {
                 frames.add(new TextureRegion(bowQuelle, i * breite, 192, breite, hoehe));
             }
-            RightBow = new Animation(bowSpeed/frameArcher, frames);
+            RightBow1 = new Animation(bowSpeed/frameArcher, frames);
             frames.clear();
             for (int i = 0; i < frameArcher; i++) {
                 frames.add(new TextureRegion(bowQuelle, i * breite, 64, breite, hoehe));
             }
-            LeftBow = new Animation(bowSpeed/frameArcher, frames);
+            LeftBow1 = new Animation(bowSpeed/frameArcher, frames);
             frames.clear();
         }
         if(cast>0) {
@@ -174,22 +181,22 @@ public abstract class Enemy extends HumanoideSprites{
             for (int i = 0; i < framesCast; i++) {
                 frames.add(new TextureRegion(castQuelle, i * breite, 0, breite, hoehe));
             }
-            UpCast = new Animation(castSpeed/framesCast, frames);
+            UpCast1 = new Animation(castSpeed/framesCast, frames);
             frames.clear();
             for (int i = 0; i < framesCast; i++) {
                 frames.add(new TextureRegion(castQuelle, i * breite, 128, breite, hoehe));
             }
-            DownCast = new Animation(castSpeed/framesCast, frames);
+            DownCast1 = new Animation(castSpeed/framesCast, frames);
             frames.clear();
             for (int i = 0; i < framesCast; i++) {
                 frames.add(new TextureRegion(castQuelle, i * breite, 192, breite, hoehe));
             }
-            RightCast = new Animation(castSpeed/framesCast, frames);
+            RightCast1 = new Animation(castSpeed/framesCast, frames);
             frames.clear();
             for (int i = 0; i < framesCast; i++) {
                 frames.add(new TextureRegion(castQuelle, i * breite, 64, breite, hoehe));
             }
-            LeftCast = new Animation(castSpeed/framesCast, frames);
+            LeftCast1 = new Animation(castSpeed/framesCast, frames);
         }
         Died=new TextureRegion(dieQuelle,320,0,breite,hoehe);
         standingDownSprite = new TextureRegion(walkQuelle, 0, 128, breite, hoehe);

@@ -1,9 +1,11 @@
 package com.mygdx.anima.sprites.character;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -34,9 +36,15 @@ public class HumanoideSprites extends Sprite {
     public State currentState, previousState;
     public Richtung previousRichtung, currentRichtung;
     public Animation UpWalk, DownWalk, LeftWalk, RightWalk;
-    public Animation UpMelee, DownMelee, LeftMelee, RightMelee;
-    public Animation UpBow, DownBow, LeftBow, RightBow;
-    public Animation UpCast,DownCast, LeftCast,RightCast;
+    public Animation UpMelee1, DownMelee1, LeftMelee1, RightMelee1,
+            UpMelee2, DownMelee2, LeftMelee2, RightMelee2,
+            UpMelee3, DownMelee3, LeftMelee3, RightMelee3;
+    public Animation UpBow1, DownBow1, LeftBow1, RightBow1,
+            UpBow2, DownBow2, LeftBow2, RightBow2;
+    public Animation UpCast1, DownCast1, LeftCast1, RightCast1,
+            UpCast2, DownCast2, LeftCast2, RightCast2,
+            UpCast3, DownCast3, LeftCast3, RightCast3,
+            UpCast4, DownCast4, LeftCast4, RightCast4;
 
     public Animation Dying;
     public TextureRegion Died;
@@ -44,7 +52,9 @@ public class HumanoideSprites extends Sprite {
             standingLeftSprite, standingRightSprite;
     public Texture spriteQuelle;
     public Vector2 velocity;
-
+    //Texture Atlas und QuellenTextureRegion
+    public TextureAtlas atlas;
+    TextureRegion heroWalkRegion,heroBow1Region,heroBow2Region,heroCastRegion,heroDieRegion,heroSword1Region,heroSword2Region,heroSword3Region;
     //Fixturen und ihre Trigger
     //(Der FixtureTrigger wird genutzt,damit eine Fixture nur einmal erzeugt wird, wenn die Animation mehrals 80% durch ist
     public Fixture meleeFixture,castFixture,bowFixture,thrustfixtureErzeugen,sensorFixture;
@@ -60,12 +70,12 @@ public class HumanoideSprites extends Sprite {
 
     //Einstellungen
     private int currentHitpoints,maxHitpoints,currentMana,maxMana,regMana,regHitpoints,
-            schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand;
-    private float geschwindigkeitLaufen;
+            schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,geschwindigkeitLaufen,angriffgeschwindigkeit;
+
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
-    public int breite;
+    public int breite,breite_oversize;
     public int hoehe;
-    public static int framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13;
+    public static float framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13;
     public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
     float regenerationTimer;
     //Konstruktor für Enemies
@@ -108,7 +118,8 @@ public class HumanoideSprites extends Sprite {
         this.meleeSpeed=0.5f;
         this.castSpeed=2f;
         this.thrustSpeed=2;
-
+        angriffgeschwindigkeit=10;
+        changeGrafiken(quelle);
         currentState = State.STANDING;
         previousState = State.STANDING;
         currentRichtung = Richtung.Unten;
@@ -117,114 +128,191 @@ public class HumanoideSprites extends Sprite {
         triggerFixture=true;
         runDying=false;
         meleeExists=false;
-        breite=64;
+        breite=64;breite_oversize=192;
         hoehe=64;
             //hitdauer=wertHeld;
         hitdauer=1;
 
         //Animationen erstellen
-            updateTextures(quelle);
+            updateTextures(quelle,angriffgeschwindigkeit,getGeschwindigkeitLaufen(),0,0,0,0);
             setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-            setRegion(standingDownSprite);
+
+        setRegion(standingDownSprite);
             }
         //Spritebreite
 
 
-    public void updateTextures(String quelle){
-        spriteQuelle = new Texture(quelle);
+    public void updateTextures(String quelle,int attackSpeed,int laufSpeed,float castSpeed1,float castSpeed2, float castSpeed3,float castSpeed4){
+        changeGrafiken(quelle);
+        float speedAttack=(0.8f-(float)attackSpeed/100f);
+        float speedLaufen=(1-(float)laufSpeed/100f);
+        Gdx.app.log("Attack"+speedAttack,"Laufen:"+speedLaufen);
+        //spriteQuelle = new Texture(quelle);
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i*breite, 512, breite, hoehe));
+            frames.add(new TextureRegion(heroWalkRegion, i*breite,0, breite, hoehe));
         }
-        UpWalk = new Animation(0.1f, frames);
+        UpWalk = new Animation(speedLaufen/framesWalk, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(spriteQuelle,i *breite, 640, breite, hoehe));
+            frames.add(new TextureRegion(heroWalkRegion, i *breite, 64, breite, hoehe));
         }
-        DownWalk = new Animation(0.1f, frames);
+        LeftWalk = new Animation(speedLaufen/framesWalk, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 577, breite, hoehe));
+            frames.add(new TextureRegion(heroWalkRegion,i *breite, 128, breite, hoehe));
         }
-        LeftWalk = new Animation(0.1f, frames);
+        DownWalk = new Animation(speedLaufen/framesWalk, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 704, breite, hoehe));
+            frames.add(new TextureRegion(heroWalkRegion, i *breite, 192, breite, hoehe));
         }
-        RightWalk = new Animation(0.1f, frames);
+        RightWalk = new Animation(speedLaufen/framesWalk, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword1Region,i *breite, 0, breite, hoehe));
+        }
+        UpMelee1 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword1Region,i *breite, 64, breite, hoehe));
+        }
+        LeftMelee1= new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword1Region,i *breite, 128, breite, hoehe));
+        }
+        DownMelee1 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword1Region, i *breite, 192, breite, hoehe));
+        }
+        RightMelee1 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword2Region,i *breite_oversize, 0, breite_oversize, breite_oversize));
+        }
+        UpMelee2 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword2Region,i *breite_oversize, breite_oversize, breite_oversize, breite_oversize));
+        }
+        LeftMelee2= new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword2Region,i *breite_oversize, breite_oversize*2, breite_oversize, breite_oversize));
+        }
+        DownMelee2 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword2Region, i *breite_oversize, breite_oversize*3, breite_oversize, breite_oversize));
+        }
+        RightMelee2 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword3Region,i *breite_oversize, 0, breite_oversize, breite_oversize));
+        }
+        UpMelee3 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword3Region,i *breite_oversize, breite_oversize, breite_oversize, breite_oversize));
+        }
+        LeftMelee3= new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword3Region,i *breite_oversize, breite_oversize*2, breite_oversize, breite_oversize));
+        }
+        DownMelee3 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < framesSchwert; i++) {
+            frames.add(new TextureRegion(heroSword3Region, i *breite_oversize, breite_oversize*3, breite_oversize, breite_oversize));
+        }
+        RightMelee3 = new Animation(speedAttack/framesSchwert, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow1Region, i *breite, 0, breite, hoehe));
+        }
+        UpBow1 = new Animation(speedAttack/frameArcher, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow1Region, i *breite, 64, breite, hoehe));
+        }
+        LeftBow1 = new Animation(speedAttack/frameArcher, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow1Region, i *breite,128, breite, hoehe));
+        }
+        DownBow1 = new Animation(speedAttack/frameArcher, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow1Region, i *breite,192, breite, hoehe));
+        }
+        RightBow1 = new Animation(speedAttack/frameArcher, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow2Region, i *breite, 0, breite, hoehe));
+        }
+        UpBow2 = new Animation(speedAttack/frameArcher, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow2Region, i *breite, 64, breite, hoehe));
+        }
+        LeftBow2 = new Animation(speedAttack/frameArcher, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow2Region, i *breite,128, breite, hoehe));
+        }
+        DownBow2 = new Animation(speedAttack/frameArcher, frames);
+        frames.clear();
+        for (int i = 0; i < frameArcher; i++) {
+            frames.add(new TextureRegion(heroBow2Region, i *breite,192, breite, hoehe));
+        }
+        RightBow2 = new Animation(speedAttack/frameArcher, frames);
         frames.clear();
 
-        for (int i = 0; i < framesSchwert; i++) {
-            frames.add(new TextureRegion(spriteQuelle,i* breite, 768, breite, hoehe));
+        for (int i = 0; i < framesCast; i++) {
+            frames.add(new TextureRegion(heroCastRegion, i *breite, 0, breite, hoehe));
         }
-        UpMelee = new Animation(meleeSpeed/framesSchwert, frames);
-        frames.clear();
-        for (int i = 0; i < framesSchwert; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i*breite,896, breite, hoehe));
-        }
-        DownMelee = new Animation(meleeSpeed/framesSchwert, frames);
-        frames.clear();
-        for (int i = 0; i < framesSchwert; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i * breite, 832, breite, hoehe));
-        }
-        LeftMelee= new Animation(meleeSpeed/framesSchwert, frames);
-        frames.clear();
-        for (int i = 0; i < framesSchwert; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 960, breite, hoehe));
-        }
-        RightMelee = new Animation(meleeSpeed/framesSchwert, frames);
-        frames.clear();
-        for (int i = 0; i < frameArcher; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 1024, breite, hoehe));
-        }
-        UpBow = new Animation(bowSpeed/frameArcher, frames);
-        frames.clear();
-        for (int i = 0; i < frameArcher; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 1152, breite, hoehe));
-        }
-        DownBow = new Animation(bowSpeed/frameArcher, frames);
-        frames.clear();
-        for (int i = 0; i < frameArcher; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 1216, breite, hoehe));
-        }
-        RightBow = new Animation(bowSpeed/frameArcher, frames);
-        frames.clear();
-        for (int i = 0; i < frameArcher; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 1088, breite, hoehe));
-        }
-        LeftBow = new Animation(bowSpeed/frameArcher, frames);
+        UpCast1 = new Animation(castSpeed1/framesCast, frames);
+        UpCast2 = new Animation(castSpeed2/framesCast, frames);
+        UpCast3 = new Animation(castSpeed3/framesCast, frames);
+        UpCast4 = new Animation(castSpeed4/framesCast, frames);
         frames.clear();
         for (int i = 0; i < framesCast; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 0, breite, hoehe));
+            frames.add(new TextureRegion(heroCastRegion, i *breite,64, breite, hoehe));
         }
-        UpCast = new Animation(castSpeed/framesCast, frames);
+        LeftCast1 = new Animation(castSpeed1/framesCast, frames);
+        LeftCast2 = new Animation(castSpeed2/framesCast, frames);
+        LeftCast3 = new Animation(castSpeed3/framesCast, frames);
+        LeftCast4 = new Animation(castSpeed4/framesCast, frames);
         frames.clear();
         for (int i = 0; i < framesCast; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 128, breite, hoehe));
+            frames.add(new TextureRegion(heroCastRegion, i *breite, 128, breite, hoehe));
         }
-        DownCast= new Animation(castSpeed/framesCast, frames);
+        DownCast1 = new Animation(castSpeed1/framesCast, frames);
+        DownCast2 = new Animation(castSpeed2/framesCast, frames);
+        DownCast3 = new Animation(castSpeed3/framesCast, frames);
+        DownCast4 = new Animation(castSpeed4/framesCast, frames);
         frames.clear();
         for (int i = 0; i < framesCast; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 192, breite, hoehe));
+            frames.add(new TextureRegion(heroCastRegion, i *breite, 192, breite, hoehe));
         }
-        RightCast = new Animation(castSpeed/framesCast, frames);
+        RightCast1 = new Animation(castSpeed1/framesCast, frames);
+        RightCast2 = new Animation(castSpeed2/framesCast, frames);
+        RightCast3 = new Animation(castSpeed3/framesCast, frames);
+        RightCast4 = new Animation(castSpeed4/framesCast, frames);
         frames.clear();
-        for (int i = 0; i < framesCast; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 64, breite, hoehe));
-        }
-        LeftCast = new Animation(castSpeed/framesCast, frames);
 
-        frames.clear();
         for (int i = 0; i < framesDie; i++) {
-            frames.add(new TextureRegion(spriteQuelle, i *breite, 1280,breite,hoehe));
+            frames.add(new TextureRegion(heroDieRegion, i *breite, 0,breite,hoehe));
         }
         Dying=new Animation(0.2f,frames);
         frames.clear();
-        Died=new TextureRegion(spriteQuelle,320,1280,breite,hoehe);
-        standingDownSprite = new TextureRegion(spriteQuelle, 0, 640, breite, hoehe);
-        standingUpSprite = new TextureRegion(spriteQuelle, 0,512, breite, hoehe);
-        standingLeftSprite = new TextureRegion(spriteQuelle, 0, 577, breite, hoehe);
-        standingRightSprite = new TextureRegion(spriteQuelle, 0, 704, breite, hoehe);
+        Died=new TextureRegion(heroDieRegion,320,0,breite,hoehe);
+        standingUpSprite = new TextureRegion(heroWalkRegion, 0, 0, breite, hoehe);
+        standingLeftSprite = new TextureRegion(heroWalkRegion, 0, 64, breite, hoehe);
+        standingDownSprite = new TextureRegion(heroWalkRegion, 0, 128, breite, hoehe);
+        standingRightSprite = new TextureRegion(heroWalkRegion, 0,192, breite, hoehe);
         setRegion(standingDownSprite);
 
     }
@@ -287,32 +375,204 @@ public class HumanoideSprites extends Sprite {
             case MELEE:
                 switch (currentRichtung) {
                     case Links:
-                        region = LeftMelee.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=LeftMelee.getAnimationDuration()*0.3)
-                        {meleeFixtureErzeugen=true;triggerFixture =false;}
-                        if(LeftMelee.isAnimationFinished(stateTimer))
-                        {stateTimer=0;runMeleeAnimation=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe()){
+                                default:
+                                    Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
+                                case 1:
+                                    region = LeftMelee1.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=LeftMelee1.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(LeftMelee1.isAnimationFinished(stateTimer))
+                                    {
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                                case 2:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = LeftMelee2.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=LeftMelee2.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(LeftMelee2.isAnimationFinished(stateTimer))
+                                    {this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+
+                                    }
+                                    break;
+                                case 3:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = LeftMelee3.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=LeftMelee3.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(LeftMelee3.isAnimationFinished(stateTimer))
+                                    { this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                            }
+
+                        }
+                        else {
+                            region = LeftMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= LeftMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (LeftMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+                        }
                         break;
                     case Rechts:
-                        region = RightMelee.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=RightMelee.getAnimationDuration()*0.3)
-                        {meleeFixtureErzeugen=true;triggerFixture =false;}
-                        if(RightMelee.isAnimationFinished(stateTimer))
-                        {stateTimer=0;runMeleeAnimation=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe()){
+                                default:
+                                    Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
+                                case 1:
+                                    region = RightMelee1.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=RightMelee1.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(RightMelee1.isAnimationFinished(stateTimer))
+                                    {
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                                case 2:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = RightMelee2.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=RightMelee2.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(RightMelee2.isAnimationFinished(stateTimer))
+                                    {this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                                case 3:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = RightMelee3.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=RightMelee3.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(RightMelee3.isAnimationFinished(stateTimer))
+                                    {
+                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                            }
+                        }
+                        else {
+                            region = RightMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= RightMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (RightMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+                        }
                         break;
                     case Oben:
-                        region = UpMelee.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=UpMelee.getAnimationDuration()*0.3)
-                        {meleeFixtureErzeugen=true;triggerFixture =false;}
-                        if(UpMelee.isAnimationFinished(stateTimer))
-                        {;stateTimer=0;runMeleeAnimation=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe()){
+                                default:
+                                    Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
+                                case 1:
+                                    region = UpMelee1.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=UpMelee1.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(UpMelee1.isAnimationFinished(stateTimer))
+                                    {
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                                case 2:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = UpMelee2.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=UpMelee2.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(UpMelee2.isAnimationFinished(stateTimer))
+                                    {
+                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                                case 3:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = UpMelee3.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=UpMelee3.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(UpMelee3.isAnimationFinished(stateTimer))
+                                    {
+                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                            }
+
+                        }
+                        else {
+                            region = UpMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= UpMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (UpMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+                        }
                         break;
                     case Unten:
-                        region = DownMelee.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=DownMelee.getAnimationDuration()*0.3)
-                        {meleeFixtureErzeugen=true;triggerFixture =false;}
-                        if(DownMelee.isAnimationFinished(stateTimer))
-                        {stateTimer=0;runMeleeAnimation=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe()){
+                                default:
+                                    Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
+                                case 1:
+                                    region = DownMelee1.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=DownMelee1.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(DownMelee1.isAnimationFinished(stateTimer))
+                                    {
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                                case 2:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = DownMelee2.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=DownMelee2.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(DownMelee2.isAnimationFinished(stateTimer))
+                                    {
+                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                                case 3:
+                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    region = DownMelee3.getKeyFrame(stateTimer, true);
+                                    if(triggerFixture && stateTimer>=DownMelee3.getAnimationDuration()*0.3)
+                                    {meleeFixtureErzeugen=true;triggerFixture =false;}
+                                    if(DownMelee3.isAnimationFinished(stateTimer))
+                                    {
+                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        stateTimer=0;runMeleeAnimation=false;
+                                    }
+                                    break;
+                            }
+                        }
+                        else {
+                            region = DownMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= DownMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (DownMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+                        }
                         break;
                     default:
                         region = standingDownSprite;
@@ -322,32 +582,149 @@ public class HumanoideSprites extends Sprite {
             case ARCHERY:
                 switch (currentRichtung) {
                     case Links:
-                        region = LeftBow.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=LeftBow.getAnimationDuration()*0.8)
-                            {bowFixtureErzeugen=true;triggerFixture =false;}
-                        if(LeftBow.isAnimationFinished(stateTimer))
-                            {runArchery=false;triggerFixture=true;}
+                        if(this instanceof Held){
+                            if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
+                                region = LeftBow2.getKeyFrame(stateTimer, true);
+                                if(triggerFixture && stateTimer>=LeftBow2.getAnimationDuration()*0.8)
+                                {bowFixtureErzeugen=true;triggerFixture =false;            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                }
+                                if(LeftBow2.isAnimationFinished(stateTimer))
+                                {runArchery=false;triggerFixture=true;}
+                            }
+                            else{
+                                region = LeftBow1.getKeyFrame(stateTimer, true);
+                                if (triggerFixture && stateTimer >= LeftBow1.getAnimationDuration() * 0.8) {
+                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    bowFixtureErzeugen = true;
+                                    triggerFixture = false;
+                                }
+                                if (LeftBow1.isAnimationFinished(stateTimer)) {
+                                    runArchery = false;
+                                    triggerFixture = true;
+                                }
+                            }
+                        }
+                        else {
+                            region = LeftBow1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= LeftBow1.getAnimationDuration() * 0.8) {
+                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                bowFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (LeftBow1.isAnimationFinished(stateTimer)) {
+                                runArchery = false;
+                                triggerFixture = true;
+                            }
+                        }
                         break;
                     case Rechts:
-                        region = RightBow.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=RightBow.getAnimationDuration()*0.8)
-                            {bowFixtureErzeugen=true;triggerFixture =false;}
-                        if(RightBow.isAnimationFinished(stateTimer))
-                            {runArchery=false;triggerFixture=true;}
+                        if(this instanceof Held){
+                            if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
+                                region = RightBow2.getKeyFrame(stateTimer, true);
+                                if(triggerFixture && stateTimer>=RightBow2.getAnimationDuration()*0.8)
+                                {            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+
+                                    bowFixtureErzeugen=true;triggerFixture =false;}
+                                if(RightBow2.isAnimationFinished(stateTimer))
+                                {runArchery=false;triggerFixture=true;}
+                            }
+                            else{
+                                region = RightBow1.getKeyFrame(stateTimer, true);
+                                if (triggerFixture && stateTimer >= RightBow1.getAnimationDuration() * 0.8) {
+                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    bowFixtureErzeugen = true;
+                                    triggerFixture = false;
+                                }
+                                if (RightBow1.isAnimationFinished(stateTimer)) {
+                                    runArchery = false;
+                                    triggerFixture = true;
+                                }
+                            }
+                        }
+                        else {
+                            region = RightBow1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= RightBow1.getAnimationDuration() * 0.8) {
+                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                bowFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (RightBow1.isAnimationFinished(stateTimer)) {
+                                runArchery = false;
+                                triggerFixture = true;
+                            }
+                        }
                         break;
                     case Oben:
-                        region = UpBow.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=UpBow.getAnimationDuration()*0.8)
-                            {bowFixtureErzeugen=true;triggerFixture =false;}
-                        if(UpBow.isAnimationFinished(stateTimer))
-                            {runArchery=false;triggerFixture=true;}
+                        if(this instanceof Held){
+                            if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
+                                region = UpBow2.getKeyFrame(stateTimer, true);
+                                if(triggerFixture && stateTimer>=UpBow2.getAnimationDuration()*0.8)
+                                {            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    bowFixtureErzeugen=true;triggerFixture =false;}
+                                if(UpBow2.isAnimationFinished(stateTimer))
+                                {runArchery=false;triggerFixture=true;}
+                            }
+                            else{
+                                region = UpBow1.getKeyFrame(stateTimer, true);
+                                if (triggerFixture && stateTimer >= UpBow1.getAnimationDuration() * 0.8) {
+                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    bowFixtureErzeugen = true;
+                                    triggerFixture = false;
+                                }
+                                if (UpBow1.isAnimationFinished(stateTimer)) {
+                                    runArchery = false;
+                                    triggerFixture = true;
+                                }
+                            }
+                        }
+                        else {
+                            region = UpBow1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= UpBow1.getAnimationDuration() * 0.8) {
+                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                bowFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (UpBow1.isAnimationFinished(stateTimer)) {
+                                runArchery = false;
+                                triggerFixture = true;
+                            }
+                        }
                         break;
                     case Unten:
-                        region = DownBow.getKeyFrame(stateTimer, true);
-                        if(triggerFixture && stateTimer>=DownBow.getAnimationDuration()*0.8)
-                            {bowFixtureErzeugen=true;triggerFixture =false;}
-                        if(DownBow.isAnimationFinished(stateTimer))
-                            {runArchery=false;triggerFixture=true;}
+                        if(this instanceof Held){
+                            if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
+                                region = DownBow2.getKeyFrame(stateTimer, true);
+                                if(triggerFixture && stateTimer>=DownBow2.getAnimationDuration()*0.8)
+                                {            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    bowFixtureErzeugen=true;triggerFixture =false;}
+                                if(DownBow2.isAnimationFinished(stateTimer))
+                                {runArchery=false;triggerFixture=true;}
+                            }
+                            else{
+                                region = DownBow1.getKeyFrame(stateTimer, true);
+                                if (triggerFixture && stateTimer >= DownBow1.getAnimationDuration() * 0.8) {
+                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    bowFixtureErzeugen = true;
+                                    triggerFixture = false;
+                                }
+                                if (DownBow1.isAnimationFinished(stateTimer)) {
+                                    runArchery = false;
+                                    triggerFixture = true;
+                                }
+                            }
+                        }
+                        else {
+                            region = DownBow1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= DownBow1.getAnimationDuration() * 0.8) {
+                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                bowFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (DownBow1.isAnimationFinished(stateTimer)) {
+                                runArchery = false;
+                                triggerFixture = true;
+                            }
+                        }
                         break;
                     default:
                         region = standingDownSprite;
@@ -357,24 +734,96 @@ public class HumanoideSprites extends Sprite {
             case CASTING:
                 switch (currentRichtung) {
                     case Links:
-                        region = LeftCast.getKeyFrame(stateTimer, true);
-                        if(LeftCast.isAnimationFinished(stateTimer)){
-                            runCasting=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getAktuellerZauberInt()){
+                                default:
+                                case 1: region = LeftCast1.getKeyFrame(stateTimer, true);
+                                    if(LeftCast1.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 2: region = LeftCast2.getKeyFrame(stateTimer, true);
+                                    if(LeftCast2.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 3: region = LeftCast3.getKeyFrame(stateTimer, true);
+                                    if(LeftCast3.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 4: region = LeftCast4.getKeyFrame(stateTimer, true);
+                                    if(LeftCast4.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                            }
+                        }else{
+                            region = LeftCast1.getKeyFrame(stateTimer, true);
+                            if(LeftCast1.isAnimationFinished(stateTimer)){
+                                runCasting=false;}
+                        }
                         break;
                     case Rechts:
-                        region = RightCast.getKeyFrame(stateTimer, true);
-                        if(RightCast.isAnimationFinished(stateTimer)){
-                            runCasting=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getAktuellerZauberInt()){
+                                default:
+                                case 1: region = RightCast1.getKeyFrame(stateTimer, true);
+                                    if(RightCast1.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 2: region = RightCast2.getKeyFrame(stateTimer, true);
+                                    if(RightCast2.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 3: region = RightCast3.getKeyFrame(stateTimer, true);
+                                    if(RightCast3.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 4: region = RightCast4.getKeyFrame(stateTimer, true);
+                                    if(RightCast4.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                            }
+                        }else{
+                            region = RightCast1.getKeyFrame(stateTimer, true);
+                            if(RightCast1.isAnimationFinished(stateTimer)){
+                                runCasting=false;}
+                        }
                         break;
                     case Oben:
-                        region = UpCast.getKeyFrame(stateTimer, true);
-                        if(UpCast.isAnimationFinished(stateTimer)){
-                            runCasting=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getAktuellerZauberInt()){
+                                default:
+                                case 1: region = UpCast1.getKeyFrame(stateTimer, true);
+                                    if(UpCast1.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 2: region = UpCast2.getKeyFrame(stateTimer, true);
+                                    if(UpCast2.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 3: region = UpCast3.getKeyFrame(stateTimer, true);
+                                    if(UpCast3.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 4: region = UpCast4.getKeyFrame(stateTimer, true);
+                                    if(UpCast4.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                            }
+                        }else{
+                            region = UpCast1.getKeyFrame(stateTimer, true);
+                            if(UpCast1.isAnimationFinished(stateTimer)){
+                                runCasting=false;}
+                        }
                         break;
                     case Unten:
-                        region = DownCast.getKeyFrame(stateTimer, true);
-                        if(DownCast.isAnimationFinished(stateTimer)){
-                            runCasting=false;}
+                        if(this instanceof Held){
+                            switch(((Held)this).getAktuellerZauberInt()){
+                                default:
+                                case 1: region = DownCast1.getKeyFrame(stateTimer, true);
+                                    if(DownCast1.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 2: region = DownCast2.getKeyFrame(stateTimer, true);
+                                    if(DownCast2.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 3: region = DownCast3.getKeyFrame(stateTimer, true);
+                                    if(DownCast3.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                                case 4: region = DownCast4.getKeyFrame(stateTimer, true);
+                                    if(DownCast4.isAnimationFinished(stateTimer)){
+                                        runCasting=false;}break;
+                            }
+                        }else{
+                            region = DownCast1.getKeyFrame(stateTimer, true);
+                            if(DownCast1.isAnimationFinished(stateTimer)){
+                                runCasting=false;}
+                        }
                         break;
                     default:
                         region = standingDownSprite;
@@ -528,9 +977,9 @@ public class HumanoideSprites extends Sprite {
         circleShape.setPosition(richtungsVector);
         fdefAttack = new FixtureDef();
         if(istHeld){fdefAttack.filter.categoryBits = AnimaRPG.HERO_WEAPON_BIT;
-                    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;}
+                    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.ENEMY_OBERKOERPER;}
         else{       fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
-                    fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT;}
+                    fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.HERO_OBERKOERPER;}
         fdefAttack.shape = circleShape;
         fdefAttack.isSensor = true;
         runMeleeAnimation = true;
@@ -624,7 +1073,18 @@ public class HumanoideSprites extends Sprite {
         setCurrentMana(maxMana);
 
     }
+    public void changeGrafiken(String quelle){
+        atlas = new TextureAtlas(quelle+".pack");
+        heroDieRegion=atlas.findRegion("die");
+        heroWalkRegion=atlas.findRegion("walk");
+        heroCastRegion=atlas.findRegion("cast");
+        heroBow1Region=atlas.findRegion("bow1");
+        heroBow2Region=atlas.findRegion("bow2");
+        heroSword1Region=atlas.findRegion("sword1");
+        heroSword2Region=atlas.findRegion("sword2");
+        heroSword3Region=atlas.findRegion("sword3");
 
+    }
     public int getRegMana() {
         return regMana;
     }
@@ -665,11 +1125,11 @@ public class HumanoideSprites extends Sprite {
         this.ruestung = ruestung;
     }
 
-    public float getGeschwindigkeitLaufen() {
+    public int getGeschwindigkeitLaufen() {
         return geschwindigkeitLaufen;
     }
 
-    public void setGeschwindigkeitLaufen(float geschwindigkeitLaufen) {
+    public void setGeschwindigkeitLaufen(int geschwindigkeitLaufen) {
         this.geschwindigkeitLaufen = geschwindigkeitLaufen;
     }
     public int getZauberwiderstand() {
@@ -679,6 +1139,15 @@ public class HumanoideSprites extends Sprite {
     public void setZauberwiderstand(int zauberwiderstand) {
         this.zauberwiderstand = zauberwiderstand;
     }
+
+    public int getAngriffgeschwindigkeit() {
+        return angriffgeschwindigkeit;
+    }
+
+    public void setAngriffgeschwindigkeit(int angriffgeschwindigkeit) {
+        this.angriffgeschwindigkeit = angriffgeschwindigkeit;
+    }
+
     public int getRegHitpoints() {
         return regHitpoints;
     }

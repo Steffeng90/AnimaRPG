@@ -1,0 +1,61 @@
+
+43.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+sword2
+  rotate: false
+  xy: 1, 1095
+  size: 1152, 768
+  orig: 1152, 768
+  offset: 0, 0
+  index: -1
+sword3
+  rotate: false
+  xy: 1, 325
+  size: 1152, 768
+  orig: 1152, 768
+  offset: 0, 0
+  index: -1
+bow1
+  rotate: false
+  xy: 1155, 1607
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+bow2
+  rotate: false
+  xy: 1, 67
+  size: 832, 256
+  orig: 832, 256
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 1155, 1349
+  size: 576, 256
+  orig: 576, 256
+  offset: 0, 0
+  index: -1
+cast
+  rotate: false
+  xy: 1155, 1091
+  size: 447, 256
+  orig: 447, 256
+  offset: 0, 0
+  index: -1
+sword1
+  rotate: false
+  xy: 1155, 833
+  size: 384, 256
+  orig: 384, 256
+  offset: 0, 0
+  index: -1
+die
+  rotate: false
+  xy: 1, 1
+  size: 384, 64
+  orig: 384, 64
+  offset: 0, 0
+  index: -1

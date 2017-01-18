@@ -9,8 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.anima.screens.Menu;
-import com.mygdx.anima.sprites.character.items.Armor;
+import com.mygdx.anima.sprites.character.items.Amulett;
+import com.mygdx.anima.sprites.character.items.Brust;
+import com.mygdx.anima.sprites.character.items.Handschuhe;
+import com.mygdx.anima.sprites.character.items.Helm;
 import com.mygdx.anima.sprites.character.items.Item;
+import com.mygdx.anima.sprites.character.items.Schuhe;
 import com.mygdx.anima.sprites.character.items.WaffeFern;
 import com.mygdx.anima.sprites.character.items.WaffeNah;
 import com.mygdx.anima.tools.listener.InventarListener;
@@ -59,53 +63,134 @@ public class InventarReiter extends Group {
         Label ausgwWaffe = new Label("Auswahl:", menu.getSkin());
         if(auswahlItem!=null) {
             String name=" ",eigenschaft1=" ",wert1auswahl=" ",wert1angelegt=" ",
-                    eigenschaft2,wert2auswahl=" ",wert2angelegt=" ",nameAngelegt=" ";
+                    eigenschaft2=" ",wert2auswahl=" ",wert2angelegt=" ",eigenschaft3,wert3auswahl=" ",wert3angelegt=" ",nameAngelegt=" ";
             name=auswahlItem.getName();
-            eigenschaft2="Wert";
+            eigenschaft3="Wert";
+
 
             switch (Item.kategorie.valueOf(auswahlItem.getItemKategorie())) {
                 case nahkampf:
                     eigenschaft1="Schaden";
                     wert1auswahl=" "+((WaffeNah)auswahlItem).getSchaden();
-                    wert2auswahl=" "+auswahlItem.getGoldWert();
+                    wert3auswahl=" "+auswahlItem.getGoldWert();
                     angelegtWaffeNah=getHeld().getHeldenInventar().getAngelegtWaffeNah();
                     if(angelegtWaffeNah!=null){
                         nameAngelegt=angelegtWaffeNah.getName();
                         wert1angelegt=" "+((WaffeNah)angelegtWaffeNah).getSchaden();
-                        wert2angelegt=" "+angelegtWaffeNah.getGoldWert();}
+                        wert3angelegt=" "+angelegtWaffeNah.getGoldWert();}
                     else{
                         nameAngelegt="Keine Nahwaffe angelegt";
                         wert1angelegt=" ";
-                        wert2angelegt=" ";}
+                        wert3angelegt=" ";}
                     break;
                 case fernkampf:
                     eigenschaft1="Fern-Schaden";
                     wert1auswahl=" "+((WaffeFern)auswahlItem).getSchaden();
-                    wert2auswahl=" "+auswahlItem.getGoldWert();
+                    wert3auswahl=" "+auswahlItem.getGoldWert();
                     angelegtWaffeFern=getHeld().getHeldenInventar().getAngelegtWaffeFern();
                     if(angelegtWaffeFern!=null){
                         nameAngelegt=angelegtWaffeFern.getName();
                         wert1angelegt=" "+((WaffeFern)angelegtWaffeFern).getSchaden();
-                        wert2angelegt=" "+angelegtWaffeFern.getGoldWert();}
+                        wert3angelegt=" "+angelegtWaffeFern.getGoldWert();}
                     else{
                         nameAngelegt="Keine Fernwaffe angelegt";
                         wert1angelegt=" ";
-                        wert2angelegt=" ";}
+                        wert3angelegt=" ";}
                     break;
-                case armor:
+                case brust:
                     eigenschaft1="Schutz:";
-                    wert1auswahl=" "+((Armor)auswahlItem).getRuestung();
-                    wert2auswahl=" "+auswahlItem.getGoldWert();
+                    eigenschaft2="Leben-Regeneration:";
+
+                    wert1auswahl=" "+((Brust)auswahlItem).getRuestung();
+                    wert2auswahl=" "+((Brust)auswahlItem).getLpReg();
+                    wert3auswahl=" "+auswahlItem.getGoldWert();
                     angelegtRuestung=getHeld().getHeldenInventar().getAngelegtRuestung();
                     if(angelegtRuestung!=null){
                         nameAngelegt=angelegtRuestung.getName();
-                        wert1angelegt=" "+((Armor)angelegtRuestung).getRuestung();
-                        wert2angelegt=" "+angelegtRuestung.getGoldWert();}
+                        wert1angelegt=" "+((Brust)angelegtRuestung).getRuestung();
+                        wert2angelegt=" "+((Brust)angelegtRuestung).getLpReg();
+                        wert3angelegt=" "+angelegtRuestung.getGoldWert();}
                     else{
-                        Gdx.app.log("ruessi weg","");
-                        nameAngelegt="Kein Schutz angelegt";
+                        nameAngelegt="Kein Brustschutz angelegt";
                         wert1angelegt=" ";
-                        wert2angelegt=" ";}
+                        wert2angelegt=" ";
+                        wert3angelegt=" ";}
+                    break;
+                case schuhe:
+                    eigenschaft1="Schutz:";
+                    eigenschaft2="Laufgeschwindigkeit:";
+
+                    wert1auswahl=" "+((Schuhe)auswahlItem).getRuestung();
+                    wert2auswahl=" "+((Schuhe)auswahlItem).getLaufgeschwindigkeit();
+                    wert3auswahl=" "+auswahlItem.getGoldWert();
+                    angelegtRuestung=getHeld().getHeldenInventar().getAngelegtSchuhe();
+                    if(angelegtRuestung!=null){
+                        nameAngelegt=angelegtRuestung.getName();
+                        wert1angelegt=" "+((Schuhe)angelegtRuestung).getRuestung();
+                        wert2angelegt=" "+((Schuhe)angelegtRuestung).getLaufgeschwindigkeit();
+                        wert3angelegt=" "+angelegtRuestung.getGoldWert();}
+                    else{
+                        nameAngelegt="Keine Schuhe angelegt";
+                        wert1angelegt=" ";
+                        wert2angelegt=" ";
+                        wert3angelegt=" ";}
+                    break;
+                case handschuhe:
+                    eigenschaft1="Schutz:";
+                    eigenschaft2="Angriffsgeschw.:";
+
+                    wert1auswahl=" "+((Handschuhe)auswahlItem).getRuestung();
+                    wert2auswahl=" "+((Handschuhe)auswahlItem).getAngriffgeschwindigkeit();
+                    wert3auswahl=" "+auswahlItem.getGoldWert();
+                    angelegtRuestung=getHeld().getHeldenInventar().getAngelegtHandschuhe();
+                    if(angelegtRuestung!=null){
+                        nameAngelegt=angelegtRuestung.getName();
+                        wert1angelegt=" "+((Handschuhe)angelegtRuestung).getRuestung();
+                        wert2angelegt=" "+((Handschuhe)angelegtRuestung).getAngriffgeschwindigkeit();
+                        wert3angelegt=" "+angelegtRuestung.getGoldWert();}
+                    else{
+                        nameAngelegt="Keine Handschuhe angelegt";
+                        wert1angelegt=" ";
+                        wert2angelegt=" ";
+                        wert3angelegt=" ";}
+                    break;
+                case helm:
+                    eigenschaft1="Lebenspunkte:";
+                    eigenschaft2="Zauberkraft:";
+
+                    wert1auswahl=" "+((Helm)auswahlItem).getLebenspunkte();
+                    wert2auswahl=" "+((Helm)auswahlItem).getZauberkraft();
+                    wert3auswahl=" "+auswahlItem.getGoldWert();
+                    angelegtRuestung=getHeld().getHeldenInventar().getAngelegtHelm();
+                    if(angelegtRuestung!=null){
+                        nameAngelegt=angelegtRuestung.getName();
+                        wert1angelegt=" "+((Helm)angelegtRuestung).getLebenspunkte();
+                        wert2angelegt=" "+((Helm)angelegtRuestung).getZauberkraft();
+                        wert3angelegt=" "+angelegtRuestung.getGoldWert();}
+                    else{
+                        nameAngelegt="Kein Helm angelegt";
+                        wert1angelegt=" ";
+                        wert2angelegt=" ";
+                        wert3angelegt=" ";}
+                    break;
+                case amulett:
+                    eigenschaft1="Zauberwiderstand:";
+                    eigenschaft2="Mana-Regeneration:";
+
+                    wert1auswahl=" "+((Amulett)auswahlItem).getZauberwiderstand();
+                    wert2auswahl=" "+((Amulett)auswahlItem).getManareg();
+                    wert3auswahl=" "+auswahlItem.getGoldWert();
+                    angelegtRuestung=getHeld().getHeldenInventar().getAngelegtAmulett();
+                    if(angelegtRuestung!=null){
+                        nameAngelegt=angelegtRuestung.getName();
+                        wert1angelegt=" "+((Amulett)angelegtRuestung).getZauberwiderstand();
+                        wert2angelegt=" "+((Amulett)angelegtRuestung).getManareg();
+                        wert3angelegt=" "+angelegtRuestung.getGoldWert();}
+                    else{
+                        nameAngelegt="Kein Amulett angelegt";
+                        wert1angelegt=" ";
+                        wert2angelegt=" ";
+                        wert3angelegt=" ";}
                     break;
                 default:
                     break;
@@ -120,6 +205,9 @@ public class InventarReiter extends Group {
             inventarLinks.add(new Label(eigenschaft2, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
             inventarLinks.add(new Label(wert2angelegt, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
             inventarLinks.row();
+            inventarLinks.add(new Label(eigenschaft3, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
+            inventarLinks.add(new Label(wert3angelegt, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.row();
             inventarLinks.add(ausgwWaffe).colspan(2);
             inventarLinks.row();
             inventarLinks.add(new Label(name, menu.getSkin())).size(invLinksWidth, height / 12f).colspan(2);
@@ -129,6 +217,9 @@ public class InventarReiter extends Group {
             inventarLinks.row();
             inventarLinks.add(new Label(eigenschaft2, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
             inventarLinks.add(new Label(wert2auswahl, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.row();
+            inventarLinks.add(new Label(eigenschaft3, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
+            inventarLinks.add(new Label(wert3angelegt, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
             inventarLinks.row();
             if(auswahlItem.isAngelegt()) {
                 angelegtButton = new TextButton("Ablegen", menu.getSkin());
@@ -155,7 +246,11 @@ public class InventarReiter extends Group {
         inventarRechts.align(Align.left | Align.top);
         if(getHeld().getHeldenInventar().getWaffenNahList().size()==0 &&
                 getHeld().getHeldenInventar().getWaffenFernList().size()==0 &&
-                getHeld().getHeldenInventar().getWaffenNahList().size()==0){
+                getHeld().getHeldenInventar().getRuestungsList().size()==0 &&
+                getHeld().getHeldenInventar().getHelmList().size()==0 &&
+                getHeld().getHeldenInventar().getHandschuheList().size()==0 &&
+                getHeld().getHeldenInventar().getSchuheList().size()==0 &&
+                getHeld().getHeldenInventar().getAmulettList().size()==0){
             inventarRechts.add(new Label("Du besitzt keine\n Ausruestungsgegenstaende.", menu.getSkin())).colspan(3);
         }
         if(getHeld().getHeldenInventar().getWaffenNahList().size()>0) {
@@ -189,10 +284,11 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
+        Gdx.app.log("",""+getHeld().getHeldenInventar().getRuestungsList().size());
         if(getHeld().getHeldenInventar().getRuestungsList().size()>0){
         inventarRechts.add(new Label("Ruestungen", menu.getSkin())).colspan(3);
         inventarRechts.row();
-        ArrayList<Armor> listeRues= getHeld().getHeldenInventar().getRuestungsList();
+        ArrayList<Brust> listeRues= getHeld().getHeldenInventar().getRuestungsList();
         size = listeRues.size();
         for (int i = 0; i < size; i++) {
             if ((i) % 5 == 0) {
@@ -200,8 +296,68 @@ public class InventarReiter extends Group {
             Image beispiel4=new Image(listeRues.get(i).getGrafik());
             beispiel4.addListener(new InventarListener(this, listeRues.get(i),beispiel4));
             inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+            }
         }
+        if(getHeld().getHeldenInventar().getSchuheList().size()>0) {
+            inventarRechts.add(new Label("Schuhe", menu.getSkin())).colspan(3);
+            inventarRechts.row();
+            ArrayList<Schuhe> listenf = getHeld().getHeldenInventar().getSchuheList();
+            size = listenf.size();
+            for (int i = 0; i < size; i++) {
+                if ((i) % 5 == 0) {
+                    inventarRechts.row();
+                }
+                Image beispiel4 = new Image(listenf.get(i).getGrafik());
+                beispiel4.addListener(new InventarListener(this, listenf.get(i), beispiel4));
+                inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+            }
         }
+        inventarRechts.row();
+        if(getHeld().getHeldenInventar().getHandschuheList().size()>0) {
+            inventarRechts.add(new Label("Handschuhe", menu.getSkin())).colspan(3);
+            inventarRechts.row();
+            ArrayList<Handschuhe> listenf = getHeld().getHeldenInventar().getHandschuheList();
+            size = listenf.size();
+            for (int i = 0; i < size; i++) {
+                if ((i) % 5 == 0) {
+                    inventarRechts.row();
+                }
+                Image beispiel4 = new Image(listenf.get(i).getGrafik());
+                beispiel4.addListener(new InventarListener(this, listenf.get(i), beispiel4));
+                inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+            }
+        }
+        inventarRechts.row();
+        if(getHeld().getHeldenInventar().getHelmList().size()>0) {
+            inventarRechts.add(new Label("Helm", menu.getSkin())).colspan(3);
+            inventarRechts.row();
+            ArrayList<Helm> listenf = getHeld().getHeldenInventar().getHelmList();
+            size = listenf.size();
+            for (int i = 0; i < size; i++) {
+                if ((i) % 5 == 0) {
+                    inventarRechts.row();
+                }
+                Image beispiel4 = new Image(listenf.get(i).getGrafik());
+                beispiel4.addListener(new InventarListener(this, listenf.get(i), beispiel4));
+                inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+            }
+        }
+        inventarRechts.row();
+        if(getHeld().getHeldenInventar().getAmulettList().size()>0) {
+            inventarRechts.add(new Label("Amulett", menu.getSkin())).colspan(3);
+            inventarRechts.row();
+            ArrayList<Amulett> listenf = getHeld().getHeldenInventar().getAmulettList();
+            size = listenf.size();
+            for (int i = 0; i < size; i++) {
+                if ((i) % 5 == 0) {
+                    inventarRechts.row();
+                }
+                Image beispiel4 = new Image(listenf.get(i).getGrafik());
+                beispiel4.addListener(new InventarListener(this, listenf.get(i), beispiel4));
+                inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
+            }
+        }
+        inventarRechts.row();
 
         ScrollPane scrollPane = new ScrollPane(inventarRechts, menu.getSkin());
         scrollPane.setBounds(0, 0, width / 2, height);

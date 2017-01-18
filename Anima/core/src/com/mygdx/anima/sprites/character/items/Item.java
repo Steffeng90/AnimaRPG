@@ -15,8 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class Item{
     private enum State{nichts,ausgewaehlt,angelegt}
-    private State state;
-    public static enum kategorie{nahkampf,fernkampf,nutzbar,armor}
+    public static enum kategorie{nahkampf,fernkampf,nutzbar,brust,handschuhe,schuhe,helm,amulett}
     private kategorie itemKategorie;
     private static Texture spriteQuelle_weiss=new Texture("objekte/icons_for_rpg.png")
             ,spriteQuelle_blau=new Texture("objekte/icons_for_rpg_auswahl.png"),
@@ -26,7 +25,6 @@ public class Item{
     private int goldWert;
     private boolean angelegt,ausgewaehlt;
     private int grafikPosX,grafikPosY;
-    public Image icon;
 
     public Item(String name, String kategorieString, Vector2 grafikposi,int goldWert) {
         setName(name);
@@ -87,7 +85,7 @@ public class Item{
             else { return false;}
     }
     public boolean isRuestung(){
-        if(itemKategorie==kategorie.armor)
+        if(itemKategorie==kategorie.brust)
                 return true;
             else { return false;}
     }

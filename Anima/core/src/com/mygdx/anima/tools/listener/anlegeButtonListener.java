@@ -4,11 +4,14 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.screens.Menu;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
 import com.mygdx.anima.sprites.character.Held;
-import com.mygdx.anima.sprites.character.items.Armor;
+import com.mygdx.anima.sprites.character.items.Amulett;
+import com.mygdx.anima.sprites.character.items.Brust;
+import com.mygdx.anima.sprites.character.items.Handschuhe;
+import com.mygdx.anima.sprites.character.items.Helm;
 import com.mygdx.anima.sprites.character.items.Item;
+import com.mygdx.anima.sprites.character.items.Schuhe;
 import com.mygdx.anima.sprites.character.items.WaffeFern;
 import com.mygdx.anima.sprites.character.items.WaffeNah;
 
@@ -40,7 +43,11 @@ public class anlegeButtonListener extends InputListener {
             {
                 case nahkampf: held.getHeldenInventar().setAngelegtWaffeNah(null);break;
                 case fernkampf: held.getHeldenInventar().setAngelegtWaffeFern(null);break;
-                case armor: held.getHeldenInventar().setAngelegtRuestung(null);break;
+                case brust: held.getHeldenInventar().setAngelegtRuestung(null);break;
+                case schuhe: held.getHeldenInventar().setAngelegtSchuhe(null);break;
+                case handschuhe: held.getHeldenInventar().setAngelegtHandschuhe(null);break;
+                case helm: held.getHeldenInventar().setAngelegtHelm(null);break;
+                case amulett: held.getHeldenInventar().setAngelegtAmulett(null);break;
                 default: break;
             }}
 
@@ -51,9 +58,14 @@ public class anlegeButtonListener extends InputListener {
         {
             case nahkampf: held.getHeldenInventar().setAngelegtWaffeNah((WaffeNah)item);break;
             case fernkampf: held.getHeldenInventar().setAngelegtWaffeFern((WaffeFern)item);break;
-            case armor: held.getHeldenInventar().setAngelegtRuestung((Armor)item);break;
+            case brust: held.getHeldenInventar().setAngelegtRuestung((Brust)item);getHeld();break;
+            case schuhe: held.getHeldenInventar().setAngelegtSchuhe((Schuhe)item);break;
+            case handschuhe: held.getHeldenInventar().setAngelegtHandschuhe((Handschuhe)item);break;
+            case helm: held.getHeldenInventar().setAngelegtHelm((Helm)item);break;
+            case amulett: held.getHeldenInventar().setAngelegtAmulett((Amulett)item);break;
             default: break;
         }}
+        getHeld().updateAlleWerte();
         inv.inventarRechts.clear();
         inv.zeigeItems();
         inv.inventarLinks.clear();

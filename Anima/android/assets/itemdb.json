@@ -1,85 +1,112 @@
 {"item":[
-  {"id":"Schwert1","name":"Eisenschwert","kategorie":1,"vectorX":0,"vectorY":6,"schaden":10,"goldWert":15},
-  {"id":"Schwert2","name":"Stahlschwert","kategorie":1,"vectorX":1,"vectorY":6,"schaden":12,"goldWert":18},
-  {"id":"Schwert3","name":"Mithrilschwert","kategorie":1,"vectorX":2,"vectorY":6,"schaden":15,"goldWert":23},
-  {"id":"Schwert4","name":"Langschwert","kategorie":1,"vectorX":3,"vectorY":6,"schaden":18,"goldWert":30},
-  {"id":"Schwert5","name":"Großschwert","kategorie":1,"vectorX":4,"vectorY":6,"schaden":23,"goldWert":42},
-  {"id":"Schwert6","name":"Schwert der Gnade","kategorie":1,"vectorX":5,"vectorY":6,"schaden":45,"goldWert":135},
+  {"id":"Schwert1","name":"Eisenschwert","kategorie":1,"vectorX":0,"vectorY":6,"schaden":10,"animationsStufe":1,"goldWert":15},
+  {"id":"Schwert2","name":"Stahlschwert","kategorie":1,"vectorX":1,"vectorY":6,"schaden":12,"animationsStufe":1,"goldWert":18},
+  {"id":"Schwert3","name":"Mithrilschwert","kategorie":1,"vectorX":2,"vectorY":6,"schaden":15,"animationsStufe":2,"goldWert":23},
+  {"id":"Schwert4","name":"Langschwert","kategorie":1,"vectorX":3,"vectorY":6,"schaden":18,"animationsStufe":2,"goldWert":30},
+  {"id":"Schwert5","name":"Großschwert","kategorie":1,"vectorX":4,"vectorY":6,"schaden":23,"animationsStufe":3,"goldWert":42},
+  {"id":"Schwert6","name":"Schwert der Gnade","kategorie":1,"vectorX":5,"vectorY":6,"schaden":45,"animationsStufe":3,"goldWert":135},
 
   //Fernkampfewaffen
-  {"id":"Bogen1","name":"Kurzbogen","kategorie":2,"vectorX":0,"vectorY":11,"schaden":9,"goldWert":6},
-  {"id":"Bogen2","name":"Gehärteter Bogen","kategorie":2,"vectorX":1,"vectorY":11,"schaden":14,"goldWert":12},
-  {"id":"Bogen3","name":"Langbogen","kategorie":2,"vectorX":2,"vectorY":11,"schaden":19,"goldWert":27},
-  {"id":"Bogen4","name":"Kompositbogen","kategorie":2,"vectorX":3,"vectorY":11,"schaden":24,"goldWert":32},
-  {"id":"Bogen5","name":"Eschenbogen","kategorie":2,"vectorX":4,"vectorY":11,"schaden":30,"goldWert":56},
-  {"id":"Bogen6","name":"Alptraum","kategorie":2,"vectorX":5,"vectorY":11,"schaden":45,"goldWert":76},
+  {"id":"Bogen1","name":"Kurzbogen","kategorie":2,"vectorX":0,"vectorY":11,"schaden":9,"animationsStufe":1,"goldWert":6},
+  {"id":"Bogen2","name":"Gehärteter Bogen","kategorie":2,"vectorX":1,"vectorY":11,"schaden":14,"animationsStufe":1,"goldWert":12},
+  {"id":"Bogen3","name":"Langbogen","kategorie":2,"vectorX":2,"vectorY":11,"schaden":19,"animationsStufe":1,"goldWert":27},
+  {"id":"Bogen4","name":"Kompositbogen","kategorie":2,"vectorX":3,"vectorY":11,"schaden":24,"animationsStufe":2,"goldWert":32},
+  {"id":"Bogen5","name":"Eschenbogen","kategorie":2,"vectorX":4,"vectorY":11,"schaden":30,"animationsStufe":2,"goldWert":56},
+  {"id":"Bogen6","name":"Alptraum","kategorie":2,"vectorX":5,"vectorY":11,"schaden":45,"animationsStufe":2,"goldWert":76},
 
   //Ruestungen
-  {"id":"ruestung1","name":"Stoffhemd","kategorie":3,"vectorX":0,"vectorY":13,"ruestung":10,"goldWert":15},
-  {"id":"ruestung2","name":"Schutzweste","kategorie":3,"vectorX":1,"vectorY":13,"ruestung":14,"goldWert":22},
-  {"id":"ruestung3","name":"Lederwarms","kategorie":3,"vectorX":2,"vectorY":13,"ruestung":19,"goldWert":31},
-  {"id":"ruestung4","name":"Brustpanzer","kategorie":3,"vectorX":3,"vectorY":13,"ruestung":28,"goldWert":54},
-  {"id":"ruestung5","name":"Plattenpanzer","kategorie":3,"vectorX":4,"vectorY":13,"ruestung":38,"goldWert":85},
-  {"id":"ruestung6","name":"Warms der Heilung","kategorie":3,"vectorX":5,"vectorY":13,"ruestung":50,"goldWert":120},
-  {"id":"ruestung7","name":"Vollstrecker-Gewand","kategorie":3,"vectorX":6,"vectorY":13,"ruestung":70,"goldWert":185},
+  {"id":"ruestung1","name":"Stoffhemd","kategorie":3,"optikStufe":1,"vectorX":0,"vectorY":13,"ruestung":10,"LPReg":1,"goldWert":15},
+  {"id":"ruestung2","name":"Schutzweste","kategorie":3,"optikStufe":2,"vectorX":1,"vectorY":13,"ruestung":14,"LPReg":2,"goldWert":22},
+  {"id":"ruestung3","name":"Lederwarms","kategorie":3,"optikStufe":2,"vectorX":2,"vectorY":13,"ruestung":19,"LPReg":4,"goldWert":31},
+  {"id":"ruestung4","name":"Brustpanzer","kategorie":3,"optikStufe":3,"vectorX":3,"vectorY":13,"ruestung":28,"LPReg":6,"goldWert":54},
+  {"id":"ruestung5","name":"Plattenpanzer","kategorie":3,"optikStufe":3,"vectorX":4,"vectorY":13,"ruestung":38,"LPReg":7,"goldWert":85},
+  {"id":"ruestung6","name":"Warms der Heilung","kategorie":3,"optikStufe":4,"vectorX":5,"vectorY":13,"ruestung":50,"LPReg":9,"goldWert":120},
+  {"id":"ruestung7","name":"Vollstrecker-Gewand","kategorie":3,"optikStufe":4,"vectorX":6,"vectorY":13,"ruestung":70,"LPReg":10,"goldWert":185},
 
-  //Handschuhe 5 Möglichkeiten
-  // Schuhe 7 Möglichkeiten
-  // Kopf 5 Möglichkeiten
-  // Halskette 4 Möglichkeiten
+  //Schuhe Kat 4
+  // Erhöht laufgeschwindigkeit und gibt Rüstung
+  {"id":"schuhe1","name":"Lederschuhe","kategorie":4,"optikStufe":2,"vectorX":0,"vectorY":14,"ruestung":6,"laufgeschwindigkeit":2,"goldWert":12},
+  {"id":"schuhe2","name":"Waldstiefel","kategorie":4,"optikStufe":2,"vectorX":1,"vectorY":14,"ruestung":8,"laufgeschwindigkeit":3,"goldWert":25},
+  {"id":"schuhe3","name":"Beschlagene Stiefel","kategorie":4,"optikStufe":2,"vectorX":2,"vectorY":14,"ruestung":11,"laufgeschwindigkeit":4,"goldWert":36},
+  {"id":"schuhe4","name":"Eisenstiefel","kategorie":4,"optikStufe":3,"vectorX":3,"vectorY":14,"ruestung":14,"laufgeschwindigkeit":5,"goldWert":51},
+  {"id":"schuhe5","name":"Plattenstiefel","kategorie":4,"optikStufe":3,"vectorX":4,"vectorY":14,"ruestung":18,"laufgeschwindigkeit":6,"goldWert":79},
+  {"id":"schuhe6","name":"Federschuhe","kategorie":4,"optikStufe":4,"vectorX":5,"vectorY":14,"ruestung":23,"laufgeschwindigkeit":7,"goldWert":113},
+  {"id":"schuhe7","name":"Sieben Meilen Stiefel","kategorie":4,"optikStufe":4,"vectorX":6,"vectorY":14,"ruestung":28,"laufgeschwindigkeit":8,"goldWert":153},
+
+  //Handschuhe 5 Möglichkeiten Kat 5
+  // Erhöht Angriffsgeschwindigkeit und gibt Rüstung
+  {"id":"handschuhe1","name":"Stoffhandschuhe","kategorie":5,"vectorX":0,"vectorY":7,"ruestung":4,"angriffgeschwindigkeit":4,"goldWert":14},
+  {"id":"handschuhe2","name":"Faustlinge","kategorie":5,"vectorX":1,"vectorY":7,"ruestung":7,"angriffgeschwindigkeit":8,"goldWert":20},
+  {"id":"handschuhe3","name":"Assasinehandschuhe","kategorie":5,"vectorX":2,"vectorY":7,"ruestung":11,"angriffgeschwindigkeit":14,"goldWert":28},
+  {"id":"handschuhe4","name":"Klingenhand","kategorie":5,"vectorX":3,"vectorY":7,"ruestung":14,"angriffgeschwindigkeit":18,"goldWert":35},
+  {"id":"handschuhe5","name":"Plattenfaust","kategorie":5,"vectorX":4,"vectorY":7,"ruestung":18,"angriffgeschwindigkeit":25,"goldWert":48},
+
+  // Kopf 5 Möglichkeiten Kat 6
+  // Erhöht Lebenspunkt und Zauberkraft
+  {"id":"kopf1","name":"Zauberhut","kategorie":6,"vectorX":8,"vectorY":13,"lebenspunkte":10,"zauberkraft":4,"goldWert":24},
+  {"id":"kopf2","name":"Lederkappe","kategorie":6,"vectorX":10,"vectorY":13,"lebenspunkte":18,"zauberkraft":8,"goldWert":34},
+  {"id":"kopf3","name":"Hut des Erzmagiers","kategorie":6,"vectorX":9,"vectorY":13,"lebenspunkte":24,"zauberkraft":12,"goldWert":45},
+  {"id":"kopf4","name":"Vollhelm","kategorie":6,"vectorX":12,"vectorY":13,"lebenspunkte":32,"zauberkraft":15,"goldWert":52},
+  {"id":"kopf5","name":"Kampfvisier","kategorie":6,"vectorX":13,"vectorY":13,"lebenspunkte":45,"zauberkraft":20,"goldWert":68},
+
+  // Halskette 4 Möglichkeiten Kat 7
+  // Erhöht ManaReg und gibt Zauberwiderstand
+  {"id":"hals1","name":"Rubinkette","kategorie":7,"vectorX":6,"vectorY":19,"manareg":2,"zauberwiderstand":7,"goldWert":35},
+  {"id":"hals2","name":"Wassermedallion","kategorie":7,"vectorX":7,"vectorY":19,"manareg":4,"zauberwiderstand":12,"goldWert":45},
+  {"id":"hals3","name":"Mondkette","kategorie":7,"vectorX":8,"vectorY":19,"manareg":6,"zauberwiderstand":18,"goldWert":70},
+  {"id":"hals4","name":"Himmlische Kette","kategorie":7,"vectorX":9,"vectorY":19,"manareg":8,"zauberwiderstand":24,"goldWert":90},
 
   //Benutzbare Gegenstände
   //CurrentHitpoints
-  {"id":"Nahrung1","name":"Brot","kategorie":4,"vectorX":7,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":15},
-  {"id":"Nahrung2","name":"Pilz","kategorie":4,"vectorX":5,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung3","name":"Gruener Paprika","kategorie":4,"vectorX":2,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung4","name":"Kaese","kategorie":4,"vectorX":9,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung5","name":"Fisch","kategorie":4,"vectorX":10,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung6","name":"Gelber Paprika","kategorie":4,"vectorX":3,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung1","name":"Brot","kategorie":8,"vectorX":7,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":15},
+  {"id":"Nahrung2","name":"Pilz","kategorie":8,"vectorX":5,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung3","name":"Gruener Paprika","kategorie":8,"vectorX":2,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung4","name":"Kaese","kategorie":8,"vectorX":9,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung5","name":"Fisch","kategorie":8,"vectorX":10,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung6","name":"Gelber Paprika","kategorie":8,"vectorX":3,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
 // noch zurordnen
-  {"id":"Nahrung7","name":"Radieschen","kategorie":4,"vectorX":0,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung8","name":"Karotte","kategorie":4,"vectorX":1,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung9","name":"Fleisch","kategorie":4,"vectorX":11,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung7","name":"Radieschen","kategorie":8,"vectorX":0,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung8","name":"Karotte","kategorie":8,"vectorX":1,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung9","name":"Fleisch","kategorie":8,"vectorX":11,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
 
-  {"id":"Nahrung10","name":"Roten Paprika","kategorie":4,"vectorX":4,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung11","name":"Kuchen","kategorie":4,"vectorX":8,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung12","name":"Gebratener Fisch","kategorie":4,"vectorX":12,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung13","name":"Gebratenes Fleisch","kategorie":4,"vectorX":13,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-
+  {"id":"Nahrung10","name":"Roten Paprika","kategorie":8,"vectorX":4,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung11","name":"Kuchen","kategorie":8,"vectorX":8,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung12","name":"Gebratener Fisch","kategorie":8,"vectorX":12,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung13","name":"Gebratenes Fleisch","kategorie":8,"vectorX":13,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
   //CurrentMana
   // Müssen noch überarbeitet werden
-  {"id":"NahrungM1","name":"Beeren","kategorie":4,"vectorX":0,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM2","name":"Kirsche","kategorie":4,"vectorX":1,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM3","name":"Trauben","kategorie":4,"vectorX":5,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM4","name":"Gegorene Trauben","kategorie":4,"vectorX":6,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM5","name":"Melone","kategorie":4,"vectorX":7,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM6","name":"Erdbeere","kategorie":4,"vectorX":8,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM7","name":"Birne","kategorie":4,"vectorX":9,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM8","name":"Zitrone","kategorie":4,"vectorX":10,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM9","name":"Ananas","kategorie":4,"vectorX":11,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM10","name":"Banane","kategorie":4,"vectorX":12,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"NahrungM11","name":"Eichel","kategorie":4,"vectorX":13,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM1","name":"Beeren","kategorie":8,"vectorX":0,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM2","name":"Kirsche","kategorie":8,"vectorX":1,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM3","name":"Trauben","kategorie":8,"vectorX":5,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM4","name":"Gegorene Trauben","kategorie":8,"vectorX":6,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM5","name":"Melone","kategorie":8,"vectorX":7,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM6","name":"Erdbeere","kategorie":8,"vectorX":8,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM7","name":"Birne","kategorie":8,"vectorX":9,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM8","name":"Zitrone","kategorie":8,"vectorX":10,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM9","name":"Ananas","kategorie":8,"vectorX":11,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM10","name":"Banane","kategorie":8,"vectorX":12,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"NahrungM11","name":"Eichel","kategorie":8,"vectorX":13,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
 
   //MaxHp
-  {"id":"MaxHP","name":"Lebenselixir","kategorie":4,"vectorX":0,"vectorY":2,"benutzbarKategorie":2,"benutzbarWert":20,"goldWert":25},
+  {"id":"MaxHP","name":"Lebenselixir","kategorie":8,"vectorX":0,"vectorY":2,"benutzbarKategorie":2,"benutzbarWert":20,"goldWert":25},
 
   //CurrentMana
-  {"id":"ManaPot1","name":"kleiner Manatrank","kategorie":4,"vectorX":10,"vectorY":2,"benutzbarKategorie":3,"benutzbarWert":20,"goldWert":25},
-  {"id":"ManaPot2","name":"grosser Manatrank","kategorie":4,"vectorX":10,"vectorY":3,"benutzbarKategorie":3,"benutzbarWert":40,"goldWert":25},
+  {"id":"ManaPot1","name":"kleiner Manatrank","kategorie":8,"vectorX":10,"vectorY":2,"benutzbarKategorie":3,"benutzbarWert":20,"goldWert":25},
+  {"id":"ManaPot2","name":"grosser Manatrank","kategorie":8,"vectorX":10,"vectorY":3,"benutzbarKategorie":3,"benutzbarWert":40,"goldWert":25},
 
   //MaxMana
-  {"id":"MaxMana","name":"Manaelixir","kategorie":4,"vectorX":9,"vectorY":4,"benutzbarKategorie":4,"benutzbarWert":20,"goldWert":25},
+  {"id":"MaxMana","name":"Manaelixir","kategorie":8,"vectorX":9,"vectorY":4,"benutzbarKategorie":4,"benutzbarWert":20,"goldWert":25},
 
   //Staerke
-  {"id":"FoliantKraft","name":"Foliant der Macht","kategorie":4,"vectorX":1,"vectorY":29,"benutzbarKategorie":5,"benutzbarWert":3,"goldWert":15},
+  {"id":"FoliantKraft","name":"Foliant der Macht","kategorie":8,"vectorX":1,"vectorY":29,"benutzbarKategorie":5,"benutzbarWert":3,"goldWert":15},
 
   //Geschick
-  {"id":"FoliantGeschick","name":"Foliant der Disziplin","kategorie":4,"vectorX":0,"vectorY":29,"benutzbarKategorie":6,"benutzbarWert":2,"goldWert":25},
+  {"id":"FoliantGeschick","name":"Foliant der Disziplin","kategorie":8,"vectorX":0,"vectorY":29,"benutzbarKategorie":6,"benutzbarWert":2,"goldWert":25},
 
   //Zauberkraft
-  {"id":"FoliantZauberK","name":"Foliant der Weisheit","kategorie":4,"vectorX":5,"vectorY":29,"benutzbarKategorie":7,"benutzbarWert":1,"goldWert":32},
+  {"id":"FoliantZauberK","name":"Foliant der Weisheit","kategorie":8,"vectorX":5,"vectorY":29,"benutzbarKategorie":7,"benutzbarWert":1,"goldWert":32},
 
   //Zauberwiderstand
- {"id":"FoliantZauberW","name":"Foliant der Reinheit","kategorie":4,"vectorX":6,"vectorY":29,"benutzbarKategorie":8,"benutzbarWert":2,"goldWert":17}
+ {"id":"FoliantZauberW","name":"Foliant der Reinheit","kategorie":8,"vectorX":6,"vectorY":29,"benutzbarKategorie":8,"benutzbarWert":2,"goldWert":17}
 ]
 }

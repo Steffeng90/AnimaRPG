@@ -1,17 +1,9 @@
 package com.mygdx.anima.tools.listener;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
-import com.mygdx.anima.screens.menuReiter.InventarReiter;
-import com.mygdx.anima.sprites.character.Held;
-import com.mygdx.anima.sprites.character.items.Armor;
 import com.mygdx.anima.sprites.character.items.Benutzbar;
-import com.mygdx.anima.sprites.character.items.Item;
-import com.mygdx.anima.sprites.character.items.WaffeFern;
-import com.mygdx.anima.sprites.character.items.WaffeNah;
 
 /**
  * Created by Steffen on 05.12.2016.

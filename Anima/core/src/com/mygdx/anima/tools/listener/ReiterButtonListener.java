@@ -9,11 +9,6 @@ import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
 import com.mygdx.anima.screens.menuReiter.ZauberReiter;
-import com.mygdx.anima.sprites.character.Held;
-import com.mygdx.anima.sprites.character.items.Armor;
-import com.mygdx.anima.sprites.character.items.Item;
-import com.mygdx.anima.sprites.character.items.WaffeFern;
-import com.mygdx.anima.sprites.character.items.WaffeNah;
 
 /**
  * Created by Steffen on 05.12.2016.
@@ -28,7 +23,7 @@ public class ReiterButtonListener extends InputListener {
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        AnimaRPG.assetManager.get("audio/sounds/reiter_wechsel.ogg", Sound.class).play();
+        AnimaRPG.assetManager.get("audio/sounds/reiter_wechsel.ogg", Sound.class).play(0.5f);
 
         switch (auswahl){
             //Charakterreiter

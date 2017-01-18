@@ -30,6 +30,7 @@ public class zauberslotButtonListener extends InputListener {
         reiter.inventarLinks.clear();
         reiter.zeigeZauber();
         reiter.auswahlAnzeige();
+        getHeld().updateAlleWerte();
         return true;
     }
 }

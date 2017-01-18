@@ -1,5 +1,6 @@
 package com.mygdx.anima.sprites.character.zauber.fixtures;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,6 +27,8 @@ import static com.mygdx.anima.sprites.character.HumanoideSprites.Richtung.Unten;
 public class Blitz extends ZauberFixture {
 public Blitz(HumanoideSprites.Richtung richtung,float zauberFixture) {
     super(zauberFixture);
+    AnimaRPG.assetManager.get("audio/sounds/electricity.wav", Sound.class).play();
+
     this.zaubernder=getHeld();
     this.world=zaubernder.world;
     this.screen=zaubernder.screen;

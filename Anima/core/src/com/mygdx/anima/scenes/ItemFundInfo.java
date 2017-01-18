@@ -3,6 +3,7 @@ package com.mygdx.anima.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -49,6 +50,8 @@ public class ItemFundInfo implements Disposable {
 
     public ItemFundInfo(final Playscreen screen, SpriteBatch sb,String itemName){
        this.screen=screen;
+        AnimaRPG.assetManager.get("audio/sounds/itemFund.wav", Sound.class).play();
+
         infoWidth=(float)(AnimaRPG.W_WIDTH*2);
                 infoHeight=(float)(AnimaRPG.W_Height*2);
         viewport = new FitViewport(infoWidth,infoHeight, new OrthographicCamera());

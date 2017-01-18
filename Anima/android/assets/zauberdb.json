@@ -4,6 +4,6 @@
 
   // Schadenzauber (kat=2)
   {"id":"schaden1","name":"Energie-Nova","kategorie":2,"vectorX":2,"vectorY":21,"effektivitaet":15,"manakosten":5,"zauberZeit":1.0,"zauberFixtureTimer":0.8,"zauberDauer":0,"beschreibung":"Ihr konzentriert reines Mana in \neurer Umgebung und bringt \nes zur Explosion, wodurch \nalle Gegner im Umfeld \nSchaden erleiden."},
-  {"id":"schaden2","name":"Blitz","kategorie":2,"vectorX":0,"vectorY":23,"effektivitaet":12,"manakosten":3,"zauberZeit":1.0,"zauberFixtureTimer":0.2,"zauberDauer":0,"beschreibung":"Erzeugt einen BLitz und\n schleudert ihn auf die\nGegner."}
+  {"id":"schaden2","name":"Blitz","kategorie":2,"vectorX":0,"vectorY":23,"effektivitaet":12,"manakosten":3,"zauberZeit":0.3,"zauberFixtureTimer":0.5,"zauberDauer":0,"beschreibung":"Erzeugt einen BLitz und\n schleudert ihn auf die\nGegner."}
 
 ]}

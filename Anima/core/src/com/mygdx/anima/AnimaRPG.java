@@ -14,6 +14,31 @@ import com.mygdx.anima.sprites.character.Held;
 
 import javax.xml.soap.Text;
 
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+
 public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
 	//public static final float  MAP_SCALE=0.5625;
@@ -42,6 +67,10 @@ public class AnimaRPG extends Game {
 	public static final short ENEMY_HEAL_SENSOR=8192;
 	public static final short ENEMY_CAST_HEAL=16384;
 	public static final short ENEMY_SEARCH_HEALER=3;
+	public static final short ENEMY_OBERKOERPER=5;
+	public static final short HERO_OBERKOERPER=6;
+
+
 
 
 	public static SpriteBatch batch;
@@ -56,7 +85,14 @@ public class AnimaRPG extends Game {
 		assetManager.load("audio/sounds/anziehen.wav", Sound.class);
 		assetManager.load("audio/sounds/ausziehen.wav", Sound.class);
 		assetManager.load("audio/sounds/reiter_wechsel.ogg", Sound.class);
-		assetManager.load("audio/sounds/walk.ogg", Sound.class);
+		//assetManager.load("audio/sounds/walk.ogg", Sound.class);
+		assetManager.load("audio/sounds/laufen.mp3", Sound.class);
+		assetManager.load("audio/sounds/sword_swing.mp3", Sound.class);
+		assetManager.load("audio/sounds/bow_attack.mp3", Sound.class);
+		assetManager.load("audio/sounds/nova.wav", Sound.class);
+		assetManager.load("audio/sounds/levelUp.wav", Sound.class);
+		assetManager.load("audio/sounds/itemFund.wav", Sound.class);
+		assetManager.load("audio/sounds/electricity.wav", Sound.class);
 
 		assetManager.load("audio/sounds/turn_page.wav", Sound.class);
 

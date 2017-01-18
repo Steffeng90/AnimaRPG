@@ -19,7 +19,7 @@ public class EnemyGenerator {
 
     private static String itemName="Default", id;
     private static Vector2 vector;
-    //Kategorie 1: Nahkampf, 2: Fernkampf 3: Armor, 4: Benutzbar
+    //Kategorie 1: Nahkampf, 2: Fernkampf 3: Brust, 4: Benutzbar
     //Benutzbarkateogie 1: Lebenspunkte
     private static int kategorie,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY;
     private static float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;

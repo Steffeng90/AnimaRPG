@@ -27,6 +27,7 @@ import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
+import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
@@ -96,7 +97,6 @@ public class Playscreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         creator = new B2WorldCreator(this);
         spieler = new Held(this,spielerPosition);
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),1,4));
 
         controller = new Controller(game);
         anzeige = new AnzeigenDisplay(game.batch, spieler);
@@ -109,24 +109,55 @@ public class Playscreen implements Screen{
         ZauberGenerator.generateZauber("staerkung1");
         ZauberGenerator.generateZauber("schaden2");
         ZauberGenerator.generateZauber("schaden1");
+        ItemGenerator.generateItem(this,0,0,"Schwert1");
+        ItemGenerator.generateItem(this,0,0,"Schwert3");
+        ItemGenerator.generateItem(this,0,0,"Schwert6");
+
+        ItemGenerator.generateItem(this,0,0,"Bogen1");
+        ItemGenerator.generateItem(this,0,0,"Bogen3");
+        ItemGenerator.generateItem(this,0,0,"Bogen5");
 
 
+        ItemGenerator.generateItem(this,0,0,"schuhe1");
+        ItemGenerator.generateItem(this,0,0,"schuhe2");
+        ItemGenerator.generateItem(this,0,0,"schuhe3");
+        ItemGenerator.generateItem(this,0,0,"schuhe4");
+        ItemGenerator.generateItem(this,0,0,"schuhe5");
+        ItemGenerator.generateItem(this,0,0,"schuhe6");
+        ItemGenerator.generateItem(this,0,0,"schuhe7");
+
+        ItemGenerator.generateItem(this,0,0,"handschuhe1");
+        ItemGenerator.generateItem(this,0,0,"handschuhe2");
+        ItemGenerator.generateItem(this,0,0,"handschuhe3");
+        ItemGenerator.generateItem(this,0,0,"handschuhe4");
+        ItemGenerator.generateItem(this,0,0,"handschuhe5");
+
+        ItemGenerator.generateItem(this,0,0,"hals1");
+        ItemGenerator.generateItem(this,0,0,"hals2");
+        ItemGenerator.generateItem(this,0,0,"hals3");
+        ItemGenerator.generateItem(this,0,0,"hals4");
+
+        ItemGenerator.generateItem(this,0,0,"kopf1");
+        ItemGenerator.generateItem(this,0,0,"kopf2");
+        ItemGenerator.generateItem(this,0,0,"kopf3");
+        ItemGenerator.generateItem(this,0,0,"kopf4");
+        ItemGenerator.generateItem(this,0,0,"kopf5");
         //Testitems erzeugen:
 /*
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi1","armor",new Vector2(5,13),15,20));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi2","armor",new Vector2(6,13),15,16));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi3","armor",new Vector2(7,13),1125,13));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi4","armor",new Vector2(1,13),125,123));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi5","armor",new Vector2(2,13),135,23));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi6","armor",new Vector2(3,13),5,46));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi7","armor",new Vector2(4,13),1,75));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi8","armor",new Vector2(5,13),13,213));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi9","armor",new Vector2(6,13),14,21));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi10","armor",new Vector2(7,13),29,222));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi11","armor",new Vector2(8,13),15,512));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi12","armor",new Vector2(9,13),15,13));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi3","armor",new Vector2(5,13),15,123));
-        getSpieler().getHeldenInventar().add(new Armor("Ruessi14","armor",new Vector2(5,13),15,132));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi1","armor",new Vector2(5,13),15,20));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi2","armor",new Vector2(6,13),15,16));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi3","armor",new Vector2(7,13),1125,13));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi4","armor",new Vector2(1,13),125,123));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi5","armor",new Vector2(2,13),135,23));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi6","armor",new Vector2(3,13),5,46));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi7","armor",new Vector2(4,13),1,75));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi8","armor",new Vector2(5,13),13,213));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi9","armor",new Vector2(6,13),14,21));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi10","armor",new Vector2(7,13),29,222));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi11","armor",new Vector2(8,13),15,512));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi12","armor",new Vector2(9,13),15,13));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi3","armor",new Vector2(5,13),15,123));
+        getSpieler().getHeldenInventar().add(new Brust("Ruessi14","armor",new Vector2(5,13),15,132));
         getSpieler().getHeldenInventar().add(new WaffeNah("Test1", "nahkampf", new Vector2(0,5),15,2));
         getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),12,5));
         getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),32,5));
@@ -290,15 +321,8 @@ public class Playscreen implements Screen{
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
             spieler.useObject();spieler.b2body.setLinearVelocity(0, 0);
 
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.V)) {
-            spieler.spriteWechsel();spieler.b2body.setLinearVelocity(0, 0);
-
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.C)) {
-            spieler.spriteBogen();spieler.b2body.setLinearVelocity(0, 0);
-
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()) {
             spieler.bowAttack();spieler.b2body.setLinearVelocity(0, 0);
-
         } else if (controller.isCast1Pressed()) {
             spieler.castAttack(1);spieler.b2body.setLinearVelocity(0, 0);
         }else if (controller.isCast2Pressed()) {
@@ -309,6 +333,7 @@ public class Playscreen implements Screen{
             spieler.castAttack(4);spieler.b2body.setLinearVelocity(0, 0);
         }
         else if (spieler.actionInProgress()) {
+            // Zu beachten: die XundY-Achse werden von -15 bis +15, deswegen sind WASD und Touchpad unterschiedlich schnell
             float xAchse=controller.getTouchpad().getKnobPercentX()*spieler.getGeschwindigkeitLaufen();
             float yAchse=controller.getTouchpad().getKnobPercentY()*spieler.getGeschwindigkeitLaufen();
             spieler.b2body.setLinearVelocity(xAchse/10,yAchse/10);
@@ -333,7 +358,7 @@ public class Playscreen implements Screen{
             } else {
                 /*if (spieler.b2body != null)
                     spieler.b2body.setLinearVelocity(0, 0);*/
-            }
+        }
         }
     }
     public void update(float dt) {

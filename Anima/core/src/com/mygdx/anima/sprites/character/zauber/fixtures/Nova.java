@@ -1,5 +1,6 @@
 package com.mygdx.anima.sprites.character.zauber.fixtures;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -69,6 +70,8 @@ public Nova(float zauberFixture) {
 
     setToDestroy=false;
     destroyed=false;
+    AnimaRPG.assetManager.get("audio/sounds/nova.wav", Sound.class).play();
+
     com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture.allZauber.add(this);
 }
 }

@@ -8,10 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 
 public class WaffeFern extends Ausruestung{
     private int schaden;
+    private int animationsStufe;
 
-    public WaffeFern(String name, String itemKategorie, Vector2 grafikposi, int schaden, int goldWert){
+    public WaffeFern(String name, String itemKategorie, Vector2 grafikposi, int schaden, int goldWert,int animationsStufe){
         super(name, itemKategorie, grafikposi, goldWert);
         this.schaden=schaden;
+        this.animationsStufe=animationsStufe;
     }
 
     public int getSchaden() {
@@ -20,5 +22,9 @@ public class WaffeFern extends Ausruestung{
 
     public void setSchaden(int schaden) {
         this.schaden = schaden;
+    }
+
+    public int getAnimationsStufe() {
+        return animationsStufe;
     }
 }
