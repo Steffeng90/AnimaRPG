@@ -64,7 +64,7 @@ public abstract class Enemy extends HumanoideSprites{
 
         FixtureDef fdef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(7.5f/AnimaRPG.PPM);
+        shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
         fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT

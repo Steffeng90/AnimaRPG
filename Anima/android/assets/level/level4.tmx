@@ -1,293 +1,373 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="35" tilewidth="16" tileheight="16" nextobjectid="90">
- <tileset firstgid="1" name="trees_plants" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
-  <image source="tilesets/trees_plants.png" width="512" height="512"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="237">
+ <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
- <tileset firstgid="1025" name="trees_plants_rocks" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
-  <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
+ <tileset firstgid="4097" name="base_out_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/base_out_atlas.png" width="1024" height="1024"/>
  </tileset>
- <layer name="Kachelebene 1" width="30" height="35">
-  <data encoding="csv">
-1931,1963,1867,1804,1865,1929,1899,1961,1930,1964,1867,1833,1804,1962,1929,1867,1931,1833,1932,1962,1833,1867,1804,1931,1834,1866,1900,1961,1900,1962,
-1803,1897,1929,1963,1801,1897,1803,1964,1929,1932,1836,1803,1929,1898,1930,1803,1804,1900,1866,1963,1930,1929,1897,1898,1964,1866,1801,1834,1867,1803,
-1929,1803,1836,1867,1963,1865,1897,1900,1835,1897,1804,1804,1801,1963,1802,1930,1867,1868,1866,1964,1964,1866,1834,1865,1803,1868,1962,1834,1930,1900,
-1897,1836,1803,1898,1868,1929,1963,1961,1803,1932,1834,1899,1835,1899,1836,1833,1866,1897,1803,1900,1866,1865,1931,1898,1833,1899,1932,1899,1834,1802,
-1932,1963,1804,1866,1963,1833,1867,1898,1930,1865,1898,1865,1899,1900,1834,1801,1867,1963,1963,1836,1803,1867,1833,1836,1897,1804,1834,1963,1961,1900,
-1865,1931,1930,1865,1867,1866,1868,1929,1801,1930,1962,1929,1868,1931,1803,1835,1801,1804,1833,1868,1930,1930,1963,1963,1867,1865,1802,1962,1803,1836,
-1834,1930,1836,1929,1900,1900,1897,1962,1961,1930,1964,1931,1929,1833,1964,1932,1833,1867,1931,1833,1929,1867,1931,1867,1804,1932,1898,1803,1867,1836,
-1900,1962,1964,1803,1834,1803,1961,1931,1931,1899,1866,1835,1898,1931,1835,1897,1930,1803,1834,1964,1802,1899,1897,1963,1836,1802,1962,1801,1930,1868,
-1803,1963,1898,1899,1866,1929,1835,1868,1865,1801,1802,1929,1867,1961,1802,1803,1834,1931,1835,1867,1962,1931,1865,1833,1932,1961,1866,1834,1962,1963,
-1835,1803,1834,1833,1897,1801,1963,1834,1932,1801,1899,1802,1963,1897,1931,1961,1900,1867,1833,1899,1932,1833,1803,1868,1801,1833,1899,1932,1899,1963,
-1804,1801,1836,1964,1962,1930,1899,1804,1897,1804,1931,1900,1961,1865,1867,1835,1929,1898,1833,1932,1900,1866,1930,1898,1932,1964,1962,1835,1963,1932,
-1900,1868,1932,1961,1834,1833,1866,1931,1836,1962,1929,1964,1897,1931,1932,1962,1898,1961,1899,1804,1900,1932,1801,1900,1833,1804,1931,1899,1900,1930,
-1932,1964,1833,1801,1866,1868,1836,1963,1964,1802,1802,1834,1802,1835,1835,1961,1962,1899,1929,1897,1802,1897,1867,1964,1899,1964,1961,1836,1803,1866,
-1899,1929,1929,1868,1929,1868,1834,1931,1929,1835,1929,1833,1835,1834,1802,1804,1833,1899,1930,1801,1801,1897,1802,1900,1898,1932,1833,1964,1931,1898,
-1932,1866,1931,1964,1961,1801,1930,1833,1931,1962,1963,1899,1868,1961,1834,1963,1865,1898,1834,1868,1963,1802,1833,1803,1899,1931,1833,1802,1868,1836,
-1930,1897,1834,1899,1833,1803,1961,1868,1835,1834,1898,1961,1929,1932,1867,1961,1962,1899,1802,1897,1900,1898,1867,1865,1866,1834,1929,1867,1802,1834,
-1836,1834,1802,1868,1963,1930,1964,1962,1929,1802,1833,1803,1834,1929,1833,1931,1961,1836,1964,1900,1835,1801,1801,1961,1962,1802,1897,1835,1802,1899,
-1932,1836,1961,1929,1866,1931,1897,1961,1801,1802,1900,1867,1961,1835,1930,1897,1962,1835,1803,1867,1803,1900,1834,1964,1868,1964,1833,1898,1898,1962,
-1866,1803,1899,1865,1836,1868,1899,1899,1803,1804,1964,1802,1897,1802,1866,1865,1865,1930,1900,1963,1801,1897,1866,1802,1962,1932,1929,1930,1963,1866,
-1964,1899,1803,1963,1866,1962,1866,1964,1897,1962,1836,1835,1932,1897,1931,1899,1899,1897,1963,1836,1898,1867,1931,1834,1962,1833,1932,1804,1868,1964,
-1833,1962,1865,1835,1865,1931,1962,1803,1900,1834,1802,1804,1801,1865,1962,1897,1961,1897,1836,1932,1833,1929,1803,1868,1898,1803,1833,1963,1964,1804,
-1867,1834,1931,1833,1804,1930,1836,1898,1964,1867,1963,1803,1900,1803,1866,1962,1898,1865,1865,1929,1898,1964,1834,1962,1868,1867,1930,1963,1929,1962,
-1929,1963,1963,1964,1897,1899,1801,1868,1801,1900,1898,1964,1802,1865,1866,1834,1804,1931,1867,1801,1898,1804,1929,1834,1833,1835,1962,1899,1964,1834,
-1803,1900,1836,1964,1961,1866,1836,1865,1963,1963,1961,1834,1932,1868,1899,1963,1929,1898,1900,1932,1804,1868,1898,1964,1961,1900,1961,1802,1931,1802,
-1804,1931,1930,1866,1929,1930,1897,1961,1804,1835,1963,1867,1961,1897,1897,1866,1897,1868,1802,1834,1962,1835,1867,1866,1865,1930,1899,1833,1930,1833,
-1868,1900,1865,1961,1930,1897,1932,1963,1804,1930,1963,1964,1897,1899,1836,1804,1836,1932,1899,1835,1868,1835,1833,1866,1900,1931,1898,1804,1834,1802,
-1899,1932,1961,1865,1897,1835,1833,1868,1931,1962,1929,1897,1803,1900,1963,1898,1868,1930,1868,1961,1833,1963,1929,1897,1867,1899,1963,1897,1931,1962,
-1804,1900,1802,1932,1835,1803,1865,1963,1900,1802,1962,1963,1804,1898,1932,1962,1836,1834,1865,1834,1866,1963,1961,1931,1801,1964,1963,1833,1961,1932,
-1835,1865,1804,1932,1802,1963,1929,1801,1932,1836,1868,1803,1898,1868,1867,1801,1803,1899,1899,1803,1929,1867,1865,1866,1930,1801,1964,1835,1929,1804,
-1964,1833,1834,1964,1931,1900,1868,1867,1964,1803,1868,1803,1865,1899,1804,1866,1803,1801,1868,1802,1963,1898,1834,1834,1804,1868,1899,1931,1866,1962,
-1803,1834,1930,1865,1898,1932,1897,1835,1803,1961,1804,1932,1897,1835,1804,1868,1802,1833,1900,1802,1961,1804,1804,1867,1931,1865,1866,1866,1833,1833,
-1961,1961,1898,1835,1961,1963,1962,1804,1962,1963,1899,1898,1963,1899,1900,1834,1866,1900,1802,1899,1803,1835,1802,1803,1900,1833,1930,1929,1964,1836,
-1833,1802,1835,1963,1900,1900,1964,1897,1963,1835,1900,1931,1804,1899,1963,1868,1834,1865,1898,1835,1932,1804,1932,1865,1866,1932,1900,1963,1865,1801,
-1865,1868,1836,1836,1866,1898,1929,1867,1836,1899,1801,1803,1962,1962,1802,1964,1833,1964,1898,1962,1833,1930,1836,1835,1802,1932,1931,1803,1897,1865,
-1867,1897,1898,1801,1801,1900,1900,1866,1964,1865,1931,1867,1961,1833,1899,1835,1931,1836,1929,1961,1964,1929,1898,1833,1898,1932,1961,1866,1930,1897
-</data>
+ <tileset firstgid="8193" name="plant repack" tilewidth="16" tileheight="16" tilecount="676" columns="26">
+  <image source="tilesets/plant repack.png" width="416" height="416"/>
+ </tileset>
+ <tileset firstgid="8869" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="tilesets/town.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="9893" name="build_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/build_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <layer name="ground" width="60" height="50">
+  <data encoding="base64" compression="zlib">
+   eJylmsmTHEcVxns6BNiWSxFTYdYTnhGL5YV9vWOwr+ycsAlsLFtiGYIrO4HNEe6a0Qyu6sIaiNABboABb/wBcJNmsWtBaoggWE+8pPOb+uWb6tZIOnyRXVVZme97e9ZMkY9GtaEEingvoDNMDB9ZHY3uN3zf8ANDbWgMTxqeMjxgeNDQxvfb+F4V1wzXTVyviGN49suV0ehXKzc+VnmKEvt3bk/dr6Nskm8Cvrr/RePyiOF5wwtxfB7XjxlOr/a8SrzfuPX0LIx/Mpn/vHLjY+vWruJ+kwFuHX6XcV4FPbR45u1aA7Rzib20R4V9tN4/TNZ/Gv5l+PdNjP8x/Hdltq78pnX8KviX9FFAziDPqROj0d2Gewz3Gn5qXJ42FIHTwDgxVIZ7Mpuf9TaUHbX2KXt2t+G1Nvd1htcb3nAT4xsNb8K+BXSquGwhQw1ddJh32jg+bnjCcMbwB1vzOefPHF80vGR4wvY8k/X8Kqff0/bsccP7bO77DR8wfPAmxg8ZPox9FbPS89mszymSSbF9EL9Z74d672Vb8xXDe06ORu89mfp1GFtDtzrbqwFHrVkgrsKan7S5nzJ82vCZmxg/a/jcam+rDntVkS/zieK2YJxlfZ7RGq8yjq82fNzwCcNrDLdgvNVw28mer/yocLlB+fKbJuO6YcNw3rA5cP1dw7cM3zZ8B9f+3vdWex+Wn+r6YjaThVwkj2T6e3Y4t7/FuLzVsGb4uuFthrdjvMtw6mT/TgnesrHsHO6dMxl/Y/it4VnD7wau5+nBX2+t9vs2SzMoRsWXcSV5VG/brJcrXF84ZvXXuNxv+LHhJ4aPGj6G8QHDg4ZfjNNc0OSHa+MzJs+vTcbLhh3EiK53DXsL9OCvf2/YPjaTM4wdfPdi1nNkDHfgt52luewC1vqZ8XnGcMGwbfj5eMZxavir4W/j2Xus76WL4SvG91LkG+ykGCFX/vZ68PbdN0who+wXuHwj6/so+jTz2pqLX/L9i/G5YrjqOF7FHPoO+yrJIfvKToqRZ2G3ReM8+wYZAm/puI35qsL+qpHy50m0r+zTgK/4TCO2cX0V+xXgKFuX4E/7BrspRnZhx0Wjt3ewr/xM9hWvi1nfgygvsz51yFeSb64Pg/tV6EB1h33kQW6I9pX+CvtdRkyWep1qvXl7z/Oz6bE0f9SQQ7lE9w84Zn28hXHe2vN0UGD9DvtIhivgVcd8Kr7ymWvFj/TFONKofCRbNi5HqVZKpm1Xs+SrxCL9NthDdmZPHta+d9zbNnAuwPm+8ez50Dgki3whjP9fD9yUS9gD6Zlq9HbWx7x8QzHo/eKg7sEf1JsVGPUuz2iybZunnNmHMhdMsLdilD0Vbca8UeEd7a91wrxpdtgXm3w4B7H31v7sT5kfZG/5U421avCn7G2e8pJeO6zr+xtfd3xf5XNWlad2aAHOlb0KvEtZJRf18NDyDA8vp3Gm/Uqs532LduFcnj+1ZpmndqrcNfVOP2C8D9XrLk/jYpIf9hfpdN04bhjOR2wu93HD/kQ+Ix3pud9XemVvRPnZ97Cv9nqs3F6lW/PA/zCX96Q/6Ua2vmz8dgy7EYEvvwPUGAt7Vi4fXo82neRpTiJf1nzNYwywh2Yu8vlsgveob8UZR/pPC77ivBftK25Cg3vyKcUEex/fB7F/Fpe1LP1+Rhtq3jRLbS755avSNXOa1vP9heZKp3caViICJ3JtIkoH5v+hWjTEV7Kzv6qcvLLrdpbe27C6d96wY9gaz643DXvx3m58HnBunMYiY0axIJ71csq5dpwb8JW+VWuH7KqRefJs1uueeYz82yz1zcuRR8D6uOe/GfnvxfuXxrO57OHkM8yX9fJhNI4voTgq87S3mMeXtVlnPdYi5tMy+rz8PLx3LnIUH9k08NyH7Tcif9qXXA96iOWjoYaNlWeOwpd9zzRL+yvdZ86auO9elyKX/TjKnvPszVzF/HYQ2yb/mTvM1+649nhg57jmUfhKbp71Ssjja+8E8Rvub0X7bUb7bkbMszfrLnMVayVz67V6cda86+FbRPuqV2ogUwvua1kvW5XPt6Niej+Ou/G34kAxJFnlT22enm38yPNgEvdH5KuaWrv4ld4lk+rLGr4JtPniuFXsrsff++M0N9M27L/mnWuH+LL2L+LJ+JWepvBVngHYk/oY348chc0FsRvuMx+KL3uVcG/RdyF+P5Ds8kF//psO8JWOmrw/21aOs2qj7FuA/3rkxny1N8fmO+P0LMhelHXAy0oetG8HXVVH5Cseil+eY9jvaU3ZV3rditwuRU5bkb9yln6r31CvxvMFba06+nk7+z1keNjwBcMjhkcNXzI8tjTjop5Y+UB858WDvhcqR21nqc5le577Jlkv5yTveyrl6Z1xX5P1ey/yvezyFc8tPBcGmQuc8TcNT7vvHNNj6VmbfOfFg/KVZJ/ib2g8wzK3XEQOpz+rh9qMXNfBX7beGKdnjwl4sy4Hmeul/oy/Z3gF1+1S75viG9ZaZFffb4RRfz9SnpSfs/9Zy9K/Oy3KTUP3uzyN2QLX+h1ke7PNvdOwMp7Pg3kljIvsyu/f8tcpvj3y/KLc2cQ5rMnz6tG8++xveEaVjTv45bX8U7ZQLmC+8uD3dtlzG77KbwE856snYexJ3g736GfSIXNBhfsl3qE8WpdnVJ1tKuzHnleys+dtcK/ID9tOcio+JJvit8hTH/Dysf+iDbkXzyTSH3NP7eb5/kRx12IOdU/98ywg/ai/0tqyA8+Gvt+QrJSZvbXkEl/5CXMV666v9+I7wT2NpZvLGtLiWYl1mRMZv9IZfUj6vetE//8b78xmOe7dhndks+t34fqsu+Zz9pGl209zF619lOfXmn/fiVl9o96YD2Qf/f/GV+ydrxq+Zvhydn3XjHX5gGL1ete60euDep6n36Pk8zxL0CbM3w30ovvyF+b7Gu/4vRq8T38mhuKd/QJtxR7R5yPVBcWuein2l8x7PM9KBu4pzj88Pho9aXjK8KPjaX2XDqUXP5f93CRPOUjnyhm6Jy7UJWO7wDrMC8pvXM/nqQLvVbhmXnvB5H7R8JLhj8fT/E8f6AbmVm6uOMhmrG8t5rGmM4exzlV5qpMSsnA91mS+x/W0Tph/y+2j0a2G2wzHb0/9mHWgGZjr+x/2d6y/kpX9C3OE5rE+M27kE5K5xnu127PIU71N8L7msY+hX2k91lzVA67p8zlrs/ZSnS3wbGhP9ku0S+HeFZcOa9OuRZ7mFPY50n2L91mvxbXN0/hk38CY0vrerk2e+gP1Lr36usu1K7e/3iuxt8+ntCn7C/Zg0oX3LZ8/KLf0VOSpTtnTMB4pJ23GvkI+4NcjN+0rLswn+q1ntA3zIWsd/a3MU72Ia5Gnfs7Y1DPWCdpNHFg7O4cJ9pb96ZOsJdqfthNPcSCX0q3v65vPZZJzqPaxNtDHKneP9UZyMv/8DzDsXZ8=
+  </data>
  </layer>
- <layer name="gras" width="30" height="35">
-  <data encoding="csv">
-1936,1935,1902,1903,1904,1905,1968,2000,1902,1903,1904,1905,1902,1903,1904,1905,1905,1902,1903,1904,1905,1902,1903,1904,1905,1902,1903,1904,1905,1905,
-1902,1903,1934,1935,1936,1937,1904,1905,1934,1935,1936,1937,1934,1935,1936,1937,1937,1934,1935,1936,1937,1934,1935,1936,1937,1934,1935,1936,1937,1937,
-1934,1935,1966,1967,1968,1998,1966,1937,1966,1967,1968,1969,1966,1967,1968,1969,1969,1966,1967,1968,1969,1966,1967,1968,1969,1966,1967,1968,1969,1969,
-1966,1967,1998,1999,2000,2001,1968,1969,1902,1903,1904,1905,1998,1999,2000,2001,2001,1998,1999,2000,2001,1902,1902,1903,1904,1905,1999,2000,2001,2001,
-1998,1999,2000,1998,1998,1999,2000,2001,1934,1935,1936,1937,1903,1904,1905,1902,1903,1904,1902,1903,1904,1905,1902,1903,1904,1905,1902,1903,1904,1905,
-1902,1903,1904,1998,1967,2000,2001,1937,1966,1967,1968,1969,1935,1936,1937,1934,1935,1936,1934,1935,1936,1937,1934,1935,1936,1937,1934,1935,1936,1937,
-1934,1935,1936,1936,1966,1967,1968,1969,1998,1999,2000,2001,1967,1968,1969,1966,1902,1903,1904,1905,1905,1969,1966,1967,1968,1969,1966,1967,1968,1969,
-1966,1967,1968,1904,1905,1999,2000,2000,1902,1903,1904,1905,1999,2000,2001,1998,1902,1903,1904,1905,1937,1905,1998,1999,2000,2001,1998,1999,2000,2001,
-1998,1999,2000,1902,1936,1936,1999,1937,1934,1935,1936,1937,1902,1903,1904,1905,1902,1903,1904,1905,1969,1937,1905,1902,1903,1904,1905,1967,1968,1969,
-1902,1903,1904,1905,1966,1967,1968,1969,1966,1967,1968,1969,1934,1935,1936,1937,1934,1935,1936,1937,2001,1969,1937,1905,1903,1904,1905,1999,2000,2001,
-1934,1935,1936,1937,1998,1999,2000,2001,1998,1999,2000,1902,1903,1904,1902,1903,1904,1905,1904,1905,2000,2001,1969,1937,1935,1936,1937,1935,1936,1937,
-1966,1967,1968,1999,1902,1903,1902,1903,1904,1905,1905,1934,1935,1936,1934,1935,1936,1937,1902,1903,1904,1905,2001,1969,1903,1904,1905,1967,1968,1969,
-1998,1934,2000,1999,1934,1935,1934,1935,1936,1937,1937,1966,1967,1968,1966,1967,1968,1969,1934,1935,1936,1937,2001,2001,1935,1936,1937,1999,2000,2001,
-1902,2001,1904,1905,1966,1967,1966,1967,1968,1969,1969,1998,1999,2000,1998,1999,2000,2001,1966,1967,1968,1969,1968,1969,1967,1968,1969,1967,1968,1969,
-1934,1903,1937,1902,1999,2000,1935,1902,1903,1926,2036,2036,2036,1875,1905,1966,1967,1968,1969,2001,1998,1999,2000,2001,1999,2000,2001,1999,2000,2001,
-1936,1967,1934,1969,1902,1967,2000,1934,1935,1958,1865,1711,1712,1907,1937,1998,1999,2000,2001,1966,1998,1999,2000,2001,1903,1904,1905,1935,1936,1937,
-1998,1999,1967,2001,1934,1935,1934,1966,1967,1990,1897,1898,1899,1939,1904,1905,1998,1999,2000,1998,1998,1999,2000,2001,1935,1936,1937,1967,1968,1969,
-1902,1903,1904,1937,1966,1967,1968,1998,1999,1990,1929,1930,1931,1939,1936,1902,1998,1902,1903,1904,1905,2000,2001,1969,1967,1968,1969,1999,2000,2001,
-1934,1935,1936,1969,1967,1905,1904,2001,1902,1903,1862,1672,1799,1967,1968,1934,1935,1934,1935,1936,1937,1968,1969,2001,1999,2000,2001,1967,1968,1969,
-1902,1905,1904,1936,1902,1903,1904,1905,1902,1903,1894,1672,1831,1999,2000,1966,1967,1902,1903,1904,1905,2000,2001,2001,1903,1904,1998,1999,2000,2001,
-1934,1935,1904,1936,1934,1935,1936,1998,1934,1935,1926,1672,1863,1935,1936,1902,1903,1934,1935,1936,1937,1936,1937,1934,1935,1936,1937,1903,1904,1905,
-1966,1967,1969,1935,1966,1967,1968,1969,1966,1967,1958,1672,1895,1967,1968,1934,1935,1966,1967,1968,1969,1968,1969,1966,1967,1968,1969,1935,1936,1937,
-1998,1999,2000,2001,1998,1999,2000,2001,1998,1999,1990,1672,1927,1999,2000,1966,1967,1998,1999,2000,2001,2000,2001,1998,1999,2000,2001,1967,1968,1969,
-2000,2000,1999,1967,1968,1937,1968,1937,2000,1968,2022,1672,1959,1969,1998,1998,1999,2000,2001,2001,1969,1968,1969,2001,1966,1935,1998,1999,2000,2001,
-1931,1931,1931,1801,1964,1963,1964,1929,1898,1964,1452,1962,1962,1932,1964,1865,1867,1833,1929,1929,1899,1867,1929,1836,1931,1932,1898,1836,1930,1804,
-1964,1803,1868,1802,1962,1867,1961,1964,1835,1802,1484,1866,1833,1803,1801,1932,1900,1961,1897,1900,1834,1897,1962,1897,1835,1836,1804,1868,1802,1932,
-1932,1802,1867,1931,1866,1836,1898,1836,1929,1897,1516,1836,1803,1929,1801,1962,1900,1833,1897,1932,1804,1866,1802,1898,1804,1868,1899,1801,1929,1900,
-1867,1900,1899,1930,1963,1835,1898,1835,1898,1932,1452,1804,1897,1835,1834,1962,1833,1868,1900,1930,1961,1898,1868,1833,1932,1897,1801,1899,1929,1899,
-1930,1931,1865,1962,1898,1929,1867,1804,1900,1931,1484,1801,1865,1898,1835,1835,1835,1834,1962,1930,1931,1900,1836,1836,1932,1930,1898,1836,1961,1900,
-1801,1932,1835,1833,1962,1900,1899,1803,1836,1865,1516,1964,1866,1834,1930,1834,1898,1929,1865,1865,1897,1868,1323,1964,1961,1835,1803,1897,1803,1835,
-1801,1833,1866,1899,1803,1932,1801,1803,1866,1452,1836,1932,1897,1897,1897,1866,1867,1868,1867,1866,1962,1804,1355,1804,1834,1964,1833,1867,1868,1962,
-1899,1836,1964,1834,1932,1803,1931,1804,1866,1484,1931,1836,1899,1802,1865,1898,1833,1868,1834,1899,1899,1897,1387,1897,1865,1804,1962,1803,1801,1899,
-1801,1801,1865,1929,1833,1961,1801,1962,1833,1516,1931,1961,1801,1961,1868,1963,1899,1964,1898,1289,1290,1962,1804,1803,1833,1833,1867,1929,1802,1930,
-1804,1868,1865,1835,1836,1899,1803,1898,1802,1804,1961,1900,1900,1900,1803,1866,1930,1866,1963,1321,1322,1963,1899,1931,1962,1964,1899,1899,1962,1836,
-1865,1866,1834,1868,1865,1930,1930,1867,1897,1803,1802,1962,1929,1898,1897,1900,1867,1866,1835,1932,1929,1964,1931,1836,1900,1865,1899,1898,1931,1930
-</data>
+ <layer name="top1" width="60" height="50">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
  </layer>
- <layer name="Kachelebene 3" width="30" height="35">
-  <data encoding="csv">
-108,109,110,111,112,45,46,47,48,76,77,78,79,80,12,13,14,15,16,12,13,14,107,108,109,110,107,108,109,110,
-140,141,142,143,144,77,78,79,80,108,109,110,111,112,44,45,46,47,48,44,45,46,139,140,141,142,139,140,141,142,
-172,173,174,175,176,109,110,111,112,140,141,142,143,144,76,77,78,79,80,76,77,78,171,172,173,174,171,172,173,174,
-204,205,206,207,208,141,142,143,144,172,173,174,175,176,108,109,110,111,112,108,109,110,203,204,205,206,203,204,205,206,
-236,237,238,239,240,173,174,175,176,204,205,206,207,208,140,141,142,143,144,140,141,142,235,236,237,238,235,236,237,238,
-0,0,0,203,204,205,206,207,208,236,237,238,239,240,172,173,174,175,176,172,173,174,175,176,130,131,132,133,134,135,
-0,0,0,235,236,237,238,239,240,0,0,0,0,203,204,205,206,207,208,204,205,206,207,208,162,163,164,165,166,167,
-0,0,0,0,0,0,0,0,0,0,0,0,0,235,236,237,238,239,240,236,237,238,239,240,194,195,196,197,198,199,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,225,226,227,228,229,230,231,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,257,258,259,260,261,262,263,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,385,386,387,388,389,390,391,
-0,0,0,0,0,0,0,0,0,0,0,0,0,1299,1300,1301,1302,1303,1304,0,0,0,0,417,418,419,420,421,422,423,
-0,0,0,0,0,0,0,0,0,0,0,0,0,1331,1332,1333,1334,1335,1336,1337,0,0,0,449,450,451,452,453,454,455,
-0,0,0,0,0,0,0,0,0,0,0,0,0,1363,1364,1365,1366,1367,1368,0,0,0,0,481,482,483,484,485,486,487,
-663,664,665,666,0,0,0,0,0,0,0,0,0,1395,1396,1397,1398,1399,1400,0,0,0,0,513,514,515,516,517,518,519,
-695,696,697,698,0,0,0,0,0,0,0,0,0,1427,1428,1429,1430,1431,1432,0,0,0,0,545,546,547,548,549,550,551,
-661,662,729,730,0,0,0,787,788,0,0,0,0,0,787,788,0,0,0,0,0,0,0,0,0,579,580,581,582,583,
-693,694,761,762,0,0,0,819,820,0,0,0,0,0,819,820,0,0,0,0,0,0,0,0,0,0,612,613,614,615,
-725,726,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,644,645,646,647,
-757,758,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,676,677,678,679,
-0,0,0,0,0,0,0,0,0,0,0,0,0,1217,1218,0,0,0,0,0,0,0,0,0,0,0,708,709,710,711,
-0,0,0,0,0,0,0,0,1253,1254,0,0,0,1249,1250,0,0,0,0,0,0,0,0,0,0,0,740,741,742,743,
-567,568,569,570,567,568,569,570,1285,1286,0,0,0,1281,1282,567,568,569,570,567,568,569,570,567,568,569,570,567,568,569,
-599,600,601,602,599,600,601,602,1317,1318,0,0,0,1313,1314,599,600,601,602,599,600,601,602,599,600,601,602,599,600,601,
-1098,1099,1100,1098,1098,1099,1100,1101,1102,1103,0,0,0,1098,1099,1100,1101,1102,1103,1098,1098,1098,1098,1098,1098,1099,1100,1101,1102,1103,
-1130,1131,1132,1130,1130,1131,1132,1133,1134,1135,0,0,0,1130,1131,1132,1133,1134,1135,1130,1130,1130,1130,1130,1130,1131,1132,1133,1134,1135,
-1098,1099,1100,1101,1102,1103,1100,1101,1102,1103,0,0,0,1130,1131,1132,1133,1134,1135,1098,1099,1100,1101,1102,1103,1099,1100,1101,1102,1103,
-1130,1131,1132,1133,1134,1135,1132,1133,1134,1135,0,0,0,1130,1131,1132,1133,1134,1135,1130,1131,1132,1133,1134,1135,1131,1132,1133,1134,1135,
-1098,1099,1100,1101,1102,1098,1099,1100,1101,1102,1103,0,0,1130,1131,1132,1133,1134,1135,1103,1103,1103,1103,1102,1098,1099,1100,1101,1102,1103,
-1130,1131,1132,1133,1134,1130,1131,1132,1133,1134,1291,1292,0,1193,1194,1132,1195,1196,1135,1227,1228,1229,1230,1134,1130,1131,1132,1133,1134,1135,
-1098,1099,1100,1101,1102,1103,1103,1101,1102,1452,1323,1324,0,1225,1226,0,1227,1228,1194,0,0,0,0,1130,1098,1099,1100,1101,1102,1103,
-1130,1131,1132,1133,1134,1135,1135,1133,1134,1484,1355,1356,0,0,0,0,1259,1260,1226,0,0,0,0,1098,1130,1131,1132,1133,1134,1135,
-1098,1099,1100,1101,1102,1098,1099,1100,1101,1032,1033,1034,1035,1036,1037,1038,1039,1040,0,0,0,0,1323,1130,1131,1098,1099,1100,1101,1102,
-1098,1099,1100,1101,1102,1130,1131,1132,1098,1452,1065,1066,1067,1068,1069,1070,1071,1072,1102,1103,0,0,1355,1098,1098,1099,1100,1101,1102,1103,
-1130,1131,1132,1133,1134,1130,1131,1132,1130,1131,1130,1131,1130,1130,1130,1131,1132,1133,1134,1135,0,0,1387,1130,1130,1131,1132,1133,1134,1135
-</data>
- </layer>
- <layer name="Kachelebene 4" width="30" height="35">
-  <data encoding="csv">
-0,0,0,0,0,11,12,13,14,15,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,43,44,45,46,47,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-391,392,393,394,395,396,397,77,78,79,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-423,424,425,426,427,428,429,109,110,111,112,0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7,8,9,
-455,456,457,458,459,460,461,141,142,143,144,0,0,0,0,0,0,0,0,0,0,33,34,35,36,37,38,39,40,41,
-487,488,489,490,491,492,493,173,174,175,176,0,0,0,0,0,0,0,0,0,0,65,66,67,68,69,70,71,72,73,
-519,520,521,522,523,524,204,205,206,207,208,0,0,0,0,0,0,0,0,0,0,97,98,99,100,101,102,103,104,105,
-551,552,553,554,555,556,236,237,238,239,240,0,0,0,0,0,0,0,0,0,0,129,130,131,132,133,134,135,136,137,
-583,584,585,586,587,588,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,163,164,165,166,167,168,169,
-615,616,617,618,619,620,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,193,194,195,196,197,198,199,200,201,
-647,648,649,650,651,652,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,225,226,227,228,229,230,231,232,233,
-679,680,681,682,683,684,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,257,258,259,260,261,262,263,264,265,
-711,712,713,714,715,716,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,289,290,291,292,293,294,295,296,297,
-743,744,745,746,747,748,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,321,322,323,324,325,0,0,0,0,
-775,776,777,778,779,780,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,353,354,355,356,357,0,0,0,0,
-807,808,809,810,811,812,0,0,0,0,0,0,0,0,0,0,275,276,0,0,0,0,0,0,0,0,331,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,307,308,0,0,0,0,0,0,0,0,363,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,669,670,0,0,0,0,0,0,
-660,661,662,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,701,702,0,0,0,0,0,0,
-692,693,694,145,146,147,148,0,0,0,0,0,0,0,0,145,146,147,148,0,0,0,733,734,0,0,0,0,0,0,
-724,725,726,177,178,179,180,0,0,0,0,0,0,0,0,177,178,179,180,0,0,0,765,766,0,0,0,0,0,0,
-756,757,758,209,210,211,212,0,0,0,0,0,0,0,0,209,210,211,212,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,241,242,243,244,0,0,0,0,0,0,0,0,241,242,243,244,0,0,0,0,0,0,0,363,364,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
+ <layer name="top2" width="60" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2mlsFGUcx/EH5B3s0t0ebwSZ1hZ4QekWBDkU0RfcbSktggr0RHzTg8uEQ9FXKtBj2y1nEBVQkHAERUkUhBe+0hYol5hAgZBwJBxyluOFX5JtWrYzs08713bDP/lkNrvTnf9vZ+aZZ3fanCjEIzzGEzyFkfJL/v3+JCF+STK2LbXK4z3zUYBCFKG4zXa8PI5FHOKRYLCHnZJ5T7Gd0xbkXcJ7LsUyLMcn+BTn6asJg3icisFIg89gD38aPD70ql7ivWvpP4A6rMFarENz8Dgex+PxmICJmGTBZx5JpXesR2OpHevRXGrH+ouyt1KTGT+RBl+y3N9cUYS4imu4rljXmxWVQcZMZGGqZN5ujL3d8RJ6qIzjLdejSKwSMpaiDOWSeV8mSx/0xSsRmkurKshYiSpUS+YdRsbheB0jdPI+ux5N5vUpyEBmBHw2u8i4G3uwVzJvR2ouGT/EPHwUAXnrydiAozhmct5IHNNukPEmbuG2yXn1xjSnypUihBu9EZNi7nt31TGtsyUzpplViR4hkjyty1eR7LF+u05UnkquIp4rjtK8mzVyRWveJo1cW6M0bz+v+vOXIyxvVjpzdmRjGnKQm/78OiMZ60ZhNN7AmxgjOf5FWt4qslXDjxrUIhCSN4dsuZiOdzEDMzXy5rOfC1CIIo197mQdJdsxHEcjTuBkSN4SspWiDOWYjwUGrm/+/sZ6NlK9hzDHgQdexGKTS4ivXa3rfEG2L/EVVmIVVlt0Pf+V+eWB4BxzH8uheA3DLPhe0VLnyHq+Td5vyfYdtmArtuF7ybxZzBenIhvTJOaOZ8j1TzBbI8sc5GK6hXlD9+9vZPsdB3EIf+CwZN4yMpZjPhZgMufKFGQgM739+g/J1RzMdoflQizCYo28oWNpsyLEIzzGE0Wux9D9a6SqyFgNP2qwioyrUYFKlbxty8v6teQMoE4jb+hY6kUs4hCPBIe/N/xFxr9RjwaVvPfJ+EDluNd6PnQsHYRUDEYafDblLaG3UpX+ejIe9oIL7iHtX49n7E5QGb+1nj+jcL7jLP7FOPKNxwRMxCSJvH3dfH90h19PryrIWmnyd1u1+k/hPMdd3EM++QpQiCIUS+SdTdY5bfIamV9ZXT3poxdccAd7WsZyeQf6C92/HZlf2V0p9NEfAzAQAdRhDdZq9Jjt49qIHOT62u/fzsyvdnEs77bheH6LPsbibbyT2Pq7+wVcxCWVPv1krEEtAr72+7cz86t6sjbYkPc9+ngfH2BWYut9YL3/ZzhOxkacwEmV/WtkfmV1LaSPRViMjyV78nAd9CIWcSrXRCPzK6urgj4qUYVqG3vqFyOEEmPf9lrqBzJuxw78aGPePLLmO5D3CBlXKEJ8hs8V++6bbibrNw7kfVbrFSE2YKOif9/UzM+iiawXHMhbyrj6kyLEz9iv6N83DXcPuSuW3n1Ts+4hOzVWdbRk7yGHK6fGKqfKybHKiXJqrHK6usp5bFa9OI+fr5bfDJ8q6q8/6GLXxHDncbjfDGNM+F/H/wGKlDOp
+  </data>
  </layer>
  <objectgroup name="barrieren">
-  <object id="19" x="208" y="368" width="272" height="96"/>
-  <object id="20" x="0" y="368" width="160" height="48"/>
-  <object id="22" x="208" y="320" width="32" height="32">
+  <object id="187" x="384" y="800">
+   <polyline points="0,0 -16,-16 -192,-16 -224,-32 -256,-16 -336,-16 -352,-96 -320,-144 -272,-144 -256,-112 -208,-112 -208,-144 -160,-144 -128,-96 -112,-128 -96,-128 -96,-80 -80,-64 -16,-64 0,-80 0,-176 -288,-176 -288,-464 -384,-464"/>
+  </object>
+  <object id="188" x="0" y="272">
+   <polyline points="0,0 96,0 96,-192 160,-192 160,-128 192,-128 192,-144 192,-176 224,-176 224,-128 320,-128 320,-192 368,-192 368,-272"/>
+  </object>
+  <object id="189" x="448" y="0">
+   <polyline points="0,0 0,80 32,80 32,192 80,192 80,144"/>
+  </object>
+  <object id="190" x="560" y="144">
+   <polyline points="0,0 0,48 48,48 48,80 80,80 96,64 96,48 128,48 144,64 160,48 208,48 224,64 240,48 240,32 240,-64 336,-64 336,96 400,96"/>
+  </object>
+  <object id="192" x="960" y="320">
+   <polyline points="0,0 -64,0 -64,304 -496,304 -496,400 -480,416 -320,416 -304,400 -304,336 -288,336 -288,400 -272,416 -128,416 -128,464 -144,464 -208,448 -256,464 -352,464 -416,448 -464,464 -480,480"/>
+  </object>
+  <object id="193" x="688" y="304">
+   <polyline points="0,0 32,-32 128,-32 160,0 160,144 112,144 112,96"/>
+  </object>
+  <object id="194" x="688" y="304">
+   <polyline points="0,0 0,144 80,144 80,96"/>
+  </object>
+  <object id="195" x="144" y="176" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="23" x="128" y="336" width="32" height="32">
+  <object id="196" x="144" y="208" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="24" x="128" y="352" width="32" height="16"/>
-  <object id="25" x="208" y="336" width="32" height="32"/>
-  <object id="35" x="48" y="320" width="64" height="64">
+  <object id="197" x="304" y="176" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="37" x="352" y="464" width="128" height="96"/>
-  <object id="40" x="0" y="416" width="176" height="144"/>
-  <object id="41" x="128" y="384" width="48" height="48">
+  <object id="198" x="304" y="208" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="42" x="176" y="528" width="144" height="32"/>
-  <object id="44" x="272" y="464" width="32" height="32">
+  <object id="200" x="144" y="336" width="48" height="48">
    <ellipse/>
   </object>
-  <object id="45" x="208" y="448" width="32" height="32">
+  <object id="201" x="288" y="416" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="46" x="224" y="464" width="64" height="16"/>
-  <object id="48" x="208" y="512" width="32" height="32">
+  <object id="202" x="320" y="416" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="49" x="256" y="512" width="32" height="32">
+  <object id="204" x="160" y="528" width="48" height="48">
    <ellipse/>
   </object>
-  <object id="51" x="160" y="480" width="32" height="32">
+  <object id="206" x="720" y="464" width="16" height="16">
    <ellipse/>
   </object>
-  <object id="52" x="224" y="256" width="32" height="32">
+  <object id="208" x="704" y="448" width="16" height="16">
    <ellipse/>
   </object>
-  <object id="53" x="112" y="256" width="32" height="32">
+  <object id="209" x="800" y="448" width="16" height="16">
    <ellipse/>
   </object>
-  <object id="54" x="208" y="192" width="48" height="48">
+  <object id="210" x="816" y="464" width="16" height="16">
    <ellipse/>
   </object>
-  <object id="55" x="256" y="176" width="48" height="48">
+  <object id="215" x="480" y="432">
+   <polyline points="0,0 16,16 96,16 128,32 160,16 160,-16 144,-32 112,-32 32,-32 16,-32 0,-16 0,0"/>
+  </object>
+  <object id="216" x="480" y="464" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="60" x="224" y="176" width="64" height="64">
+  <object id="217" x="480" y="528" width="32" height="32">
    <ellipse/>
   </object>
-  <object id="67" x="368" y="304" height="39.3333"/>
-  <object id="68" x="48" y="336">
-   <polyline points="0,0 -16,-16 -16,-48 16,-64 16,-128 0,-160 0,-192 48,-224 80,-208 112,-224 128,-240 192,-224 208,-208 336,-208 352,-176 320,-144 320,-112 336,-80 400,-80 416,-32 384,32"/>
+  <object id="218" x="304" y="352">
+   <polyline points="0,0 32,0 32,64 0,64 0,0"/>
+  </object>
+  <object id="221" x="800" y="112" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="224" x="304" y="512" width="32" height="64"/>
+  <object id="227" x="448" y="272" width="64" height="64">
+   <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="areaborder">
-  <object id="61" x="320" y="560" width="32">
+ <objectgroup name="schatztruhen" visible="0">
+  <object id="72" x="48" y="672" width="16" height="16">
    <properties>
-    <property name="ausgang" value="sued"/>
-    <property name="nextMap" value="3"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup name="startpunkt">
-  <object id="62" x="336" y="528" width="16" height="16">
-   <properties>
-    <property name="start" value="sued"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup name="enemy">
-  <object id="74" x="176" y="221" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-1"/>
-   </properties>
-  </object>
-  <object id="76" x="320" y="192" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-1"/>
-   </properties>
-  </object>
-  <object id="77" x="90" y="219" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-2"/>
-   </properties>
-  </object>
-  <object id="78" x="352" y="144" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-2"/>
-   </properties>
-  </object>
-  <object id="79" x="400" y="272" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-2"/>
-   </properties>
-  </object>
-  <object id="80" x="307" y="280" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-1"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup name="schatztruhen">
-  <object id="83" x="304" y="128" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="FoliantKraft"/>
+    <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="84" x="432" y="256" width="16" height="16">
+  <object id="73" x="48" y="688" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung2"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="74" x="48" y="704" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung3"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="75" x="96" y="656" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung4"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="76" x="96" y="672" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung5"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="77" x="96" y="688" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung6"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="81" x="288" y="432" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Schwert1"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="82" x="288" y="448" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Schwert2"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="83" x="288" y="464" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Schwert3"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="86" x="160" y="624" width="16" height="16">
    <properties>
     <property name="Inhalt" value="ruestung1"/>
     <property name="typ" value="1"/>
    </properties>
   </object>
-  <object id="86" x="176" y="96" width="16" height="16">
+  <object id="87" x="240" y="544" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="ruestung2"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="88" x="272" y="544" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="ruestung4"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="89" x="304" y="544" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="ruestung6"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="92" x="304" y="672" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Schwert4"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="94" x="304" y="704" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Schwert5"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="95" x="304" y="736" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Schwert6"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="97" x="160" y="480" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Bogen3"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="98" x="192" y="480" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Bogen4"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="99" x="224" y="480" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Bogen5"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="100" x="256" y="480" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Bogen6"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="101" x="128" y="480" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Bogen2"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="102" x="96" y="480" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Bogen1"/>
     <property name="typ" value="1"/>
    </properties>
   </object>
-  <object id="88" x="80" y="112" width="16" height="16">
+  <object id="105" x="240" y="608" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung2"/>
+    <property name="Inhalt" value="FoliantZauberW"/>
     <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="106" x="240" y="576" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="FoliantZauberK"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="109" x="112" y="624" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="FoliantGeschick"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="113" x="112" y="560" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="FoliantKraft"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="115" x="144" y="336" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="MaxHP"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="116" x="128" y="368" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="MaxMana"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="119" x="80" y="384" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="ManaPot1"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="120" x="112" y="384" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="ManaPot2"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="enemy" visible="0">
+  <object id="170" x="192" y="656" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="173" x="240" y="656" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-3"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="areaborder">
+  <object id="228" x="384" y="800">
+   <properties>
+    <property name="ausgang" value="sued"/>
+    <property name="nextMap" value="3"/>
+   </properties>
+   <polyline points="0,0 96,0"/>
+  </object>
+  <object id="230" x="0" y="272">
+   <properties>
+    <property name="ausgang" value="west"/>
+    <property name="nextMap" value="5"/>
+   </properties>
+   <polyline points="0,0 0,64"/>
+  </object>
+  <object id="231" x="768" y="432">
+   <properties>
+    <property name="ausgang" value="haus2"/>
+    <property name="nextMap" value="9002"/>
+   </properties>
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="232" x="528" y="176">
+   <properties>
+    <property name="ausgang" value="haus4"/>
+    <property name="nextMap" value="9004"/>
+   </properties>
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="233" x="192" y="128">
+   <properties>
+    <property name="ausgang" value="haus3"/>
+    <property name="nextMap" value="9003"/>
+   </properties>
+   <polyline points="0,0 32,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="startpunkt">
+  <object id="131" x="432" y="768" width="16" height="16">
+   <properties>
+    <property name="start" value="sued"/>
+   </properties>
+  </object>
+  <object id="136" x="400" y="32" width="16" height="16">
+   <properties>
+    <property name="start" value="nord"/>
+   </properties>
+  </object>
+  <object id="143" x="16" y="304" width="16" height="16">
+   <properties>
+    <property name="start" value="west"/>
+   </properties>
+  </object>
+  <object id="234" x="208" y="144" width="16" height="16">
+   <properties>
+    <property name="start" value="haus3"/>
+   </properties>
+  </object>
+  <object id="235" x="768" y="448" width="16" height="16">
+   <properties>
+    <property name="start" value="haus2"/>
+   </properties>
+  </object>
+  <object id="236" x="544" y="192" width="16" height="16">
+   <properties>
+    <property name="start" value="haus4"/>
    </properties>
   </object>
  </objectgroup>

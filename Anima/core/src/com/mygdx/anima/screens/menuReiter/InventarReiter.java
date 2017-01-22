@@ -298,6 +298,7 @@ public class InventarReiter extends Group {
             inventarRechts.add(beispiel4).size(width / 10f, width / 10f);
             }
         }
+        inventarRechts.row();
         if(getHeld().getHeldenInventar().getSchuheList().size()>0) {
             inventarRechts.add(new Label("Schuhe", menu.getSkin())).colspan(3);
             inventarRechts.row();

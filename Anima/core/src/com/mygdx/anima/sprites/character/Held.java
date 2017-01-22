@@ -53,10 +53,9 @@ public class Held extends HumanoideSprites{
     {
         super(screen,einseins,true);
         this.screen=screen;
-        heldPosition=spielerPosition;
-
+        //heldPosition=spielerPosition;
         if(!heldErstellt){
-        createHeroBody(new Vector2(150f/AnimaRPG.PPM,50f/AnimaRPG.PPM));
+        createHeroBody(new Vector2(150f/AnimaRPG.PPM,150f/AnimaRPG.PPM));
         heldErstellt=true;}
         objectInReichweite=false;
 
@@ -85,8 +84,8 @@ public class Held extends HumanoideSprites{
         setCurrentLevel(1);
         setCurrentErfahrung(0);
         setNextLevelUp(1);
-        basicAngrGeschw=40;// 10 ist guter Startwert
-        setBasicLaufgeschw(10);
+        basicAngrGeschw=40;
+        setBasicLaufgeschw(20); // 10 ist guter Startwert
         setStaerke(10);
         setGeschick(12);
         setZauberkraft(8);
@@ -110,7 +109,7 @@ public class Held extends HumanoideSprites{
         createSensor();
         FixtureDef fdef=new FixtureDef();
         CircleShape shape=new CircleShape();
-        shape.setRadius(7.5f/AnimaRPG.PPM);
+        shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
         fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK

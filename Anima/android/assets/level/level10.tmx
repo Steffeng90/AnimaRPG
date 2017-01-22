@@ -1,180 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="61">
- <tileset firstgid="1" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="60" tilewidth="16" tileheight="16" nextobjectid="196">
+ <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="4097" name="base_out_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/base_out_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="8193" name="plant repack" tilewidth="16" tileheight="16" tilecount="676" columns="26">
+  <image source="tilesets/plant repack.png" width="416" height="416"/>
+ </tileset>
+ <tileset firstgid="8869" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/town.png" width="512" height="512"/>
  </tileset>
- <layer name="Kachelebene 1" width="30" height="25">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,219,220,221,222,223,220,221,222,220,221,222,223,220,221,222,220,221,222,223,224,0,0,0,0,
-0,0,0,0,0,0,251,252,253,254,255,252,253,254,252,253,254,255,252,253,254,252,253,254,255,256,0,0,0,0,
-0,0,0,0,0,0,283,284,285,286,287,284,285,286,284,285,286,287,284,285,286,284,285,286,287,288,0,0,0,0,
-0,0,0,0,0,0,315,316,317,318,319,316,317,318,316,317,318,319,316,317,318,316,317,318,319,320,0,0,0,0,
-0,0,0,0,0,0,251,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,256,0,0,0,0,
-0,0,0,0,0,0,283,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,288,0,0,0,0,
-0,0,0,0,0,0,315,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,320,0,0,0,0,
-0,0,0,0,0,0,251,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,256,0,0,0,0,
-0,0,0,0,0,0,283,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,288,0,0,0,0,
-0,0,0,0,0,0,315,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,320,0,0,0,0,
-0,0,0,0,0,0,251,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,256,0,0,0,0,
-0,0,0,0,0,0,283,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,288,0,0,0,0,
-0,0,0,0,0,0,315,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,320,0,0,0,0,
-0,0,0,0,0,0,251,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,256,0,0,0,0,
-0,0,0,0,0,0,283,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,288,0,0,0,0,
-0,0,0,0,0,0,315,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,320,0,0,0,0,
-0,0,0,0,0,0,251,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,256,0,0,0,0,
-0,0,0,0,0,0,283,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,288,0,0,0,0,
-0,0,0,0,0,0,315,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,583,320,0,0,0,0,
-0,0,0,0,0,0,347,348,349,348,349,350,351,349,350,351,348,349,350,351,109,109,350,351,351,352,0,0,0,0
-</data>
+ <tileset firstgid="9893" name="build_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/build_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="13989" name="obj_misk_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/obj_misk_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <layer name="ground" width="40" height="60">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
  </layer>
- <layer name="barriere1" width="30" height="25">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,441,442,443,444,0,0,0,0,0,0,0,0,0,441,442,443,444,0,0,0,0,0,0,
-0,0,0,0,0,0,0,473,474,475,476,0,0,0,0,0,0,0,0,0,473,474,475,476,0,0,0,0,0,0,
-0,0,0,0,0,0,0,505,506,507,508,0,0,0,0,0,0,0,0,0,505,506,507,508,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,543,544,0,0,0,0,0,0,0,0,543,544,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,575,576,0,0,0,0,0,0,0,0,575,576,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,607,608,0,0,0,0,0,0,0,0,607,608,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,639,640,0,0,0,0,0,0,0,0,639,640,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
+ <layer name="top1" width="40" height="60">
+  <data encoding="base64" compression="zlib">
+   eJy9mklwG0UUhntk3wgkdgIXEhi5ygZsK5EOWarAFPt2gQROLJWNC3gJB+CSwIXlCAkEOLFzIfLGiTVscViLxQ4HlgPcWGQnJiwFOEnxdzSv5unpdY9GHvmv+mqkUUvz+7X09zLuzBuzEqwCZ4NzQBoFaJ8DbaA9r5/bDn4OjfkF/Ap+C/2f2YH2nZGvflAAa8E6UEzp71y0Xw3WgPPy+rndef3vcKmP+boGXAuuA9eDG1L6W4/2G8BGsCmvn3sqr/8dLl3NfG2L6r8D7AR3Jrw332dMF3gV7Q6ItoUc+iFXPV+OXhvHcSKv/x2kzUVjtoCbwS1gK/NlZeu/p0Ff28EOcAjtp8AI/Aznao/2/OHo8z7B8VPwGficXaPSbcxsd/U9++DpCfAk2F+M21hf+6P6Pw2eUTz+2GvMT72xrxfBS+zokr3uLlZTC2kEnNFjzLKe6vNpeJoBR8A3kT/yRfWfBK8p/s6Hh5D52VnAd6Dgr7X0SbWlx1IdJfxewUqwCvTnYl+u+pO2wtM25utl8EoKf82oHMS+kkT1WwpfpAr8zQbJ7ez3hOq3lKoIb/+ExvwL/gMLYXx+sj2un9QYfnvj3fExS02wx3wskWOc9eeq3xfw9GV3fMxK5fba53wskWPcuOdzvoKnr8E0mMnAXwF9ujao1o73Jx9LtDHuHsf39Bg8zYPfwfFF+rOehnGdkaC+P/lYoo1xkw5/y5GtK0AH6Oxp3ltZfL7sT5JrjJtv4He+GE2I57I/rXxjnKt+WUjWzkr2p5VvjGulP5lzXNSf3yaMca32p2Uv78/j4A/wJ/gL/A1yaNcWtW3l98+Vvbw/l3UZcyY4CywHK8BqeFsT+Wtl/VzZy/uzB34uABeCi0Av2ABvG8Gm0J/Ri1VS9lpdBj+XgyvAleAqcBN8bQZbwmqbSTHmZKWk7LW6FX5uA7eDO8Bd8HQ3GARDkb9W1LAviPPFt764F57uA/d3VZ8/BE8Pg0fAo2HcLusaDsLbUJC8vngMvh4HeyN/z8LTc+B58ALzl3UNbe1Gg/rslXnzHc59D36IvL+Oc2+AN8FbYf18MCvZ2tk5ssxemTcy+2wmzcDTkbB+TyKrGg45MkvLG5l9ts0svMyF+p7EYmvo8mal5Y3MPt5G7klMtKf31x/Ec0+fNystb3j20bhGbbQ9ibT+kjxp4nnDs4+Pa1omjaS/1Om1Ntd7+Pz3Q3d7mTeUfevDeFxzZVKzYzHtdTQimTeUfTeG8bimzQebqZ1UIx5dcz0+rsk2Sd7SrOWSasnrZEV57RrXGqlbM2s56ZH2C3mdrCivtXGt0T5tdi1HHvl+Ia+TFeW1HNey+L6l8UjidbJyzQ9bNedL8sjrZOWaH84voT++zpwO4/GfJLNY61v5G81638r1m9ay2OawvL78jWa9b+XyqGWxXVPK62e13+KTtp+g5XUr15QfFI35EBwCU8Xa17T1Oj0/AMpgFIyFrfMXlDBPAm2gvVT7mrZep+dT8HQYfAQ+bqG/8gBqAMbA+EB83u5jafNn194p9fEC+uAEOAlOFesul1oVeJoFc+DoQOzNSps/u/KZ1hoXow8uAQPg0lL2fvn+nzZ/9q3frcfd8LQHPAAeLNX7bVZ23i/3Jkkyj33r97fh4R1wELxbqvfbrOy8f1jJCZnHSev3BXg4AU6CU6V6v83IVTfKEp7Hvr1Tbe9Q+k0rLYOteLZQHtu9QNd82nffZlfgvu/AZW/r9ItztKd7MET9w3i95LsPo2kvXtvnad/IGDMIhsQ5V/18e4FaP9I9eq39mKnd66D1Nx3XKR6olq49cddeoKsfac6tZc8cOBp5pHs/XNT/ZTweFbV01Y8ksySp3xv53wQrOXbb/q/gOCva+e4paFni6/ek7OGSY7etLfU334NxZcvp9yhZ4tsDTvrfBJ/oO3BMPPbJdx9G68ek/01YCv0PULFPow==
+  </data>
  </layer>
- <layer name="barriere2" width="30" height="25">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,341,342,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,373,374,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,279,280,839,840,839,840,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,311,312,871,872,871,872,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,543,544,0,0,0,0,0,0,0,0,543,544,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,575,576,0,0,0,0,0,0,0,0,575,576,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,607,608,0,0,0,0,0,0,0,0,607,608,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,639,640,0,0,0,0,0,0,0,0,639,640,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,343,344,0,0,0,0,0,0,0,0,343,344,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,375,376,0,0,683,684,685,686,0,0,375,376,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,715,716,717,718,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,747,748,749,750,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
+ <layer name="top2" width="40" height="60">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
  </layer>
  <objectgroup name="barrieren">
-  <object id="18" x="96" y="80" width="320" height="64"/>
-  <object id="19" x="96" y="144" width="16" height="256"/>
-  <object id="20" x="112" y="384" width="208" height="16"/>
-  <object id="21" x="400" y="144" width="16" height="256"/>
-  <object id="22" x="352" y="384" width="48" height="16"/>
-  <object id="28" x="176" y="288" width="0.666667" height="0.666667">
-   <ellipse/>
+  <object id="187" x="352" y="957.333">
+   <polyline points="0,0 0,-93.3333 -32,-157.333 -96,-157.333 -112,-205.333 -160,-205.333 -176,-221.333 -240,-221.333 -240,-253.333 -224,-269.333 -224,-301.333 -256,-333.333 -256,-349.333 -224,-365.333 -208,-365.333 -192,-381.333 -160,-397.333 -144,-429.333 -144,-493.333 -96,-557.333 -96,-605.333 -160,-653.333 -224,-605.333 -224,-685.333 -224,-733.333 -208,-733.333 -192,-749.333 -192,-813.333 -192,-797.333 -112,-861.333 -64,-861.333 -64,-797.333"/>
   </object>
-  <object id="30" x="160" y="272" width="32" height="32">
-   <ellipse/>
+  <object id="189" x="288" y="160">
+   <polyline points="0,0 -64,16 -64,64 -48,80 0,80 16,112 32,112 48,80 80,80 96,112 112,112 128,96 128,-48 304,-48 304,0 224,32 224,144 208,176 224,208 192,256 176,224 112,256 112,272 144,304 160,352 160,368 192,400 128,480 144,560 176,592 176,608 208,656 192,720 208,800"/>
   </object>
-  <object id="32" x="320" y="272" width="32" height="32">
-   <ellipse/>
+  <object id="190" x="160" y="672">
+   <polyline points="0,0 0,-32 80,-32 96,-16 80,0 48,16 16,16 0,0"/>
   </object>
-  <object id="36" x="272" y="128" width="32" height="32">
-   <ellipse/>
+  <object id="191" x="272" y="560">
+   <polyline points="0,0 16,-16 48,-16 64,0 64,16 48,32 16,32 0,16 0,0"/>
   </object>
-  <object id="37" x="304" y="128" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="38" x="336" y="128" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="41" x="160" y="176" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="42" x="160" y="240" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="43" x="320" y="176" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="44" x="320" y="240" width="32" height="32">
-   <ellipse/>
-  </object>
-  <object id="45" x="160" y="192" width="32" height="64"/>
-  <object id="46" x="320" y="192" width="32" height="64"/>
-  <object id="47" x="226.75" y="297" width="61.25" height="39"/>
  </objectgroup>
- <objectgroup name="enemy">
-  <properties>
-   <property name="typ" value="raider-1"/>
-  </properties>
-  <object id="54" x="128" y="320" width="16" height="16">
+ <objectgroup name="schatztruhen" visible="0">
+  <object id="115" x="144" y="336" width="16" height="16">
    <properties>
-    <property name="typ" value="raider-1"/>
+    <property name="Inhalt" value="MaxHP"/>
+    <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="56" x="208" y="208" width="16" height="16">
+ </objectgroup>
+ <objectgroup name="enemy" visible="0"/>
+ <objectgroup name="areaborder">
+  <object id="193" x="328.5" y="254.5">
    <properties>
-    <property name="typ" value="raider-2"/>
+    <property name="ausgang" value="haus6"/>
+    <property name="nextMap" value="9"/>
    </properties>
+   <polyline points="0,0 48,0"/>
   </object>
-  <object id="57" x="288" y="240" width="16" height="16">
+  <object id="195" x="352" y="960">
    <properties>
-    <property name="typ" value="raider-1"/>
+    <property name="ausgang" value="ost"/>
+    <property name="nextMap" value="9"/>
    </properties>
-  </object>
-  <object id="58" x="368" y="192" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-1"/>
-   </properties>
+   <polyline points="0,0 144,0"/>
   </object>
  </objectgroup>
  <objectgroup name="startpunkt">
-  <object id="7" x="320" y="368" width="16" height="16">
+  <object id="136" x="352" y="272" width="16" height="16">
    <properties>
-    <property name="start" value="haus1"/>
+    <property name="start" value="haus6"/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup name="areaborder">
-  <object id="8" x="320" y="400" width="32">
+  <object id="192" x="416" y="928" width="16" height="16">
    <properties>
-    <property name="ausgang" value="haus1"/>
-    <property name="nextMap" value="2"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup name="schatztruhen">
-  <object id="51" x="224" y="144" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung1"/>
-    <property name="typ" value="1"/>
+    <property name="start" value="ost"/>
    </properties>
   </object>
  </objectgroup>

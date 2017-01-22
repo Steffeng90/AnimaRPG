@@ -118,13 +118,38 @@ public class B2WorldCreator {
             }
             // Erzeugen von Ein und Ausgängen
             allAusgang = new Array<Gebietswechsel>();
-            for (MapObject object : map.getLayers().get("areaborder").getObjects().getByType(RectangleMapObject.class)) {
+        /*for (MapObject object : map.getLayers().get("areaborder").getObjects().getByType(RectangleMapObject.class)) {
                 int nextMap = Integer.valueOf(object.getProperties().get("nextMap").toString());
                 int richtungInt = getAreaInt(object.getProperties().get("ausgang").toString());
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 allAusgang.add(new Gebietswechsel(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM, nextMap, richtungInt, rect));
                 // Gdx.app.log("Wechsel erzeugt"," ");
+            }*/
+        for (MapObject object : map.getLayers().get("areaborder").getObjects().getByType(PolylineMapObject.class)) {
+            float[] vertices = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
+
+            Vector2[] worldVertices = new Vector2[vertices.length / 2];
+            body = world.createBody(bdef);
+            for (int i = 0; i < vertices.length / 2; ++i) {
+                worldVertices[i] = new Vector2();
+                worldVertices[i].x = vertices[i * 2] / AnimaRPG.PPM;
+                worldVertices[i].y = vertices[i * 2 + 1] / AnimaRPG.PPM;
             }
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((((PolylineMapObject) object).getPolyline().getOriginX()) / AnimaRPG.PPM, (((PolylineMapObject) object).getPolyline().getOriginX()) / AnimaRPG.PPM);
+            body = world.createBody(bdef);
+            ChainShape chain = new ChainShape();
+            chain.createChain(worldVertices);
+
+            /*fdef.shape = chain;
+            fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
+            body.createFixture(fdef);*/
+            int nextMap = Integer.valueOf(object.getProperties().get("nextMap").toString());
+            int richtungInt = getAreaInt(object.getProperties().get("ausgang").toString());
+            // Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            allAusgang.add(new Gebietswechsel(screen,worldVertices, nextMap, richtungInt));
+
+        }
             // Erzeugen von Gegner
             allEnemy = new Array<Enemy>();
             if (map.getLayers().get("enemy") != null) {
@@ -169,11 +194,22 @@ public class B2WorldCreator {
         this.allAusgang = allAusgang;
     }
     public int getAreaInt(String richtung){
+        // Wenn hier Häuser hinzugefügt werden, dann muss auch getAusgangsrichtung in Gebietswechsel angepasst werden
         if (richtung.equals("sued")) {return 1;
         } else if (richtung.equals("west")) {return 2;
         } else if (richtung.equals("nord")) {return 3;
         } else if (richtung.equals("ost")) {return 4;
-        } else if (richtung.equals("haus1")) {return 10;
+        } else if (richtung.equals("haus1")) {return 9001;
+        } else if (richtung.equals("haus2")) {return 9002;
+        } else if (richtung.equals("haus3")) {return 9003;
+        } else if (richtung.equals("haus4")) {return 9004;
+        } else if (richtung.equals("haus5")) {return 9005;
+        } else if (richtung.equals("haus6")) {return 9006;
+        } else if (richtung.equals("haus7")) {return 9007;
+        } else if (richtung.equals("haus8")) {return 9008;
+        } else if (richtung.equals("haus9")) {return 9009;
+        } else if (richtung.equals("haus10")) {return 9010;
+
         } else{ return 2;}
     }
 }

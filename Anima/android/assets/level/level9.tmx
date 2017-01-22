@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="16" tilewidth="16" tileheight="16" nextobjectid="194">
+ <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="4097" name="base_out_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/base_out_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="8193" name="plant repack" tilewidth="16" tileheight="16" tilecount="676" columns="26">
+  <image source="tilesets/plant repack.png" width="416" height="416"/>
+ </tileset>
+ <tileset firstgid="8869" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="tilesets/town.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="9893" name="build_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/build_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="13989" name="obj_misk_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/obj_misk_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <layer name="ground" width="60" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxdl02O6kgQhG0LpNeSr9ISZ+wGNr2ZW8yTwDZX4HfTG24xI4FNHeE5XF90emZhAa6qrMzIyMjk/lYU17ooTuOTlkXRV0XxHJ/X+P17XHtUef2vX+NaMb4ff7fjc1jmd+2iKHb6PT7bOn9qj872Zban/c0i25KNhvVumc9rPRV5z1Dm+2Vbz2p838rOuNaUeX1T598f3Heps019/6yz7/sq75/OjN/PdX5k80GMsjMs8jn50BHDhAP+3N9yfLIvf2VD/rz4Pe0v8j3vRY5He2919kW4Cr+BddlSTPLRuKUq32nsZEv46swaf+TndNcMyx1+Tz4t8pkVOdIj37sq/JAdnU3g/mBN/iom7dH5v8fvv8vAVPcIT/kvXIS9cVMOBq9V5JgYtKb9wkk5Eh/kz9ev7MMW/I919uuTOFpy1mJv8o/7dE8itgEOfJBz5VO2hL34pffK8xq72nNYhk9TLONd/4zPv2X2S+9PM3+UO3NCn1Mc+CYchLP8kE89+RrgZEeu5Ys+n9SS9uu79snfPXxxHfbUQEOc8tOfikOfw8yHJ3hf4Lhrt+NTts0HrQnftoo6FKYPMP7JTxFYJzigswNx6r6dOUjOzKMX71VrZ/LRzbgy2WfPmlz1PrvM6zqr9wN1uoWnulv3reCb9qcqantnzMoc/x67CQ5bl67cK1vO2QFd0/NCqxIYT5zBd/MyVZH/K9iLNz2aKAzPaJRieJCzNTlOaEhHzZzgss5viPeJLkkLevTjvYjath965zOnOurW/p/g3aTJZfDPNS4snpzRuuuoocb0W/aNjex1y8C8R/eu+GAfExozaXSZ95uHCSxk9x1O38BpD19Ud/pcg4s1Ttjq+3sRvUh25W9DTpWrgdj2YCwb2vusQg+n3jbTYeGk2H7qccYp2dR9a3ySH+t6pkno/JW42iq0r0Uv3GPFyzP137FvP9OOPXxrqK87vbqltlw7G/rLDf12P2y5Sxhs6+gLifOyeyEO791VUaMv+p2wcB88O1clvaSKvLXUQQN/ZVvnPuuoZ+F/g58PYt2SW62f6BlTTtz3sbfhXA83OvToyt3u8Tf42lahLbc6eph754qabuh9bRk9dVhE7z3CA53VGfm7I4dfzEAJXe3B5ghv3NPMjcR93/Qv83n/v9o519HbumXg7XfuSfe36DHWpbYKPHr6gu6ZzwxtFVi7VpL1dBl8NH92aKNj2ZBb5/GJzS22Prhzg7YmfFRef3SYXDRotTX9Sl0lcNnPaqvFF8fkPG5nfHhVMTe8qOeWecTzq2y3aN80K9JHe97p3BMeuHd7hrKuW4/cu93z9HRV9JkDc/WG3tyhW6c6sHdf9z7F97QmUdOHKvBeMZ961vR8soard7D2fOfZ+aOO3pGw9f0WNXRBU6zp1poeffmijs23Yx0aNumv64c5PbGnBYuePmWtacr4P5GK6P/tIuZMz6n3t+CJudmX/9V8+XrArt9d0YS+Ct/9H2ONVlzoj+5/1pv7LFbPXUcw6qqY9bbYGfDlHe6uZrOa50nFaE18cl7vPO8Zz3Ud/DPXrnXE6bl2YF72fwZrVcM853pJ9C3/D2vR70nrq5g3zvUM38XMHnVywDfXvO36/6JnqBt17D5ovbd+WG89h17q8NWz64uYjLFzdyB/tzp66QZ+9vDjSI36ziufJzRJOfgDylrS3w==
+  </data>
+ </layer>
+ <layer name="top1" width="60" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzN1kdMVEEYwPERjMZCtZw0vrfWXRA8qRcL1R7LRam7iy2g0SgdrLFclCoerOBJKeLB7k0perHECmiinhRiB7sH/8a85OnObMvG+CW/5O3sN/Pm+3bz5gkhxGJNiCVYimXIHiBEDv4OK2M2ybg5xlqEGIfxmICJmAQrbBbX/BRdiFSkIR0ZKEcFKlGl/84bxNzBGIKhCEEowhAuWdddZFNjDtZhPeqpqUFSl9GHGK5jFWvN4N4zMQuzEYd4JCBRsq9c6slDPgpQiFOoRwMadf/66C52UeNu7MFedFNTj6Reow8buN6oWGs5916BFKQiDenIQKZkX2WS3/MaWtCKNt2/PrqLY9R4HLWog3UgPRvommf0oZnrM4q1NnHvzchFHvJRgEIUSfZ1UvJ7Numueb720V1cpMZLuIwryKbWHEm9Rh/CyAlHBCK1P3P2ce/9KEM5KlCJKlRL9nVV8nu2S+r1tY+qCGK/wbiLe7ivqXONPljJsSEK0W7yAxm+9lEVozQhRuMVXuONps6N47t4JCARSUh2k/8/xlRNiGmYrnnOTSMnHRnIhB0OL+apQuNZoMPi4YwLZJjPXU+RT04BClGEYpR4MU8Wdmp0wImsf1iv+dz1FBXkVKIK1TiAGi/myaKWGutwAgt4Pi3EIkT5+Kz1NcznrqeoJ6cBjWjCaTQr5n1m/Au+4hu+44cp9yl1PsNzrKbONViLJFO9D/j8EI/QgU504TGeSJ7h3oT53PUULeS0og3tuI4binkR7CcSwzAcIzDStMcxPOc16NjO+A7shJ16HXDiLZ/f4T0+oBd9+IhPftZrPncDGVHsJxqTEYNYTDHt0U6dDjhxiPHDOIKjKKHWUktg35mNUJ274X70r4M1OtGFJOYnYw7mYh7mK9Y8y/g5nMcF1FDLQUtg35mNUJ27NsXeXpD3Et3o0VzHe9EHO/MdcCILK7FKseZNxm/hNu6YcgL5zuwpEhV768d4EILRX3cdD0Eoin/9L1GKLdiKbT7+ZwL5zmzETzie5ws=
+  </data>
+ </layer>
+ <layer name="top2" width="60" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzN1mdPFEEYwPEBE4nCHR1r4uzpFUSK9a0tdkC/AUU5/ArWL2F9pzHRb6RUBVGKr5ReRf+b7OWGzc7ubHZRnuQXjp3dmXsmzzx7QvhHGhnN2LIlxApWsYZ1bFj6ua6khLiKa7iOG7iZCvgCMUQ1a9Sg1mCtPuQN5qlDPRp85uxirBs96MVd3NumfI9AOp+bWOMEmg3Weo8PmjF1nha0os1nzgeMPcQjPMYTPI2Q72dq6QvGMI6vmHDqqwvdzn1qXQXFJKY0Y2Hr8xljz/ECL/EKryPka3qe1LoKEwkpRFJ6z7Pd9ekVuvP0hrG3yn1qXYWJrBQiJ73niaM+w4buPI0xNq7cp9ZVlIi7Pu3wO5PuMD1P33j+OyZ93h3/K8K840zP02+e38SfHZhvmHec6Xnax7X9OPAPz5pfvNstRDt734FOy/wdZ3qeTnLtFE7vkHwnyDdPnv24b8X/G+wWz7ejw5lnQAoxiCEMYwSjMtoaYSJVVuwnU5jGjBXfO66P5/Pod+aZlULMYR4LWMSSjLaGV+h6b2+Z0k/4TiUoDTiTH7n3EwYwiCEMYwSj1taerO6hHeX8rUACSVRimXxXsIo1rGPDZw8KNeIXut6r9pODOITDAWfyJ8/9wizmMI8FLGLJcvVkZQ/tSHMtgyxyaEQ1alCLOtSjwdXPp8lvBj9ksUYK4VUjut6r9pMzOItzATW8h/G9KEcFEkiiElUp/R7acZ48LuAiLuEymuw+iWa0oBVtrnxL+L8Uu6xijRTCrpEq1/2630NqP+nEbdwJyPco48eQRgZZ5NCI4z57+BeJ2d4w
+  </data>
+ </layer>
+ <objectgroup name="barrieren">
+  <object id="188" x="112" y="0">
+   <polyline points="0,0 0,80 -32,80 -80,112 -64,176 -48,176 0,224 32,208 64,224 80,240 128,224 208,224 240,192 288,160 336,208 368,192 368,144 400,112 416,128 432,144 464,144 496,112 544,112 560,176 608,176 640,208 720,208 752,224 800,192 816,112 832,96 832,64 800,32 800,0"/>
+  </object>
+  <object id="189" x="176" y="0">
+   <polyline points="0,0 0,96 28.5,140 32,160 48,176 64,160 64,144 96,112 144,80 160,48 176,48 208,64 224,48 256,32 288,48 320,48 352,16 384,64 400,48 400,16 448,32 464,16 496,16 528,64 560,80 592,112 624,144 672,112 656,48 624,32 624,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="schatztruhen" visible="0"/>
+ <objectgroup name="enemy" visible="0"/>
+ <objectgroup name="areaborder">
+  <object id="191" x="112" y="0">
+   <properties>
+    <property name="ausgang" value="west"/>
+    <property name="nextMap" value="10"/>
+   </properties>
+   <polyline points="0,0 64,0"/>
+  </object>
+  <object id="193" x="800" y="0">
+   <properties>
+    <property name="ausgang" value="nord"/>
+    <property name="nextMap" value="8"/>
+   </properties>
+   <polyline points="0,0 112,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="startpunkt">
+  <object id="136" x="144" y="16" width="16" height="16">
+   <properties>
+    <property name="start" value="west"/>
+   </properties>
+  </object>
+  <object id="190" x="864" y="16" width="16" height="16">
+   <properties>
+    <property name="start" value="nord"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

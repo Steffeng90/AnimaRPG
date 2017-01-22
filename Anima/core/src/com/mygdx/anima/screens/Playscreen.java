@@ -81,7 +81,8 @@ public class Playscreen implements Screen{
         gameViewPort = new FitViewport(AnimaRPG.W_WIDTH / AnimaRPG.PPM, AnimaRPG.W_Height / AnimaRPG.PPM, gamecam);
 
         kartenManager =new KartenManager();
-        renderer = kartenManager.karteErstellen(1,gameViewPort);
+        // Erste Karte erstellen:
+        renderer = kartenManager.karteErstellen(4,gameViewPort);
 
         gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
         setCurrentGameState(GameState.RUN);
@@ -142,48 +143,6 @@ public class Playscreen implements Screen{
         ItemGenerator.generateItem(this,0,0,"kopf3");
         ItemGenerator.generateItem(this,0,0,"kopf4");
         ItemGenerator.generateItem(this,0,0,"kopf5");
-        //Testitems erzeugen:
-/*
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi1","armor",new Vector2(5,13),15,20));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi2","armor",new Vector2(6,13),15,16));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi3","armor",new Vector2(7,13),1125,13));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi4","armor",new Vector2(1,13),125,123));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi5","armor",new Vector2(2,13),135,23));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi6","armor",new Vector2(3,13),5,46));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi7","armor",new Vector2(4,13),1,75));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi8","armor",new Vector2(5,13),13,213));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi9","armor",new Vector2(6,13),14,21));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi10","armor",new Vector2(7,13),29,222));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi11","armor",new Vector2(8,13),15,512));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi12","armor",new Vector2(9,13),15,13));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi3","armor",new Vector2(5,13),15,123));
-        getSpieler().getHeldenInventar().add(new Brust("Ruessi14","armor",new Vector2(5,13),15,132));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test1", "nahkampf", new Vector2(0,5),15,2));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),12,5));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),32,5));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test5", "nahkampf", new Vector2(4,5),23,182));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test6", "nahkampf", new Vector2(5,5),56,18546));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),123,14568));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),54,1458));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test5", "nahkampf", new Vector2(4,5),11231,158));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test6", "nahkampf", new Vector2(5,5),1,178));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test1", "nahkampf", new Vector2(0,5),64,178));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test2", "nahkampf", new Vector2(1,5),75,188));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test3", "nahkampf", new Vector2(2,5),44,1118));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test4", "nahkampf", new Vector2(3,5),876,118));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test5", "nahkampf", new Vector2(4,5),1567,128));
-        getSpieler().getHeldenInventar().add(new WaffeNah("Test6", "nahkampf", new Vector2(5,5),1546,32));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(5,11),112, 345));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,11),142, 78));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(7,11),312, 86));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(8,11),1512, 2456));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(9,11),242, 12));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(4,11),1, 2224));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(5,11),2, 4));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(6,11),8, 2));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(7,11),5, 6));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(8,11),151, 23));
-        getSpieler().getHeldenInventar().add(new WaffeFern("Bogen1", "fernkampf", new Vector2(9,11),534, 52));*/
     }
     @Override
     public void show() {
@@ -209,7 +168,6 @@ public class Playscreen implements Screen{
             renderer=kartenManager.karteErstellen(mapID,gameViewPort);
             creator=new B2WorldCreator(this);
 
-            Gdx.app.log("KArte erstellt","");
         }
         switch (getCurrentGameState()) {
             case RUN:
@@ -283,16 +241,18 @@ public class Playscreen implements Screen{
                     controller.draw();
                     if(itemWindow!=null){itemWindow.draw();
                         getCurrentItemsprite().update(delta);
+                        itemWindow.update(delta);
+
                         if (itemWindow.isGeklickt()) {
                             setCurrentItemsprite(null);
                             Gdx.input.setInputProcessor(controller.getStage());
                             itemWindow.dispose();
                             itemWindow=null;
-
                             setCurrentGameState(GameState.RUN);
                         }}
                     if(levelUpWindow!=null){
                         levelUpWindow.draw();
+                        levelUpWindow.update(delta);
                         if (levelUpWindow.isGeklickt()) {
                             levelUpWindow.dispose();
                             levelUpWindow=null;
@@ -317,10 +277,8 @@ public class Playscreen implements Screen{
     public void handleInput(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
             spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
-
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
             spieler.useObject();spieler.b2body.setLinearVelocity(0, 0);
-
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()) {
             spieler.bowAttack();spieler.b2body.setLinearVelocity(0, 0);
         } else if (controller.isCast1Pressed()) {
@@ -383,7 +341,7 @@ public class Playscreen implements Screen{
                     truhe.update(dt);
                 }
                 if (getCurrentItemsprite() != null) {
-                    itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite().name);
+                    itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite());
                 }
                 for (Arrow arrow : Arrow.getAllArrows()) {
                     if (!arrow.destroyed) {

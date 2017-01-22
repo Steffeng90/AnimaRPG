@@ -36,7 +36,7 @@ public class LevelUpInfo implements Disposable {
     private boolean geklickt;
     private Skin skin;
     //Scene2D widgets
-    private float infoWidth,infoHeight;
+    private float infoWidth,infoHeight, windowTimer;
 
     public LevelUpInfo(Playscreen screen, SpriteBatch sb,int level, int stark,int gesch,int zaub,int hp,int mana){
         AnimaRPG.assetManager.get("audio/sounds/levelUp.wav", Sound.class).play();
@@ -83,16 +83,19 @@ public class LevelUpInfo implements Disposable {
         table.add(l3a).expandY();table.add(l3b).expandY();table.add(l3c).expandY();table.add(l3d).expandY();
         dialog.add(table);
         table.left();
-
-        stage.addActor(dialog);
+        dialog.show(stage);
+//        stage.addActor(dialog);
         stage.addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                geklickt=true;}
+                //geklickt=true;
+                }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("Klicker erkannt","");
-                geklickt=true;
+                if(windowTimer>2){
+                    Gdx.app.log("Klicker erkannt","");
+                    geklickt=true;
+                }
                 return true;}
         });
     }
@@ -104,7 +107,9 @@ public class LevelUpInfo implements Disposable {
     {   stage.clear();
         stage.dispose();
     }
-
+    public void update(float dt){
+        windowTimer+=dt;
+    }
     public void resize(int width,int height){
         viewport.update(width,height);
     }
