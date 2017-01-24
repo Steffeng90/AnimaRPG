@@ -1,5 +1,6 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
@@ -19,7 +21,7 @@ import com.mygdx.anima.sprites.character.items.ItemSprite;
  * Created by Steffen on 13.11.2016.
  */
 
-public class Schatztruhe extends InteraktivesObjekt {
+public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
 
     Texture spriteQuelle;
     Body body;
@@ -32,8 +34,11 @@ public class Schatztruhe extends InteraktivesObjekt {
     public String inhalt;
 
 
-    public Schatztruhe(Playscreen screen, float x, float y,int truhenTyp,String inhalt){
-        super(screen,x,y);
+    public Schatztruhe(){
+       super();
+    }
+    public void init(Playscreen screen, float x, float y,int truhenTyp,String inhalt){
+        super.init(screen,x,y);
         this.inhalt=inhalt;
         defineItem();
         int xAuswahlBereich;
@@ -42,7 +47,7 @@ public class Schatztruhe extends InteraktivesObjekt {
 
         spriteQuelle=new Texture("objekte/schatztruhe.png");
         spriteOpen=new TextureRegion(spriteQuelle,xAuswahlBereich,224, 32,32);
-                spriteClose=new TextureRegion(spriteQuelle,xAuswahlBereich,128, 32,32);
+        spriteClose=new TextureRegion(spriteQuelle,xAuswahlBereich,128, 32,32);
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 1; i < 4; i++) {
@@ -51,7 +56,6 @@ public class Schatztruhe extends InteraktivesObjekt {
         openTruhe = new Animation(0.1f, frames);
         frames.clear();
     }
-
     @Override
     public void defineItem() {
         BodyDef bdef= new BodyDef();
@@ -70,6 +74,19 @@ public class Schatztruhe extends InteraktivesObjekt {
 
         body.createFixture(fdef).setUserData(this);
         }
+    public void reset(){
+        spriteQuelle=null;
+        body=null;
+        openTruhe=null;
+        currentState=null;
+        previousState=null;
+        runOpenAnimation=false;
+        closed=false;
+        spriteClose=null;
+        spriteOpen=null;
+        stateTimer=0;
+        inhalt="";
+    }
     public void update(float dt){
         setRegion(getFrame(dt));
     }
@@ -102,7 +119,9 @@ public class Schatztruhe extends InteraktivesObjekt {
                 region = openTruhe.getKeyFrame(stateTimer, false);
                 if(openTruhe.isAnimationFinished(stateTimer)){
                     runOpenAnimation=false;closed=false;
-                    screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));}
+                    screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));
+                    Gdx.app.log("Truhe geöffnet","");
+                }
                 break;
             case OPEN:
             default:

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
@@ -26,6 +27,10 @@ import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.NPCPool;
+import com.mygdx.anima.sprites.character.enemies.raider.Raider;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
@@ -38,6 +43,8 @@ import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.KartenManager;
 import com.mygdx.anima.tools.listener.WorldContactListener;
+
+import static com.badlogic.gdx.Input.Keys.R;
 
 /**
  * Created by Steffen on 06.11.2016.
@@ -73,13 +80,37 @@ public class Playscreen implements Screen{
     private ItemSprite currentItemsprite;
     private static KartenManager kartenManager;
 
-    //Camera-Variablen
+    //Poolable - Arrays
+    public static Array<Arrow> activeArrows = new Array<Arrow>();
+    public static Pool<Arrow> arrowPool= new Pool<Arrow>() {
+        @Override
+        protected Arrow newObject() {
+            return new Arrow();
+        }
+    };
+    public static Array<Schatztruhe> activeTruhen = new Array<Schatztruhe>();
+    public static Pool<Schatztruhe> truhenPool= new Pool<Schatztruhe>() {
+        @Override
+        protected Schatztruhe newObject() {
+            return new Schatztruhe();
+        }
+    };
+    public static Array<SchadenLabel> activeSchadenlabel = new Array<SchadenLabel>();
+    public static Pool<SchadenLabel> schadenlabelPool= new Pool<SchadenLabel>() {
+        @Override
+        protected SchadenLabel newObject() {
+            return new SchadenLabel();
+        }
+    };
+    public static Array<Raider> activeRaider= new Array<Raider>();
+    public static Array<RaiderArcher> activeRaiderArcher= new Array<RaiderArcher>();
+    public static Array<RaiderHealer> activeRaiderHealer= new Array<RaiderHealer>();
 
     public Playscreen(AnimaRPG game) {
         this.game = game;
         gamecam = new OrthographicCamera();
         gameViewPort = new FitViewport(AnimaRPG.W_WIDTH / AnimaRPG.PPM, AnimaRPG.W_Height / AnimaRPG.PPM, gamecam);
-
+        Gdx.app.log("Pool ist instantiiert",""+arrowPool.toString());
         kartenManager =new KartenManager();
         // Erste Karte erstellen:
         renderer = kartenManager.karteErstellen(4,gameViewPort);
@@ -113,7 +144,7 @@ public class Playscreen implements Screen{
         ItemGenerator.generateItem(this,0,0,"Schwert1");
         ItemGenerator.generateItem(this,0,0,"Schwert3");
         ItemGenerator.generateItem(this,0,0,"Schwert6");
-
+        spieler.getHeldenInventar().setAngelegtWaffeNah(spieler.getHeldenInventar().getWaffenNahList().get(2));
         ItemGenerator.generateItem(this,0,0,"Bogen1");
         ItemGenerator.generateItem(this,0,0,"Bogen3");
         ItemGenerator.generateItem(this,0,0,"Bogen5");
@@ -153,18 +184,11 @@ public class Playscreen implements Screen{
         if(isMapWechsel()){
             // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
             setMapWechsel(false);
-
+            aktiveNPCsEntfernen();
             renderer.dispose();
             //TODO destroy alle bodies in WOrld (google)
-            Array<Body> bodyArray=new Array<Body>();
-            world.getBodies(bodyArray);
-            world.clearForces();
-            for(Body b:bodyArray){
-                for(Fixture fix:b.getFixtureList()){
-                    b.destroyFixture(fix);
-                }
-                // world.destroyBody(b);
-            }
+
+
             renderer=kartenManager.karteErstellen(mapID,gameViewPort);
             creator=new B2WorldCreator(this);
 
@@ -191,16 +215,31 @@ public class Playscreen implements Screen{
         game.batch.begin();
 
         //Enemies malen
-       for (Enemy enemy : creator.getAllEnemies()) {
+       /*for (Enemy enemy : creator.getAllEnemies()) {
             enemy.draw(game.batch);
-        }
-        for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
+        }*/
+        /*for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
             schatztruhe.draw(game.batch);
-        }
-        if (Arrow.getAllArrows().size > 0) {
+        }*/
+        /*if (Arrow.getAllArrows().size > 0) {
             for (Arrow arrow : Arrow.getAllArrows()) {
                 arrow.draw(game.batch);
             }
+        }*/
+        for(Arrow arrow :activeArrows){
+            arrow.draw(game.batch);
+        }
+        for(Schatztruhe truhe:activeTruhen){
+            truhe.draw(game.batch);
+        }
+        for (Raider raider:activeRaider){
+            raider.draw(game.batch);
+        }
+        for(RaiderHealer raiderHealer:activeRaiderHealer){
+            raiderHealer.draw(game.batch);
+        }
+        for(RaiderArcher raiderArcher:activeRaiderArcher){
+            raiderArcher.draw(game.batch);
         }
         if (ZauberFixture.getAllZauber().size > 0) {
 
@@ -214,13 +253,16 @@ public class Playscreen implements Screen{
             gebietswechsel.draw(game.batch);
         }*/
         spieler.draw(game.batch);
-        if (SchadenLabel.getSchadensLabelArray().size > 0) {
-            for (int i = 0; i < SchadenLabel.getSchadensLabelArray().size; i++) {
-                    SchadenLabel sl = SchadenLabel.getSchadenLabel(i);
+        if (activeSchadenlabel.size > 0) {
+            for (int i = activeSchadenlabel.size; --i >= 0;) {
+                    SchadenLabel sl = activeSchadenlabel.get(i);
                     if (sl.getTimer() < 0.5) {
                         sl.draw(game.batch);
                         sl.addTime(delta);
-                    } else {sl.removeSchadenLabel(i);}
+                    } else {
+                        activeSchadenlabel.removeIndex(i);
+                        schadenlabelPool.free(sl);
+                    }
             }}
             if (getCurrentItemsprite() != null || getLevelUpWindow()!=null) {
                 setCurrentGameState(GameState.PAUSE);
@@ -234,12 +276,15 @@ public class Playscreen implements Screen{
                     break;
                 case PAUSE:
                     game.batch.begin();
+                    Gdx.app.log("Pause","");
                     if(getCurrentItemsprite()!=null)
                         getCurrentItemsprite().draw(game.batch);
+
                     game.batch.end();
 
                     controller.draw();
                     if(itemWindow!=null){itemWindow.draw();
+                        Gdx.app.log("LALALAL","dasd");
                         getCurrentItemsprite().update(delta);
                         itemWindow.update(delta);
 
@@ -251,6 +296,7 @@ public class Playscreen implements Screen{
                             setCurrentGameState(GameState.RUN);
                         }}
                     if(levelUpWindow!=null){
+
                         levelUpWindow.draw();
                         levelUpWindow.update(delta);
                         if (levelUpWindow.isGeklickt()) {
@@ -271,9 +317,6 @@ public class Playscreen implements Screen{
                 dispose();
             }
         }
-
-
-
     public void handleInput(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
             spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
@@ -329,28 +372,89 @@ public class Playscreen implements Screen{
                     gamecam.position.set(spieler.b2body.getPosition(), 0);
                     kartenManager.justiereCam(gamecam);
                 }
-                for (Enemy enemy : creator.getAllEnemies()) {
-                    if (!enemy.destroyed) {
-                        kartenManager.isEnemyinRange(enemy);
-                        enemy.update(spieler, dt);
-                    } else {
-                        creator.removeEnemy(enemy);
-                    }
-                }
-                for (Schatztruhe truhe : creator.getAllSchatztruhen()) {
-                    truhe.update(dt);
-                }
-                if (getCurrentItemsprite() != null) {
-                    itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite());
-                }
-                for (Arrow arrow : Arrow.getAllArrows()) {
-                    if (!arrow.destroyed) {
-                        arrow.update(dt);
-                    } else {
-                        arrow.remove();
-                    }
-                }
+        Schatztruhe truhe;
+        int len = activeTruhen.size;
+        for (int i = len; --i >= 0;) {
+            truhe= activeTruhen.get(i);
+            truhe.update(dt);
+        }
+                Gdx.app.log("ItemSprite ",""+getCurrentItemsprite());
+        if (getCurrentItemsprite() != null) {
+            itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite());
+            Gdx.app.log("Neues Itemwindow draw","");
+        }
+        // ArrowPool durchlaufen
+        Arrow arrow;
+        len = activeArrows.size;
+        for (int i = len; --i >= 0;) {
+            arrow = activeArrows.get(i);
+            if (arrow.destroyed == true) {
+                activeArrows.removeIndex(i);
+                arrowPool.free(arrow);
+            }
+            else{
+                arrow.update(dt);
+            }
+        }
+        //Raider-pool
+        Raider raider;
+        len = activeRaider.size;
+        Gdx.app.log("Raiderlaenge:"+len,"");
+        for (int i = 0; i <len;i++) {
+            try {
+                raider = activeRaider.get(i);
 
+                Gdx.app.log("Forschleife Raider:", "");
+
+                if (raider.destroyed == true) {
+                    Gdx.app.log("Der KILL Raider:", "");
+
+                    activeRaider.removeIndex(i);
+                    NPCPool.getRaiderPool().free(raider);
+                }
+                else{
+                    kartenManager.isEnemyinRange(raider);
+                    raider.update(spieler,dt);
+                    Gdx.app.log("NICHTKILL Raider:","");
+
+                }
+            }catch(IndexOutOfBoundsException e){
+                Gdx.app.log(e.getMessage(),"");
+            }
+
+        }
+        // RaiderArcher
+        RaiderArcher raiderArcher;
+        len = activeRaiderArcher.size;
+        Gdx.app.log("Archerlange:"+len,"");
+
+        for (int i = len; --i >= 0;) {
+            raiderArcher = activeRaiderArcher.get(i);
+            if (raiderArcher.destroyed == true) {
+                activeRaiderArcher.removeIndex(i);
+                NPCPool.getRaiderArcherPool().free(raiderArcher);
+            }
+            else{
+                kartenManager.isEnemyinRange(raiderArcher);
+                raiderArcher.update(spieler,dt);
+            }
+        }
+        // RaiderHealer
+        RaiderHealer raiderHealer;
+        len = activeRaiderHealer.size;
+        Gdx.app.log("Healerrlaenge:"+len,"");
+
+        for (int i = len; --i >= 0;) {
+            raiderHealer = activeRaiderHealer.get(i);
+            if (raiderHealer.destroyed == true) {
+                activeRaiderHealer.removeIndex(i);
+                NPCPool.getRaiderHealerPool().free(raiderHealer);
+            }
+            else{
+                kartenManager.isEnemyinRange(raiderHealer);
+                raiderHealer.update(spieler,dt);
+            }
+        }
                 for (ZauberFixture zauberFixture : Nova.getAllZauber()) {
                     if (!zauberFixture.destroyed) {
                         zauberFixture.update(dt);
@@ -474,4 +578,67 @@ public class Playscreen implements Screen{
     public void setLevelUpWindow(LevelUpInfo levelUpWindow) {
         this.levelUpWindow = levelUpWindow;
     }
+
+    public void aktiveNPCsEntfernen(){
+        int size= activeArrows.size;
+        Arrow arrow;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            arrow = activeArrows.get(i);
+            activeArrows.removeIndex(i);
+            arrowPool.free(arrow);
+        }
+        }
+        size= activeSchadenlabel.size;
+        SchadenLabel schadenLabel;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            schadenLabel= activeSchadenlabel.get(i);
+            activeSchadenlabel.removeIndex(i);
+            schadenlabelPool.free(schadenLabel);
+        }
+        }
+        size= activeTruhen.size;
+        Schatztruhe truhe;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            truhe= activeTruhen.get(i);
+            activeTruhen.removeIndex(i);
+            truhenPool.free(truhe);
+        }
+        }
+        size= activeRaider.size;
+        Raider raider;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            raider = activeRaider.get(i);
+            activeRaider.removeIndex(i);
+            NPCPool.getRaiderPool().free(raider);
+            }
+        }
+        size= activeRaiderArcher.size;
+        RaiderArcher raiderArcher;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            raiderArcher = activeRaiderArcher.get(i);
+            activeRaiderArcher.removeIndex(i);
+            NPCPool.getRaiderArcherPool().free(raiderArcher);
+        }
+        }
+        size= activeRaiderHealer.size;
+        RaiderHealer raiderHealer;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            raiderHealer = activeRaiderHealer.get(i);
+            activeRaiderHealer.removeIndex(i);
+            NPCPool.getRaiderHealerPool().free(raiderHealer);
+        }
+        }
+
+
+        Array<Body> bodyArray=new Array<Body>();
+        world.getBodies(bodyArray);
+        //world.clearForces();
+        for(Body b:bodyArray){
+            if(b.getFixtureList()!=null){for(Fixture fix:b.getFixtureList()){
+                b.destroyFixture(fix);
+                Gdx.app.log("","Koerper zerstoert");
+            }}
+            world.destroyBody(b);
+        }
+}
 }
