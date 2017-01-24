@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
@@ -22,13 +23,12 @@ import com.mygdx.anima.tools.SchadenBerechner;
 
 import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
-import static jdk.nashorn.internal.objects.NativeString.substring;
 
 /**
  * Created by Steffen on 13.11.2016.
  */
 
-public abstract class Enemy extends HumanoideSprites{
+public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
 
     public boolean
             // enemyInReichweite, wird true, wenn Held den ENEMY_ATTACK_SENSOR betritt
@@ -37,15 +37,18 @@ public abstract class Enemy extends HumanoideSprites{
             enemyNear;
     public int erfahrung;
     public String quelle;
-    public Enemy(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,int boundsX,int boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed)
+    public Enemy()
     {
-        super(screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+    super();
+    }
+    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
+        super.init(screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
         setPosition(x,y);
         setErfahrung(ep);
         quelle=id;
         create();
         velocity=new Vector2(0.2f,0.2f);
-        b2body.setActive(false);
+        //b2body.setActive(false);
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
         Gdx.app.log("","Text: "+id.substring(0,id.length()-2));
@@ -53,7 +56,9 @@ public abstract class Enemy extends HumanoideSprites{
         animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false);
         setRegion(standingDownSprite);
     }
-
+    public void reset(){
+        super.reset();
+    }
     public void create(){
         BodyDef bdef=new BodyDef();
         bdef.position.set(getX(),getY());

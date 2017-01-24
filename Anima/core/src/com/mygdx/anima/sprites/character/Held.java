@@ -55,7 +55,7 @@ public class Held extends HumanoideSprites{
         this.screen=screen;
         //heldPosition=spielerPosition;
         if(!heldErstellt){
-        createHeroBody(new Vector2(150f/AnimaRPG.PPM,150f/AnimaRPG.PPM));
+        createHeroBody(new Vector2(150f/AnimaRPG.PPM,100f/AnimaRPG.PPM));
         heldErstellt=true;}
         objectInReichweite=false;
 

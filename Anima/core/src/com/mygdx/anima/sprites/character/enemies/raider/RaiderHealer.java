@@ -21,13 +21,16 @@ public class RaiderHealer extends Enemy {
     Playscreen screen;
     Boolean zaubereHeilung;
 
-    public RaiderHealer(Playscreen screen, float x, float y, String id, int maxhp, int maxmana, int regMana, int ep, int speed, int schadenNah, int schadenfern, int schadenzauber, int ruestung, int boundsX, int boundsY, float castSpeed, float bowSpeed, float meleeSpeed, float thrustSpeed) {
-        super(screen, x, y, id, maxhp, maxmana, regMana, ep, speed, schadenNah, schadenfern, schadenzauber, ruestung, boundsX, boundsY, castSpeed, bowSpeed, meleeSpeed, thrustSpeed);
+    public RaiderHealer() {
+        super();
         enemiesInRange = new ArrayList<Enemy>();
         this.screen = screen;
         zaubereHeilung=false;
     }
+    public void init(Playscreen screen, float x, float y, String id, int maxhp, int maxmana, int regMana, int ep, int speed, int schadenNah, int schadenfern, int schadenzauber, int ruestung, int boundsX, int boundsY, float castSpeed, float bowSpeed, float meleeSpeed, float thrustSpeed){
+        super.init(screen, x, y, id, maxhp, maxmana, regMana, ep, speed, schadenNah, schadenfern, schadenzauber, ruestung, boundsX, boundsY, castSpeed, bowSpeed, meleeSpeed, thrustSpeed);
 
+    }
     @Override
     public void update(Held hero, float dt) {
         stateTimer += dt;

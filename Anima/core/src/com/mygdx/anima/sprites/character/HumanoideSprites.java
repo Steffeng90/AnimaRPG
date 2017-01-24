@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
@@ -23,7 +24,7 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
  * Created by Steffen on 13.11.2016.
  */
 
-public class HumanoideSprites extends Sprite {
+public class HumanoideSprites extends Sprite{
     public Playscreen screen;
     public World world;
     public Body b2body;
@@ -65,7 +66,7 @@ public class HumanoideSprites extends Sprite {
 
     public boolean meleeExists, castExists;
     public boolean runMeleeAnimation,istHeld,runArchery,runCasting,hitByFeedback;
-    public boolean runDying,dead,destroyed;
+    public boolean runDying,dead,destroyed,resetAktiv;
     public float hitdauer,wertHeld=0.07f;
 
     //Einstellungen
@@ -79,7 +80,9 @@ public class HumanoideSprites extends Sprite {
     public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
     float regenerationTimer;
     //Konstruktor für Enemies
-    public HumanoideSprites(Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,int boundsX,int boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
+    public HumanoideSprites(){
+    }
+    public void init(Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
         this.world = screen.getWorld();
         this.screen=screen;
         setMaxHitpoints(maxhp);
@@ -103,13 +106,12 @@ public class HumanoideSprites extends Sprite {
         runMeleeAnimation=false;
         runDying=false;
         meleeExists=false;
+        destroyed=false;
         breite=64;
         hoehe=64;
         triggerFixture=true;
         setBounds(0, 0, boundsX / AnimaRPG.PPM, boundsY/ AnimaRPG.PPM);
-        //setRegion(standingDownSprite);
     }
-
     //Konstruktor für Held
     public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
         this.world = screen.getWorld();
@@ -883,7 +885,7 @@ public class HumanoideSprites extends Sprite {
     public void destroyBody(){
         world.destroyBody(b2body);
         b2body.setUserData(null);
-        b2body=null;
+        //b2body=null;
         runDying=false;
         destroyed=true;
     }
@@ -894,9 +896,13 @@ public class HumanoideSprites extends Sprite {
             fix.setFilterData(filter);}
         runDying=true;
     }
-
+    // Diese Methode zerstört die B2bodys und alle Fixtures, ohne EP zu geben.
+    // Grund dafür ist der Kartenwechsel
+    public void bodyZerstoeren() {
+    }
 
     public void update(float dt){
+
         if(b2body!=null){
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);}
         if(getCurrentRichtung()!=getPreviousRichtung() && !destroyed) {
@@ -904,8 +910,13 @@ public class HumanoideSprites extends Sprite {
         }
         if(meleeFixtureErzeugen){meleeFixtureErzeugen=false;meleeFixtureErzeugen();}
         else if(bowFixtureErzeugen){bowFixtureErzeugen=false;
-            new Arrow(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);}
-        if(!runMeleeAnimation && meleeExists){
+
+            //new Arrow(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
+           Arrow arrow=Playscreen.arrowPool.obtain();
+            arrow.init(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
+            Playscreen.activeArrows.add(arrow);
+        }
+        if(!runMeleeAnimation && meleeExists && b2body!=null){
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;triggerFixture=true;}
        //s else(bowFixtureErzeugen){
@@ -1030,7 +1041,7 @@ public class HumanoideSprites extends Sprite {
     }
     public float getCurrentHitpointsPercent(){ return ((float)currentHitpoints/(float)maxHitpoints);}
     public void setCurrentHitpoints(int currentHitpoints) {
-        if(currentHitpoints<=0){
+        if(currentHitpoints<=0 && !dead ){
             readyToDie();
             this.currentHitpoints=0;
         }else if(currentHitpoints>maxHitpoints){
@@ -1047,6 +1058,7 @@ public class HumanoideSprites extends Sprite {
     public void setMaxHitpoints(int maxHitpoints) {
         int temp=this.maxHitpoints;
         this.maxHitpoints = maxHitpoints;
+        Gdx.app.log("","der wert der Hitpoints:"+maxHitpoints);
         setCurrentHitpoints(getCurrentHitpoints()+(maxHitpoints-temp));
     }
 
@@ -1166,5 +1178,40 @@ public class HumanoideSprites extends Sprite {
 
     public void setFeedbackDauer(float feedbackDauer) {
         this.feedbackDauer = feedbackDauer;
+    }
+    public void reset(){
+        resetAktiv=true;
+        if(b2body!=null){for(Fixture fix:b2body.getFixtureList()){
+            Filter filter=fix.getFilterData();
+            filter.categoryBits=AnimaRPG.NOTHING_BIT;
+            fix.setFilterData(filter);}}
+        //world.destroyBody(b2body);
+        //b2body.setUserData(null);
+        b2body=null;
+        runDying=false;
+        destroyed=false;
+
+        currentHitpoints=0;
+        maxHitpoints=0;
+        currentMana=0;
+        maxMana=0;
+        regMana=0;
+        regHitpoints=0;
+        schadenNah=0;
+        schadenFern=0;
+        schadenZauber=0;
+        ruestung=0;
+        zauberwiderstand=0;
+        geschwindigkeitLaufen=0;
+        angriffgeschwindigkeit=0;
+        meleeExists=false; castExists=false;
+        runMeleeAnimation=false;
+        istHeld=false;
+        runArchery=false;
+        runCasting=false;
+        hitByFeedback=false;
+        runDying=false;
+        dead=false;
+        destroyed=false;
     }
 }

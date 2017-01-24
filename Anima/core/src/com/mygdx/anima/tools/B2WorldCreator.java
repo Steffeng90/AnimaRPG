@@ -29,7 +29,9 @@ import static com.mygdx.anima.AnimaRPG.BARRIERE_BIT;
 import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
 import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
+import static com.mygdx.anima.screens.Playscreen.activeTruhen;
 import static com.mygdx.anima.screens.Playscreen.getMapEinstieg;
+import static com.mygdx.anima.screens.Playscreen.truhenPool;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -151,22 +153,23 @@ public class B2WorldCreator {
 
         }
             // Erzeugen von Gegner
-            allEnemy = new Array<Enemy>();
             if (map.getLayers().get("enemy") != null) {
                 for (MapObject object : map.getLayers().get("enemy").getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    allEnemy.add(EnemyGenerator.generateEnemy(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,object.getProperties().get("typ").toString()));
+                    EnemyGenerator.generateEnemy(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,object.getProperties().get("typ").toString());
                     Gdx.app.log("Raider erzeugt", "");
                 }
             }
             // Erzeugen von Schatztruhen
-            allSchatztruhen = new Array<Schatztruhe>();
+            //allSchatztruhen = new Array<Schatztruhe>();
             if (map.getLayers().get("schatztruhen") != null) {
                 for (MapObject object : map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
                     String inhalt = (String) object.getProperties().get("Inhalt");
                     int typ=Integer.valueOf((String) object.getProperties().get("typ"));
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    allSchatztruhen.add(new Schatztruhe(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ, inhalt));
+                    Schatztruhe truhe=truhenPool.obtain();
+                    truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ, inhalt);
+                    activeTruhen.add(truhe);
                 }
             }
             if (screen.getSpieler() != null) {
@@ -183,7 +186,7 @@ public class B2WorldCreator {
 
 
     public Array<Enemy> getAllEnemies(){ return allEnemy;}
-    public Array<Schatztruhe> getAllSchatztruhen(){ return allSchatztruhen;}
+    // public Array<Schatztruhe> getAllSchatztruhen(){ return allSchatztruhen;}
     public void removeEnemy(Enemy enemy){
         allEnemy.removeValue(enemy,true);
     }

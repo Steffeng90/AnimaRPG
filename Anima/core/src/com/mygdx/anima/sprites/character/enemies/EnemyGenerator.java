@@ -7,6 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.enemies.raider.Raider;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,11 +24,11 @@ public class EnemyGenerator {
     private static Vector2 vector;
     //Kategorie 1: Nahkampf, 2: Fernkampf 3: Brust, 4: Benutzbar
     //Benutzbarkateogie 1: Lebenspunkte
-    private static int kategorie,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY;
-    private static float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
+    private static int kategorie,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung;
+    private static float castSpeed,bowSpeed,meleeSpeed,thrustSpeed,boundsX,boundsY;
     //  private static kategorie itemKategorie=waffe;
     private static JsonArray itemArray;
-    public static Enemy generateEnemy(Playscreen screen, float x, float y, String typ) {
+    public static void generateEnemy(Playscreen screen, float x, float y, String typ) {
         Gson gson = new Gson();
         try {
             FileHandle file =Gdx.files.internal("enemydb.json");
@@ -50,24 +53,29 @@ public class EnemyGenerator {
                     schadenfern=item.get("schadenfern").getAsInt();
                     schadenzauber=item.get("schadenzauber").getAsInt();
                     ruestung=item.get("ruestung").getAsInt();
-                    boundsX=item.get("boundsX").getAsInt();
-                    boundsY=item.get("boundsY").getAsInt();
+                    boundsX=item.get("boundsX").getAsFloat();
+                    boundsY=item.get("boundsY").getAsFloat();
                     castSpeed=item.get("castSpeed").getAsFloat();
                     bowSpeed=item.get("bowSpeed").getAsFloat();
                     meleeSpeed=item.get("meleeSpeed").getAsFloat();
                     thrustSpeed=item.get("thrustSpeed").getAsFloat();
                 break;}
             }
+        //Enemy enemy=Playscreen.enemyPool.obtain();
         switch (kategorie){
-            case 1:
-                return new com.mygdx.anima.sprites.character.enemies.raider.Raider(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
-            case 2:
-                return new com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
-            case 3:
-                return new com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
             default:
-                return new com.mygdx.anima.sprites.character.enemies.raider.Raider(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
-
+            case 1:
+                Raider raider=NPCPool.getRaiderPool().obtain();
+                raider.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeRaider.add(raider);break;
+            case 2:
+                RaiderArcher raiderArcher=NPCPool.getRaiderArcherPool().obtain();
+                raiderArcher.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeRaiderArcher.add(raiderArcher);break;
+            case 3:
+                RaiderHealer raiderHealer=NPCPool.getRaiderHealerPool().obtain();
+                raiderHealer.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeRaiderHealer.add(raiderHealer);break;
         }
         }
 
