@@ -49,7 +49,7 @@ public class CharakterReiter extends Group {
         Label nameLabel= new Label("Name:", menu.getSkin());
         Label nameString= new Label("Alana", menu.getSkin());
         Label spielzeitLabel= new Label("Spielzeit:", menu.getSkin());
-        Label spielzeitString= new Label(held.getSpielzeit(), menu.getSkin());
+        Label spielzeitString= new Label(held.getSpielzeitString(), menu.getSkin());
         Image charBild=new Image (getHeld().getProfilbild());
         charLinks.add(charBild).size(linksWidth,zeilenHeight*8).colspan(2);
         charLinks.row();

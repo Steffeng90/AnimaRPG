@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
@@ -17,10 +18,10 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 
 public class HeilzauberAOE extends com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture {
 
-public HeilzauberAOE(Enemy enemy,Playscreen screen) {
+public HeilzauberAOE(Enemy enemy,Playscreen screen, World world) {
     super(0.8f);
     this.zaubernder=enemy;
-    this.world=screen.getWorld();
+    this.world=world;
     this.screen=screen;
     bdef=new BodyDef();
     bdef.position.set(zaubernder.b2body.getPosition().x,zaubernder.b2body.getPosition().y+7/AnimaRPG.PPM);

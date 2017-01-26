@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="35" tilewidth="16" tileheight="16" nextobjectid="211">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="35" tilewidth="16" tileheight="16" nextobjectid="222">
  <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
   <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
@@ -64,7 +64,7 @@
   <object id="199" x="480" y="16">
    <polyline points="0,0 0,32 -16,48 -48,48 -32,0"/>
   </object>
-  <object id="203" x="464" y="48" width="16" height="16">
+  <object id="203" x="462" y="46.6667" width="28" height="28">
    <ellipse/>
   </object>
   <object id="204" x="1136" y="448" width="32" height="32">
@@ -74,111 +74,68 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="schatztruhen" visible="0">
-  <object id="81" x="288" y="432" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Schwert1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="82" x="288" y="448" width="16" height="16">
+ <objectgroup name="schatztruhen">
+  <object id="219" x="848" y="32" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Schwert2"/>
     <property name="typ" value="1"/>
    </properties>
   </object>
-  <object id="83" x="288" y="464" width="16" height="16">
+  <object id="220" x="656" y="48" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Schwert3"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="87" x="240" y="544" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung2"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="88" x="272" y="544" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung4"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="89" x="304" y="544" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung6"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="97" x="160" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen3"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="98" x="192" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen4"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="99" x="224" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen5"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="100" x="256" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen6"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="101" x="128" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen2"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="102" x="96" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="113" x="112" y="560" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="FoliantKraft"/>
+    <property name="Inhalt" value="FoliantZauberW"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="115" x="144" y="336" width="16" height="16">
+  <object id="221" x="382" y="13" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="MaxHP"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="116" x="128" y="368" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="MaxMana"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="119" x="80" y="384" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ManaPot1"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="120" x="112" y="384" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ManaPot2"/>
+    <property name="Inhalt" value="Nahrung2"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="enemy" visible="0"/>
+ <objectgroup name="enemy">
+  <object id="211" x="128" y="304" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-2"/>
+   </properties>
+  </object>
+  <object id="212" x="704" y="256" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-2"/>
+   </properties>
+  </object>
+  <object id="213" x="1184" y="304" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-2"/>
+   </properties>
+  </object>
+  <object id="214" x="400" y="336" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="215" x="400" y="64" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="216" x="976" y="160" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="217" x="992" y="256" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="218" x="960" y="208" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-3"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup name="areaborder">
   <object id="208" x="32" y="0">
    <properties>
@@ -189,7 +146,7 @@
   </object>
   <object id="210" x="1088" y="560">
    <properties>
-    <property name="ausgang" value="nord"/>
+    <property name="ausgang" value="sued"/>
     <property name="nextMap" value="7"/>
    </properties>
    <polyline points="0,0 48,0"/>

@@ -284,7 +284,6 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
-        Gdx.app.log("",""+getHeld().getHeldenInventar().getRuestungsList().size());
         if(getHeld().getHeldenInventar().getRuestungsList().size()>0){
         inventarRechts.add(new Label("Ruestungen", menu.getSkin())).colspan(3);
         inventarRechts.row();
@@ -370,7 +369,6 @@ public class InventarReiter extends Group {
         scrollPane.setupFadeScrollBars(0, 0);
         scrollPane.layout();
         scrollPane.setScrollPercentY(getScrollbarposition());
-        Gdx.app.log("Scroller erneuert","");
         scrollPane.layout();
         this.addActor(scrollPane);
         pane=scrollPane;

@@ -116,7 +116,6 @@ public class RaiderArcher extends Enemy
     public void attack()
         {   if(currentState==State.STANDING |currentState==State.WALKING)
         {runArchery= true;
-           // Vector2 startVector, flugVector;
             Vector2 koerper=b2body.getPosition();
             switch (getCurrentRichtung()) {
                 //Hier sind bei Y immer schon mind. -5 Abzug, weil man es ein bisschen nach unten ziehen muss, um die Mitte der Bodentexture und nicht
@@ -128,7 +127,7 @@ public class RaiderArcher extends Enemy
                     arrowStartVector = new Vector2(koerper.x-20 / AnimaRPG.PPM,koerper.y-8 / AnimaRPG.PPM);
                     arrowFlugVector = new Vector2(-200 / AnimaRPG.PPM, 0);break;
                 case Oben:
-                    arrowStartVector = new Vector2(koerper.x,koerper.y +17 / AnimaRPG.PPM);
+                    arrowStartVector = new Vector2(koerper.x,koerper.y +33 / AnimaRPG.PPM);
                     arrowFlugVector = new Vector2(0, 200 / AnimaRPG.PPM);break;
                 case Unten:
                     arrowStartVector = new Vector2(koerper.x,koerper.y -33 / AnimaRPG.PPM);
@@ -152,11 +151,9 @@ public class RaiderArcher extends Enemy
         fdefSensor.isSensor = true;
         sensorFixture= b2body.createFixture(fdefSensor);
         sensorFixture.setUserData(this);
-        Gdx.app.log("Shaperstellen","");
     }
     @Override
     public void sensorAnpassen(){
-        Gdx.app.log("Sensoranpassen","");
 
         b2body.destroyFixture(sensorFixture);
         switch (getCurrentRichtung()) {

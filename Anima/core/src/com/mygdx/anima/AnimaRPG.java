@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.google.gson.Gson;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.screens.StartScreen;
 import com.mygdx.anima.sprites.character.Held;
 
+import javax.naming.Context;
 import javax.xml.soap.Text;
 
 import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
@@ -38,6 +40,7 @@ import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
 import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
 import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
 import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
+import static java.security.AccessController.getContext;
 
 public class AnimaRPG extends Game {
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
@@ -80,6 +83,7 @@ public class AnimaRPG extends Game {
 
 	@Override
 	public void create() {
+
 		assetManager = new AssetManager();
 		assetManager.load("audio/music/little town - orchestral.ogg", Music.class);
 		assetManager.load("audio/sounds/anziehen.wav", Sound.class);
@@ -100,7 +104,8 @@ public class AnimaRPG extends Game {
 		assetManager.finishLoading();
 
 		batch = new SpriteBatch();
-		currentScreen=new Playscreen(this);
+		//currentScreen=new Playscreen(this);
+		currentScreen=new StartScreen(this);
 		setScreen(currentScreen);
 	}
 

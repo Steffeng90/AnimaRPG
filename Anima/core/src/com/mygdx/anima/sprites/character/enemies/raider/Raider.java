@@ -42,16 +42,14 @@ public class Raider extends Enemy
         }
         else if(!dead && !runDying && !runMeleeAnimation){
             if(healer!=null){
-                //b2body.setLinearVelocity(new Vector2(0,0));
                 coordinateWalking(healer, dt);}
             else{coordinateWalking(hero, dt);}
             b2body.setLinearVelocity(velocity);
-        //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         }
         else if(b2body!=null){ b2body.setLinearVelocity(new Vector2(0,0));}
         if(healSensorActive==false && getCurrentHitpointsPercent()<0.5 && !dead){
             createHealerSensor();
-             b2body.setLinearVelocity(new Vector2(0,0));
+             //b2body.setLinearVelocity(new Vector2(0,0));
         }
         else if(healSensorActive && b2body!=null){
             healSensorTimer+=dt;
@@ -68,7 +66,7 @@ public class Raider extends Enemy
         float einheitsZahl=1/(float)Math.sqrt(Math.pow(einheitsvector.x,2)+Math.pow(einheitsvector.y,2));
         einheitsvector.x=einheitsZahl*einheitsvector.x;
         einheitsvector.y=einheitsZahl*einheitsvector.y;
-        walkingVelo(zielSprite,new Vector2(einheitsvector.x*getGeschwindigkeitLaufen(),einheitsvector.y*getGeschwindigkeitLaufen()));
+        walkingVelo(zielSprite,new Vector2(einheitsvector.x*(float)getGeschwindigkeitLaufen(),einheitsvector.y*(float)getGeschwindigkeitLaufen()));
         if(einheitsvector.y>0 && einheitsvector.y> Math.abs(einheitsvector.x)){ setCurrentRichtung(2);}
         else if(einheitsvector.x>0 && einheitsvector.x> Math.abs(einheitsvector.y)){ setCurrentRichtung(1);}
         else if(einheitsvector.y<0 && Math.abs(einheitsvector.y)> Math.abs(einheitsvector.x)){ setCurrentRichtung(3);}
@@ -118,11 +116,11 @@ public class Raider extends Enemy
         if((getX()-hero.getX())<0.1f && (getX()-hero.getX())>-0.1f){
             velocity.x=0;
         }else
-        if((velocity.x>-getGeschwindigkeitLaufen()/10 && velocity.x<getGeschwindigkeitLaufen()/10) || (velocity.x>=getGeschwindigkeitLaufen()/10 && v2.x<0) || (velocity.x<=-getGeschwindigkeitLaufen()/10 && v2.x>0))
+        if((velocity.x>-(float)getGeschwindigkeitLaufen()/10 && velocity.x<(float)getGeschwindigkeitLaufen()/10) || (velocity.x>=getGeschwindigkeitLaufen()/10 && v2.x<0) || (velocity.x<=-getGeschwindigkeitLaufen()/10 && v2.x>0))
             velocity.x=v2.x;
         if((getY()-hero.getY())<0.15f && (getY()-hero.getY())>-0.15f){
             velocity.y=0;
-        }else if((velocity.y>-getGeschwindigkeitLaufen()/10 &&velocity.y<getGeschwindigkeitLaufen()/10) || (velocity.y>=getGeschwindigkeitLaufen()/10 && v2.y<0) || (velocity.y<=-getGeschwindigkeitLaufen()/10 && v2.y>0))
+        }else if((velocity.y>-(float)getGeschwindigkeitLaufen()/10 &&velocity.y<(float)getGeschwindigkeitLaufen()/10) || (velocity.y>=getGeschwindigkeitLaufen()/10 && v2.y<0) || (velocity.y<=-getGeschwindigkeitLaufen()/10 && v2.y>0))
             velocity.y=v2.y;
     }
     @Override

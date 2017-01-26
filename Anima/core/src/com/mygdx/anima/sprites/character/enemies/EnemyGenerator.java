@@ -30,6 +30,7 @@ public class EnemyGenerator {
     private static JsonArray itemArray;
     public static void generateEnemy(Playscreen screen, float x, float y, String typ) {
         Gson gson = new Gson();
+
         try {
             FileHandle file =Gdx.files.internal("enemydb.json");
             BufferedReader reader = new BufferedReader(new InputStreamReader(file.read()));

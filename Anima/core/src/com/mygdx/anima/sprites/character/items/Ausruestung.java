@@ -10,8 +10,8 @@ public class Ausruestung extends Item {
     public boolean angelegt;
     public boolean ausgewaehlt;
 
-    public Ausruestung(String name, String itemKategorie, Vector2 grafikposi, int goldWert) {
-        super(name, itemKategorie, grafikposi, goldWert);
+    public Ausruestung(String id,String name, String itemKategorie, Vector2 grafikposi, int goldWert) {
+        super(id,name, itemKategorie, grafikposi, goldWert);
         this.angelegt = false;
         this.ausgewaehlt = false;
     }

@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 public class Brust extends Ausruestung{
     private int ruestung,lpReg,optikStufe;
 
-    public Brust(String name, String itemKategorie, Vector2 grafikposi, int ruestung,int lpReg, int goldWert,int optikStufe){
-        super(name, itemKategorie, grafikposi, goldWert);
+    public Brust(String id,String name, String itemKategorie, Vector2 grafikposi, int ruestung,int lpReg, int goldWert,int optikStufe){
+        super(id,name, itemKategorie, grafikposi, goldWert);
         this.ruestung=ruestung;
         this.lpReg=lpReg;
         this.optikStufe=optikStufe;

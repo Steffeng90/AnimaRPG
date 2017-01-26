@@ -58,21 +58,19 @@
 
   //Benutzbare Gegenstände
   //CurrentHitpoints
-  {"id":"Nahrung1","name":"Brot","kategorie":8,"vectorX":7,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":15},
-  {"id":"Nahrung2","name":"Pilz","kategorie":8,"vectorX":5,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung3","name":"Gruener Paprika","kategorie":8,"vectorX":2,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung4","name":"Kaese","kategorie":8,"vectorX":9,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung5","name":"Fisch","kategorie":8,"vectorX":10,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung6","name":"Gelber Paprika","kategorie":8,"vectorX":3,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-// noch zurordnen
-  {"id":"Nahrung7","name":"Radieschen","kategorie":8,"vectorX":0,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung8","name":"Karotte","kategorie":8,"vectorX":1,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung9","name":"Fleisch","kategorie":8,"vectorX":11,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-
-  {"id":"Nahrung10","name":"Roten Paprika","kategorie":8,"vectorX":4,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung11","name":"Kuchen","kategorie":8,"vectorX":8,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung12","name":"Gebratener Fisch","kategorie":8,"vectorX":12,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
-  {"id":"Nahrung13","name":"Gebratenes Fleisch","kategorie":8,"vectorX":13,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},
+  {"id":"Nahrung1","name":"Brot","kategorie":8,"vectorX":7,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":5},
+  {"id":"Nahrung2","name":"Pilz","kategorie":8,"vectorX":5,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":20,"goldWert":7},
+  {"id":"Nahrung3","name":"Gruener Paprika","kategorie":8,"vectorX":2,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":25,"goldWert":8},
+  {"id":"Nahrung4","name":"Kaese","kategorie":8,"vectorX":9,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":30,"goldWert":10},
+  {"id":"Nahrung5","name":"Fisch","kategorie":8,"vectorX":10,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":35,"goldWert":12},
+  {"id":"Nahrung6","name":"Gelber Paprika","kategorie":8,"vectorX":3,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":40,"goldWert":14},
+  {"id":"Nahrung7","name":"Radieschen","kategorie":8,"vectorX":0,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":45,"goldWert":16},
+  {"id":"Nahrung8","name":"Karotte","kategorie":8,"vectorX":1,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":50,"goldWert":18},
+  {"id":"Nahrung9","name":"Fleisch","kategorie":8,"vectorX":11,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":55,"goldWert":21},
+  {"id":"Nahrung10","name":"Roten Paprika","kategorie":8,"vectorX":4,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":60,"goldWert":25},
+  {"id":"Nahrung11","name":"Kuchen","kategorie":8,"vectorX":8,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":70,"goldWert":32},
+  {"id":"Nahrung12","name":"Gebratener Fisch","kategorie":8,"vectorX":12,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":80,"goldWert":38},
+  {"id":"Nahrung13","name":"Gebratenes Fleisch","kategorie":8,"vectorX":13,"vectorY":1,"benutzbarKategorie":1,"benutzbarWert":100,"goldWert":48},
   //CurrentMana
   // Müssen noch überarbeitet werden
   {"id":"NahrungM1","name":"Beeren","kategorie":8,"vectorX":0,"vectorY":0,"benutzbarKategorie":1,"benutzbarWert":15,"goldWert":25},

@@ -7,16 +7,22 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
 import com.mygdx.anima.sprites.character.items.InventarList;
-import com.mygdx.anima.sprites.character.zauber.ZauberEntity;
+import com.mygdx.anima.sprites.character.items.ItemGenerator;
+import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
 import com.mygdx.anima.sprites.character.zauber.ZauberList;
 import com.mygdx.anima.tools.Controller;
+import com.mygdx.anima.tools.GameData;
 import com.mygdx.anima.tools.SchadenBerechner;
+
+import java.io.Serializable;
 
 import static com.badlogic.gdx.Gdx.app;
 import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
@@ -26,8 +32,10 @@ import static com.mygdx.anima.AnimaRPG.setHeld;
  * Created by Steffen on 09.11.2016.
  */
 
-public class Held extends HumanoideSprites{
+public class Held extends HumanoideSprites implements Serializable{
     public boolean objectInReichweite, genugEP;
+
+    private Array<SchatztruhenSpeicherObjekt> geoeffneteTruhen;
     private int[] erfahrungsstufen;
     public InteraktivesObjekt object;
     public Playscreen screen;
@@ -49,6 +57,7 @@ public class Held extends HumanoideSprites{
     Sound walkingSound;
     Boolean soundLoopAktiv;
 
+    // Erstmaliges Erstellen mit Konstruktor
     public Held(Playscreen screen,Vector2 spielerPosition)
     {
         super(screen,einseins,true);
@@ -58,25 +67,17 @@ public class Held extends HumanoideSprites{
         createHeroBody(new Vector2(150f/AnimaRPG.PPM,100f/AnimaRPG.PPM));
         heldErstellt=true;}
         objectInReichweite=false;
-
+        geoeffneteTruhen= new Array<SchatztruhenSpeicherObjekt>();
         heldenInventar=new InventarList();
         zauberList=new ZauberList();
 
         // Gameplay-Variablen
-        int Startwert=100;
-        int lastWert=Startwert;
-        erfahrungsstufen=new int[50];
-        for(int i=0;i<50;i++){
-            lastWert=(int) (lastWert*1.2);
-            lastWert-=(lastWert%10);
-            erfahrungsstufen[i]=lastWert;
-            // Gdx.app.log("Stufe "+i+" EPWert:",""+erfahrungsstufen[i]);
-        }
+        setErfahrungsstufen();
         soundLoopAktiv=false;
         //walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
         walkingSound=AnimaRPG.assetManager.get("audio/sounds/laufen.mp3", Sound.class);
 
-        setMaxHitpoints(1000);
+        setMaxHitpoints(100);
         setCurrentHitpoints(getMaxHitpoints());
         setMaxMana(15);
         setCurrentMana(getMaxMana());
@@ -101,10 +102,112 @@ public class Held extends HumanoideSprites{
    /* public TextureRegion getFrame(float dt) {
         return super.getFrame(dt);
     }*/
+    public Held(Playscreen screen,GameData gameData){
+        super(screen,einseins,true);
+
+        soundLoopAktiv=false;
+        //walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
+        walkingSound=AnimaRPG.assetManager.get("audio/sounds/laufen.mp3", Sound.class);
+
+        setErfahrungsstufen();
+        setZauberwiderstand(gameData.zauberwiderstand);
+        if(!heldErstellt){
+            createHeroBody(new Vector2(150f/AnimaRPG.PPM,100f/AnimaRPG.PPM));
+            Gdx.app.log("Spieler wurde neu navigiert","");
+
+            heldErstellt=true;}
+        objectInReichweite=false;
+        geoeffneteTruhen= new Array<SchatztruhenSpeicherObjekt>();
+        heldenInventar=new InventarList();
+        zauberList=new ZauberList();
+
+        // Nicht löschen: setSchadenZauber();
+        // TODO RUESTUNG durch ITEMS definieren
+
+
+        setCurrentHitpoints(gameData.hitpoints);
+        setMaxHitpoints(gameData.maxHitpoints);
+        setMaxMana(gameData.maxMana);
+        setRegMana(gameData.regMana);
+        setCurrentLevel(gameData.currentLevel);
+        setCurrentErfahrung(gameData.currentErfahrung);
+        setBasicAngrGeschw(gameData.basicAngrGeschw);
+        setBasicLaufgeschw(gameData.basicLaufgeschw);
+
+        setStaerke(gameData.staerke);
+        setGeschick(gameData.geschick);
+        setZauberkraft(gameData.zauberkraft);
+        setSchadenNah();
+        setSchadenFern();
+        setSpielzeit(gameData.spielzeit);
+
+        setNextLevelUp(getCurrentLevel());
+
+        setHeld(this);
+        // Zauber auslesen
+        for(int i=0; i<gameData.zauber.length;i++){
+            ZauberGenerator.generateZauber(gameData.zauber[i]);
+            if(gameData.zauberslot1==zauberList.getZauberList().get(i).getId()){
+                getZauberList().setZauberslot(1,getZauberList().getZauberList().get(i));
+            }
+            if(gameData.zauberslot2==zauberList.getZauberList().get(i).getId()){
+                getZauberList().setZauberslot(2,getZauberList().getZauberList().get(i));
+            }
+            if(gameData.zauberslot3==zauberList.getZauberList().get(i).getId()){
+                getZauberList().setZauberslot(3,getZauberList().getZauberList().get(i));
+            }
+            if(gameData.zauberslot4==zauberList.getZauberList().get(i).getId()){
+                getZauberList().setZauberslot(4,getZauberList().getZauberList().get(i));
+            }
+        }
+        // Geöffnete truhen auslesen
+        for(int i = 0; i<gameData.geoeffneteTruhenMaps.length; i++)
+        {   geoeffneteTruhen.add(new SchatztruhenSpeicherObjekt(gameData.geoeffneteTruhenMaps[i],gameData.geoeffneteTruhenId[i]));
+            }
+        // Gespeicherte Items auslesen und wieder anziehen
+        for(int i = 0; i<gameData.waffenNah.length; i++)
+        {   ItemGenerator.generateItem(screen,0f,0f,gameData.waffenNah[i]);
+            if(gameData.angelegtWaffenNahIndex==i){
+                heldenInventar.setAngelegtWaffeNah(heldenInventar.getWaffenNahList().get(i));
+            }}
+        for(int i = 0; i<gameData.waffenFern.length; i++)
+        {   ItemGenerator.generateItem(screen,0f,0f,gameData.waffenFern[i]);
+            if(gameData.angelegtWaffenFernIndex==i){
+                heldenInventar.setAngelegtWaffeFern(heldenInventar.getWaffenFernList().get(i));
+            }}
+        for(int i = 0; i<gameData.brust.length; i++)
+        {   ItemGenerator.generateItem(screen,0f,0f,gameData.brust[i]);
+            if(gameData.angelegtBrustIndex==i){
+                heldenInventar.setAngelegtRuestung(heldenInventar.getRuestungsList().get(i));
+            }}
+        for(int i = 0; i<gameData.helm.length; i++)
+        {   ItemGenerator.generateItem(screen,0f,0f,gameData.helm[i]);
+            if(gameData.angelegtHelmIndex==i){
+                heldenInventar.setAngelegtHelm(heldenInventar.getHelmList().get(i));
+            }}
+        for(int i = 0; i<gameData.schuhe.length; i++)
+        {   ItemGenerator.generateItem(screen,0f,0f,gameData.schuhe[i]);
+            if(gameData.angelegtSchuheIndex==i){
+                heldenInventar.setAngelegtSchuhe(heldenInventar.getSchuheList().get(i));
+            }}
+        for(int i = 0; i<gameData.handschuhe.length; i++)
+        {   ItemGenerator.generateItem(screen,0f,0f,gameData.handschuhe[i]);
+            if(gameData.angelegtHandschuheIndx==i){
+                heldenInventar.setAngelegtHandschuhe(heldenInventar.getHandschuheList().get(i));
+            }}
+        for(int i = 0; i<gameData.amulett.length; i++)
+        {   ItemGenerator.generateItem(screen,0f,0f,gameData.amulett[i]);
+            if(gameData.angelegtAmuleettIndex==i){
+                heldenInventar.setAngelegtAmulett(heldenInventar.getAmulettList().get(i));
+            }}
+
+        updateAlleWerte();
+    }
     public void createHeroBody(Vector2 heldPosition){
         BodyDef bdef=new BodyDef();
         bdef.position.set(heldPosition);
         bdef.type=BodyDef.BodyType.DynamicBody;
+        Gdx.app.log("world ist gleich","+"+world);
         b2body=world.createBody(bdef);
         createSensor();
         FixtureDef fdef=new FixtureDef();
@@ -134,7 +237,6 @@ public class Held extends HumanoideSprites{
         if(currentState==State.WALKING && soundLoopAktiv==false){
             soundLoopAktiv=true;
          walkingSound.loop(0.2f);
-            Gdx.app.log("AKtiv","");
         }
         else if(currentState!=State.WALKING && soundLoopAktiv==true){
             soundLoopAktiv=false;
@@ -321,12 +423,14 @@ public class Held extends HumanoideSprites{
         setNextLevelUp(currentLevel);
     }
 
-    public String getSpielzeit() {
+    public String getSpielzeitString() {
         int stunde =(int) spielzeit/3600,minute=(int) (spielzeit%3600)/60,sekunden=(int)(spielzeit%3600)%60;
 
         return ""+String.format("%02d",stunde)+":"+String.format("%02d",minute)+":"+String.format("%02d",sekunden);
     }
-
+    public float getSpielzeit(){
+        return spielzeit;
+    }
     public void setSpielzeit(float spielzeit) {
         this.spielzeit += spielzeit;
     }
@@ -357,7 +461,7 @@ public class Held extends HumanoideSprites{
     }
 
     public void setSchadenZauber(int schadenZauber) {
-        //TODO Zauberübergabe einstellen
+        //TODO Zauberübergabe einstellen Hier sollte man untescheiden zwischen allen Zauberslot
         this.schadenZauber = schadenZauber;
     }
 
@@ -537,6 +641,12 @@ public class Held extends HumanoideSprites{
     public int getBasicLaufgeschw() {
         return basicLaufgeschw;
     }
+    public int getBasicAngrGeschw() {
+        return basicAngrGeschw;
+    }
+    public void setBasicAngrGeschw(int basicAngrGeschw) {
+        this.basicAngrGeschw = basicAngrGeschw;
+    }
 
     public void setBasicLaufgeschw(int basicLaufgeschw) {
         this.basicLaufgeschw = basicLaufgeschw;
@@ -548,5 +658,24 @@ public class Held extends HumanoideSprites{
 
     public void setAktuellerZauberInt(int aktuellerZauber) {
         this.aktuellerZauberInt = aktuellerZauber;
+    }
+
+    public Array<SchatztruhenSpeicherObjekt> getGeoeffneteTruhen() {
+        return geoeffneteTruhen;
+    }
+
+    public void setGeoeffneteTruhen(Array<SchatztruhenSpeicherObjekt> geoeffneteTruhen) {
+        this.geoeffneteTruhen = geoeffneteTruhen;
+    }
+    public void setErfahrungsstufen(){
+        int Startwert=100;
+        int lastWert=Startwert;
+        erfahrungsstufen=new int[50];
+        for(int i=0;i<50;i++){
+            lastWert=(int) (lastWert*1.2);
+            lastWert-=(lastWert%10);
+            erfahrungsstufen[i]=lastWert;
+            // Gdx.app.log("Stufe "+i+" EPWert:",""+erfahrungsstufen[i]);
+        }
     }
 }

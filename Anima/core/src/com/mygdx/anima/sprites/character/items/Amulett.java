@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Amulett extends Ausruestung{
     private int manareg,zauberwiderstand;
-    public Amulett(String name, String itemKategorie, Vector2 grafikposi, int manareg, int zauberwiderstand, int goldWert){
-        super(name, itemKategorie, grafikposi, goldWert);
+    public Amulett(String id,String name, String itemKategorie, Vector2 grafikposi, int manareg, int zauberwiderstand, int goldWert){
+        super(id, name, itemKategorie, grafikposi, goldWert);
         this.manareg=manareg;
         this.zauberwiderstand=zauberwiderstand;
     }

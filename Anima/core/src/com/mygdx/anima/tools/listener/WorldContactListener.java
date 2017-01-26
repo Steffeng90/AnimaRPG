@@ -47,20 +47,19 @@ public class WorldContactListener implements ContactListener {
                     else{((Held) fixB.getUserData()).setObject(true,((InteraktivesObjekt) fixA.getUserData()));}}
                 break;
             case AnimaRPG.ENEMY_SENSOR | AnimaRPG.HERO_BIT:
-                Gdx.app.log("Held im Sensor","");
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_SENSOR){
                     ((Enemy) fixA.getUserData()).enemyInReichweite=true;}
                 else {
                     ((Enemy) fixB.getUserData()).enemyInReichweite=true;}
                     break;
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_BIT:
-                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
+              /*  if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
                 {   ((Held)fixB.getUserData()).isHitbyMelee=true;
                     ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)fixA.getUserData();}
                 else
                 {   ((Held)fixA.getUserData()).isHitbyMelee=true;
                     ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
-                break;
+                break;*/
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
                 {   ((Held)fixB.getUserData()).isHitbyMelee=true;
@@ -70,7 +69,7 @@ public class WorldContactListener implements ContactListener {
                     ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
                 break;
             case AnimaRPG.ARROW_BIT | AnimaRPG.HERO_BIT:
-                if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
+                /*if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
                 {
                     ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)((Arrow)fixA.getUserData()).erzeuger;
                     ((Held)fixB.getUserData()).isHitbyBow=true;
@@ -79,7 +78,7 @@ public class WorldContactListener implements ContactListener {
                 {   ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)((Arrow)fixB.getUserData()).erzeuger;
                     ((Held)fixA.getUserData()).isHitbyBow=true;
                     ((Arrow)fixB.getUserData()).setToDestroy=true;}
-                break;
+                break;*/
             case AnimaRPG.ARROW_BIT | AnimaRPG.HERO_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
                 {
@@ -91,6 +90,7 @@ public class WorldContactListener implements ContactListener {
                     ((Held)fixA.getUserData()).isHitbyBow=true;
                     ((Arrow)fixB.getUserData()).setToDestroy=true;}
                 break;
+            case AnimaRPG.ARROW_BIT | AnimaRPG.GEBIETSWECHSEL_BIT:
             case AnimaRPG.ARROW_BIT | AnimaRPG.BARRIERE_BIT:
             case AnimaRPG.ARROW_BIT | AnimaRPG.OBJECT_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT){
@@ -100,13 +100,6 @@ public class WorldContactListener implements ContactListener {
                 break;
 
             case AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_BIT:
-                if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
-                {   ((Enemy)fixB.getUserData()).getsHitbyBow();
-                    ((Arrow)fixA.getUserData()).setToDestroy=true;}
-                else
-                {   ((Enemy)fixA.getUserData()).getsHitbyBow();
-                    ((Arrow)fixB.getUserData()).setToDestroy=true;}
-                break;
             case AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
                 {   ((Enemy)fixB.getUserData()).getsHitbyBow();
@@ -154,7 +147,6 @@ public class WorldContactListener implements ContactListener {
                 if(((RaiderHealer) fixA.getUserData()).getCurrentMana()>=4){((Raider)fixB.getUserData()).healer=(RaiderHealer) fixA.getUserData();}}
                 break;
             default:
-                //Gdx.app.log("undefined","unknown");
                 break;
         }
     }
@@ -172,7 +164,6 @@ public class WorldContactListener implements ContactListener {
                     ((Held) fixB.getUserData()).setObject(false,null);}
                 break;
             case AnimaRPG.ENEMY_SENSOR | AnimaRPG.HERO_BIT:
-                Gdx.app.log("Held nicht im Sensor","");
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_SENSOR){
                     ((Enemy) fixA.getUserData()).enemyInReichweite=false;}
                 else {

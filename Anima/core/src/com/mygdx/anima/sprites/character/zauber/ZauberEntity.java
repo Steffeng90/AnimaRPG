@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 
+import java.io.Serializable;
+
 /**
  * Created by Steffen on 01.12.2016.
  */
 
-public class ZauberEntity {
+public class ZauberEntity implements Serializable {
     private enum State{nichts,ausgewaehlt,angelegt}
     private State state;
     public static enum kategorie{staerkung,schaden};
@@ -18,7 +20,7 @@ public class ZauberEntity {
             ,spriteQuelle_blau=new Texture("objekte/icons_for_rpg_auswahl.png"),
             spriteQuelle_gruen=new Texture("objekte/icons_for_rpg_angelegt.png");
     private TextureRegion grafikNichts,grafikAusgewaehlt,grafikAngelegt;
-    private String name,beschreibung;
+    private String id,name,beschreibung;
     private int effektivitaet, manakosten;
     // zauberFixtureTimer beschreibt die Prozent zu denen die Cast-Animation abgelaufen sein muss, also bei 0.8 wird der zauber erzeugt
     private float zauberZeit, zauberDauer, feedbackDauer ,zauberFixtureTimer;
@@ -26,7 +28,8 @@ public class ZauberEntity {
     private int grafikPosX,grafikPosY;
     private com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture zauberFixture;
 
-    public ZauberEntity(String name, String kategorieString, Vector2 grafikposi, int effektivitaet, int manakosten,float zauberFixtureTimer,float zauberZeit,float zauberDauer,String beschreibung) {
+    public ZauberEntity(String id,String name, String kategorieString, Vector2 grafikposi, int effektivitaet, int manakosten,float zauberFixtureTimer,float zauberZeit,float zauberDauer,String beschreibung) {
+        this.id=id;
         setName(name);
         grafikPosX = (int) grafikposi.x;
         grafikPosY = (int) grafikposi.y;
@@ -149,4 +152,11 @@ public class ZauberEntity {
 
     public void setZauberFixture(com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture zauberFixture) {this.zauberFixture = zauberFixture;}
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

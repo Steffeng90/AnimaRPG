@@ -41,10 +41,12 @@ import com.mygdx.anima.sprites.character.items.WaffeNah;
 import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
+import com.mygdx.anima.tools.GameData;
 import com.mygdx.anima.tools.KartenManager;
 import com.mygdx.anima.tools.listener.WorldContactListener;
 
 import static com.badlogic.gdx.Input.Keys.R;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 
 /**
  * Created by Steffen on 06.11.2016.
@@ -105,37 +107,23 @@ public class Playscreen implements Screen{
     public static Array<Raider> activeRaider= new Array<Raider>();
     public static Array<RaiderArcher> activeRaiderArcher= new Array<RaiderArcher>();
     public static Array<RaiderHealer> activeRaiderHealer= new Array<RaiderHealer>();
-
-    public Playscreen(AnimaRPG game) {
+    public Playscreen(AnimaRPG game,GameData gameData){
         this.game = game;
-        gamecam = new OrthographicCamera();
-        gameViewPort = new FitViewport(AnimaRPG.W_WIDTH / AnimaRPG.PPM, AnimaRPG.W_Height / AnimaRPG.PPM, gamecam);
-        Gdx.app.log("Pool ist instantiiert",""+arrowPool.toString());
-        kartenManager =new KartenManager();
-        // Erste Karte erstellen:
-        renderer = kartenManager.karteErstellen(4,gameViewPort);
-
-        gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
-        setCurrentGameState(GameState.RUN);
-
-        // Musik
-        Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
-        music.setLooping(true);
-        music.setVolume(0.3f);
-        music.play();
-
-        world = new World(new Vector2(0, 0), false);
-        world.setContactListener(new WorldContactListener());
-        b2dr = new Box2DDebugRenderer();
-        creator = new B2WorldCreator(this);
-        spieler = new Held(this,spielerPosition);
-
+        defineScreen(game,gameData.currentMapId);
+        spieler=new Held(this,gameData);
         controller = new Controller(game);
         anzeige = new AnzeigenDisplay(game.batch, spieler);
-        bf=new BitmapFont(Gdx.files.internal("ui-skin/default.fnt"));
-        bf.setColor(Color.BLUE);
-        bf.setUseIntegerPositions(false);
-        bf.getData().setScale(1f/AnimaRPG.W_WIDTH,1f/AnimaRPG.W_Height);
+        setMapEinstieg(gameData.tempEingang);
+        creator = new B2WorldCreator(this);
+
+    }
+    public Playscreen(AnimaRPG game) {
+        this.game = game;
+        defineScreen(game,4);
+        spieler = new Held(this,spielerPosition);
+        controller = new Controller(game);
+        anzeige = new AnzeigenDisplay(game.batch, spieler);
+        creator = new B2WorldCreator(this);
 
         //TestZauber erzeugen
         ZauberGenerator.generateZauber("staerkung1");
@@ -175,9 +163,37 @@ public class Playscreen implements Screen{
         ItemGenerator.generateItem(this,0,0,"kopf4");
         ItemGenerator.generateItem(this,0,0,"kopf5");
     }
+    // Hier sind die Gemeinsamkeiten der beiden Konstruktoren ausgelagert
+    public void defineScreen(AnimaRPG game,int kartenID){
+        this.game = game;
+
+        setCurrentGameState(GameState.RUN);
+        gamecam = new OrthographicCamera();
+
+        gameViewPort = new FitViewport(AnimaRPG.W_WIDTH / AnimaRPG.PPM, AnimaRPG.W_Height / AnimaRPG.PPM, gamecam);
+        gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
+
+        kartenManager =new KartenManager();
+        renderer = kartenManager.karteErstellen(kartenID,gameViewPort);
+
+        // Musik
+        Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        music.play();
+
+        world = new World(new Vector2(0, 0), false);
+        world.setContactListener(new WorldContactListener());
+        b2dr = new Box2DDebugRenderer();
+
+        bf=new BitmapFont(Gdx.files.internal("ui-skin/default.fnt"));
+        bf.setColor(Color.BLUE);
+        bf.setUseIntegerPositions(false);
+        bf.getData().setScale(1f/AnimaRPG.W_WIDTH,1f/AnimaRPG.W_Height);
+
+    }
     @Override
     public void show() {
-
     }
     @Override
     public void render(float delta) {
@@ -206,10 +222,8 @@ public class Playscreen implements Screen{
         //karte rendern
         renderer.render();
         // Render-Linien
-        b2dr.render(world, gamecam.combined);
+        // b2dr.render(world, gamecam.combined);
 
-        //Zeigt den Controller nur bei Android an:
-        //if(Gdx.app.getType()== Application.ApplicationType.Android){controller.draw();}
         game.batch.setProjectionMatrix(gamecam.combined);
 
         game.batch.begin();
@@ -276,7 +290,6 @@ public class Playscreen implements Screen{
                     break;
                 case PAUSE:
                     game.batch.begin();
-                    Gdx.app.log("Pause","");
                     if(getCurrentItemsprite()!=null)
                         getCurrentItemsprite().draw(game.batch);
 
@@ -284,7 +297,6 @@ public class Playscreen implements Screen{
 
                     controller.draw();
                     if(itemWindow!=null){itemWindow.draw();
-                        Gdx.app.log("LALALAL","dasd");
                         getCurrentItemsprite().update(delta);
                         itemWindow.update(delta);
 
@@ -378,10 +390,8 @@ public class Playscreen implements Screen{
             truhe= activeTruhen.get(i);
             truhe.update(dt);
         }
-                Gdx.app.log("ItemSprite ",""+getCurrentItemsprite());
         if (getCurrentItemsprite() != null) {
             itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite());
-            Gdx.app.log("Neues Itemwindow draw","");
         }
         // ArrowPool durchlaufen
         Arrow arrow;
@@ -399,35 +409,20 @@ public class Playscreen implements Screen{
         //Raider-pool
         Raider raider;
         len = activeRaider.size;
-        Gdx.app.log("Raiderlaenge:"+len,"");
-        for (int i = 0; i <len;i++) {
-            try {
-                raider = activeRaider.get(i);
-
-                Gdx.app.log("Forschleife Raider:", "");
-
-                if (raider.destroyed == true) {
-                    Gdx.app.log("Der KILL Raider:", "");
-
-                    activeRaider.removeIndex(i);
-                    NPCPool.getRaiderPool().free(raider);
-                }
-                else{
-                    kartenManager.isEnemyinRange(raider);
-                    raider.update(spieler,dt);
-                    Gdx.app.log("NICHTKILL Raider:","");
-
-                }
-            }catch(IndexOutOfBoundsException e){
-                Gdx.app.log(e.getMessage(),"");
+        for (int i = len; --i >= 0;) {
+            raider = activeRaider.get(i);
+            if (raider.destroyed == true) {
+                activeRaider.removeIndex(i);
+                NPCPool.getRaiderPool().free(raider);
             }
-
+            else{
+                kartenManager.isEnemyinRange(raider);
+                raider.update(spieler,dt);
+            }
         }
         // RaiderArcher
         RaiderArcher raiderArcher;
         len = activeRaiderArcher.size;
-        Gdx.app.log("Archerlange:"+len,"");
-
         for (int i = len; --i >= 0;) {
             raiderArcher = activeRaiderArcher.get(i);
             if (raiderArcher.destroyed == true) {
@@ -442,7 +437,6 @@ public class Playscreen implements Screen{
         // RaiderHealer
         RaiderHealer raiderHealer;
         len = activeRaiderHealer.size;
-        Gdx.app.log("Healerrlaenge:"+len,"");
 
         for (int i = len; --i >= 0;) {
             raiderHealer = activeRaiderHealer.get(i);
@@ -636,7 +630,6 @@ public class Playscreen implements Screen{
         for(Body b:bodyArray){
             if(b.getFixtureList()!=null){for(Fixture fix:b.getFixtureList()){
                 b.destroyFixture(fix);
-                Gdx.app.log("","Koerper zerstoert");
             }}
             world.destroyBody(b);
         }

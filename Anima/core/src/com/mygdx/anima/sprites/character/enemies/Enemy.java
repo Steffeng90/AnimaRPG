@@ -51,7 +51,6 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
         //b2body.setActive(false);
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
-        Gdx.app.log("","Text: "+id.substring(0,id.length()-2));
         atlas = new TextureAtlas(id.substring(0,id.length()-2)+".pack");
         animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false);
         setRegion(standingDownSprite);

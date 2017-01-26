@@ -18,18 +18,15 @@ import java.util.ArrayList;
 
 public class RaiderHealer extends Enemy {
     ArrayList<Enemy> enemiesInRange;
-    Playscreen screen;
     Boolean zaubereHeilung;
 
     public RaiderHealer() {
         super();
         enemiesInRange = new ArrayList<Enemy>();
-        this.screen = screen;
         zaubereHeilung=false;
     }
     public void init(Playscreen screen, float x, float y, String id, int maxhp, int maxmana, int regMana, int ep, int speed, int schadenNah, int schadenfern, int schadenzauber, int ruestung, int boundsX, int boundsY, float castSpeed, float bowSpeed, float meleeSpeed, float thrustSpeed){
         super.init(screen, x, y, id, maxhp, maxmana, regMana, ep, speed, schadenNah, schadenfern, schadenzauber, ruestung, boundsX, boundsY, castSpeed, bowSpeed, meleeSpeed, thrustSpeed);
-
     }
     @Override
     public void update(Held hero, float dt) {
@@ -127,7 +124,6 @@ public class RaiderHealer extends Enemy {
         fdefSensor.isSensor = true;
         sensorFixture = b2body.createFixture(fdefSensor);
         sensorFixture.setUserData(this);
-        Gdx.app.log("Shaperstellen", "");
     }
     @Override
     public void sensorAnpassen(){
@@ -138,7 +134,9 @@ public class RaiderHealer extends Enemy {
 
             if ((currentState == State.STANDING | currentState == State.WALKING) && getCurrentMana() >= 5) {
                 setCurrentMana(getCurrentMana() - 5);
-                new HeilzauberAOE(this, screen);
+                if(screen==null) {
+                    Gdx.app.log("SCreen istnull","");
+                }new HeilzauberAOE(this, screen,world);
                 runCasting=true;
             }
         }

@@ -21,14 +21,14 @@ public class Item{
             ,spriteQuelle_blau=new Texture("objekte/icons_for_rpg_auswahl.png"),
             spriteQuelle_gruen=new Texture("objekte/icons_for_rpg_angelegt.png");
     private TextureRegion grafikNichts,grafikAusgewaehlt,grafikAngelegt;
-    private String name;
+    private String id,name;
     private int goldWert;
     private boolean angelegt,ausgewaehlt;
     private int grafikPosX,grafikPosY;
 
-    public Item(String name, String kategorieString, Vector2 grafikposi,int goldWert) {
+    public Item(String typ,String name, String kategorieString, Vector2 grafikposi,int goldWert) {
         setName(name);
-
+        id=typ;
         grafikPosX = (int) grafikposi.x;
         grafikPosY = (int) grafikposi.y;
         ausgewaehlt=false;
@@ -121,4 +121,12 @@ public class Item{
         else {return State.nichts;}
     }
     //private void setState(State state) {this.state = state;}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

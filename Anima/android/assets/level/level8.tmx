@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" nextobjectid="217">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="16" tileheight="16" nextobjectid="226">
  <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
   <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
@@ -86,15 +86,62 @@
    <polyline points="0,0 48,48 48,80 32,96 16,144 -16,80 -32,48 -96,96 -112,128 -128,160 -160,192"/>
   </object>
  </objectgroup>
- <objectgroup name="schatztruhen" visible="0">
-  <object id="115" x="144" y="336" width="16" height="16">
+ <objectgroup name="schatztruhen">
+  <object id="115" x="576" y="368" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="MaxHP"/>
+    <property name="Inhalt" value="schuhe1"/>
+    <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="225" x="464" y="640" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung2"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="enemy" visible="0"/>
+ <objectgroup name="enemy">
+  <object id="217" x="832" y="688" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="218" x="752" y="384" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-2"/>
+   </properties>
+  </object>
+  <object id="219" x="592" y="128" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="220" x="96" y="544" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="221" x="80" y="144" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="222" x="78" y="192" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="223" x="144" y="480" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-2"/>
+   </properties>
+  </object>
+  <object id="224" x="432" y="528" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup name="areaborder">
   <object id="215" x="176" y="960">
    <properties>

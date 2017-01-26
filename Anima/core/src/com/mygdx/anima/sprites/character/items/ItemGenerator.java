@@ -11,6 +11,8 @@ import com.mygdx.anima.screens.Playscreen;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /*
 import static com.mygdx.anima.sprites.character.items.ItemGenerator.ruestung;
 import static com.mygdx.anima.sprites.character.items.ItemGenerator.setItemID;
@@ -40,7 +42,7 @@ public class ItemGenerator {
     private static int kategorie,schaden,goldWert, benutzbarKategorie, benutzbarWert,wert1, wert2,animationsStufe,optikStufe;
  //  private static kategorie itemKategorie=waffe;
 
-    public static ItemSprite generateItem(Playscreen screen, float x, float y, String typ) {
+    public static ItemSprite generateItem(Playscreen screen, float x, float y, String id) {
         Gson gson = new Gson();
         try {
             FileHandle file =Gdx.files.internal("itemdb.json");
@@ -49,57 +51,55 @@ public class ItemGenerator {
 
             JsonArray itemArray = json. getAsJsonArray("item");
             for (int i = 0; i < itemArray.size(); i++) {
-                if(typ.equals(itemArray.get(i).getAsJsonObject().get("id").getAsString())){
+                if(id.equals(itemArray.get(i).getAsJsonObject().get("id").getAsString())){
                 JsonObject item = itemArray.get(i).getAsJsonObject();
                 itemName = item.get("name").getAsString();
                 vector = new Vector2(item.get("vectorX").getAsFloat(), item.get("vectorY").getAsFloat());
                 goldWert = item.get("goldWert").getAsInt();
                 kategorie = item.get("kategorie").getAsInt();
-
+                Gdx.app.log("IDIDIDID",""+id);
                 switch (kategorie){
                     case 1:
                         schaden = item.get("schaden").getAsInt();
                         animationsStufe = item.get("animationsStufe").getAsInt();
-
-
-                        screen.getSpieler().getHeldenInventar().add(new WaffeNah(itemName, "nahkampf", vector,schaden, goldWert,animationsStufe));
+                        getHeld().getHeldenInventar().add(new WaffeNah(id,itemName, "nahkampf", vector,schaden, goldWert,animationsStufe));
                         break;
                     case 2:
                         schaden = item.get("schaden").getAsInt();
                         animationsStufe = item.get("animationsStufe").getAsInt();
-                        screen.getSpieler().getHeldenInventar().add(new WaffeFern(itemName, "fernkampf", vector,schaden, goldWert,animationsStufe));
+                        getHeld().getHeldenInventar().add(new WaffeFern(id,itemName, "fernkampf", vector,schaden, goldWert,animationsStufe));
                         break;
                     case 3:
                         wert1 = item.get("ruestung").getAsInt();
-                        wert1 = item.get("LPReg").getAsInt();
+                        wert2 = item.get("LPReg").getAsInt();
                         optikStufe =item.get("optikStufe").getAsInt();
-                        screen.getSpieler().getHeldenInventar().add(new Brust(itemName, "brust", vector,wert1,wert2, goldWert,optikStufe));
+                        getHeld().getHeldenInventar().add(new Brust(id,itemName, "brust", vector,wert1,wert2, goldWert,optikStufe));
                         break;
                     case 4:
                         wert1 = item.get("ruestung").getAsInt();
                         wert2 = item.get("laufgeschwindigkeit").getAsInt();
                         optikStufe =item.get("optikStufe").getAsInt();
-                        screen.getSpieler().getHeldenInventar().add(new Schuhe(itemName, "schuhe", vector,wert1,wert2,goldWert,optikStufe));
+                        getHeld().getHeldenInventar().add(new Schuhe(id,itemName, "schuhe", vector,wert1,wert2,goldWert,optikStufe));
                         break;
                     case 5:
                         wert1 = item.get("ruestung").getAsInt();
                         wert2 = item.get("angriffgeschwindigkeit").getAsInt();
-                        screen.getSpieler().getHeldenInventar().add(new Handschuhe(itemName, "handschuhe", vector,wert1,wert2,goldWert));
+                        getHeld().getHeldenInventar().add(new Handschuhe(id,itemName, "handschuhe", vector,wert1,wert2,goldWert));
                         break;
                     case 6:
                         wert1 = item.get("lebenspunkte").getAsInt();
                         wert2 = item.get("zauberkraft").getAsInt();
-                        screen.getSpieler().getHeldenInventar().add(new Helm(itemName, "helm", vector,wert1,wert2,goldWert));
+                        getHeld().getHeldenInventar().add(new Helm(id,itemName, "helm", vector,wert1,wert2,goldWert));
                         break;
                     case 7:
                         wert1 = item.get("manareg").getAsInt();
                         wert2 = item.get("zauberwiderstand").getAsInt();
-                        screen.getSpieler().getHeldenInventar().add(new Amulett(itemName, "amulett", vector,wert1,wert2,goldWert));
+                        getHeld().getHeldenInventar().add(new Amulett(id,itemName, "amulett", vector,wert1,wert2,goldWert));
                         break;
                     case 8:
                         benutzbarKategorie=item.get("benutzbarKategorie").getAsInt();
                         benutzbarWert=item.get("benutzbarWert").getAsInt();
-                        screen.getSpieler().getHeldenInventar().add(new Benutzbar(itemName, "nutzbar", vector,benutzbarKategorie, benutzbarWert, goldWert));
+                        getHeld().getHeldenInventar().add(new Benutzbar(id,itemName, "nutzbar", vector,benutzbarKategorie, benutzbarWert, goldWert));
                         break;
                 }
                 break;}

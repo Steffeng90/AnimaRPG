@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="198">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="204">
  <tileset firstgid="1" name="start" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
  </tileset>
@@ -47,197 +47,45 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="schatztruhen" visible="0">
-  <object id="72" x="48" y="672" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Nahrung1"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="73" x="48" y="688" width="16" height="16">
+ <objectgroup name="schatztruhen">
+  <object id="200" x="80" y="224" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Nahrung2"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="74" x="48" y="704" width="16" height="16">
+  <object id="201" x="503" y="447" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung3"/>
+    <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="75" x="96" y="656" width="16" height="16">
+  <object id="202" x="64" y="112" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung4"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="76" x="96" y="672" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Nahrung5"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="77" x="96" y="688" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Nahrung6"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="81" x="288" y="432" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Schwert1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="82" x="288" y="448" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Schwert2"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="83" x="288" y="464" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Schwert3"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="86" x="160" y="624" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="87" x="240" y="544" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung2"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="88" x="272" y="544" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung4"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="89" x="304" y="544" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung6"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="92" x="304" y="672" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Schwert4"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="94" x="304" y="704" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Schwert5"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="95" x="304" y="736" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Schwert6"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="97" x="160" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen3"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="98" x="192" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen4"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="99" x="224" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen5"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="100" x="256" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen6"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="101" x="128" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen2"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="102" x="96" y="480" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Bogen1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="105" x="240" y="608" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="FoliantZauberW"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="106" x="240" y="576" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="FoliantZauberK"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="109" x="112" y="624" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="FoliantGeschick"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="113" x="112" y="560" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="FoliantKraft"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="115" x="144" y="336" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="MaxHP"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="116" x="128" y="368" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="MaxMana"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="119" x="80" y="384" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ManaPot1"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="120" x="112" y="384" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ManaPot2"/>
+    <property name="Inhalt" value="NahrungM1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="enemy" visible="0">
-  <object id="170" x="192" y="656" width="16" height="16">
+ <objectgroup name="enemy">
+  <object id="170" x="432" y="448" width="16" height="16">
    <properties>
     <property name="typ" value="raider-1"/>
    </properties>
   </object>
-  <object id="173" x="240" y="656" width="16" height="16">
+  <object id="173" x="144" y="176" width="16" height="16">
    <properties>
-    <property name="typ" value="raider-3"/>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="199" x="832" y="192" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="203" x="96" y="640" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
    </properties>
   </object>
  </objectgroup>

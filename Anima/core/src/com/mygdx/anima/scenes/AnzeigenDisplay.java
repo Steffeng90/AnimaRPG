@@ -44,7 +44,7 @@ public class AnzeigenDisplay implements Disposable {
         viewport = new FitViewport(AnimaRPG.W_WIDTH, AnimaRPG.W_Height, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
-        //define a table used to organize our hud's labels
+        //define a table used to organize our hud'waffenNah labels
         Table table = new Table();
         //Top-Align table
         table.top();

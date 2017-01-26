@@ -1,5 +1,6 @@
 package com.mygdx.anima.sprites.character.items;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
  * Created by Steffen on 01.12.2016.
  */
 
-public class InventarList {
+public class InventarList implements Serializable {
     private static ArrayList<Brust> ruestungsList;
     private static ArrayList<Handschuhe> handschuheList;
     private static ArrayList<Schuhe> schuheList;

@@ -17,6 +17,9 @@ import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
+
 /**
  * Created by Steffen on 13.11.2016.
  */
@@ -32,18 +35,20 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
     TextureRegion spriteClose,spriteOpen;
     public float stateTimer;
     public String inhalt;
-
+    public int truhenID;
 
     public Schatztruhe(){
        super();
     }
-    public void init(Playscreen screen, float x, float y,int truhenTyp,String inhalt){
+    public void init(Playscreen screen, float x, float y,int truhenTyp,int truhenID,String inhalt,boolean isClosed){
         super.init(screen,x,y);
         this.inhalt=inhalt;
         defineItem();
+        this.truhenID=truhenID;
         int xAuswahlBereich;
         if(truhenTyp==1){xAuswahlBereich=0;}
         else{xAuswahlBereich=192;}
+        closed=isClosed;
 
         spriteQuelle=new Texture("objekte/schatztruhe.png");
         spriteOpen=new TextureRegion(spriteQuelle,xAuswahlBereich,224, 32,32);
@@ -63,7 +68,6 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
         bdef.type = BodyDef.BodyType.StaticBody;
         body =world.createBody(bdef);
         body.setActive(true);
-        closed=true;
 
         FixtureDef fdef= new FixtureDef();
         PolygonShape shape=new PolygonShape();
@@ -120,7 +124,7 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
                 if(openTruhe.isAnimationFinished(stateTimer)){
                     runOpenAnimation=false;closed=false;
                     screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));
-                    Gdx.app.log("Truhe geöffnet","");
+                    getHeld().getGeoeffneteTruhen().add(new SchatztruhenSpeicherObjekt(aktuelleKartenId,truhenID));
                 }
                 break;
             case OPEN:

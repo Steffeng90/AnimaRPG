@@ -123,7 +123,6 @@ public class Arrow extends Sprite implements Pool.Poolable {
         world.destroyBody(this.b2body);
         b2body.setUserData(null);
         b2body=null;
-      //  Gdx.app.log("Kapuut","");
         setToDestroy=false;
         destroyed=true;
       //  allArrows.removeValue(this,true);

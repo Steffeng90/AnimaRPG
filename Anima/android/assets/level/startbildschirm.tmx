@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="24" height="16" tilewidth="16" tileheight="16" nextobjectid="208">
+ <tileset firstgid="1" name="start" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="1025" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="5121" name="base_out_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/base_out_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="9217" name="plant repack" tilewidth="16" tileheight="16" tilecount="676" columns="26">
+  <image source="tilesets/plant repack.png" width="416" height="416"/>
+ </tileset>
+ <tileset firstgid="9893" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
+  <image source="tilesets/town.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="10917" name="obj_misk_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
+  <image source="tilesets/obj_misk_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <layer name="ground" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJylk01OwzAQhb1pRFUi2LRrfs4FV4ILgPhZOq5zk8IBQPwsEzs5Ak/qPGVqbKjUxSfHnsmbNxmnr4zpgBUa4MAaeNBKvAehkPOwNOYRPIHn5TbmZojPpne7PeqU9D+g+Qm+wLfoB2hHMCb+umQfwVBt89qkHtezlTHn4AJcrnb9Uydk6uRqpPWKvYp/L1pRcrj/qwdqpLPRedr/ILWDPPdqJqUao0LHCP1Ty4qOU/tc321Gs814oH9qNonnkvex0E8K/Tey76VGkOdIH1LLSx+luuyPHuh/kHPOgDMLqqaX+L5zb6rd+99Ljp4zffB/4zez/9TgP0L/UXluVX6j9HlnnfpepdmM9Cj+rfJu1X2J6nv5arpTvCtBzl013adO+aL/m7kxt/PD1qvamOs6H9+AlwPXO2jf1/m4PUZPwIE18KAFJwtjThe/z3P5b9B+r6fzzRG0wSv4AaXHONg=
+  </data>
+ </layer>
+ <layer name="top1" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJyl1D9ME2EYgPF3Nwy2tJpoUoY2xNbCScENN60gZfNfiUCBRBLATRM0KiArxUQZbNU6MKiIitKuoC0UMCSssoDSTR0kURx9Lnf1Ls21FXiTX4D7vu/ppfmCiDbnq0Uu4CIu4TLC1dpa2i2SwQIWkcURj8hRJBwi7gPavkGP9nPSIf8mxLNWzNGaxwd8RBoZ2GlVwgEnDuEwGjhzEhu0evT+A72fM/Wv8qxX3UdrE1/wFVvIwU+rBrVQcAJ1CKAeLifvq/en9b7bafSHeTZS4v2DNM6iCc04hxaE0IoOWp2IoAvd6NH7KbpxPC7x/uXmUYVIDDt81h+s0gqjDWtIerTPafSKnPKW7xXOZ9rrOEjDBjuiGMd9j7HvCu32PfTz46N1HH48xwu8NPVv076zj/5pWmcQhE/hs+BXjPUntJ+W6d91Wz93VYpUoZN2BH10+zGgGPffamZYf6dYr5mnQ23jJp1bmOLMK0wrxv1XZ+CYyDUM8Z7D+Mn69n/0E7Sf4SGdCXzjzHf8UIz7r84Y7ShitOMW38Wq6dma6fcN2pt4TecN3mJGb6r3P2njjtq0v99zbhZJpIp83+qYz6iTpbOEZazgk95X7/8v9v22WXeKzW7ONNj5X2Uvvn4vIDIa2N0Z81xn340Se9O0MwX9cmfy8xeMGYhh
+  </data>
+ </layer>
+ <layer name="top2" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJzt0LuOAQEUgOHTsxrsCzCMhi1s7VIhsRWdRGIk9gGUGvsQFHRqConLS6xCQ29fwKVB41dIxpgNwxQKJ/mSmWTyn8lJB0QyuHd8jvP3pV9khTU20GiXH+hrhr5DEXHiDS7l8vu+KhLFp3pbv2PoKzQDCEI16U/p5iz0F/T/dDtiNONIIGnSX9GtIo9RSGQcum3PabbcfIc9CvSz+DLZc5wZ7bnFvpuWB168o4Lvf/r3TpheBB+o48fmfopeGhm00LahX9Q1SjxrKGOAoaHf5eY9i3fXT+3K//7SnjzQb9Bv2nzz1zznHADkoSuv
+  </data>
+ </layer>
+</map>

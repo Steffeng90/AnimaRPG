@@ -1,12 +1,13 @@
 package com.mygdx.anima.sprites.character.zauber;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Steffen on 01.12.2016.
  */
 
-public class ZauberList {
+public class ZauberList implements Serializable {
     private static ArrayList<ZauberEntity> zauberListe;
 
     private ZauberEntity zauberslot1,zauberslot2,zauberslot3,zauberslot4, zauberAuswahl;

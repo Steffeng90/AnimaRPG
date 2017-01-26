@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.tools.Controller;
+import com.mygdx.anima.tools.listener.HauptmenuListener;
 import com.mygdx.anima.tools.listener.ReiterButtonListener;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -31,7 +33,7 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
 public class Menu implements Screen {
     public AnimaRPG game;
     private Viewport viewport;
-    Stage stage;
+    public Stage stage;
     Group anzeigeGroup;
     private boolean changeReiter;
     private final Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
@@ -88,21 +90,26 @@ public class Menu implements Screen {
         TextButton skillReiterButton= new TextButton("ZauberFixture", skin);
         TextButton inventarReiterButton= new TextButton("Ausruestung", skin);
         TextButton nutzbareItemsReiterButton= new TextButton("Benutzbar", skin);
+        TextButton hautpmenueButton=new TextButton("Hauptmenue", skin);
 
         //Listener hinzufügen
         charakterReiterButton.addListener(new ReiterButtonListener(this,1));
         skillReiterButton.addListener(new ReiterButtonListener(this,2));
         inventarReiterButton.addListener(new ReiterButtonListener(this,3));
         nutzbareItemsReiterButton.addListener(new ReiterButtonListener(this,4));
+        hautpmenueButton.addListener(new HauptmenuListener(this,skin,game));
+
 
         //Zur Zabelle hinzufügen
-        reiterTable.add(charakterReiterButton).size(reiterWidth, height / 4f);
+        reiterTable.add(charakterReiterButton).size(reiterWidth, height / 5f);
         reiterTable.row();
-        reiterTable.add(skillReiterButton).size(reiterWidth, height / 4f);
+        reiterTable.add(skillReiterButton).size(reiterWidth, height / 5f);
         reiterTable.row();
-        reiterTable.add(inventarReiterButton).size(reiterWidth, height / 4f);
+        reiterTable.add(inventarReiterButton).size(reiterWidth, height / 5f);
         reiterTable.row();
-        reiterTable.add(nutzbareItemsReiterButton).size(reiterWidth, height / 4f);
+        reiterTable.add(nutzbareItemsReiterButton).size(reiterWidth, height / 5f);
+        reiterTable.row();
+        reiterTable.add(hautpmenueButton).size(reiterWidth, height / 5f);
         return reiterTable;
     }
     public Skin getSkin() {return skin;}

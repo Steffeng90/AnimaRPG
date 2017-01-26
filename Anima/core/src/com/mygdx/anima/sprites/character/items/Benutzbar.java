@@ -12,8 +12,8 @@ public class Benutzbar extends Item {
     private String wertKategorie, beschreibung;
     private int wertUpgradeZahl,kategoriezahl;
 
-    public Benutzbar(String name, String itemKategorie, Vector2 grafikposi,int kategorie,int wertZahl, int goldWert) {
-        super(name, itemKategorie, grafikposi, goldWert);
+    public Benutzbar(String id,String name, String itemKategorie, Vector2 grafikposi,int kategorie,int wertZahl, int goldWert) {
+        super(id,name, itemKategorie, grafikposi, goldWert);
         switch (kategorie)
         {
             case 1: this.wertKategorie="Lebenspunkte";break;

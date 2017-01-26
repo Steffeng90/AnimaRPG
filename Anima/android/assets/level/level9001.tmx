@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="65">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="66">
  <tileset firstgid="1" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/town.png" width="512" height="512"/>
  </tileset>
@@ -123,8 +123,14 @@
  <objectgroup name="schatztruhen">
   <object id="51" x="224" y="144" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="ruestung1"/>
+    <property name="Inhalt" value="Schwert1"/>
     <property name="typ" value="1"/>
+   </properties>
+  </object>
+  <object id="65" x="160" y="368" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung1"/>
+    <property name="typ" value="2"/>
    </properties>
   </object>
  </objectgroup>

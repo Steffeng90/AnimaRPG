@@ -10,8 +10,8 @@ public class WaffeFern extends Ausruestung{
     private int schaden;
     private int animationsStufe;
 
-    public WaffeFern(String name, String itemKategorie, Vector2 grafikposi, int schaden, int goldWert,int animationsStufe){
-        super(name, itemKategorie, grafikposi, goldWert);
+    public WaffeFern(String id,String name, String itemKategorie, Vector2 grafikposi, int schaden, int goldWert,int animationsStufe){
+        super(id,name, itemKategorie, grafikposi, goldWert);
         this.schaden=schaden;
         this.animationsStufe=animationsStufe;
     }

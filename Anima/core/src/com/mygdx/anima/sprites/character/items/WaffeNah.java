@@ -11,8 +11,8 @@ public class WaffeNah extends Ausruestung{
     private int animationsStufe;
 
 
-    public WaffeNah(String name, String itemKategorie, Vector2 grafikposi, int schaden, int goldWert,int animationsStufe){
-        super(name, itemKategorie, grafikposi, goldWert);
+    public WaffeNah(String id,String name, String itemKategorie, Vector2 grafikposi, int schaden, int goldWert,int animationsStufe){
+        super(id, name, itemKategorie, grafikposi, goldWert);
         this.schaden=schaden;
         this.animationsStufe=animationsStufe;
 

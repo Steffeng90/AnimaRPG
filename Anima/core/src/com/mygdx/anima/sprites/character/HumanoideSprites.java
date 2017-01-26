@@ -148,7 +148,6 @@ public class HumanoideSprites extends Sprite{
         changeGrafiken(quelle);
         float speedAttack=(0.8f-(float)attackSpeed/100f);
         float speedLaufen=(1-(float)laufSpeed/100f);
-        Gdx.app.log("Attack"+speedAttack,"Laufen:"+speedLaufen);
         //spriteQuelle = new Texture(quelle);
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < framesWalk; i++) {
@@ -894,6 +893,7 @@ public class HumanoideSprites extends Sprite{
             Filter filter=fix.getFilterData();
             filter.categoryBits=AnimaRPG.NOTHING_BIT;
             fix.setFilterData(filter);}
+        b2body.setLinearVelocity(new Vector2(0,0));
         runDying=true;
     }
     // Diese Methode zerstört die B2bodys und alle Fixtures, ohne EP zu geben.
@@ -919,7 +919,7 @@ public class HumanoideSprites extends Sprite{
         if(!runMeleeAnimation && meleeExists && b2body!=null){
             b2body.destroyFixture(meleeFixture);
             meleeExists=false;triggerFixture=true;}
-       //s else(bowFixtureErzeugen){
+       //waffenNah else(bowFixtureErzeugen){
         regenerationTimer+=dt;
         if(regenerationTimer>=3 && getCurrentMana()<getMaxMana()){
             setCurrentMana(getCurrentMana()+getRegMana());
@@ -1058,7 +1058,6 @@ public class HumanoideSprites extends Sprite{
     public void setMaxHitpoints(int maxHitpoints) {
         int temp=this.maxHitpoints;
         this.maxHitpoints = maxHitpoints;
-        Gdx.app.log("","der wert der Hitpoints:"+maxHitpoints);
         setCurrentHitpoints(getCurrentHitpoints()+(maxHitpoints-temp));
     }
 

@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Helm extends Ausruestung{
     private int lebenspunkte,zauberkraft;
-    public Helm(String name, String itemKategorie, Vector2 grafikposi, int lebenspunkte, int zauberkraft, int goldWert){
-        super(name, itemKategorie, grafikposi, goldWert);
+    public Helm(String id,String name, String itemKategorie, Vector2 grafikposi, int lebenspunkte, int zauberkraft, int goldWert){
+        super(id,name, itemKategorie, grafikposi, goldWert);
         this.lebenspunkte=lebenspunkte;
         this.zauberkraft=zauberkraft;
     }

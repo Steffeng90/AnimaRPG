@@ -23,15 +23,19 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.EnemyGenerator;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
 
 import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.BARRIERE_BIT;
 import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
 import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
+import static com.mygdx.anima.AnimaRPG.getHeld;
 import static com.mygdx.anima.screens.Playscreen.activeTruhen;
 import static com.mygdx.anima.screens.Playscreen.getMapEinstieg;
 import static com.mygdx.anima.screens.Playscreen.truhenPool;
+import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -59,10 +63,6 @@ public class B2WorldCreator {
 
         try {
             if (map.getLayers().get("barrieren") != null) {
-                //TODO PoliLine Probieren
-                /*for (MapObject object : map.getLayers().get("barrieren").getObjects()) {
-                     Gdx.app.log("RectFound", "" + object.getClass());
-                }*/
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(RectangleMapObject.class)) {
 
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -89,7 +89,6 @@ public class B2WorldCreator {
                     body.createFixture(fdef);
                 }
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(PolylineMapObject.class)) {
-                    Gdx.app.log("Trigger bei:", "Chain");
                     float[] vertices = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
 
                     Vector2[] worldVertices = new Vector2[vertices.length / 2];
@@ -120,13 +119,6 @@ public class B2WorldCreator {
             }
             // Erzeugen von Ein und Ausgängen
             allAusgang = new Array<Gebietswechsel>();
-        /*for (MapObject object : map.getLayers().get("areaborder").getObjects().getByType(RectangleMapObject.class)) {
-                int nextMap = Integer.valueOf(object.getProperties().get("nextMap").toString());
-                int richtungInt = getAreaInt(object.getProperties().get("ausgang").toString());
-                Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                allAusgang.add(new Gebietswechsel(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM, nextMap, richtungInt, rect));
-                // Gdx.app.log("Wechsel erzeugt"," ");
-            }*/
         for (MapObject object : map.getLayers().get("areaborder").getObjects().getByType(PolylineMapObject.class)) {
             float[] vertices = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
 
@@ -157,18 +149,27 @@ public class B2WorldCreator {
                 for (MapObject object : map.getLayers().get("enemy").getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     EnemyGenerator.generateEnemy(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,object.getProperties().get("typ").toString());
-                    Gdx.app.log("Raider erzeugt", "");
                 }
             }
             // Erzeugen von Schatztruhen
             //allSchatztruhen = new Array<Schatztruhe>();
             if (map.getLayers().get("schatztruhen") != null) {
                 for (MapObject object : map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
+                    int truhenId=(Integer) object.getProperties().get("id");
+                    boolean boolWert=true;
+                    if(getHeld()!=null){
+                        for(SchatztruhenSpeicherObjekt objekt:getHeld().getGeoeffneteTruhen()){
+                            if(aktuelleKartenId==objekt.getMapID() && truhenId==objekt.getTruhenID())
+                            {
+                                boolWert=false;
+                            }
+                        }
+                    }
                     String inhalt = (String) object.getProperties().get("Inhalt");
                     int typ=Integer.valueOf((String) object.getProperties().get("typ"));
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     Schatztruhe truhe=truhenPool.obtain();
-                    truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ, inhalt);
+                    truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ,truhenId, inhalt,boolWert);
                     activeTruhen.add(truhe);
                 }
             }

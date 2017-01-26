@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Handschuhe extends Ausruestung{
     private int ruestung,angriffgeschwindigkeit;
-    public Handschuhe(String name, String itemKategorie, Vector2 grafikposi, int ruestung,int angriffgeschwindigkeit, int goldWert){
-        super(name, itemKategorie, grafikposi, goldWert);
+    public Handschuhe(String id,String name, String itemKategorie, Vector2 grafikposi, int ruestung,int angriffgeschwindigkeit, int goldWert){
+        super(id, name, itemKategorie, grafikposi, goldWert);
         this.ruestung=ruestung;
         this.angriffgeschwindigkeit=angriffgeschwindigkeit;
     }

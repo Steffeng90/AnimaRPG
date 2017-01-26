@@ -56,10 +56,10 @@ public class ZauberGenerator {
 
                switch (kategorie){
                     case 1:
-                        getHeld().getZauberList().addZauber(new ZauberEntity(zauberName,"staerkung", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
+                        getHeld().getZauberList().addZauber(new ZauberEntity(typ,zauberName,"staerkung", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
                         break;
                     case 2:
-                        getHeld().getZauberList().addZauber(new ZauberEntity(zauberName,"schaden", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
+                        getHeld().getZauberList().addZauber(new ZauberEntity(typ,zauberName,"schaden", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
                         break;
                 }
                 break;}
