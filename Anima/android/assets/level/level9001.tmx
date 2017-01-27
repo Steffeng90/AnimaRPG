@@ -124,6 +124,7 @@
   <object id="51" x="224" y="144" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Schwert1"/>
+    <property name="nachbed" value="1"/>
     <property name="typ" value="1"/>
    </properties>
   </object>

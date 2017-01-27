@@ -46,6 +46,8 @@ public class Held extends HumanoideSprites implements Serializable{
     private InventarList heldenInventar;
     private ZauberList zauberList;
     private int aktuellerZauberInt;
+    private TextureRegion dialogBild;
+    private boolean[] eventList;
     //Dieser Wert wird über Methoden übergeben, um den Held neu zu positionieren, bei Kartenwechsel
     private Vector2 heldPosition;
     //Statistik-Werte
@@ -70,7 +72,7 @@ public class Held extends HumanoideSprites implements Serializable{
         geoeffneteTruhen= new Array<SchatztruhenSpeicherObjekt>();
         heldenInventar=new InventarList();
         zauberList=new ZauberList();
-
+        setEventList();
         // Gameplay-Variablen
         setErfahrungsstufen();
         soundLoopAktiv=false;
@@ -207,7 +209,6 @@ public class Held extends HumanoideSprites implements Serializable{
         BodyDef bdef=new BodyDef();
         bdef.position.set(heldPosition);
         bdef.type=BodyDef.BodyType.DynamicBody;
-        Gdx.app.log("world ist gleich","+"+world);
         b2body=world.createBody(bdef);
         createSensor();
         FixtureDef fdef=new FixtureDef();
@@ -216,7 +217,7 @@ public class Held extends HumanoideSprites implements Serializable{
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
         fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
-                | ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR;
+                | ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.EVENT_AREA_BIT;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
         // Oberkörpershape
@@ -395,6 +396,10 @@ public class Held extends HumanoideSprites implements Serializable{
     public TextureRegion getProfilbild(){
         return standingDownSprite;
     }
+    public TextureRegion getDialogbild(){
+        return dialogBild;
+    }
+
 
     public synchronized int getCurrentErfahrung() {
         return currentErfahrung;
@@ -526,6 +531,8 @@ public class Held extends HumanoideSprites implements Serializable{
             zeit4=getZauberList().getZauberslot(3).getZauberZeit();
         }
         updateTextures("character/"+w1+""+w2,getAngriffgeschwindigkeit(),getGeschwindigkeitLaufen(),zeit1,zeit2,zeit3,zeit4);
+        dialogBild=new TextureRegion(standingDownSprite,20,8,24,32);
+
     };
     public int getStaerke() {
         return staerke;
@@ -675,7 +682,22 @@ public class Held extends HumanoideSprites implements Serializable{
             lastWert=(int) (lastWert*1.2);
             lastWert-=(lastWert%10);
             erfahrungsstufen[i]=lastWert;
-            // Gdx.app.log("Stufe "+i+" EPWert:",""+erfahrungsstufen[i]);
+        }
+    }
+    public boolean[] getEventList() {
+        return eventList;
+    }
+    public void setEventList(boolean[] eventList) {
+        this.eventList = eventList;
+    }
+    public void setEventList() {
+        this.eventList=new boolean[50];
+       /* for(boolean event:eventList){
+            event=true;
+            Gdx.app.log("werte gesetzt","");
+        }*/
+        for(int i=0;i<50;i++){
+            eventList[i]=false;
         }
     }
 }

@@ -18,9 +18,12 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
+import com.mygdx.anima.scenes.DialogFenster;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.EnemyGenerator;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.DialogArea;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
@@ -42,6 +45,7 @@ import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
  */
 
 public class B2WorldCreator {
+    AnimaRPG game;
     World world;
     TiledMap map;
     Body body;
@@ -49,13 +53,12 @@ public class B2WorldCreator {
     FixtureDef fdef;
     PolygonShape pshape;
     CircleShape cshape;
-    public Array<Enemy> allEnemy;
-    public Array<Schatztruhe> allSchatztruhen;
     public Array<Gebietswechsel> allAusgang;
 
     public B2WorldCreator(Playscreen screen) {
         this.world = screen.getWorld();
         this.map = screen.getMap();
+        this.game=screen.getGame();
         bdef = new BodyDef();
         fdef = new FixtureDef();
         pshape = new PolygonShape();
@@ -138,10 +141,19 @@ public class B2WorldCreator {
             /*fdef.shape = chain;
             fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
             body.createFixture(fdef);*/
-            int nextMap = Integer.valueOf(object.getProperties().get("nextMap").toString());
-            int richtungInt = getAreaInt(object.getProperties().get("ausgang").toString());
-            // Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            allAusgang.add(new Gebietswechsel(screen,worldVertices, nextMap, richtungInt));
+            if(object.getProperties().containsKey("nextMap")){
+                int nextMap = Integer.valueOf(object.getProperties().get("nextMap").toString());
+                int richtungInt = getAreaInt(object.getProperties().get("ausgang").toString());
+                // Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                allAusgang.add(new Gebietswechsel(screen,worldVertices, nextMap, richtungInt));
+            }
+            else{
+                String dialogID=object.getProperties().get("dialog").toString();
+                int event=Integer.parseInt(object.getProperties().get("vorbed").toString());
+
+                new DialogArea(screen,worldVertices,dialogID,event);
+            }
+
 
         }
             // Erzeugen von Gegner
@@ -152,7 +164,6 @@ public class B2WorldCreator {
                 }
             }
             // Erzeugen von Schatztruhen
-            //allSchatztruhen = new Array<Schatztruhe>();
             if (map.getLayers().get("schatztruhen") != null) {
                 for (MapObject object : map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
                     int truhenId=(Integer) object.getProperties().get("id");
@@ -165,11 +176,18 @@ public class B2WorldCreator {
                             }
                         }
                     }
+                    int vorbed=0,nachbed=0;
+                    if(object.getProperties().containsKey("vorbed")){
+                        vorbed=Integer.parseInt((String)object.getProperties().get("vorbed"));
+                    }
+                    if(object.getProperties().containsKey("nachbed")){
+                        nachbed=Integer.parseInt((String)object.getProperties().get("nachbed"));
+                    }
                     String inhalt = (String) object.getProperties().get("Inhalt");
                     int typ=Integer.valueOf((String) object.getProperties().get("typ"));
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     Schatztruhe truhe=truhenPool.obtain();
-                    truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ,truhenId, inhalt,boolWert);
+                    truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ,truhenId, inhalt,boolWert,vorbed,nachbed);
                     activeTruhen.add(truhe);
                 }
             }
@@ -184,19 +202,6 @@ public class B2WorldCreator {
                 }
             }
         }
-
-
-    public Array<Enemy> getAllEnemies(){ return allEnemy;}
-    // public Array<Schatztruhe> getAllSchatztruhen(){ return allSchatztruhen;}
-    public void removeEnemy(Enemy enemy){
-        allEnemy.removeValue(enemy,true);
-    }
-    public Array<Gebietswechsel> getAllAusgang() {
-        return allAusgang;
-    }
-    public void setAllAusgang(Array<Gebietswechsel> allAusgang) {
-        this.allAusgang = allAusgang;
-    }
     public int getAreaInt(String richtung){
         // Wenn hier Häuser hinzugefügt werden, dann muss auch getAusgangsrichtung in Gebietswechsel angepasst werden
         if (richtung.equals("sued")) {return 1;

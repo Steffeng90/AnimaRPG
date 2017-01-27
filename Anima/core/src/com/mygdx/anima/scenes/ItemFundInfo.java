@@ -54,8 +54,7 @@ public class ItemFundInfo implements Disposable {
 
     public ItemFundInfo(final Playscreen screen, SpriteBatch sb,ItemSprite item) {
         this.screen = screen;
-        AnimaRPG.assetManager.get("audio/sounds/itemFund.wav", Sound.class).play();
-        Gdx.app.log("","itemfundInfo erstellt");
+        AnimaRPG.assetManager.get("audio/sounds/itemFund.wav", Sound.class).play(0.5f);
         infoWidth = (float) (AnimaRPG.W_WIDTH * 2);
         infoHeight = (float) (AnimaRPG.W_Height * 2);
         viewport = new FitViewport(infoWidth, infoHeight, new OrthographicCamera());
@@ -109,7 +108,6 @@ public class ItemFundInfo implements Disposable {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (windowTimer >= 0.4f) {
-                    Gdx.app.log("Klicker erkannt", "");
                     geklickt = true;
                 }
                 return true;

@@ -13,6 +13,7 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.DialogArea;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
@@ -145,6 +146,12 @@ public class WorldContactListener implements ContactListener {
                 {if(((RaiderHealer) fixB.getUserData()).getCurrentMana()>=4){((Raider)fixA.getUserData()).healer=(RaiderHealer) fixB.getUserData();}}
                 else{
                 if(((RaiderHealer) fixA.getUserData()).getCurrentMana()>=4){((Raider)fixB.getUserData()).healer=(RaiderHealer) fixA.getUserData();}}
+                break;
+            case AnimaRPG.HERO_BIT | AnimaRPG.EVENT_AREA_BIT:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.EVENT_AREA_BIT)
+                {((DialogArea)fixA.getUserData()).checkForEvents();}
+                else{((DialogArea)fixB.getUserData()).checkForEvents();}
+                Gdx.app.log("Dialogarea getroffen","");
                 break;
             default:
                 break;

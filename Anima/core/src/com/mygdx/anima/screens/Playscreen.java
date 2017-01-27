@@ -21,8 +21,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.AnzeigenDisplay;
+import com.mygdx.anima.scenes.DialogFenster;
 import com.mygdx.anima.scenes.ItemFundInfo;
 import com.mygdx.anima.scenes.LevelUpInfo;
+import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
@@ -60,6 +62,7 @@ public class Playscreen implements Screen{
     private static Viewport gameViewPort;
     Controller controller;
     ItemFundInfo itemWindow;
+    DialogFenster activeDialog;
     private LevelUpInfo levelUpWindow;
     BitmapFont bf;
 
@@ -119,7 +122,7 @@ public class Playscreen implements Screen{
     }
     public Playscreen(AnimaRPG game) {
         this.game = game;
-        defineScreen(game,4);
+        defineScreen(game,1);
         spieler = new Held(this,spielerPosition);
         controller = new Controller(game);
         anzeige = new AnzeigenDisplay(game.batch, spieler);
@@ -177,11 +180,11 @@ public class Playscreen implements Screen{
         renderer = kartenManager.karteErstellen(kartenID,gameViewPort);
 
         // Musik
-        Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
+        /*Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
-
+*/
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
         b2dr = new Box2DDebugRenderer();
@@ -278,7 +281,7 @@ public class Playscreen implements Screen{
                         schadenlabelPool.free(sl);
                     }
             }}
-            if (getCurrentItemsprite() != null || getLevelUpWindow()!=null) {
+            if (getCurrentItemsprite() != null || getLevelUpWindow()!=null ||getActiveDialog()!=null) {
                 setCurrentGameState(GameState.PAUSE);
             }
 
@@ -316,6 +319,22 @@ public class Playscreen implements Screen{
                             levelUpWindow=null;
                             Gdx.input.setInputProcessor(controller.getStage());
                             setCurrentGameState(GameState.RUN);
+                        }
+                    }
+                    if(activeDialog!=null){
+
+                        activeDialog.draw();
+                        activeDialog.update(delta);
+                        if (activeDialog.isGeklickt()) {
+                            if((Integer.parseInt(activeDialog.getNachfolger()))!=0){
+                                DialogGenerator.generateDialog(this,game.batch,activeDialog.getNachfolger());
+                            }
+                            else {
+                                activeDialog.dispose();
+                                activeDialog=null;
+                                Gdx.input.setInputProcessor(controller.getStage());
+                                setCurrentGameState(GameState.RUN);
+                            }
                         }
                     }
 
@@ -565,12 +584,28 @@ public class Playscreen implements Screen{
         Playscreen.mapEinstieg = tempMapEinstieg;
     }
 
+    public AnimaRPG getGame() {
+        return game;
+    }
+
+    public void setGame(AnimaRPG game) {
+        this.game = game;
+    }
+
     public LevelUpInfo getLevelUpWindow() {
         return levelUpWindow;
     }
 
     public void setLevelUpWindow(LevelUpInfo levelUpWindow) {
         this.levelUpWindow = levelUpWindow;
+    }
+
+    public DialogFenster getActiveDialog() {
+        return activeDialog;
+    }
+
+    public void setActiveDialog(DialogFenster activeDialog) {
+        this.activeDialog = activeDialog;
     }
 
     public void aktiveNPCsEntfernen(){

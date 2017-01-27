@@ -57,7 +57,6 @@ public class ItemGenerator {
                 vector = new Vector2(item.get("vectorX").getAsFloat(), item.get("vectorY").getAsFloat());
                 goldWert = item.get("goldWert").getAsInt();
                 kategorie = item.get("kategorie").getAsInt();
-                Gdx.app.log("IDIDIDID",""+id);
                 switch (kategorie){
                     case 1:
                         schaden = item.get("schaden").getAsInt();

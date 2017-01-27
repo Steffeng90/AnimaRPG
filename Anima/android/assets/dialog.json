@@ -1,0 +1,16 @@
+{
+  "dialoge": [
+    {
+      "id": 1,
+      "sprecher": "Aria",
+      "inhalt": "Ich sollte zuerst nach einer Waffe\nsuchen, bevor ich tiefer in den\nWald laufe",
+      "nachfolger":2
+    },
+    {
+      "id": 2,
+      "sprecher": "Aria",
+      "inhalt": "Vielleicht find ich in dem Haus\netwas, das mir weiterhilft",
+      "nachfolger":0
+    }
+  ]
+}

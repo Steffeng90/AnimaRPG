@@ -72,6 +72,7 @@ public class AnimaRPG extends Game {
 	public static final short ENEMY_SEARCH_HEALER=3;
 	public static final short ENEMY_OBERKOERPER=5;
 	public static final short HERO_OBERKOERPER=6;
+	public static final short EVENT_AREA_BIT=7;
 
 
 
