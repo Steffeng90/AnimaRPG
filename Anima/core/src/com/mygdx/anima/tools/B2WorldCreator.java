@@ -149,9 +149,14 @@ public class B2WorldCreator {
             }
             else{
                 String dialogID=object.getProperties().get("dialog").toString();
-                int event=Integer.parseInt(object.getProperties().get("vorbed").toString());
-
-                new DialogArea(screen,worldVertices,dialogID,event);
+                int vorbed=0,nachbedfalse=0;
+                if(object.getProperties().containsKey("vorbed")){
+                    vorbed=Integer.parseInt(object.getProperties().get("vorbed").toString());
+                }
+                if(object.getProperties().containsKey("nachbedfalse")){
+                    nachbedfalse=Integer.parseInt(object.getProperties().get("nachbedfalse").toString());
+                }
+                new DialogArea(screen,worldVertices,dialogID,vorbed,nachbedfalse);
             }
 
 
@@ -167,28 +172,33 @@ public class B2WorldCreator {
             if (map.getLayers().get("schatztruhen") != null) {
                 for (MapObject object : map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
                     int truhenId=(Integer) object.getProperties().get("id");
-                    boolean boolWert=true;
+                    boolean isClosed=true;
                     if(getHeld()!=null){
                         for(SchatztruhenSpeicherObjekt objekt:getHeld().getGeoeffneteTruhen()){
                             if(aktuelleKartenId==objekt.getMapID() && truhenId==objekt.getTruhenID())
                             {
-                                boolWert=false;
+                                isClosed=false;
                             }
                         }
                     }
-                    int vorbed=0,nachbed=0;
+                    int vorbed=0,nachbedfalse=0,nachbedtrue=0;
                     if(object.getProperties().containsKey("vorbed")){
                         vorbed=Integer.parseInt((String)object.getProperties().get("vorbed"));
                     }
-                    if(object.getProperties().containsKey("nachbed")){
-                        nachbed=Integer.parseInt((String)object.getProperties().get("nachbed"));
+                    if(object.getProperties().containsKey("nachbedtrue")){
+                        nachbedtrue=Integer.parseInt((String)object.getProperties().get("nachbedtrue"));
+                    }
+                    if(object.getProperties().containsKey("nachbedfalse")){
+                        nachbedfalse=Integer.parseInt((String)object.getProperties().get("nachbedfalse"));
                     }
                     String inhalt = (String) object.getProperties().get("Inhalt");
                     int typ=Integer.valueOf((String) object.getProperties().get("typ"));
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     Schatztruhe truhe=truhenPool.obtain();
-                    truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ,truhenId, inhalt,boolWert,vorbed,nachbed);
-                    activeTruhen.add(truhe);
+                    if(vorbed==0 || (vorbed!=0 && getHeld().getEventList()[vorbed]==true)){
+                        truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ,truhenId, inhalt,isClosed,nachbedfalse,nachbedtrue);
+                        activeTruhen.add(truhe);
+                    }
                 }
             }
             if (screen.getSpieler() != null) {

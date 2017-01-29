@@ -22,11 +22,12 @@ public class DialogArea {
     Playscreen screen;
     Body body;
     private String id;
-    private int vorbed;
+    private int vorbed,nachbedfalse;
 
-    public DialogArea(Playscreen screen, Vector2[]worldVertices, String id, int vorbed) {
+    public DialogArea(Playscreen screen, Vector2[]worldVertices, String id, int vorbed,int nachbedfalse) {
         this.id = id;
         this.vorbed=vorbed;
+        this.nachbedfalse=nachbedfalse;
         this.screen=screen;
         BodyDef bdef = new BodyDef();
         body = screen.getWorld().createBody(bdef);
@@ -50,11 +51,12 @@ public class DialogArea {
     }
 
     public void checkForEvents(){
-        if(!getHeld().getEventList()[vorbed]){
+        if(getHeld().getEventList()[vorbed]){
             createDialog();
         }
     }
     public void createDialog(){
         DialogGenerator.generateDialog(screen, screen.getGame().batch, id);
+        getHeld().getEventList()[nachbedfalse]=false;
     }
 }

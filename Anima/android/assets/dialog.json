@@ -11,6 +11,12 @@
       "sprecher": "Aria",
       "inhalt": "Vielleicht find ich in dem Haus\netwas, das mir weiterhilft",
       "nachfolger":0
+    },
+    {
+      "id": 3,
+      "sprecher": "Aria",
+      "inhalt": "Ich sollte mich mit dem Dolch ausrüsten. Berühre das Inventar-Icon in der rechten oberen Ecke.\nDort kann du im Reiter Ausruestung den Dolch auswaehlen und anlegen.",
+      "nachfolger":0
     }
   ]
 }

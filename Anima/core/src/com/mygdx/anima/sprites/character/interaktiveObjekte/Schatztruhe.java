@@ -35,18 +35,18 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
     TextureRegion spriteClose,spriteOpen;
     public float stateTimer;
     public String inhalt;
-    public int truhenID, vorbed,nachbed;
+    public int truhenID,nachbedfalse,nachbedtrue;
 
     public Schatztruhe(){
        super();
     }
-    public void init(Playscreen screen, float x, float y,int truhenTyp,int truhenID,String inhalt,boolean isClosed,int vorbed,int nachbed){
+    public void init(Playscreen screen, float x, float y,int truhenTyp,int truhenID,String inhalt,boolean isClosed,int nachbedfalse,int nachbedtrue){
         super.init(screen,x,y);
         this.inhalt=inhalt;
         defineItem();
         this.truhenID=truhenID;
-        this.vorbed=vorbed;
-        this.nachbed=nachbed;
+        this.nachbedtrue=nachbedtrue;
+        this.nachbedfalse=nachbedfalse;
         int xAuswahlBereich;
         if(truhenTyp==1){xAuswahlBereich=0;}
         else{xAuswahlBereich=192;}
@@ -125,11 +125,11 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
                 region = openTruhe.getKeyFrame(stateTimer, false);
                 if(openTruhe.isAnimationFinished(stateTimer)){
                     runOpenAnimation=false;closed=false;
-                    if(vorbed!=0){
-                        getHeld().getEventList()[vorbed]=false;
+                    if(nachbedtrue!=0){
+                        getHeld().getEventList()[nachbedtrue]=true;
                     }
-                    if(nachbed!=0){
-                        getHeld().getEventList()[nachbed]=true;
+                    if(nachbedfalse!=0){
+                        getHeld().getEventList()[nachbedfalse]=false;
                     }
                     screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));
                     getHeld().getGeoeffneteTruhen().add(new SchatztruhenSpeicherObjekt(aktuelleKartenId,truhenID));

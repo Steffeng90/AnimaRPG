@@ -59,10 +59,19 @@ public class GameData implements Serializable{
         {
             zauber[i]=getHeld().getZauberList().getZauberList().get(i).getId();
         }
-        zauberslot1=getHeld().getZauberList().getZauberslot(1).getId();
-        zauberslot2=getHeld().getZauberList().getZauberslot(2).getId();
-        zauberslot3=getHeld().getZauberList().getZauberslot(3).getId();
-        zauberslot4=getHeld().getZauberList().getZauberslot(4).getId();
+        if(getHeld().getZauberList().getZauberslot(1)!=null){
+            zauberslot1=getHeld().getZauberList().getZauberslot(1).getId();
+        }
+        if(getHeld().getZauberList().getZauberslot(2)!=null){
+            zauberslot2=getHeld().getZauberList().getZauberslot(2).getId();
+        }
+        if(getHeld().getZauberList().getZauberslot(3)!=null){
+            zauberslot3=getHeld().getZauberList().getZauberslot(3).getId();
+        }
+        if(getHeld().getZauberList().getZauberslot(4)!=null){
+            zauberslot4=getHeld().getZauberList().getZauberslot(4).getId();
+        }
+
         size=getHeld().getGeoeffneteTruhen().size;
         geoeffneteTruhenMaps=new int[size];
         geoeffneteTruhenId=new int[size];

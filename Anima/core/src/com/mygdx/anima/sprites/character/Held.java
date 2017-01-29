@@ -699,5 +699,6 @@ public class Held extends HumanoideSprites implements Serializable{
         for(int i=0;i<50;i++){
             eventList[i]=false;
         }
+        eventList[1]=true;
     }
 }
