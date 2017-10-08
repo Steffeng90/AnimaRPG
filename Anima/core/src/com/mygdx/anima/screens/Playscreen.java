@@ -34,6 +34,7 @@ import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
@@ -110,6 +111,8 @@ public class Playscreen implements Screen{
     public static Array<Raider> activeRaider= new Array<Raider>();
     public static Array<RaiderArcher> activeRaiderArcher= new Array<RaiderArcher>();
     public static Array<RaiderHealer> activeRaiderHealer= new Array<RaiderHealer>();
+    public static Array<FriendlyNPC> activeNPC= new Array<FriendlyNPC>();
+
     public Playscreen(AnimaRPG game,GameData gameData){
         this.game = game;
         defineScreen(game,gameData.currentMapId);
@@ -180,11 +183,11 @@ public class Playscreen implements Screen{
         renderer = kartenManager.karteErstellen(kartenID,gameViewPort);
 
         // Musik
-        /*Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
+        Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
-*/
+
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
         b2dr = new Box2DDebugRenderer();
@@ -251,6 +254,10 @@ public class Playscreen implements Screen{
         }
         for (Raider raider:activeRaider){
             raider.draw(game.batch);
+        }
+
+        for (FriendlyNPC npc:activeNPC){
+            npc.draw(game.batch);
         }
         for(RaiderHealer raiderHealer:activeRaiderHealer){
             raiderHealer.draw(game.batch);
@@ -327,7 +334,7 @@ public class Playscreen implements Screen{
                         activeDialog.update(delta);
                         if (activeDialog.isGeklickt()) {
                             if((Integer.parseInt(activeDialog.getNachfolger()))!=0){
-                                DialogGenerator.generateDialog(this,game.batch,activeDialog.getNachfolger());
+                                DialogGenerator.generateDialog(this,game.batch,activeDialog.getNachfolger(),null);
                             }
                             else {
                                 activeDialog.dispose();
@@ -353,6 +360,8 @@ public class Playscreen implements Screen{
             spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isUsePressed()) {
             spieler.useObject();spieler.b2body.setLinearVelocity(0, 0);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B) | controller.isTalkPressed()) {
+           spieler.useNPC();controller.talkPressed=false; spieler.b2body.setLinearVelocity(0, 0);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N) | controller.isBowPressed()) {
             spieler.bowAttack();spieler.b2body.setLinearVelocity(0, 0);
         } else if (controller.isCast1Pressed()) {
@@ -438,6 +447,14 @@ public class Playscreen implements Screen{
                 kartenManager.isEnemyinRange(raider);
                 raider.update(spieler,dt);
             }
+        }
+        //FriendlyNPC-Pool
+        FriendlyNPC npc;
+        len = activeNPC.size;
+        for (int i = len; --i >= 0;) {
+            npc = activeNPC.get(i);
+            npc.update();
+
         }
         // RaiderArcher
         RaiderArcher raiderArcher;
@@ -641,6 +658,14 @@ public class Playscreen implements Screen{
             NPCPool.getRaiderPool().free(raider);
             }
         }
+        size= activeNPC.size;
+        FriendlyNPC npc;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            npc = activeNPC.get(i);
+            activeNPC.removeIndex(i);
+            NPCPool.getFriendlyNPCPool().free(npc);
+        }
+        }
         size= activeRaiderArcher.size;
         RaiderArcher raiderArcher;
         if(size>0){ for (int i = size; --i >= 0;) {
@@ -657,8 +682,6 @@ public class Playscreen implements Screen{
             NPCPool.getRaiderHealerPool().free(raiderHealer);
         }
         }
-
-
         Array<Body> bodyArray=new Array<Body>();
         world.getBodies(bodyArray);
         //world.clearForces();

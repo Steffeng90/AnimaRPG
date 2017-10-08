@@ -2,6 +2,7 @@ package com.mygdx.anima.sprites.character.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -10,6 +11,7 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -79,8 +81,11 @@ public class EnemyGenerator {
                 Playscreen.activeRaiderHealer.add(raiderHealer);break;
         }
         }
-
-
+    public static void generateNPC(Playscreen screen, Rectangle rect, String typ,String dialogID) {
+        FriendlyNPC friendlyNPC=NPCPool.getFriendlyNPCPool().obtain();
+        friendlyNPC.init(screen,rect,typ,dialogID);
+        Playscreen.activeNPC.add(friendlyNPC);
+    }
     }
 
 

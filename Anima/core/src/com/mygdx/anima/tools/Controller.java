@@ -31,10 +31,10 @@ public class Controller {
     AnimaRPG game;
     Viewport viewport;
     private Stage stage;
-    public static boolean updateDurchfuehren,useUpdate;
-    boolean upPressed,downPressed,leftPressed,rightPressed,
-    meleePressed,bowPressed,cast1Pressed,cast2Pressed,cast3Pressed,cast4Pressed, usePressed ;
-    ImageButton meleeButton,useButton,bowButton,cast1Button,cast2Button,cast3Button,cast4Button;
+    public static boolean updateDurchfuehren,useUpdate,talkUpdate;
+    public boolean upPressed,downPressed,leftPressed,rightPressed,
+    meleePressed,bowPressed,cast1Pressed,cast2Pressed,cast3Pressed,cast4Pressed, usePressed,talkPressed ;
+    ImageButton meleeButton,useButton,talkButton,bowButton,cast1Button,cast2Button,cast3Button,cast4Button;
     ImageButton.ImageButtonStyle style;
     Table tableRechts;
 
@@ -42,6 +42,8 @@ public class Controller {
     private Touchpad touchpad;
     public int buttonSize;
     Skin skin=new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+    SpriteDrawable background = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage.png"))));
+    SpriteDrawable background_aktiv = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage_aktiv.png"))));
 
 
     public Controller(final AnimaRPG game){
@@ -77,9 +79,7 @@ public class Controller {
         stage.addActor(inventarImg);
     }
     public void rechteTabelleDefinieren() {
-        SpriteDrawable background = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage.png"))));
-        SpriteDrawable background_aktiv = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage_aktiv.png"))));
-        // Test für Dynamische Buttons#
+       // Test für Dynamische Buttons#
         if (getHeld().getHeldenInventar().getAngelegtWaffeNah() != null) {
             style = new ImageButton.ImageButtonStyle();
             style.up = background;
@@ -203,7 +203,10 @@ public class Controller {
         tableRight.row().pad(5,0,5,5);
         if (getHeld().objectInReichweite) {
             tableRight.add(useButton).size(buttonSize,buttonSize);
-        } else {        tableRight.add().size(buttonSize,buttonSize);}
+        } else if (getHeld().npcInReichweite){
+            tableRight.add(talkButton).size(buttonSize,buttonSize);
+        }
+        else {          tableRight.add().size(buttonSize,buttonSize);}
         if (getHeld().getHeldenInventar().getAngelegtWaffeFern() != null) {
             tableRight.add(bowButton).size(buttonSize,buttonSize);
         } else {        tableRight.add().size(buttonSize,buttonSize);}
@@ -229,6 +232,28 @@ public class Controller {
             tableRechts.clear();
             tableRechts=rechteTabelleZeichnen();
             stage.addActor((tableRechts));
+        }
+        else if(talkUpdate){
+            talkUpdate=false;
+            updateTalkButton();
+            tableRechts.clear();
+            tableRechts=rechteTabelleZeichnen();
+            stage.addActor((tableRechts));
+        }
+    }
+    //talkButton ist ausgelagert, weil sich Icon während dem game ständig verändern kann.
+    public void updateTalkButton(){
+        if(getHeld().npc!=null){
+            style = new ImageButton.ImageButtonStyle();
+            style.up = background;
+            style.down = background_aktiv;style.imageUp = new SpriteDrawable(new Sprite((new TextureRegion(getHeld().npc.getProfilbild()))));
+            style.imageDown = new SpriteDrawable(new Sprite((new TextureRegion(getHeld().npc.getProfilbild()))));
+            talkButton = new ImageButton(style);
+            talkButton.setSize(buttonSize, buttonSize);
+            talkButton.addListener(new InputListener() {
+                @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {talkPressed = false;}
+                @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {talkPressed = true;return true;}
+            });
         }
     }
     public boolean isUpPressed() {
@@ -270,6 +295,10 @@ public class Controller {
     public boolean isUsePressed() {
         return usePressed;
     }
+    public boolean isTalkPressed() {
+        return talkPressed;
+    }
+
 
     public void dispose(){
         stage.dispose();

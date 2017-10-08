@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 
 /**
  * Created by Steffen on 22.01.2017.
@@ -23,6 +24,12 @@ public class NPCPool {
         @Override
         protected RaiderArcher newObject() {
             return new RaiderArcher();
+        }
+    };
+    private static final Pool<FriendlyNPC> friendlyNPCPool = new Pool<FriendlyNPC>() {
+        @Override
+        protected FriendlyNPC newObject() {
+            return new FriendlyNPC();
         }
     };
     private static final Pool<RaiderHealer> raiderHealerPool = new Pool<RaiderHealer>() {
@@ -66,4 +73,6 @@ public class NPCPool {
     public static Pool<RaiderHealer> getRaiderHealerPool() {
         return raiderHealerPool;
     }
+
+    public static Pool<FriendlyNPC> getFriendlyNPCPool(){return friendlyNPCPool;}
 }

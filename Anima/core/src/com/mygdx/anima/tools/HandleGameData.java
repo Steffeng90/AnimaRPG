@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 
 import jdk.nashorn.internal.runtime.Context;
 
+import static com.badlogic.gdx.Gdx.files;
 import static com.badlogic.gdx.Input.Keys.M;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static java.security.AccessController.getContext;
@@ -36,57 +37,27 @@ import static javax.script.ScriptEngine.FILENAME;
 
 public class HandleGameData {
         public static void speichern(){
-            Gson gson = new Gson();
             try {
-               /* FileHandle file = Gdx.files.local("saveGame.json");
-                String FILENAME ="saveGame.json";
-                String string = "hello world!";
-                FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), "tours"));
-                javax.naming.Context.
-                FileOutputStream fos = openFileOutput(FILENAME, getContext().MODE_PRIVATE);
-                fos.write(string.getBytes());
-                fos.close();*/
-               FileOutputStream fileO;
-                try {
                     GameData data=new GameData();
-                    fileO = new FileOutputStream("saveGame.json");
-                    ObjectOutputStream oas = new ObjectOutputStream(fileO);
-                    oas.writeObject(data);
-                    oas.close();
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                    System.out.println(e.toString());
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                    FileHandle file = files.local("save.txt");
+                    byte[] dataBytes=data.serialize();
+                    file.writeBytes(dataBytes,false);
+                System.out.print("Spiel gespeichert");
             }
-            catch (Exception e) {
-                System.out.print("Fehler beim Heldspeichern:");
-                e.printStackTrace();
+            catch(Exception e) {
+                System.out.print("Fehler beim Heldspeichern:"+e.getMessage());
             }
-
         }
         public static Playscreen laden(AnimaRPG game) {
-            FileInputStream fileI;
-            try {
-                fileI = new FileInputStream("saveGame.json");
-                ObjectInputStream ias = new ObjectInputStream(fileI);
-                GameData gameData=(GameData)ias.readObject();
-                ias.close();
+            try{
+                FileHandle file = files.local("save.txt");
+                byte[] dataBytes=file.readBytes();
+                GameData gameData=(GameData) GameData.deserialize(dataBytes);
+                System.out.print("Spiel geladen");
                 return new Playscreen(game,gameData);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                System.out.println(e.toString());
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                System.out.println(e.toString());
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            }
+            catch(Exception e){
+                System.out.print(e.getStackTrace()+"Fehler beim Heldladen:"+e.getMessage());
             }
             return new Playscreen(game);
         }

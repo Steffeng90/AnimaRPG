@@ -41,7 +41,6 @@ public class ItemSprite extends Sprite {
         this.name=name;
         spriteBreite=34;
         spriteHoehe =34;
-        Gdx.app.log("davor","vector:"+textureArea.x+"und "+textureArea.y);
 
         texture=new TextureRegion(spriteQuelle,((int)textureArea.x)*spriteBreite,((int)textureArea.y)*spriteHoehe,spriteBreite,spriteHoehe);
 

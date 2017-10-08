@@ -14,6 +14,7 @@ import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.DialogArea;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
@@ -46,6 +47,13 @@ public class WorldContactListener implements ContactListener {
                 else{
                     if(fixA.getUserData() instanceof Schatztruhe && ((Schatztruhe) fixA.getUserData()).closed==false){}
                     else{((Held) fixB.getUserData()).setObject(true,((InteraktivesObjekt) fixA.getUserData()));}}
+                break;
+            case AnimaRPG.HERO_SENSOR | AnimaRPG.NPC_BIT:
+                Gdx.app.log("NPC in Reichweite","");
+                if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_SENSOR){
+                    ((Held) fixA.getUserData()).setNPC(true,((FriendlyNPC) fixB.getUserData()));}
+                else{
+                    ((Held) fixB.getUserData()).setNPC(true,((FriendlyNPC) fixA.getUserData()));}
                 break;
             case AnimaRPG.ENEMY_SENSOR | AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_SENSOR){
@@ -164,6 +172,12 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB=contact.getFixtureB();
         int cDef=fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
         switch(cDef) {
+            case AnimaRPG.HERO_SENSOR | AnimaRPG.NPC_BIT:
+                if (fixA.getFilterData().categoryBits == AnimaRPG.HERO_SENSOR){
+                    ((Held) fixA.getUserData()).setNPC(false,null);}
+                else{
+                    ((Held) fixB.getUserData()).setNPC(false,null);}
+                break;
             case AnimaRPG.HERO_SENSOR | AnimaRPG.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == AnimaRPG.HERO_SENSOR){
                     ((Held) fixA.getUserData()).setObject(false,null);}

@@ -12,6 +12,7 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
 import com.mygdx.anima.sprites.character.items.InventarList;
@@ -33,12 +34,13 @@ import static com.mygdx.anima.AnimaRPG.setHeld;
  */
 
 public class Held extends HumanoideSprites implements Serializable{
-    public boolean objectInReichweite, genugEP;
+    public boolean objectInReichweite, npcInReichweite, genugEP;
 
     private Array<SchatztruhenSpeicherObjekt> geoeffneteTruhen;
     private int[] erfahrungsstufen;
     public InteraktivesObjekt object;
-    public Playscreen screen;
+    public FriendlyNPC npc;
+    // public Playscreen screen;
     public boolean heldErstellt=false;
     public static String einseins="character/43";
     public boolean isHitbyMelee,isHitbyBow,isHitbyCast,isHitbyThrust;
@@ -63,7 +65,7 @@ public class Held extends HumanoideSprites implements Serializable{
     public Held(Playscreen screen,Vector2 spielerPosition)
     {
         super(screen,einseins,true);
-        this.screen=screen;
+        //this.screen=screen;
         //heldPosition=spielerPosition;
         if(!heldErstellt){
         createHeroBody(new Vector2(150f/AnimaRPG.PPM,100f/AnimaRPG.PPM));
@@ -104,11 +106,11 @@ public class Held extends HumanoideSprites implements Serializable{
    /* public TextureRegion getFrame(float dt) {
         return super.getFrame(dt);
     }*/
+    // Erstellen von Speicherstand besteht
     public Held(Playscreen screen,GameData gameData){
         super(screen,einseins,true);
 
         soundLoopAktiv=false;
-        //walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
         walkingSound=AnimaRPG.assetManager.get("audio/sounds/laufen.mp3", Sound.class);
 
         setErfahrungsstufen();
@@ -144,6 +146,7 @@ public class Held extends HumanoideSprites implements Serializable{
         setSpielzeit(gameData.spielzeit);
 
         setNextLevelUp(getCurrentLevel());
+        eventList=gameData.eventArray;
 
         setHeld(this);
         // Zauber auslesen
@@ -216,7 +219,7 @@ public class Held extends HumanoideSprites implements Serializable{
         shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
-        fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
+        fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK | AnimaRPG.NPC_BIT
                 | ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.EVENT_AREA_BIT;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -356,6 +359,15 @@ public class Held extends HumanoideSprites implements Serializable{
     public void useObject(){
         if(object!=null)
             object.use(this);
+    }
+    public void setNPC(boolean inReichweite,FriendlyNPC io){
+        npcInReichweite=inReichweite;
+        npc=io;
+        Controller.talkUpdate=true;
+    }
+    public void useNPC(){
+        if(npc!=null)
+            npc.talktTo();
     }
   /*  public void spriteWechsel(){
         updateTextures(spriteSword);
@@ -634,6 +646,16 @@ public class Held extends HumanoideSprites implements Serializable{
             case 1: mana=3;break;
         }
         setMaxMana(getMaxMana() + 2);
+
+        System.out.println("Level"+currentLevel);
+        System.out.println(stark);
+        System.out.println(gesch);
+        System.out.println(zaub);
+        System.out.println(currentLevel);
+        if(screen==null){
+            System.out.println("screen ist leer");
+
+        }
         screen.setLevelUpWindow(new LevelUpInfo(screen,AnimaRPG.batch,currentLevel,stark,gesch,zaub,hp,mana));
     }
 

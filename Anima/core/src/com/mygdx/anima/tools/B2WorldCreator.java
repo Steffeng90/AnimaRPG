@@ -149,14 +149,17 @@ public class B2WorldCreator {
             }
             else{
                 String dialogID=object.getProperties().get("dialog").toString();
-                int vorbed=0,nachbedfalse=0;
+                int vorbed=0,nachbedfalse=0,nachbedtrue=0;
                 if(object.getProperties().containsKey("vorbed")){
                     vorbed=Integer.parseInt(object.getProperties().get("vorbed").toString());
                 }
                 if(object.getProperties().containsKey("nachbedfalse")){
                     nachbedfalse=Integer.parseInt(object.getProperties().get("nachbedfalse").toString());
                 }
-                new DialogArea(screen,worldVertices,dialogID,vorbed,nachbedfalse);
+                if(object.getProperties().containsKey("nachbedtrue")){
+                    nachbedtrue=Integer.parseInt(object.getProperties().get("nachbedtrue").toString());
+                }
+                new DialogArea(screen,worldVertices,dialogID,vorbed,nachbedfalse,nachbedtrue);
             }
 
 
@@ -165,7 +168,13 @@ public class B2WorldCreator {
             if (map.getLayers().get("enemy") != null) {
                 for (MapObject object : map.getLayers().get("enemy").getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    EnemyGenerator.generateEnemy(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,object.getProperties().get("typ").toString());
+                    if(object.getProperties().get("typ").toString().contains("npc")){
+                        EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
+                                object.getProperties().get("dialog").toString());
+                    }
+                    else{
+                        EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString());
+                    }
                 }
             }
             // Erzeugen von Schatztruhen

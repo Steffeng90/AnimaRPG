@@ -10,6 +10,11 @@ import com.mygdx.anima.sprites.character.items.Schuhe;
 import com.mygdx.anima.sprites.character.items.WaffeFern;
 import com.mygdx.anima.sprites.character.items.WaffeNah;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -29,11 +34,11 @@ public class GameData implements Serializable{
     public String zauberslot1,zauberslot2,zauberslot3,zauberslot4;
     public String[] waffenNah,waffenFern,brust,helm,handschuhe,schuhe,amulett,zauber;
     public int[] geoeffneteTruhenMaps,geoeffneteTruhenId;
-
+    public boolean[] eventArray;
     public GameData()
     {
         hitpoints = getHeld().getMaxHitpoints();
-        maxHitpoints = getHeld().getCurrentHitpoints();
+        maxHitpoints = getHeld().getMaxHitpoints();
         maxMana = getHeld().getMaxMana();
         regMana = getHeld().getRegMana();
         currentLevel = getHeld().getCurrentLevel();
@@ -50,6 +55,7 @@ public class GameData implements Serializable{
         ruestung = getHeld().getRuestung();
         zauberwiderstand = getHeld().getZauberwiderstand();
 
+        eventArray=getHeld().getEventList();
         currentMapId=aktuelleKartenId;
         tempEingang=Playscreen.getMapEinstieg();
         spielzeit=getHeld().getSpielzeit();
@@ -152,6 +158,19 @@ public class GameData implements Serializable{
                 angelegtAmuleettIndex=i;
             }
         }
+
     }
-   // regenerationTimer=0;
+    public byte[] serialize( ) throws IOException {
+            ByteArrayOutputStream b = new ByteArrayOutputStream();
+        ObjectOutputStream o = new ObjectOutputStream(b);
+        o.writeObject(this);
+        return b.toByteArray();
+    }
+
+    public static Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream b = new ByteArrayInputStream(bytes);
+        ObjectInputStream o = new ObjectInputStream(b);
+        return o.readObject();
+    }
+
 }

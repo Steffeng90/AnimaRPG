@@ -115,6 +115,7 @@ public class HumanoideSprites extends Sprite{
     //Konstruktor für Held
     public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
         this.world = screen.getWorld();
+        this.screen=screen;
         this.istHeld=istHeld;
         this.bowSpeed=1f;
         this.meleeSpeed=0.5f;
@@ -971,7 +972,7 @@ public class HumanoideSprites extends Sprite{
         FixtureDef fdefSensor = new FixtureDef();
         if(this.istHeld) {
             fdefSensor.filter.categoryBits = AnimaRPG.HERO_SENSOR;
-            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT;
+            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT | AnimaRPG.NPC_BIT;
         }
         else {
               fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;
@@ -1025,7 +1026,7 @@ public class HumanoideSprites extends Sprite{
         FixtureDef fdefSensor = new FixtureDef();
         if(this.istHeld) {
             fdefSensor.filter.categoryBits = AnimaRPG.HERO_SENSOR;
-            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT;
+            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT | AnimaRPG.NPC_BIT;
         }
         else {
             fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;

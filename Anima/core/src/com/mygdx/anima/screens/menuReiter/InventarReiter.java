@@ -219,7 +219,7 @@ public class InventarReiter extends Group {
             inventarLinks.add(new Label(wert2auswahl, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
             inventarLinks.row();
             inventarLinks.add(new Label(eigenschaft3, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
-            inventarLinks.add(new Label(wert3angelegt, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.add(new Label(wert3auswahl, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
             inventarLinks.row();
             if(auswahlItem.isAngelegt()) {
                 angelegtButton = new TextButton("Ablegen", menu.getSkin());

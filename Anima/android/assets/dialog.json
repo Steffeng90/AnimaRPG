@@ -1,21 +1,210 @@
-{
+﻿{
   "dialoge": [
     {
       "id": 1,
       "sprecher": "Aria",
-      "inhalt": "Ich sollte zuerst nach einer Waffe\nsuchen, bevor ich tiefer in den\nWald laufe",
+      "inhalt": "Ich sollte zuerst nach einer Waffe suchen, bevor ich tiefer in den Wald laufe",
       "nachfolger":2
     },
     {
       "id": 2,
       "sprecher": "Aria",
-      "inhalt": "Vielleicht find ich in dem Haus\netwas, das mir weiterhilft",
+      "inhalt": "Vielleicht find ich in dem Haus etwas, das mir weiterhilft",
       "nachfolger":0
     },
     {
       "id": 3,
       "sprecher": "Aria",
-      "inhalt": "Ich sollte mich mit dem Dolch ausrüsten. Berühre das Inventar-Icon in der rechten oberen Ecke.\nDort kann du im Reiter Ausruestung den Dolch auswaehlen und anlegen.",
+      "inhalt": "Ich sollte mich mit dem Dolch ausrüsten. Berühre das Inventar-Icon in der rechten oberen Ecke. Dort kann du im Reiter Ausruestung den Dolch auswaehlen und anlegen.",
+      "nachfolger":0
+    },
+    {
+      "id": 4,
+      "sprecher": "Aria",
+      "inhalt": "In diesem Wald treiben des öfteren Räuber ihre Unwesen. Ich werde es nicht vermeiden können zu kämpfen.",
+      "nachfolger":0
+    },
+    {
+      "id": 5,
+      "sprecher": "Aria",
+      "inhalt": "Sogar dieses Dorf ist voller Räuber. Was ist hier nur passiert?! Ich muss herausfinden, was mit den Bewohnern passiert ist...",
+      "nachfolger":0
+    },
+    {
+      "id": 6,
+      "sprecher": "Dorfbewohner1",
+      "inhalt": "Wer seid ihr? Ihr seht nicht aus, wie all die anderen Räuber.Seid ihr hier um uns zu helfen?",
+      "nachfolger":7
+    },
+    {
+      "id": 7,
+      "sprecher": "Aria",
+      "inhalt": "Nein, ich bin keiner dieser Räuber. Aber ich verstehe nicht. Woher kommen all diese Banditen, und warum greifen sie ein ganzes Dorf an?.",
+      "nachfolger":8
+    },
+    {
+      "id": 8 ,
+      "sprecher": "Dorfbewohner1",
+      "inhalt": "Wir hörten sie haben einen neuen Hauptmann. Gladin heißt er. Sie haben sich über ihn unterhalten, scheinbar ist er größenwahnsinnig und will sein eigenes Reich gründen.",
+      "nachfolger":9
+    },
+    {
+      "id": 9 ,
+      "sprecher": "Dorfbewohner1",
+      "inhalt": "Es heißt er lockt Söldner und sonstigen Abschaum mit ungeheuren Reichtümern sich ihm anzuschließen. Er muss aufgehalten werden.",
+      "nachfolger":10
+    },
+    {
+      "id": 10 ,
+      "sprecher": "Dorfbewohner1",
+      "inhalt": "Es heißt er lockt Söldner und sonstigen Abschaum mit ungeheuren Reichtümern sich ihm anzuschließen. Er muss aufgehalten werden.",
+      "nachfolger":11
+    },
+    {
+      "id": 11 ,
+      "sprecher": "Aria",
+      "inhalt": "Und wie kann ich euch dabei helfen? ",
+      "nachfolger":12
+    },
+    {
+      "id": 12 ,
+      "sprecher": "Dorfbewohner1",
+      "inhalt": "Tötet Gladin! Dazu müsst Ihr das Lager der Banditen ausfindet machen. Sie kamen aus dem Wald nahe unserer Höfe im Westen. Von dort aus findet Ihr sicher einen Weg.",
+      "nachfolger":13
+    },
+    {
+      "id": 13 ,
+      "sprecher": "Aria",
+      "inhalt": "Und ihr wartet hier und dreht Däumchen?",
+      "nachfolger":14
+    },
+    {
+      "id": 14 ,
+      "sprecher": "Dorfbewohner1",
+      "inhalt": "Wir sind keine Krieger, nur einfache Bauern und Händler... Wir haben Schätze hier in Sicherheit gebracht. Ihr könnt sie haben, wenn Ihr uns rettet.",
+      "nachfolger":15
+    },
+    {
+      "id": 15 ,
+      "sprecher": "Aria",
+      "inhalt": "Wir sind im Geschäft.",
+      "nachfolger":16
+    },
+    {
+      "id": 16 ,
+      "sprecher": "Dorfbewohner1",
+      "inhalt": "Vielen Dank, Kriegerin! Bevor ihr Richtung Westen aufbrecht geht in mein Haus, nahe von hier, und sucht meinen Bogen, er soll euch gehören.",
+      "nachfolger":0
+    },
+    {
+      "id": 17 ,
+      "sprecher": "Aria",
+      "inhalt": "Hier sollte es sein. Ich sollte die Augen offen halten, um herauszufinden von wo die Banditen kommen.",
+      "nachfolger":0
+    },
+    {
+      "id": 18 ,
+      "sprecher": "Aria",
+      "inhalt": "Ich sollte aufpassen, dass in diesen Wäldern ich nicht die Orientierung verliere.",
+      "nachfolger":0
+    },
+{
+      "id": 19,
+      "sprecher": "Gladin",
+      "inhalt": "Halt, keinen Schritt weiter. Wer bist du, Eindringling.",
+      "nachfolger":20
+    },
+    {
+      "id": 20,
+      "sprecher": "Aria",
+      "inhalt": "Ich bin Aria. Ich komme um das Dorf, das ihr Banditen überfallen, habt zu befreien. Sagt mir wo ich Gladin finde.",
+      "nachfolger":21
+    },
+{
+      "id": 21,
+      "sprecher": "Aria",
+      "inhalt": "Gladin steht vor dir, Kleine. Willst du damit sagen, du bist gekommen um mich aufzuhalten?",
+      "nachfolger":22
+    },
+    {
+      "id": 22,
+      "sprecher": "Aria",
+      "inhalt": "Ich hatte keine Frau an der Spitze dieser Bande erwartet, aber das tut nichts zur Sache. Ja ich werde dich aufhalten.",
+      "nachfolger":23
+    },
+    {
+      "id": 23,
+      "sprecher": "Aria",
+      "inhalt": "Haha, ich bin keine einfache Frau. Ich bin eine Halbriesin und mir kann keiner das Wasser reichen. Du wirst sterben, wenn du dich mir in den Weg stellst",
+      "nachfolger":24
+    },
+    {
+      "id": 24,
+      "sprecher": "Aria",
+      "inhalt": "Wärst du gekommen, um dich mir anzuschließen hätte ich dich in meine Armee aufgenommen. Doch wer mir droht hat sein Leben verwirkt.",
+      "nachfolger":25
+    },
+
+
+
+    {
+      "id": 8001,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Hmm, wenn du Gladin besiegen konnest, dann kann sie garnicht so mächtig gewesen sein, wie alle behaupten...",
+      "nachfolger":0
+    },
+    {
+      "id": 8002,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Du bist der Held unseres Dorfes. Ohne dich wären wir alle Gefangene.",
+      "nachfolger":0
+    },
+    {
+      "id": 8003,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich kann es nicht glauben, dass du Gladin ganz alleine besiegt hast.",
+      "nachfolger":0
+    },
+    {
+      "id": 8004,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich wünschte ich wäre so stark und mutig, wie du es bist.",
+      "nachfolger":0
+    },
+    {
+      "id": 8005,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Heyeh, ich geb dir mal einen Tipp, als Dank für deine Rettung.",
+      "nachfolger":80051
+    },
+    {
+      "id": 80051,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Aber verrate es lieber nicht weiter....",
+      "nachfolger":80052
+    },
+    {
+      "id": 80052,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Im ersten Stock des Gasthauses kannst du viele wertvolle Schätze finden... Das hast du aber nicht von mir!",
+      "nachfolger":0
+    },
+    {
+      "id": 8006,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich hoffe wir können uns irgendwann bei dir revanchieren. Vielen Dank.",
+      "nachfolger":0
+    },
+    {
+      "id": 8007,
+      "sprecher": "Dorf-Ältester",
+      "inhalt": "Danke für alles Heldin, du hast das Dorf und alle Einwohner gerettet. Ich will nicht daran denken, was ohne deine Hilfe geschehen wäre.",
+      "nachfolger":80071
+    },
+    {
+      "id": 80071,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Wir stehen für immer in deiner Schuld. Ich hoffe wir können uns irgendwann erkenntlich zeigen.",
       "nachfolger":0
     }
   ]
