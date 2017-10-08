@@ -54,7 +54,7 @@ public class ItemFundInfo implements Disposable {
 
     public ItemFundInfo(final Playscreen screen, SpriteBatch sb,ItemSprite item) {
         this.screen = screen;
-        AnimaRPG.assetManager.get("audio/sounds/itemFund.wav", Sound.class).play(0.5f);
+        this.screen.getGame().getAssetManager().get("audio/sounds/itemFund.wav", Sound.class).play(0.5f);
         infoWidth = (float) (AnimaRPG.W_WIDTH * 2);
         infoHeight = (float) (AnimaRPG.W_Height * 2);
         viewport = new FitViewport(infoWidth, infoHeight, new OrthographicCamera());

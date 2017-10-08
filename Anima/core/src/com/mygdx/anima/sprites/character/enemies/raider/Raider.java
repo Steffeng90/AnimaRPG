@@ -62,7 +62,7 @@ public class Raider extends Enemy
 
     }
     public void coordinateWalking(HumanoideSprites zielSprite, float dt){
-        Vector2 einheitsvector=new Vector2(zielSprite.getX()-getX(),zielSprite.getY()-getY());
+        Vector2 einheitsvector=new Vector2(zielSprite.getb2bodyX()-getb2bodyX(),zielSprite.getb2bodyY()-getb2bodyY());
         float einheitsZahl=1/(float)Math.sqrt(Math.pow(einheitsvector.x,2)+Math.pow(einheitsvector.y,2));
         einheitsvector.x=einheitsZahl*einheitsvector.x;
         einheitsvector.y=einheitsZahl*einheitsvector.y;
@@ -113,12 +113,12 @@ public class Raider extends Enemy
         v2.x=v2.x/10;
         v2.y=v2.y/10;
 
-        if((getX()-hero.getX())<0.1f && (getX()-hero.getX())>-0.1f){
+        if((getb2bodyX()-hero.getb2bodyX())<0.1f && (getb2bodyX()-hero.getb2bodyX())>-0.1f){
             velocity.x=0;
         }else
         if((velocity.x>-(float)getGeschwindigkeitLaufen()/10 && velocity.x<(float)getGeschwindigkeitLaufen()/10) || (velocity.x>=getGeschwindigkeitLaufen()/10 && v2.x<0) || (velocity.x<=-getGeschwindigkeitLaufen()/10 && v2.x>0))
             velocity.x=v2.x;
-        if((getY()-hero.getY())<0.15f && (getY()-hero.getY())>-0.15f){
+        if((getb2bodyY()-hero.getb2bodyY())<0.15f && (getb2bodyY()-hero.getb2bodyY())>-0.15f){
             velocity.y=0;
         }else if((velocity.y>-(float)getGeschwindigkeitLaufen()/10 &&velocity.y<(float)getGeschwindigkeitLaufen()/10) || (velocity.y>=getGeschwindigkeitLaufen()/10 && v2.y<0) || (velocity.y<=-getGeschwindigkeitLaufen()/10 && v2.y>0))
             velocity.y=v2.y;

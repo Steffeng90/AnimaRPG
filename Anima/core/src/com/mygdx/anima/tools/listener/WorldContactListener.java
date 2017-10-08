@@ -62,13 +62,6 @@ public class WorldContactListener implements ContactListener {
                     ((Enemy) fixB.getUserData()).enemyInReichweite=true;}
                     break;
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_BIT:
-              /*  if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
-                {   ((Held)fixB.getUserData()).isHitbyMelee=true;
-                    ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)fixA.getUserData();}
-                else
-                {   ((Held)fixA.getUserData()).isHitbyMelee=true;
-                    ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
-                break;*/
             case AnimaRPG.ENEMY_ATTACK | AnimaRPG.HERO_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
                 {   ((Held)fixB.getUserData()).isHitbyMelee=true;
@@ -77,19 +70,9 @@ public class WorldContactListener implements ContactListener {
                 {   ((Held)fixA.getUserData()).isHitbyMelee=true;
                     ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)fixB.getUserData();}
                 break;
-            case AnimaRPG.ARROW_BIT | AnimaRPG.HERO_BIT:
-                /*if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
-                {
-                    ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)((Arrow)fixA.getUserData()).erzeuger;
-                    ((Held)fixB.getUserData()).isHitbyBow=true;
-                    ((Arrow)fixA.getUserData()).setToDestroy=true;}
-                else
-                {   ((Held)fixA.getUserData()).treffenderEnemy=(Enemy)((Arrow)fixB.getUserData()).erzeuger;
-                    ((Held)fixA.getUserData()).isHitbyBow=true;
-                    ((Arrow)fixB.getUserData()).setToDestroy=true;}
-                break;*/
-            case AnimaRPG.ARROW_BIT | AnimaRPG.HERO_OBERKOERPER:
-                if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
+            case AnimaRPG.ENEMY_ARROW | AnimaRPG.HERO_BIT:
+            case AnimaRPG.ENEMY_ARROW | AnimaRPG.HERO_OBERKOERPER:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ARROW)
                 {
                     ((Held)fixB.getUserData()).treffenderEnemy=(Enemy)((Arrow)fixA.getUserData()).erzeuger;
                     ((Held)fixB.getUserData()).isHitbyBow=true;
@@ -99,18 +82,26 @@ public class WorldContactListener implements ContactListener {
                     ((Held)fixA.getUserData()).isHitbyBow=true;
                     ((Arrow)fixB.getUserData()).setToDestroy=true;}
                 break;
-            case AnimaRPG.ARROW_BIT | AnimaRPG.GEBIETSWECHSEL_BIT:
-            case AnimaRPG.ARROW_BIT | AnimaRPG.BARRIERE_BIT:
-            case AnimaRPG.ARROW_BIT | AnimaRPG.OBJECT_BIT:
-                if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT){
+            case AnimaRPG.HERO_ARROW | AnimaRPG.GEBIETSWECHSEL_BIT:
+            case AnimaRPG.HERO_ARROW | AnimaRPG.BARRIERE_BIT:
+            case AnimaRPG.HERO_ARROW | AnimaRPG.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits==(AnimaRPG.HERO_ARROW)){
+                    ((Arrow)fixA.getUserData()).setToDestroy=true;}
+                else{
+                    ((Arrow)fixB.getUserData()).setToDestroy=true;}
+                break;
+            case AnimaRPG.ENEMY_ARROW | AnimaRPG.GEBIETSWECHSEL_BIT:
+            case AnimaRPG.ENEMY_ARROW | AnimaRPG.BARRIERE_BIT:
+            case AnimaRPG.ENEMY_ARROW | AnimaRPG.OBJECT_BIT:
+                if(fixA.getFilterData().categoryBits==(AnimaRPG.ENEMY_ARROW)){
                     ((Arrow)fixA.getUserData()).setToDestroy=true;}
                 else{
                     ((Arrow)fixB.getUserData()).setToDestroy=true;}
                 break;
 
-            case AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_BIT:
-            case AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_OBERKOERPER:
-                if(fixA.getFilterData().categoryBits==AnimaRPG.ARROW_BIT)
+            case AnimaRPG.HERO_ARROW | AnimaRPG.ENEMY_BIT:
+            case AnimaRPG.HERO_ARROW | AnimaRPG.ENEMY_OBERKOERPER:
+                if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_ARROW)
                 {   ((Enemy)fixB.getUserData()).getsHitbyBow();
                     ((Arrow)fixA.getUserData()).setToDestroy=true;}
                 else

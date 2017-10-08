@@ -1,6 +1,5 @@
 package com.mygdx.anima.sprites.character.enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,7 +20,8 @@ import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.tools.SchadenBerechner;
 
-import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
+import static com.mygdx.anima.AnimaRPG.ENEMY_ARROW;
+import static com.mygdx.anima.AnimaRPG.HERO_ARROW;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
@@ -42,7 +42,7 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
     super();
     }
     public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
-        super.init(screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+        super.init(screen.getGame(),screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
         setPosition(x,y);
         setErfahrung(ep);
         quelle=id;
@@ -72,13 +72,13 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
         fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
-        | AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_CAST_HEAL;
+        | AnimaRPG.HERO_ARROW | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_CAST_HEAL;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
 
         shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.ENEMY_OBERKOERPER;
-        fdef.filter.maskBits=AnimaRPG.HERO_WEAPON_BIT | ARROW_BIT;
+        fdef.filter.maskBits=AnimaRPG.HERO_WEAPON_BIT | HERO_ARROW;
         fdef.isSensor=true;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);;
@@ -265,15 +265,15 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
             hitByFeedback = true;
             Held tempHeld =(Held) z.zaubernder;
             getsDamaged(3);
-            if (tempHeld.getX() < getX()) {
+            if (tempHeld.getb2bodyX() < getb2bodyX()) {
                 // Runter
-                if (tempHeld.getY() < getY()) {changeVelocity(new Vector2(z.rueckstoss, z.rueckstoss));}
+                if (tempHeld.getb2bodyY() < getb2bodyY()) {changeVelocity(new Vector2(z.rueckstoss, z.rueckstoss));}
                 // Hoch
                 else {changeVelocity(new Vector2(z.rueckstoss, -z.rueckstoss));}
             }
             // Rechts
             else {// Runter
-                if (tempHeld.getY() < getY()) {changeVelocity(new Vector2(-z.rueckstoss, z.rueckstoss));}
+                if (tempHeld.getb2bodyY() < getb2bodyY()) {changeVelocity(new Vector2(-z.rueckstoss, z.rueckstoss));}
                 // Hoch
                 else {changeVelocity(new Vector2(-z.rueckstoss, -z.rueckstoss));}
             }
@@ -285,9 +285,9 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
             hitByFeedback = true;
             Held tempHeld =(Held) z.zaubernder;
             getsDamaged(3);
-            if (tempHeld.getX() < getX()) {
+            if (tempHeld.getb2bodyX() < getb2bodyX()) {
                 // Runter
-                if (tempHeld.getY() < getY()) {changeVelocity(new Vector2(z.rueckstoss, z.rueckstoss));}
+                if (tempHeld.getb2bodyY() < getb2bodyY()) {changeVelocity(new Vector2(z.rueckstoss, z.rueckstoss));}
                 // Hoch
                 else {changeVelocity(new Vector2(z.rueckstoss, -z.rueckstoss));}
             }
@@ -303,9 +303,9 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
         getsDamaged(1);
         //Links
         float feedback = 3f;
-        if (hero.getX() < getX()) {
+        if (hero.getb2bodyX() < getb2bodyX()) {
             // Runter
-            if (hero.getY() < getY()) {
+            if (hero.getb2bodyY() < getb2bodyY()) {
                 changeVelocity(new Vector2(feedback, feedback));
             }
             // Hoch
@@ -316,7 +316,7 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
         // Rechts
         else {
             // Runter
-            if (hero.getY() < getY()) {
+            if (hero.getb2bodyY() < getb2bodyY()) {
                 changeVelocity(new Vector2(-feedback, feedback));
             }
             // Hoch

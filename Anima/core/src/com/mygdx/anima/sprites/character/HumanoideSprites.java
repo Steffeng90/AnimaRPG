@@ -28,6 +28,7 @@ public class HumanoideSprites extends Sprite{
     public Playscreen screen;
     public World world;
     public Body b2body;
+    public AnimaRPG anima;
     public float stateTimer, feedbackDauer;
     // TODO Feedback-Dauer einfügen
 
@@ -82,7 +83,7 @@ public class HumanoideSprites extends Sprite{
     //Konstruktor für Enemies
     public HumanoideSprites(){
     }
-    public void init(Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
+    public void init(AnimaRPG anima, Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
         this.world = screen.getWorld();
         this.screen=screen;
         setMaxHitpoints(maxhp);
@@ -116,6 +117,7 @@ public class HumanoideSprites extends Sprite{
     public HumanoideSprites(Playscreen screen, String quelle,Boolean istHeld) {
         this.world = screen.getWorld();
         this.screen=screen;
+        this.anima=screen.getGame();
         this.istHeld=istHeld;
         this.bowSpeed=1f;
         this.meleeSpeed=0.5f;
@@ -497,6 +499,7 @@ public class HumanoideSprites extends Sprite{
                                     if(UpMelee2.isAnimationFinished(stateTimer))
                                     {
                                         this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                        this.setSize(42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
                                         stateTimer=0;runMeleeAnimation=false;
                                     }
                                     break;
@@ -588,7 +591,8 @@ public class HumanoideSprites extends Sprite{
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
                                 region = LeftBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=LeftBow2.getAnimationDuration()*0.8)
-                                {bowFixtureErzeugen=true;triggerFixture =false;            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                {bowFixtureErzeugen=true;triggerFixture =false;
+                                    anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 }
                                 if(LeftBow2.isAnimationFinished(stateTimer))
                                 {runArchery=false;triggerFixture=true;}
@@ -596,7 +600,7 @@ public class HumanoideSprites extends Sprite{
                             else{
                                 region = LeftBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= LeftBow1.getAnimationDuration() * 0.8) {
-                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
                                     triggerFixture = false;
                                 }
@@ -609,7 +613,7 @@ public class HumanoideSprites extends Sprite{
                         else {
                             region = LeftBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= LeftBow1.getAnimationDuration() * 0.8) {
-                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
                                 triggerFixture = false;
                             }
@@ -624,7 +628,7 @@ public class HumanoideSprites extends Sprite{
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
                                 region = RightBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=RightBow2.getAnimationDuration()*0.8)
-                                {            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                {            anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
 
                                     bowFixtureErzeugen=true;triggerFixture =false;}
                                 if(RightBow2.isAnimationFinished(stateTimer))
@@ -633,7 +637,7 @@ public class HumanoideSprites extends Sprite{
                             else{
                                 region = RightBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= RightBow1.getAnimationDuration() * 0.8) {
-                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
                                     triggerFixture = false;
                                 }
@@ -646,7 +650,7 @@ public class HumanoideSprites extends Sprite{
                         else {
                             region = RightBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= RightBow1.getAnimationDuration() * 0.8) {
-                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
                                 triggerFixture = false;
                             }
@@ -661,7 +665,7 @@ public class HumanoideSprites extends Sprite{
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
                                 region = UpBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=UpBow2.getAnimationDuration()*0.8)
-                                {            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                {            anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen=true;triggerFixture =false;}
                                 if(UpBow2.isAnimationFinished(stateTimer))
                                 {runArchery=false;triggerFixture=true;}
@@ -669,7 +673,7 @@ public class HumanoideSprites extends Sprite{
                             else{
                                 region = UpBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= UpBow1.getAnimationDuration() * 0.8) {
-                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
                                     triggerFixture = false;
                                 }
@@ -682,7 +686,7 @@ public class HumanoideSprites extends Sprite{
                         else {
                             region = UpBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= UpBow1.getAnimationDuration() * 0.8) {
-                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
                                 triggerFixture = false;
                             }
@@ -697,7 +701,7 @@ public class HumanoideSprites extends Sprite{
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
                                 region = DownBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=DownBow2.getAnimationDuration()*0.8)
-                                {            AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                {   anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen=true;triggerFixture =false;}
                                 if(DownBow2.isAnimationFinished(stateTimer))
                                 {runArchery=false;triggerFixture=true;}
@@ -705,7 +709,7 @@ public class HumanoideSprites extends Sprite{
                             else{
                                 region = DownBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= DownBow1.getAnimationDuration() * 0.8) {
-                                    AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                    anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
                                     triggerFixture = false;
                                 }
@@ -718,7 +722,7 @@ public class HumanoideSprites extends Sprite{
                         else {
                             region = DownBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= DownBow1.getAnimationDuration() * 0.8) {
-                                AnimaRPG.assetManager.get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
+                                anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
                                 triggerFixture = false;
                             }
@@ -903,8 +907,8 @@ public class HumanoideSprites extends Sprite{
     }
 
     public void update(float dt){
-
-        if(b2body!=null){
+        //  b2body beweggt sich nur, wenn kein nahkampfangriff ausgeführt wird
+        if(b2body!=null && !meleeExists){
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);}
         if(getCurrentRichtung()!=getPreviousRichtung() && !destroyed) {
             sensorAnpassen();
@@ -1213,5 +1217,12 @@ public class HumanoideSprites extends Sprite{
         runDying=false;
         dead=false;
         destroyed=false;
+    }
+    // beide Methoden ermitteln die Position des Bodys des Helds, damit Figuren sich nicht an seinem Sprite-Grafik orientieren.
+    public float getb2bodyY(){
+        return this.b2body.getPosition().y;
+    }
+    public float getb2bodyX(){
+        return this.b2body.getPosition().x;
     }
 }

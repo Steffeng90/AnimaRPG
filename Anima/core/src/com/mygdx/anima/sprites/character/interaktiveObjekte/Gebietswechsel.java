@@ -1,23 +1,13 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.Held;
-import com.mygdx.anima.sprites.character.items.ItemGenerator;
-
-import static com.mygdx.anima.AnimaRPG.GEBIETSWECHSEL_BIT;
 
 /**
  * Created by Steffen on 13.11.2016.
@@ -44,7 +34,7 @@ public class Gebietswechsel {
 
         //pshape.setAsBox((v2.x-v1.x)/ AnimaRPG.PPM, (v2.y/v1.y) / AnimaRPG.PPM);
         fdef.filter.categoryBits = AnimaRPG.GEBIETSWECHSEL_BIT;
-        fdef.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.ARROW_BIT;
+        fdef.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.ENEMY_ARROW;
         fdef.shape = chain;
         body.createFixture(fdef).setUserData(this);
     }

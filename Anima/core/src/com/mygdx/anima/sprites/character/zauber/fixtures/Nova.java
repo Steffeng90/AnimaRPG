@@ -70,7 +70,7 @@ public Nova(float zauberFixture) {
 
     setToDestroy=false;
     destroyed=false;
-    AnimaRPG.assetManager.get("audio/sounds/nova.wav", Sound.class).play();
+    zaubernder.anima.getAssetManager().get("audio/sounds/nova.wav", Sound.class).play();
 
     com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture.allZauber.add(this);
 }

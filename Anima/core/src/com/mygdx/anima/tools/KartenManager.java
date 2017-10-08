@@ -73,7 +73,7 @@ public class KartenManager {
         {gamecam.position.x = mapRight - cameraHalfWidth;}
 
 // Vertical axis
-        if(mapPixelHeight<  gamecam.viewportWidth)
+        if(mapPixelHeight<  gamecam.viewportHeight)
         {gamecam.position.y = mapTop / 2;}
         else if(cameraBottom <= mapBottom)
         {gamecam.position.y = mapBottom + cameraHalfHeight;}

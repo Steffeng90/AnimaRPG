@@ -69,7 +69,7 @@ public class Controller {
         inventarImg.setSize(buttonSize,buttonSize);
         inventarImg.addListener(new InputListener(){
             @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                AnimaRPG.assetManager.get("audio/sounds/turn_page.wav", Sound.class).play();
+                game.getAssetManager().get("audio/sounds/turn_page.wav", Sound.class).play();
 
                 game.getScreen().pause();
                 game.changeScreen(new Menu(game));}

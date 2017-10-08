@@ -57,7 +57,7 @@ public class ItemSprite extends Sprite {
         PolygonShape shape=new PolygonShape();
         shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(getWidth()/2, getHeight()/2),0);
         fdef.filter.categoryBits=AnimaRPG.ITEM_SPRITE_BIT;
-        // fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR | AnimaRPG.ARROW_BIT;
+        // fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR | AnimaRPG.ENEMY_ARROW;
         fdef.shape=shape;
 
        // body.createFixture(fdef).setUserData(this);

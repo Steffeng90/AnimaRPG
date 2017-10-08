@@ -39,7 +39,7 @@ public class LevelUpInfo implements Disposable {
     private float infoWidth,infoHeight, windowTimer;
 
     public LevelUpInfo(Playscreen screen, SpriteBatch sb,int level, int stark,int gesch,int zaub,int hp,int mana){
-        AnimaRPG.assetManager.get("audio/sounds/levelUp.wav", Sound.class).play();
+        screen.getGame().getAssetManager().get("audio/sounds/levelUp.wav", Sound.class).play();
 
         this.screen=screen;
         infoWidth=(float)(AnimaRPG.W_WIDTH*2);

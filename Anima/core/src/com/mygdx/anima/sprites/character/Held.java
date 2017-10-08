@@ -26,7 +26,7 @@ import com.mygdx.anima.tools.SchadenBerechner;
 import java.io.Serializable;
 
 import static com.badlogic.gdx.Gdx.app;
-import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
+import static com.mygdx.anima.AnimaRPG.ENEMY_ARROW;
 import static com.mygdx.anima.AnimaRPG.setHeld;
 
 /**
@@ -79,7 +79,7 @@ public class Held extends HumanoideSprites implements Serializable{
         setErfahrungsstufen();
         soundLoopAktiv=false;
         //walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
-        walkingSound=AnimaRPG.assetManager.get("audio/sounds/laufen.mp3", Sound.class);
+        walkingSound=anima.getAssetManager().get("audio/sounds/laufen.mp3", Sound.class);
 
         setMaxHitpoints(100);
         setCurrentHitpoints(getMaxHitpoints());
@@ -111,7 +111,7 @@ public class Held extends HumanoideSprites implements Serializable{
         super(screen,einseins,true);
 
         soundLoopAktiv=false;
-        walkingSound=AnimaRPG.assetManager.get("audio/sounds/laufen.mp3", Sound.class);
+        walkingSound=anima.getAssetManager().get("audio/sounds/laufen.mp3", Sound.class);
 
         setErfahrungsstufen();
         setZauberwiderstand(gameData.zauberwiderstand);
@@ -220,13 +220,13 @@ public class Held extends HumanoideSprites implements Serializable{
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
         fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK | AnimaRPG.NPC_BIT
-                | ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.EVENT_AREA_BIT;
+                | ENEMY_ARROW | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.EVENT_AREA_BIT;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
         // Oberkörpershape
         shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_OBERKOERPER;
-        fdef.filter.maskBits=AnimaRPG.ENEMY_ATTACK | ARROW_BIT;
+        fdef.filter.maskBits=AnimaRPG.ENEMY_ATTACK | ENEMY_ARROW;
         fdef.isSensor=true;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -273,7 +273,7 @@ public class Held extends HumanoideSprites implements Serializable{
        // CircleShape circleShape = new CircleShape();
         //circleShape.setRadius(15 / AnimaRPG.PPM);
         Vector2 richtungsVector;
-        AnimaRPG.assetManager.get("audio/sounds/sword_swing.mp3", Sound.class).play(0.5f);
+        anima.getAssetManager().get("audio/sounds/sword_swing.mp3", Sound.class).play(0.5f);
 
 
         switch (getCurrentRichtung()) {
@@ -723,4 +723,6 @@ public class Held extends HumanoideSprites implements Serializable{
         }
         eventList[1]=true;
     }
+
+
 }

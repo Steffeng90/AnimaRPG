@@ -18,19 +18,17 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.scenes.DialogFenster;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.DialogGenerator;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.EnemyGenerator;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.DialogArea;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
 
-import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
+import static com.mygdx.anima.AnimaRPG.ENEMY_ARROW;
 import static com.mygdx.anima.AnimaRPG.BARRIERE_BIT;
 import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
+import static com.mygdx.anima.AnimaRPG.HERO_ARROW;
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
 import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -38,7 +36,6 @@ import static com.mygdx.anima.screens.Playscreen.activeTruhen;
 import static com.mygdx.anima.screens.Playscreen.getMapEinstieg;
 import static com.mygdx.anima.screens.Playscreen.truhenPool;
 import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 /**
  * Created by Steffen on 09.11.2016.
@@ -76,7 +73,7 @@ public class B2WorldCreator {
                     pshape.setAsBox((rect.getWidth() / 2) / AnimaRPG.PPM, (rect.getHeight() / 2) / AnimaRPG.PPM);
                     fdef.shape = pshape;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW;
                     body.createFixture(fdef);
                 }
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(EllipseMapObject.class)) {
@@ -88,7 +85,7 @@ public class B2WorldCreator {
 
                     fdef.shape = cshape;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW;
                     body.createFixture(fdef);
                 }
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(PolylineMapObject.class)) {
@@ -109,7 +106,7 @@ public class B2WorldCreator {
 
                     fdef.shape = chain;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW;
                     body.createFixture(fdef);
                 }
                 // Keine PolygonShapes verwenden.
@@ -139,7 +136,7 @@ public class B2WorldCreator {
             chain.createChain(worldVertices);
 
             /*fdef.shape = chain;
-            fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT;
+            fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW;
             body.createFixture(fdef);*/
             if(object.getProperties().containsKey("nextMap")){
                 int nextMap = Integer.valueOf(object.getProperties().get("nextMap").toString());

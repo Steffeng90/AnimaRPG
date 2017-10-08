@@ -26,17 +26,19 @@ public class anlegeButtonListener extends InputListener {
     Held held;
     Item item;
     InventarReiter inv;
+    AnimaRPG game;
 
     public anlegeButtonListener(AnimaRPG game, Item item,InventarReiter inv){
         temp =Item.kategorie.valueOf(item.getItemKategorie());
         this.held=getHeld();
         this.item=item;
         this.inv=inv;
+        this.game=game;
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if (item.isAngelegt()) {
-            AnimaRPG.assetManager.get("audio/sounds/ausziehen.wav", Sound.class).play();
+            game.getAssetManager().get("audio/sounds/ausziehen.wav", Sound.class).play();
 
             item.setAngelegt(false);
             switch(temp)
@@ -52,7 +54,7 @@ public class anlegeButtonListener extends InputListener {
             }}
 
             else{
-            AnimaRPG.assetManager.get("audio/sounds/anziehen.wav", Sound.class).play();
+            game.getAssetManager().get("audio/sounds/anziehen.wav", Sound.class).play();
 
             switch(temp)
         {

@@ -1,6 +1,5 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,7 +14,6 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
-import com.mygdx.anima.sprites.character.items.ItemSprite;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
@@ -75,7 +73,6 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
         PolygonShape shape=new PolygonShape();
         shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(getWidth()/2, getHeight()/2),0);
         fdef.filter.categoryBits=AnimaRPG.OBJECT_BIT;
-        fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR | AnimaRPG.ARROW_BIT;
         fdef.shape=shape;
 
         body.createFixture(fdef).setUserData(this);

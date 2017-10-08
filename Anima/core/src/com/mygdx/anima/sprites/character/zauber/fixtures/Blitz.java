@@ -27,10 +27,11 @@ import static com.mygdx.anima.sprites.character.HumanoideSprites.Richtung.Unten;
 public class Blitz extends ZauberFixture {
 public Blitz(HumanoideSprites.Richtung richtung,float zauberFixture) {
     super(zauberFixture);
-    AnimaRPG.assetManager.get("audio/sounds/electricity.wav", Sound.class).play();
+
 
     this.zaubernder=getHeld();
     this.world=zaubernder.world;
+    zaubernder.anima.getAssetManager().get("audio/sounds/electricity.wav", Sound.class).play();
     this.screen=zaubernder.screen;
     richtungBestimmen(getHeld());
     bdef=new BodyDef();

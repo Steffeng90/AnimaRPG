@@ -183,11 +183,11 @@ public class Playscreen implements Screen{
         renderer = kartenManager.karteErstellen(kartenID,gameViewPort);
 
         // Musik
-        Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
+        /*Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
-
+*/
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new WorldContactListener());
         b2dr = new Box2DDebugRenderer();
@@ -228,7 +228,7 @@ public class Playscreen implements Screen{
         //karte rendern
         renderer.render();
         // Render-Linien
-        // b2dr.render(world, gamecam.combined);
+         b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
 

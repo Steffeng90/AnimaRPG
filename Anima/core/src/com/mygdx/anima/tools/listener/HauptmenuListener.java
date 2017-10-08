@@ -32,7 +32,7 @@ public class HauptmenuListener extends InputListener {
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        AnimaRPG.assetManager.get("audio/sounds/reiter_wechsel.ogg", Sound.class).play(0.5f);
+        game.getAssetManager().get("audio/sounds/reiter_wechsel.ogg", Sound.class).play(0.5f);
         Dialog dialog = new Dialog("Hauptmenu", skin, "dialog") {
             public void result(Object obj) {
                 System.out.println("result " + obj);

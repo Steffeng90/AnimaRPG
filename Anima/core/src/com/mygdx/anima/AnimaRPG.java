@@ -63,7 +63,8 @@ public class AnimaRPG extends Game {
 	public static final short HERO_SENSOR=64;
 	public static final short ENEMY_SENSOR=128;
 	public static final short ENEMY_ATTACK=256;
-	public static final short ARROW_BIT=512;
+	public static final short ENEMY_ARROW =512;
+	public static final short HERO_ARROW =520;
 	public static final short HERO_CAST_BIT=1024;
 	public static final short ITEM_SPRITE_BIT=2048;
 	public static final short GEBIETSWECHSEL_BIT=4096;
@@ -79,14 +80,15 @@ public class AnimaRPG extends Game {
 
 
 
+
 	public static SpriteBatch batch;
 	public static Screen currentScreen, previousScreen;
 	private static Held held;
-	public static AssetManager assetManager;
+	private AssetManager assetManager;
 
 	@Override
 	public void create() {
-
+		// AUDIOS
 		assetManager = new AssetManager();
 		assetManager.load("audio/music/little town - orchestral.ogg", Music.class);
 		assetManager.load("audio/sounds/anziehen.wav", Sound.class);
@@ -100,8 +102,8 @@ public class AnimaRPG extends Game {
 		assetManager.load("audio/sounds/levelUp.wav", Sound.class);
 		assetManager.load("audio/sounds/itemFund.wav", Sound.class);
 		assetManager.load("audio/sounds/electricity.wav", Sound.class);
-
 		assetManager.load("audio/sounds/turn_page.wav", Sound.class);
+
 
 
 		assetManager.finishLoading();
@@ -138,5 +140,10 @@ public class AnimaRPG extends Game {
 
 	public static void setHeld(Held held) {
 		AnimaRPG.held = held;
+	}
+
+	public AssetManager getAssetManager() {
+		return this.assetManager;
+
 	}
 }

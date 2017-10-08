@@ -1,10 +1,8 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -13,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
@@ -75,11 +72,13 @@ public class Arrow extends Sprite implements Pool.Poolable {
             shape.setAsBox(laenge / AnimaRPG.PPM, breite / AnimaRPG.PPM, new Vector2(0,0), 0);
         }
         FixtureDef fdefAttack = new FixtureDef();
-        fdefAttack.filter.categoryBits = AnimaRPG.ARROW_BIT;
+
         if(erzeuger instanceof Held) {
+            fdefAttack.filter.categoryBits = AnimaRPG.HERO_ARROW;
             fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.GEBIETSWECHSEL_BIT |AnimaRPG.ENEMY_OBERKOERPER;
         }
         else{
+            fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ARROW;
             fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.HERO_OBERKOERPER;
 
         }

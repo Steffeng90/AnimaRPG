@@ -9,8 +9,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
@@ -18,7 +16,6 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.Held;
 
-import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
 import static com.mygdx.anima.AnimaRPG.NPC_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -85,29 +82,29 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
     public void update() {
         Held hero = getHeld();
         int richtung;
-        if (hero.getX() < getX()) {
+        if (hero.getb2bodyX() < getX()) {
             if (hero.getY() < getY()) {
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                if ((Math.abs(hero.getb2bodyX() - getX()) <= Math.abs(hero.getb2bodyY() - getY()))) {
                     richtung=3;
                 } else {
                     richtung=0;
                 }
             } else {
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                if ((Math.abs(hero.getb2bodyX() - getX()) <= Math.abs(hero.getb2bodyY() - getY()))) {
                     richtung=2;
                 } else {
                     richtung=0;
                 }
             }
         } else {
-            if (hero.getY() < getY()) {
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+            if (hero.getb2bodyY() < getY()) {
+                if ((Math.abs(hero.getb2bodyX() - getX()) <= Math.abs(hero.getb2bodyY() - getY()))) {
                     richtung=3;
                 } else {
                     richtung=1;
                 }
             } else {
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                if ((Math.abs(hero.getb2bodyX() - getX()) <= Math.abs(hero.getb2bodyY() - getY()))) {
                     richtung=2;
                 } else {
                     richtung=1;
