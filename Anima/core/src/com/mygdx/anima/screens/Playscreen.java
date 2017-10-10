@@ -50,6 +50,7 @@ import com.mygdx.anima.tools.listener.WorldContactListener;
 
 import static com.badlogic.gdx.Input.Keys.R;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+import static com.mygdx.anima.AnimaRPG.currentPlayScreen;
 
 /**
  * Created by Steffen on 06.11.2016.
@@ -115,6 +116,7 @@ public class Playscreen implements Screen{
 
     public Playscreen(AnimaRPG game,GameData gameData){
         this.game = game;
+        game.currentPlayScreen=this;
         defineScreen(game,gameData.currentMapId);
         spieler=new Held(this,gameData);
         controller = new Controller(game);
@@ -125,6 +127,7 @@ public class Playscreen implements Screen{
     }
     public Playscreen(AnimaRPG game) {
         this.game = game;
+        game.currentPlayScreen=this;
         defineScreen(game,1);
         spieler = new Held(this,spielerPosition);
         controller = new Controller(game);
@@ -519,6 +522,7 @@ public class Playscreen implements Screen{
         anzeige.dispose();
         b2dr.dispose();
         controller.dispose();
+        // this.dispose();
     }
     //Getter und Setter, selbstgeschrieben
     public World getWorld(){ return world;}

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
+import com.mygdx.anima.tools.HandleGameData;
 
 /**
  * Created by Steffen on 20.11.2016.
@@ -43,41 +44,32 @@ import com.mygdx.anima.AnimaRPG;
         }
         @Override
         public void show() {
-
         }
-
         @Override
         public void render(float delta) {
             if(Gdx.input.justTouched())
             {
-                game.setScreen(new Playscreen(game));
+                //game.changeScreen(HandleGameData.laden(game));
+                game.changeScreen(new StartScreen(game));
+                //game.setScreen(new Playscreen(game));
                 dispose();
             }
             Gdx.gl.glClearColor(0,0,0,1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             stage.draw();
         }
-
         @Override
         public void resize(int width, int height) {
-
         }
-
         @Override
         public void pause() {
-
         }
-
         @Override
         public void resume() {
-
         }
-
         @Override
         public void hide() {
-
         }
-
         @Override
         public void dispose() {
             stage.dispose();

@@ -22,6 +22,7 @@ import com.mygdx.anima.screens.Playscreen;
 
 import static com.badlogic.gdx.utils.Align.center;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import static java.awt.SystemColor.window;
 
 /**
  * Created by Steffen on 18.11.2016.
@@ -57,23 +58,25 @@ public class LevelUpInfo implements Disposable {
             }
         };
         dialog.key(Input.Keys.ENTER, true); //sends "true" when the ENTER key is pressed
-        dialog.setSize(infoWidth/3.5f,infoHeight/3.5f);
+        dialog.setSize(infoWidth/1.5f,infoHeight/1.5f);
         dialog.setPosition(infoWidth/3,0);
         dialog.getTitleLabel().setAlignment(center);
         dialog.getTitleLabel().setSize(infoWidth,infoHeight*3/4);
+        dialog.getTitleLabel().setHeight(200);
+
         Label l1a=new Label("Stufe:",skin);
-        Label l1b=new Label(""+level,skin);
+        Label l1b=new Label("      "+level+"     ",skin);
         Label l1c=new Label("Staerke:",skin);
-        Label l1d=new Label("+"+stark,skin);
+        Label l1d=new Label("+"+stark+"  ",skin);
         Label l2a=new Label("Leben:",skin);
-        Label l2b=new Label("+"+hp,skin);
+        Label l2b=new Label("     +"+hp+"     ",skin);
 
         Label l2c=new Label("Geschick:",skin);
-        Label l2d=new Label("+"+gesch,skin);
+        Label l2d=new Label("+"+gesch+"  ",skin);
         Label l3a=new Label("Mana:",skin);
-        Label l3b=new Label("+"+mana,skin);
-        Label l3c=new Label("Zauberkraft:",skin);
-        Label l3d=new Label("+"+zaub,skin);
+        Label l3b=new Label("     +"+mana+"     ",skin);
+        Label l3c=new Label("Zauberkraft:   ",skin);
+        Label l3d=new Label("+"+zaub+"  ",skin);
 
         Table table=new Table();
         table.add(l1a).expandY();table.add(l1b).expandY();table.add(l1c).expandY();table.add(l1d).expandY();
@@ -84,7 +87,7 @@ public class LevelUpInfo implements Disposable {
         dialog.add(table);
         table.left();
         dialog.show(stage);
-//        stage.addActor(dialog);
+        // stage.addActor(dialog);
         stage.addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

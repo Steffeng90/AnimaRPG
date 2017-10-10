@@ -59,6 +59,7 @@ public class HandleGameData {
             catch(Exception e){
                 System.out.print(e.getStackTrace()+"Fehler beim Heldladen:"+e.getMessage());
             }
+
             return new Playscreen(game);
         }
 }

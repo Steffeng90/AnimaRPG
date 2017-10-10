@@ -76,13 +76,8 @@ public class AnimaRPG extends Game {
 	public static final short EVENT_AREA_BIT=7;
 	public static final short NPC_BIT=9;
 
-
-
-
-
-
 	public static SpriteBatch batch;
-	public static Screen currentScreen, previousScreen;
+	public static Screen currentScreen, previousScreen, currentPlayScreen;
 	private static Held held;
 	private AssetManager assetManager;
 
@@ -103,13 +98,9 @@ public class AnimaRPG extends Game {
 		assetManager.load("audio/sounds/itemFund.wav", Sound.class);
 		assetManager.load("audio/sounds/electricity.wav", Sound.class);
 		assetManager.load("audio/sounds/turn_page.wav", Sound.class);
-
-
-
 		assetManager.finishLoading();
 
 		batch = new SpriteBatch();
-		//currentScreen=new Playscreen(this);
 		currentScreen=new StartScreen(this);
 		setScreen(currentScreen);
 	}

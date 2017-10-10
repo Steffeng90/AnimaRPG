@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.StartScreen;
 import com.mygdx.anima.tools.HandleGameData;
+import com.mygdx.anima.tools.UniversalDisposer;
 
 /**
  * Created by Steffen on 05.12.2016.
@@ -27,7 +28,11 @@ public class HauptmenuAbfrageListener extends InputListener {
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         switch(typ){
-            case 1: HandleGameData.speichern();game.changeScreen(new StartScreen(game));break;
+           // case 1: HandleGameData.speichern();game.changeScreen(new StartScreen(game));break;
+            case 1: HandleGameData.speichern();
+                UniversalDisposer.disposeCurrentGame(game);
+
+                break;
             case 2: dialog.hide(); break;
         }
 

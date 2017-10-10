@@ -1,0 +1,16 @@
+package com.mygdx.anima.tools;
+
+import com.mygdx.anima.AnimaRPG;
+import com.mygdx.anima.screens.StartScreen;
+
+/**
+ * Created by Steffen on 08.10.2017.
+ */
+
+public class UniversalDisposer {
+  public static void disposeCurrentGame(AnimaRPG game){
+        game.currentPlayScreen.dispose();
+        game.currentScreen.dispose();
+        game.changeScreen(new StartScreen(game));
+    }
+}
