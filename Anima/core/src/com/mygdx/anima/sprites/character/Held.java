@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
@@ -513,6 +515,18 @@ public class Held extends HumanoideSprites implements Serializable{
             gesamtLPReg=getRegHitpoints()+getHeldenInventar().getAngelegtRuestung().getLpReg();
         }
         else {gesamtLPReg=getRegHitpoints();}
+    }
+    public void wiederbeleben(){
+        setCurrentHitpoints((int)(getMaxHitpoints()*0.7f));
+        runDying=false;
+        dead=false;
+        currentState=getState();
+        for(Fixture fix:b2body.getFixtureList()){
+            Filter filter=fix.getFilterData();
+            filter.categoryBits=AnimaRPG.HERO_BIT;
+            filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK | AnimaRPG.NPC_BIT
+                    | ENEMY_ARROW | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.EVENT_AREA_BIT;
+            fix.setFilterData(filter);}
     }
     public void updateAlleWerte(){
         updateGesamtLPReg();

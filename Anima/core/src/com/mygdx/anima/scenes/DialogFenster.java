@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.screens.actors.MyDialog;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -53,7 +54,7 @@ public class DialogFenster implements Disposable {
 
         windowTimer = 0;
         geklickt = false;
-        Dialog dialog = new Dialog(sprecher, skin, "dialog") {
+        MyDialog dialog = new MyDialog(sprecher, skin, "dialog") {
             public void result(Object obj) {
                 System.out.println("result " + obj);
             }
@@ -97,7 +98,7 @@ public class DialogFenster implements Disposable {
 
         windowTimer = 0;
         geklickt = false;
-        Dialog dialog = new Dialog(sprecher, skin, "dialog") {
+        MyDialog dialog = new MyDialog(sprecher, skin, "dialog") {
             public void result(Object obj) {
                 System.out.println("result " + obj);
             }

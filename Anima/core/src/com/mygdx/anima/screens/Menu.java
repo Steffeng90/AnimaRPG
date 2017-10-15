@@ -6,10 +6,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -23,6 +25,8 @@ import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.listener.HauptmenuListener;
 import com.mygdx.anima.tools.listener.ReiterButtonListener;
+
+import java.awt.Color;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
@@ -38,12 +42,30 @@ public class Menu implements Screen {
     private boolean changeReiter;
     private final Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
     private float width, height,reiterWidth;
+
+    public int getAktiverReiter() {
+        return aktiverReiter;
+    }
+
+    public void setAktiverReiter(int aktiverReiter) {
+        if (aktiverReiter>1 && aktiverReiter<6) {
+            this.aktiverReiter = aktiverReiter;
+            System.out.println("jetzt auf"+ aktiverReiter);
+        }
+        else {
+            this.aktiverReiter=1;
+            System.out.println("NAnana");
+        }
+    }
+
+    private int aktiverReiter;
     public Menu(final AnimaRPG game) {
         this.game = game;
         width = game.W_WIDTH * 2;
         height = game.W_Height * 2;
         reiterWidth=width*2/10;
         changeReiter=false;
+        aktiverReiter=1;
 
         this.viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, game.batch);
@@ -99,6 +121,16 @@ public class Menu implements Screen {
         nutzbareItemsReiterButton.addListener(new ReiterButtonListener(this,4));
         hautpmenueButton.addListener(new HauptmenuListener(this,skin,game));
 
+        // Farblich markieren
+        System.out.println("vor switch");
+
+        switch(getAktiverReiter()){
+            case 1: charakterReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("vor 1");break;
+            case 2: skillReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("vor 2");break;
+            case 3: inventarReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("vor 3");break;
+            case 4: nutzbareItemsReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("4 switch");break;
+            default: break;
+        }
 
         //Zur Zabelle hinzufügen
         reiterTable.add(charakterReiterButton).size(reiterWidth, height / 5f);

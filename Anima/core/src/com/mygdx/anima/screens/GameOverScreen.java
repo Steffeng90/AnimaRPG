@@ -50,9 +50,13 @@ import com.mygdx.anima.tools.HandleGameData;
             if(Gdx.input.justTouched())
             {
                 //game.changeScreen(HandleGameData.laden(game));
-                game.changeScreen(new StartScreen(game));
+                // letzter Stand: game.changeScreen(new StartScreen(game));
                 //game.setScreen(new Playscreen(game));
-                dispose();
+                this.dispose();
+                game.getHeld().wiederbeleben();
+                Playscreen.setMapWechsel(true);
+                game.changeScreen(game.currentPlayScreen);
+
             }
             Gdx.gl.glClearColor(0,0,0,1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -53,14 +53,14 @@ public class HumanoideSprites extends Sprite{
     public TextureRegion standingDownSprite, standingUpSprite,
             standingLeftSprite, standingRightSprite;
     public Texture spriteQuelle;
-    public Vector2 velocity;
+    public Vector2 velocity,basicPosition; //BasicPosition ist ein Zwischenspeicher für Angriffe mit großen Waffen. Bei folgenden Animationen kehrt die Figur in die BasicPosition zurück
     //Texture Atlas und QuellenTextureRegion
     public TextureAtlas atlas;
     TextureRegion heroWalkRegion,heroBow1Region,heroBow2Region,heroCastRegion,heroDieRegion,heroSword1Region,heroSword2Region,heroSword3Region;
     //Fixturen und ihre Trigger
     //(Der FixtureTrigger wird genutzt,damit eine Fixture nur einmal erzeugt wird, wenn die Animation mehrals 80% durch ist
     public Fixture meleeFixture,castFixture,bowFixture,thrustfixtureErzeugen,sensorFixture;
-    public boolean meleeFixtureErzeugen,castFixtureErzeugen,bowFixtureErzeugen,thrustFixtureErzeugen, triggerFixture;
+    public boolean meleeFixtureErzeugen,castFixtureErzeugen,bowFixtureErzeugen,thrustFixtureErzeugen, triggerFixture, uebergroeßeAktiv;
     FixtureDef fdefAttack;
     CircleShape sensorCircleShape;
     public Vector2 arrowStartVector,arrowFlugVector;
@@ -108,6 +108,7 @@ public class HumanoideSprites extends Sprite{
         runDying=false;
         meleeExists=false;
         destroyed=false;
+        uebergroeßeAktiv=false;
         breite=64;
         hoehe=64;
         triggerFixture=true;
@@ -137,6 +138,7 @@ public class HumanoideSprites extends Sprite{
         hoehe=64;
             //hitdauer=wertHeld;
         hitdauer=1;
+        uebergroeßeAktiv=false;
 
         //Animationen erstellen
             updateTextures(quelle,angriffgeschwindigkeit,getGeschwindigkeitLaufen(),0,0,0,0);
@@ -328,7 +330,10 @@ public class HumanoideSprites extends Sprite{
         previousState = currentState;
         switch (currentState) {
             case DYING:
+                // Baustelle
                 region=Dying.getKeyFrame(stateTimer,false);
+                this.uebergroesseRueckgaengig();
+
                 if(Dying.isAnimationFinished(stateTimer)){
                     dead=true;}
                 break;
@@ -393,24 +398,25 @@ public class HumanoideSprites extends Sprite{
                                     }
                                     break;
                                 case 2:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = LeftMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=LeftMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(LeftMelee2.isAnimationFinished(stateTimer))
-                                    {this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                    {
                                         stateTimer=0;runMeleeAnimation=false;
-
+                                        this.uebergroesseRueckgaengig();
                                     }
                                     break;
                                 case 3:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = LeftMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=LeftMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(LeftMelee3.isAnimationFinished(stateTimer))
-                                    { this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                    {this.setBounds(this.getX(),this.getY(), 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
                                         stateTimer=0;runMeleeAnimation=false;
+                                        this.uebergroesseRueckgaengig();
                                     }
                                     break;
                             }
@@ -443,24 +449,25 @@ public class HumanoideSprites extends Sprite{
                                     }
                                     break;
                                 case 2:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = RightMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=RightMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(RightMelee2.isAnimationFinished(stateTimer))
-                                    {this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+                                    {
                                         stateTimer=0;runMeleeAnimation=false;
+                                        uebergroesseRueckgaengig();
                                     }
                                     break;
                                 case 3:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = RightMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=RightMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(RightMelee3.isAnimationFinished(stateTimer))
                                     {
-                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
                                         stateTimer=0;runMeleeAnimation=false;
+                                        uebergroesseRueckgaengig();
                                     }
                                     break;
                             }
@@ -492,26 +499,25 @@ public class HumanoideSprites extends Sprite{
                                     }
                                     break;
                                 case 2:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = UpMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=UpMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(UpMelee2.isAnimationFinished(stateTimer))
                                     {
-                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-                                        this.setSize(42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
                                         stateTimer=0;runMeleeAnimation=false;
+                                        uebergroesseRueckgaengig();
                                     }
                                     break;
                                 case 3:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = UpMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=UpMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(UpMelee3.isAnimationFinished(stateTimer))
                                     {
-                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
                                         stateTimer=0;runMeleeAnimation=false;
+                                        uebergroesseRueckgaengig();
                                     }
                                     break;
                             }
@@ -544,25 +550,25 @@ public class HumanoideSprites extends Sprite{
                                     }
                                     break;
                                 case 2:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = DownMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=DownMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(DownMelee2.isAnimationFinished(stateTimer))
                                     {
-                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
                                         stateTimer=0;runMeleeAnimation=false;
+                                        uebergroesseRueckgaengig();
                                     }
                                     break;
                                 case 3:
-                                    this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+                                    this.uebergroesseAnpassen();
                                     region = DownMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=DownMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(DownMelee3.isAnimationFinished(stateTimer))
                                     {
-                                        this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
                                         stateTimer=0;runMeleeAnimation=false;
+                                        this.uebergroesseRueckgaengig();
                                     }
                                     break;
                             }
@@ -894,12 +900,18 @@ public class HumanoideSprites extends Sprite{
         destroyed=true;
     }
     public void readyToDie(){
-        for(Fixture fix:b2body.getFixtureList()){
-            Filter filter=fix.getFilterData();
-            filter.categoryBits=AnimaRPG.NOTHING_BIT;
-            fix.setFilterData(filter);}
-        b2body.setLinearVelocity(new Vector2(0,0));
+        //if(!this.istHeld){
+            for(Fixture fix:b2body.getFixtureList()){
+                Filter filter=fix.getFilterData();
+                filter.categoryBits=AnimaRPG.NOTHING_BIT;
+                fix.setFilterData(filter);}
+            b2body.setLinearVelocity(new Vector2(0,0));
+        //}
         runDying=true;
+        //this.setBounds(0,0,42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+            // Die Größe wird hier bewusst angepasst, da wenn eine Nahkampf (mit großer Waffe) unterbrochen wird die Größenanpassung
+            // evtl. übersprungen werden. Hier wird sichergestellt, dass der Char in normale Größe stirbt
+        //this.setSize(42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
     }
     // Diese Methode zerstört die B2bodys und alle Fixtures, ohne EP zu geben.
     // Grund dafür ist der Kartenwechsel
@@ -1224,5 +1236,18 @@ public class HumanoideSprites extends Sprite{
     }
     public float getb2bodyX(){
         return this.b2body.getPosition().x;
+    }
+    public void uebergroesseAnpassen(){
+        if(stateTimer==0)
+            basicPosition=new Vector2(getX(),getY());
+        this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+        uebergroeßeAktiv=true;
+    }
+    public void uebergroesseRueckgaengig(){
+        if(uebergroeßeAktiv){
+            this.setBounds(basicPosition.x,basicPosition.y, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+            uebergroeßeAktiv=false;
+        }
+
     }
 }

@@ -28,6 +28,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.screens.actors.MyDialog;
 import com.mygdx.anima.screens.actors.SteffensDialog;
 import com.mygdx.anima.screens.actors.UITest;
 import com.mygdx.anima.sprites.character.Held;
@@ -64,7 +65,7 @@ public class ItemFundInfo implements Disposable {
 
         windowTimer = 0;
         geklickt = false;
-        Dialog dialog = new Dialog("Gegenstand gefunden", skin, "dialog") {
+        MyDialog dialog = new MyDialog("Gegenstand gefunden", skin, "dialog") {
             public void result(Object obj) {
                 System.out.println("result " + obj);
             }
@@ -90,15 +91,16 @@ public class ItemFundInfo implements Disposable {
 */
         Table dialogTable=new Table();
         Label l1 = new Label(item.name , skin);
+        Label l2 = new Label(item.name , skin);
+        Label l3 = new Label(item.name , skin);
         Image img=new Image(item.texture);
         img.setSize(80f,80f);
 
-        dialog.add(img).size(80f,80f);
-        //dialog.row();
-        dialog.add(l1);
-        //stage.addActor(img);
+        dialogTable.add(l1);
+        dialogTable.add(img).size(80f,80f).padTop(5f);
+        //dialog.add(img).size(80f,80f).padTop(5f);
+        dialog.add(dialogTable);
         dialog.show(stage);
-        //stage.addActor(dialog);
         stage.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

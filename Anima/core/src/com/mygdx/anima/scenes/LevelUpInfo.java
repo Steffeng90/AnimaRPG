@@ -19,10 +19,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.screens.actors.MyDialog;
 
 import static com.badlogic.gdx.utils.Align.center;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
-import static java.awt.SystemColor.window;
 
 /**
  * Created by Steffen on 18.11.2016.
@@ -52,7 +51,7 @@ public class LevelUpInfo implements Disposable {
 
         geklickt=false;
 
-        Dialog dialog = new Dialog("Neue Stufe!", skin, "dialog") {
+        Dialog dialog = new MyDialog("Neue Stufe!", skin, "dialog") {
             public void result(Object obj) {
                 System.out.println("result "+obj);
             }
@@ -63,6 +62,7 @@ public class LevelUpInfo implements Disposable {
         dialog.getTitleLabel().setAlignment(center);
         dialog.getTitleLabel().setSize(infoWidth,infoHeight*3/4);
         dialog.getTitleLabel().setHeight(200);
+        // dialog.padTop(100f);
 
         Label l1a=new Label("Stufe:",skin);
         Label l1b=new Label("      "+level+"     ",skin);

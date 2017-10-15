@@ -40,19 +40,27 @@ public class StartScreen implements Screen {
         continueButton=new TextButton("Spiel fortsetzen",skin);
         continueButton.setSize(width/4,height/6);
         continueButton.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.changeScreen(HandleGameData.laden(game));
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.changeScreen(HandleGameData.laden(game));
+                System.out.println("BUtton Pressed");
             }
         });
         newGameButton=new TextButton("Neues Spiel",skin);
         newGameButton.setSize(width/4,height/6);
         newGameButton.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.changeScreen(new Playscreen(game));
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.changeScreen(new Playscreen(game));
+                System.out.println("BUtton Pressed");
             }
             });
         creditsButton=new TextButton("Credits",skin);

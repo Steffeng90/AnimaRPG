@@ -1,0 +1,73 @@
+﻿{
+  "grafiken": [
+    {
+      "id": 1,
+      "inhalt": "Tilesets",
+      "urheber": "Liberated Pixel Cup"
+    },
+    {
+      "id": 5,
+      "inhalt": "more Tilesets",
+      "urheber": ["Casper Nilsson",
+        "Daniel Eddeland",
+        "Johann Charlott",
+        "Skyler Robert Colladay",
+        "Lanea Zimmerman",
+        "Charles Sanchez",
+        "Manuel Riecke",
+        "Daniel Armstrong"
+      ]
+    },
+    {
+      "id": 2,
+      "inhalt": "Characters",
+      "urheber": "Universal-LPC-Spritesheet-Character-Generator"
+    },
+    {
+      "id": 3,
+      "inhalt": "Icons & Items",
+      "urheber": "Universal-LPC-Spritesheet-Character-Generator"
+    },
+    {
+      "id": 4,
+      "inhalt": "Sewer, Cave and Pixel Tilesets",
+      "urheber": "Art by MrBeast. Commissioned by OpenGameArt.org"
+    },
+    {
+      "id": 5,
+      "inhalt": "Spiders",
+      "urheber": "Stephen 'Redshrike' Challener as graphic artist and William.Thompsonj"
+    },
+    {
+      "id": 1111111,
+      "inhalt": "arming tilesets, magic animations and UI elements",
+      "urheber":"Daniel Eddeland"
+        },
+    {
+      "id": 1111111,
+      "inhalt": "Other Grafics",
+      "urheber": ["Lanea Zimmerman",
+        "Tuomo Untinen", "Jaidyn Reiman", "Jetrel", "Gwes", "Johannes Sjölund", "frogatto"
+    },
+        F
+  ],
+  "sounds": [
+    {
+      "id": 1,
+      "inhalt": "Music",
+      "urheber": ["artisticdude",
+    },
+      "id": 1,
+      "inhalt": "Sound & Effects",
+      "urheber": ["artisticdude",
+      ]
+    }
+  ],
+  "tester": [
+    {
+      "id": 1,
+      "inhalt": "Aria",
+      "urheber": "Ich sollte zuerst nach einer Waffe suchen, bevor ich tiefer in den Wald laufe"
+    }
+  ],
+}

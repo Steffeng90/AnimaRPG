@@ -355,7 +355,7 @@ public class Playscreen implements Screen{
 
             if (gameOver()) {
                 game.setScreen(new GameOverScreen(game));
-                dispose();
+                //dispose();
             }
         }
     public void handleInput(float dt) {
@@ -529,8 +529,10 @@ public class Playscreen implements Screen{
     public TiledMap getMap(){ return kartenManager.getMap();}
 
     public boolean gameOver(){
-        if(spieler.currentState == HumanoideSprites.State.DEAD && spieler.stateTimer>3){
+        if(spieler.currentState == HumanoideSprites.State.DEAD && spieler.stateTimer>1.5f){
+            System.out.println("Game over ist true");
             return true;
+
         }
         return false;
     }
