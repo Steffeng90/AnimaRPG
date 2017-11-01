@@ -28,7 +28,7 @@ public class SchadenLabel extends BitmapFont implements Pool.Poolable {
         public SchadenLabel(){
             super(Gdx.files.internal("ui-skin/damageLabel.fnt"));
         }
-    public void init(int schaden, HumanoideSprites getroffener,Vector2 treffender){
+    public void init(int schaden, SpriteVorlage getroffener,Vector2 treffender){
         this.schaden = String.valueOf(schaden);
         if(getroffener instanceof Held)
         {   this.setColor(Color.RED);

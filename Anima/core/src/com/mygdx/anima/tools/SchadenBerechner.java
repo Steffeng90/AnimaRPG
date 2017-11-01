@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
+import com.mygdx.anima.sprites.character.SpriteVorlage;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static com.mygdx.anima.screens.Playscreen.activeSchadenlabel;
@@ -14,7 +15,7 @@ import static com.mygdx.anima.screens.Playscreen.schadenlabelPool;
  */
 
 public class SchadenBerechner {
-    public static void  berechneSchaden(int schadensTyp, HumanoideSprites erleidender, HumanoideSprites verursacher){
+    public static void  berechneSchaden(int schadensTyp, SpriteVorlage erleidender, HumanoideSprites verursacher){
         int verursachterSchaden;
         try {
             switch (schadensTyp) {

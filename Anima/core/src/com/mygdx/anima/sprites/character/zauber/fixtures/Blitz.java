@@ -15,10 +15,10 @@ import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
-import static com.mygdx.anima.sprites.character.HumanoideSprites.Richtung.Links;
-import static com.mygdx.anima.sprites.character.HumanoideSprites.Richtung.Oben;
-import static com.mygdx.anima.sprites.character.HumanoideSprites.Richtung.Rechts;
-import static com.mygdx.anima.sprites.character.HumanoideSprites.Richtung.Unten;
+import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Links;
+import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Oben;
+import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Rechts;
+import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Unten;
 
 /**
  * Created by Steffen on 19.11.2016.

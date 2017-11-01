@@ -306,7 +306,7 @@
    <polyline points="0,0 -16,0 -32,-16 -80,-16 -96,-32 -96,-48 -144,-80 -240,-80"/>
   </object>
  </objectgroup>
- <objectgroup name="enemy">
+ <objectgroup name="enemyHumanoid">
   <object id="563" x="960" y="144" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>

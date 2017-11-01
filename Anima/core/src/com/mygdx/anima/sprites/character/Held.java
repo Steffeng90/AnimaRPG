@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.scenes.LevelUpInfo;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.InteraktivesObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
@@ -46,7 +46,7 @@ public class Held extends HumanoideSprites implements Serializable{
     public boolean heldErstellt=false;
     public static String einseins="character/43";
     public boolean isHitbyMelee,isHitbyBow,isHitbyCast,isHitbyThrust;
-    public Enemy treffenderEnemy;
+    public EnemyHumanoid treffenderEnemyHumanoid;
     private InventarList heldenInventar;
     private ZauberList zauberList;
     private int aktuellerZauberInt;
@@ -252,10 +252,10 @@ public class Held extends HumanoideSprites implements Serializable{
             genugEP=false;
             stufenAufstieg();
         }
-        if(isHitbyMelee){getsHitbyMelee(treffenderEnemy);isHitbyMelee=false;}
-        if(isHitbyBow){getsHitbyBow(treffenderEnemy);isHitbyBow=false;}
-        if(isHitbyCast){getsHitbyCast(treffenderEnemy);isHitbyCast=false;}
-        if(isHitbyThrust){getsHitbyThrust(treffenderEnemy);isHitbyThrust=false;}
+        if(isHitbyMelee){getsHitbyMelee(treffenderEnemyHumanoid);isHitbyMelee=false;}
+        if(isHitbyBow){getsHitbyBow(treffenderEnemyHumanoid);isHitbyBow=false;}
+        if(isHitbyCast){getsHitbyCast(treffenderEnemyHumanoid);isHitbyCast=false;}
+        if(isHitbyThrust){getsHitbyThrust(treffenderEnemyHumanoid);isHitbyThrust=false;}
         if(!runCasting && castExists){
             castExists=false;}
         else if(!destroyed){
@@ -377,20 +377,20 @@ public class Held extends HumanoideSprites implements Serializable{
     public void spriteBogen(){
         updateTextures(spriteBogen);
     }*/
-    public void getsHitbyMelee(Enemy enemy){
-        if(enemy!=null){getsDamaged(1,enemy);}
+    public void getsHitbyMelee(EnemyHumanoid enemyHumanoid){
+        if(enemyHumanoid !=null){getsDamaged(1, enemyHumanoid);}
     }
-    public void getsHitbyBow(Enemy enemy){getsDamaged(2,enemy);}
-    public void getsHitbyCast(Enemy enemy){
-        getsDamaged(3,enemy);
+    public void getsHitbyBow(EnemyHumanoid enemyHumanoid){getsDamaged(2, enemyHumanoid);}
+    public void getsHitbyCast(EnemyHumanoid enemyHumanoid){
+        getsDamaged(3, enemyHumanoid);
     }
-    public void getsHitbyThrust(Enemy enemy){
-        getsDamaged(4,enemy);
+    public void getsHitbyThrust(EnemyHumanoid enemyHumanoid){
+        getsDamaged(4, enemyHumanoid);
     }
-    public void getsDamaged(int schadensTyp,Enemy enemy){
-        if(enemy==null){
+    public void getsDamaged(int schadensTyp,EnemyHumanoid enemyHumanoid){
+        if(enemyHumanoid ==null){
             app.log("Gegner ist null","");}
-        SchadenBerechner.berechneSchaden(schadensTyp,this,enemy);
+        SchadenBerechner.berechneSchaden(schadensTyp,this, enemyHumanoid);
     }
     //die Methode prüft, ob gerade eine Aktion oder Animation ausgeführt wird und gibt Boolean zurück
     public boolean actionInProgress(){

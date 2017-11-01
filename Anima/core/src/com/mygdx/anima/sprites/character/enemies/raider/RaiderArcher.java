@@ -1,19 +1,18 @@
 package com.mygdx.anima.sprites.character.enemies.raider;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 
 /**
  * Created by Steffen on 13.11.2016.
  */
 
-public class RaiderArcher extends Enemy
+public class RaiderArcher extends EnemyHumanoid
 {
     Playscreen screen;
     PolygonShape bowSensor;

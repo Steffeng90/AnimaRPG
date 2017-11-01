@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 
 /**
  * Created by Steffen on 19.11.2016.
@@ -18,9 +18,9 @@ import com.mygdx.anima.sprites.character.enemies.Enemy;
 
 public class HeilzauberAOE extends com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture {
 
-public HeilzauberAOE(Enemy enemy,Playscreen screen, World world) {
+public HeilzauberAOE(EnemyHumanoid enemyHumanoid, Playscreen screen, World world) {
     super(0.8f);
-    this.zaubernder=enemy;
+    this.zaubernder= enemyHumanoid;
     this.world=world;
     this.screen=screen;
     bdef=new BodyDef();

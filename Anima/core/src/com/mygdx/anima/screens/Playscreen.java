@@ -3,7 +3,6 @@ package com.mygdx.anima.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,11 +27,11 @@ import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.SchadenLabel;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
 import com.mygdx.anima.sprites.character.enemies.NPCPool;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
@@ -40,7 +39,6 @@ import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
-import com.mygdx.anima.sprites.character.items.WaffeNah;
 import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
@@ -48,9 +46,7 @@ import com.mygdx.anima.tools.GameData;
 import com.mygdx.anima.tools.KartenManager;
 import com.mygdx.anima.tools.listener.WorldContactListener;
 
-import static com.badlogic.gdx.Input.Keys.R;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-import static com.mygdx.anima.AnimaRPG.currentPlayScreen;
 
 /**
  * Created by Steffen on 06.11.2016.
@@ -113,6 +109,7 @@ public class Playscreen implements Screen{
     public static Array<RaiderArcher> activeRaiderArcher= new Array<RaiderArcher>();
     public static Array<RaiderHealer> activeRaiderHealer= new Array<RaiderHealer>();
     public static Array<FriendlyNPC> activeNPC= new Array<FriendlyNPC>();
+    public static Array<Bat> activeBat= new Array<Bat>();
 
     public Playscreen(AnimaRPG game,GameData gameData){
         this.game = game;
@@ -128,6 +125,7 @@ public class Playscreen implements Screen{
     public Playscreen(AnimaRPG game) {
         this.game = game;
         game.currentPlayScreen=this;
+        // Level auswahl
         defineScreen(game,1);
         spieler = new Held(this,spielerPosition);
         controller = new Controller(game);
@@ -238,7 +236,7 @@ public class Playscreen implements Screen{
         game.batch.begin();
 
         //Enemies malen
-       /*for (Enemy enemy : creator.getAllEnemies()) {
+       /*for (EnemyHumanoid enemy : creator.getAllEnemies()) {
             enemy.draw(game.batch);
         }*/
         /*for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
@@ -257,6 +255,9 @@ public class Playscreen implements Screen{
         }
         for (Raider raider:activeRaider){
             raider.draw(game.batch);
+        }
+        for (Bat bat:activeBat){
+            bat.draw(game.batch);
         }
 
         for (FriendlyNPC npc:activeNPC){
@@ -437,6 +438,20 @@ public class Playscreen implements Screen{
                 arrow.update(dt);
             }
         }
+        //Bat-pool
+        Bat bat;
+        len = activeBat.size;
+        for (int i = len; --i >= 0;) {
+            bat = activeBat.get(i);
+            if (bat.destroyed == true) {
+                activeBat.removeIndex(i);
+                NPCPool.getBatPool().free(bat);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(bat);
+                bat.update(spieler,dt);
+            }
+        }
         //Raider-pool
         Raider raider;
         len = activeRaider.size;
@@ -488,6 +503,8 @@ public class Playscreen implements Screen{
                 raiderHealer.update(spieler,dt);
             }
         }
+
+        // Zauberfixture
                 for (ZauberFixture zauberFixture : Nova.getAllZauber()) {
                     if (!zauberFixture.destroyed) {
                         zauberFixture.update(dt);
@@ -663,6 +680,14 @@ public class Playscreen implements Screen{
             activeRaider.removeIndex(i);
             NPCPool.getRaiderPool().free(raider);
             }
+        }
+        size= activeBat.size;
+        Bat bat;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            bat = activeBat.get(i);
+            activeBat.removeIndex(i);
+            NPCPool.getBatPool().free(bat);
+        }
         }
         size= activeNPC.size;
         FriendlyNPC npc;

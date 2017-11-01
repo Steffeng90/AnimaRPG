@@ -54,7 +54,7 @@
   </object>
  </objectgroup>
  <objectgroup name="schatztruhen"/>
- <objectgroup name="enemy">
+ <objectgroup name="enemyHumanoid">
   <object id="199" x="496" y="0" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Nahnrung3"/>

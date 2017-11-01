@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 import com.mygdx.anima.sprites.character.zauber.fixtures.HeilzauberAOE;
 
 import java.util.ArrayList;
@@ -16,13 +16,13 @@ import java.util.ArrayList;
  * Created by Steffen on 13.11.2016.
  */
 
-public class RaiderHealer extends Enemy {
-    ArrayList<Enemy> enemiesInRange;
+public class RaiderHealer extends EnemyHumanoid {
+    ArrayList<EnemyHumanoid> enemiesInRange;
     Boolean zaubereHeilung;
 
     public RaiderHealer() {
         super();
-        enemiesInRange = new ArrayList<Enemy>();
+        enemiesInRange = new ArrayList<EnemyHumanoid>();
         zaubereHeilung=false;
     }
     public void init(Playscreen screen, float x, float y, String id, int maxhp, int maxmana, int regMana, int ep, int speed, int schadenNah, int schadenfern, int schadenzauber, int ruestung, int boundsX, int boundsY, float castSpeed, float bowSpeed, float meleeSpeed, float thrustSpeed){
@@ -31,7 +31,7 @@ public class RaiderHealer extends Enemy {
     @Override
     public void update(Held hero, float dt) {
         stateTimer += dt;
-        for(Enemy e:enemiesInRange){
+        for(EnemyHumanoid e:enemiesInRange){
             if((e.getCurrentHitpointsPercent()<0.5) && !runCasting){zaubereHeilung=true;}
         }
         super.update(hero, dt);
@@ -142,10 +142,10 @@ public class RaiderHealer extends Enemy {
         }
     }
 
-    public void removeEnemieInRange(Enemy e) {
+    public void removeEnemieInRange(EnemyHumanoid e) {
         enemiesInRange.remove(e);
     }
-    public void addEnemieInRange(Enemy e) {
+    public void addEnemieInRange(EnemyHumanoid e) {
         enemiesInRange.add(e);
     }
 }

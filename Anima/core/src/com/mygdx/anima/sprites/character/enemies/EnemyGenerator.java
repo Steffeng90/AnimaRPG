@@ -11,6 +11,7 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 
 import java.io.BufferedReader;
@@ -64,7 +65,7 @@ public class EnemyGenerator {
                     thrustSpeed=item.get("thrustSpeed").getAsFloat();
                 break;}
             }
-        //Enemy enemy=Playscreen.enemyPool.obtain();
+        //EnemyHumanoid enemy=Playscreen.enemyPool.obtain();
         switch (kategorie){
             default:
             case 1:
@@ -79,6 +80,10 @@ public class EnemyGenerator {
                 RaiderHealer raiderHealer=NPCPool.getRaiderHealerPool().obtain();
                 raiderHealer.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
                 Playscreen.activeRaiderHealer.add(raiderHealer);break;
+            case 101:
+                Bat bat=NPCPool.getBatPool().obtain();
+                bat.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeBat.add(bat);break;
         }
         }
     public static void generateNPC(Playscreen screen, Rectangle rect, String typ,String dialogID) {

@@ -28,7 +28,7 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
  * Created by Steffen on 13.11.2016.
  */
 
-public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
+public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poolable{
 
     public boolean
             // enemyInReichweite, wird true, wenn Held den ENEMY_ATTACK_SENSOR betritt
@@ -37,7 +37,7 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
             enemyNear;
     public int erfahrung;
     public String quelle;
-    public Enemy()
+    public EnemyHumanoid()
     {
     super();
     }
@@ -54,6 +54,73 @@ public abstract class Enemy extends HumanoideSprites implements Pool.Poolable{
         atlas = new TextureAtlas(id.substring(0,id.length()-2)+".pack");
         animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false);
         setRegion(standingDownSprite);
+    }
+
+    public void animationenErstellen(int melee){
+        // Die ersten Animationen werden erstellen, unabhängig der Übergebenen Booleans
+        //TextureRegion spriteQuelle = new TextureRegion(atlas.findRegion(quelle+"-walk"), 0, 0, 16, 16);;
+        TextureRegion walkQuelle=atlas.findRegion(quelle+"-walk"),
+                dieQuelle=atlas.findRegion(quelle+"-die");
+
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i*breite,0, breite, hoehe));
+        }
+        UpWalk = new Animation(0.1f, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle,i *breite, 128, breite, hoehe));
+        }
+        DownWalk = new Animation(0.1f, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i *breite, 64, breite, hoehe));
+        }
+        LeftWalk = new Animation(0.1f, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i *breite, 192, breite, hoehe));
+        }
+        RightWalk = new Animation(0.1f, frames);
+
+        frames.clear();
+        for (int i = 0; i < framesDie; i++) {
+            frames.add(new TextureRegion(dieQuelle, i *breite, 0,breite,hoehe));
+        }
+        Dying=new Animation(0.2f,frames);
+        frames.clear();
+
+        // Hier folgt die Spezifikation anhand der Boolean, ob Melee oder nicht..
+        if(melee>0) {
+            TextureRegion meleeQuelle=atlas.findRegion(quelle+"-melee");
+            for (int i = 0; i < framesSchwert; i++) {
+                frames.add(new TextureRegion(meleeQuelle, i * breite, 0, breite, hoehe));
+            }
+            UpMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
+            frames.clear();
+            for (int i = 0; i < framesSchwert; i++) {
+                frames.add(new TextureRegion(meleeQuelle, i * breite, 128, breite, hoehe));
+            }
+            DownMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
+            frames.clear();
+            for (int i = 0; i < framesSchwert; i++) {
+                frames.add(new TextureRegion(meleeQuelle, i * breite, 64, breite, hoehe));
+            }
+            LeftMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
+            frames.clear();
+            for (int i = 0; i < framesSchwert; i++) {
+                frames.add(new TextureRegion(meleeQuelle, i * breite, 192, breite, hoehe));
+            }
+            RightMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
+            frames.clear();
+        }
+        Died=new TextureRegion(dieQuelle,320,0,breite,hoehe);
+        standingDownSprite = new TextureRegion(walkQuelle, 0, 128, breite, hoehe);
+        standingUpSprite = new TextureRegion(walkQuelle, 0,0, breite, hoehe);
+        standingLeftSprite = new TextureRegion(walkQuelle, 0, 64, breite, hoehe);
+        standingRightSprite = new TextureRegion(walkQuelle, 0, 192, breite, hoehe);
+        setRegion(standingDownSprite);
+
     }
     public void reset(){
         super.reset();

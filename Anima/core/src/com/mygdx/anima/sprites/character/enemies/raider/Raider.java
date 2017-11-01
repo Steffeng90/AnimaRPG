@@ -1,23 +1,21 @@
 package com.mygdx.anima.sprites.character.enemies.raider;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 
 /**
  * Created by Steffen on 13.11.2016.
  */
 
-public class Raider extends Enemy
+public class Raider extends EnemyHumanoid
 {
     public RaiderHealer healer;
     float healSensorTimer=0;

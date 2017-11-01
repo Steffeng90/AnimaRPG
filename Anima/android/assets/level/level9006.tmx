@@ -128,7 +128,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="enemy">
+ <objectgroup name="enemyHumanoid">
   <object id="98" x="272" y="80" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>

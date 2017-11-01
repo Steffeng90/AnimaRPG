@@ -54,27 +54,37 @@ public class AnimaRPG extends Game {
 	public static final int W_Height = 200;
 
 	//B2D Collision Bits
-	public static final short NOTHING_BIT=0;
-	public static final short BARRIERE_BIT=1;
-	public static final short HERO_BIT =2;
-	public static final short ENEMY_BIT=4;
+	//Es wurden anfangs quadratische Bit genommen, damit die Summe nie das gleiche sein kann (Duplicate Label in WorldContactListener)
+	// Man muss ein bisschen rumprobieren, weil sich manche Summen überschneiden.
+	// im World Contact Listener sind mal ^ | und & eingebaut.
+	// Aktueller Stand: 2^X und dann auch mit Negativem Vorzeichen
+	public static final short NOTHING_BIT=1;
+	public static final short BARRIERE_BIT=2;
+	public static final short HERO_BIT =4;
+	public static final short ENEMY_BIT=8;
 	public static final short HERO_WEAPON_BIT=16;
-	public static final short OBJECT_BIT=32;
-	public static final short HERO_SENSOR=64;
-	public static final short ENEMY_SENSOR=128;
-	public static final short ENEMY_ATTACK=256;
-	public static final short ENEMY_ARROW =512;
-	public static final short HERO_ARROW =520;
-	public static final short HERO_CAST_BIT=1024;
-	public static final short ITEM_SPRITE_BIT=2048;
-	public static final short GEBIETSWECHSEL_BIT=4096;
-	public static final short ENEMY_HEAL_SENSOR=8192;
-	public static final short ENEMY_CAST_HEAL=16384;
-	public static final short ENEMY_SEARCH_HEALER=3;
-	public static final short ENEMY_OBERKOERPER=5;
-	public static final short HERO_OBERKOERPER=6;
-	public static final short EVENT_AREA_BIT=7;
-	public static final short NPC_BIT=9;
+	public static final short NPC_BIT=32;
+	public static final short OBJECT_BIT=64;
+	public static final short HERO_SENSOR=128;
+	public static final short ENEMY_SENSOR=256;
+	public static final short ENEMY_ATTACK=512;
+	public static final short ENEMY_ARROW =1024;
+	public static final short HERO_ARROW =2048;
+	public static final short HERO_CAST_BIT=4096;
+	public static final short ITEM_SPRITE_BIT=8192;
+	public static final short GEBIETSWECHSEL_BIT=-1;
+	public static final short ENEMY_HEAL_SENSOR=-2;
+	public static final short ENEMY_CAST_HEAL=-4;
+	public static final short ENEMY_SEARCH_HEALER=-8;
+	public static final short ENEMY_OBERKOERPER=-16;
+	public static final short HERO_OBERKOERPER=-32;
+	public static final short EVENT_AREA_BIT=-64;
+
+	public static final short UNGEHEUER_BIT=-128;
+	public static final short FLYING_UNGEHEUER_BIT=-256;
+	public static final short UNGEHEUER_SENSOR_BIT=-512;
+	public static final short UNGEHEUER_ATTACK_BIT=-1024;
+
 
 	public static SpriteBatch batch;
 	public static Screen currentScreen, previousScreen, currentPlayScreen;
@@ -89,7 +99,7 @@ public class AnimaRPG extends Game {
 		assetManager.load("audio/sounds/anziehen.wav", Sound.class);
 		assetManager.load("audio/sounds/ausziehen.wav", Sound.class);
 		assetManager.load("audio/sounds/reiter_wechsel.ogg", Sound.class);
-		//assetManager.load("audio/sounds/walk.ogg", Sound.class);
+		assetManager.load("audio/sounds/walk.ogg", Sound.class);
 		assetManager.load("audio/sounds/laufen.mp3", Sound.class);
 		assetManager.load("audio/sounds/sword_swing.mp3", Sound.class);
 		assetManager.load("audio/sounds/bow_attack.mp3", Sound.class);

@@ -7,7 +7,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.sprites.character.enemies.Enemy;
+import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
+import com.mygdx.anima.sprites.character.enemies.EnemyUngeheuer;
 
 /**
  * Created by Steffen on 18.12.2016.
@@ -81,11 +82,18 @@ public class KartenManager {
         {gamecam.position.y = mapTop - cameraHalfHeight;}
     }
 
-    public void isEnemyinRange(Enemy enemy){
-        if (enemy.getX() < cameraRight+enemyActivePuffer && enemy.getX() > cameraLeft-enemyActivePuffer
-                && enemy.getY() < cameraTop+enemyActivePuffer && enemy.getY() > cameraBottom-enemyActivePuffer) {
-            if (enemy.b2body.isActive() == false)
-                enemy.b2body.setActive(true);
+    public void isEnemyinRange(EnemyHumanoid enemyHumanoid) {
+        if (enemyHumanoid.getX() < cameraRight + enemyActivePuffer && enemyHumanoid.getX() > cameraLeft - enemyActivePuffer
+                && enemyHumanoid.getY() < cameraTop + enemyActivePuffer && enemyHumanoid.getY() > cameraBottom - enemyActivePuffer) {
+            if (enemyHumanoid.b2body.isActive() == false)
+                enemyHumanoid.b2body.setActive(true);
+        }
+    }
+    public void isEnemyinRangeUngeheuer(EnemyUngeheuer enemyUngeheuer){
+        if (enemyUngeheuer.getX() < cameraRight+enemyActivePuffer && enemyUngeheuer.getX() > cameraLeft-enemyActivePuffer
+                && enemyUngeheuer.getY() < cameraTop+enemyActivePuffer && enemyUngeheuer.getY() > cameraBottom-enemyActivePuffer) {
+            if (enemyUngeheuer.b2body.isActive() == false)
+                enemyUngeheuer.b2body.setActive(true);
         }
     }
 }

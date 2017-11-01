@@ -288,6 +288,6 @@
  <objectgroup name="barrieren"/>
  <objectgroup name="startpunkt"/>
  <objectgroup name="areaborder"/>
- <objectgroup name="enemy"/>
+ <objectgroup name="enemyHumanoid"/>
  <objectgroup name="schatztruhen"/>
 </map>

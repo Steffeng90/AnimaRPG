@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 
 /**
@@ -38,7 +39,13 @@ public class NPCPool {
             return new RaiderHealer();
         }
     };
-    public static Enemy createEnemy(MonsterType monsterType){
+    private static final Pool<Bat> batPool = new Pool<Bat>() {
+        @Override
+        protected Bat newObject() {
+            return new Bat();
+        }
+    };
+    public static EnemyHumanoid createEnemy(MonsterType monsterType){
         switch(monsterType){
             default:
             case Raider:
@@ -50,15 +57,20 @@ public class NPCPool {
         }
     }
     //You must call destroyMonster whenever you are done with the monster or the pool will leak.
-    public static void destroyMonster(Enemy enemy){
-        if(enemy instanceof Raider){
-            raiderPool.free((Raider) enemy);
+    public static void destroyMonster(EnemyHumanoid enemyHumanoid){
+        if(enemyHumanoid instanceof Raider){
+            raiderPool.free((Raider) enemyHumanoid);
         }
-        else if(enemy instanceof RaiderArcher){
-            raiderArcherPool.free((RaiderArcher) enemy);
+        else if(enemyHumanoid instanceof RaiderArcher){
+            raiderArcherPool.free((RaiderArcher) enemyHumanoid);
         }
-        else if(enemy instanceof RaiderHealer){
-            raiderHealerPool.free((RaiderHealer) enemy);
+        else if(enemyHumanoid instanceof RaiderHealer){
+            raiderHealerPool.free((RaiderHealer) enemyHumanoid);
+        }
+    }
+    public static void destroyUngeheuer(EnemyUngeheuer enemyUngeheuer){
+        if(enemyUngeheuer instanceof Bat){
+            batPool.free((Bat) enemyUngeheuer);
         }
     }
 
@@ -75,4 +87,6 @@ public class NPCPool {
     }
 
     public static Pool<FriendlyNPC> getFriendlyNPCPool(){return friendlyNPCPool;}
+
+    public static Pool<Bat> getBatPool(){return batPool;}
 }

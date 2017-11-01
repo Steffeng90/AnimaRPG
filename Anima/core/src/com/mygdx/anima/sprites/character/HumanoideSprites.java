@@ -24,19 +24,11 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
  * Created by Steffen on 13.11.2016.
  */
 
-public class HumanoideSprites extends Sprite{
-    public Playscreen screen;
-    public World world;
-    public Body b2body;
-    public AnimaRPG anima;
-    public float stateTimer, feedbackDauer;
-    // TODO Feedback-Dauer einfügen
-
+public class HumanoideSprites extends SpriteVorlage{
 
     public enum State {STANDING, WALKING, MELEE, DYING, DEAD, ARCHERY, CASTING,FEEDBACK};
-    public enum Richtung {Links, Rechts, Oben, Unten};
     public State currentState, previousState;
-    public Richtung previousRichtung, currentRichtung;
+
     public Animation UpWalk, DownWalk, LeftWalk, RightWalk;
     public Animation UpMelee1, DownMelee1, LeftMelee1, RightMelee1,
             UpMelee2, DownMelee2, LeftMelee2, RightMelee2,
@@ -52,7 +44,6 @@ public class HumanoideSprites extends Sprite{
     public TextureRegion Died;
     public TextureRegion standingDownSprite, standingUpSprite,
             standingLeftSprite, standingRightSprite;
-    public Texture spriteQuelle;
     public Vector2 velocity,basicPosition; //BasicPosition ist ein Zwischenspeicher für Angriffe mit großen Waffen. Bei folgenden Animationen kehrt die Figur in die BasicPosition zurück
     //Texture Atlas und QuellenTextureRegion
     public TextureAtlas atlas;
@@ -61,18 +52,17 @@ public class HumanoideSprites extends Sprite{
     //(Der FixtureTrigger wird genutzt,damit eine Fixture nur einmal erzeugt wird, wenn die Animation mehrals 80% durch ist
     public Fixture meleeFixture,castFixture,bowFixture,thrustfixtureErzeugen,sensorFixture;
     public boolean meleeFixtureErzeugen,castFixtureErzeugen,bowFixtureErzeugen,thrustFixtureErzeugen, triggerFixture, uebergroeßeAktiv;
-    FixtureDef fdefAttack;
     CircleShape sensorCircleShape;
+    FixtureDef fdefAttack;
+
     public Vector2 arrowStartVector,arrowFlugVector;
 
     public boolean meleeExists, castExists;
     public boolean runMeleeAnimation,istHeld,runArchery,runCasting,hitByFeedback;
-    public boolean runDying,dead,destroyed,resetAktiv;
+
     public float hitdauer,wertHeld=0.07f;
 
     //Einstellungen
-    private int currentHitpoints,maxHitpoints,currentMana,maxMana,regMana,regHitpoints,
-            schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,geschwindigkeitLaufen,angriffgeschwindigkeit;
 
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
     public int breite,breite_oversize;
@@ -86,14 +76,15 @@ public class HumanoideSprites extends Sprite{
     public void init(AnimaRPG anima, Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
         this.world = screen.getWorld();
         this.screen=screen;
+        this.anima=screen.getGame();
         setMaxHitpoints(maxhp);
         setMaxMana(maxmana);
         setRegMana(regMana);
-        geschwindigkeitLaufen=speed;
-        this.schadenNah=schadenNah;
-        this.schadenFern=schadenfern;
-        this.schadenZauber=schadenzauber;
-        this.ruestung=ruestung;
+        setGeschwindigkeitLaufen(speed);
+        this.setSchadenNah(schadenNah);
+        this.setSchadenFern(schadenfern);
+        this.setSchadenZauber(schadenzauber);
+        this.setRuestung(ruestung);
         this.bowSpeed=bowSpeed;
         this.meleeSpeed=meleeSpeed;
         this.castSpeed=castSpeed;
@@ -124,7 +115,7 @@ public class HumanoideSprites extends Sprite{
         this.meleeSpeed=0.5f;
         this.castSpeed=2f;
         this.thrustSpeed=2;
-        angriffgeschwindigkeit=10;
+        setAngriffgeschwindigkeit(10);
         changeGrafiken(quelle);
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -141,7 +132,7 @@ public class HumanoideSprites extends Sprite{
         uebergroeßeAktiv=false;
 
         //Animationen erstellen
-            updateTextures(quelle,angriffgeschwindigkeit,getGeschwindigkeitLaufen(),0,0,0,0);
+            updateTextures(quelle,getAngriffgeschwindigkeit(),getGeschwindigkeitLaufen(),0,0,0,0);
             setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
 
         setRegion(standingDownSprite);
@@ -891,77 +882,6 @@ public class HumanoideSprites extends Sprite{
         else
             return State.WALKING;
     }
-
-    public void destroyBody(){
-        world.destroyBody(b2body);
-        b2body.setUserData(null);
-        //b2body=null;
-        runDying=false;
-        destroyed=true;
-    }
-    public void readyToDie(){
-        //if(!this.istHeld){
-            for(Fixture fix:b2body.getFixtureList()){
-                Filter filter=fix.getFilterData();
-                filter.categoryBits=AnimaRPG.NOTHING_BIT;
-                fix.setFilterData(filter);}
-            b2body.setLinearVelocity(new Vector2(0,0));
-        //}
-        runDying=true;
-        //this.setBounds(0,0,42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-            // Die Größe wird hier bewusst angepasst, da wenn eine Nahkampf (mit großer Waffe) unterbrochen wird die Größenanpassung
-            // evtl. übersprungen werden. Hier wird sichergestellt, dass der Char in normale Größe stirbt
-        //this.setSize(42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-    }
-    // Diese Methode zerstört die B2bodys und alle Fixtures, ohne EP zu geben.
-    // Grund dafür ist der Kartenwechsel
-    public void bodyZerstoeren() {
-    }
-
-    public void update(float dt){
-        //  b2body beweggt sich nur, wenn kein nahkampfangriff ausgeführt wird
-        if(b2body!=null && !meleeExists){
-            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);}
-        if(getCurrentRichtung()!=getPreviousRichtung() && !destroyed) {
-            sensorAnpassen();
-        }
-        if(meleeFixtureErzeugen){meleeFixtureErzeugen=false;meleeFixtureErzeugen();}
-        else if(bowFixtureErzeugen){bowFixtureErzeugen=false;
-
-            //new Arrow(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
-           Arrow arrow=Playscreen.arrowPool.obtain();
-            arrow.init(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
-            Playscreen.activeArrows.add(arrow);
-        }
-        if(!runMeleeAnimation && meleeExists && b2body!=null){
-            b2body.destroyFixture(meleeFixture);
-            meleeExists=false;triggerFixture=true;}
-       //waffenNah else(bowFixtureErzeugen){
-        regenerationTimer+=dt;
-        if(regenerationTimer>=3 && getCurrentMana()<getMaxMana()){
-            setCurrentMana(getCurrentMana()+getRegMana());
-            regenerationTimer=0;}
-        }
-    public void setCurrentRichtung(int richtung) {
-        previousRichtung=currentRichtung;
-        switch (richtung) {
-            case 0:
-                currentRichtung = Richtung.Links;
-                break;
-            case 1:
-                currentRichtung = Richtung.Rechts;
-                break;
-            case 2:
-                currentRichtung = Richtung.Oben;
-                break;
-            case 3:
-                currentRichtung = Richtung.Unten;
-                break;
-            default:
-                break;
-        }
-    }
-
     public void createSensor(){
         sensorCircleShape = new CircleShape();
         sensorCircleShape.setRadius(5 / AnimaRPG.PPM);
@@ -991,32 +911,51 @@ public class HumanoideSprites extends Sprite{
             fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT | AnimaRPG.NPC_BIT;
         }
         else {
-              fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;
-              fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT;
+            fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;
+            fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT;
         }
         fdefSensor.shape = sensorCircleShape;
         fdefSensor.isSensor = true;
         sensorFixture= b2body.createFixture(fdefSensor);
         sensorFixture.setUserData(this);
     }
+    public void update(float dt){
+        //  b2body beweggt sich nur, wenn kein nahkampfangriff ausgeführt wird
+        if(b2body!=null && !meleeExists){
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);}
+        if(getCurrentRichtung()!=getPreviousRichtung() && !destroyed) {
+            sensorAnpassen();
+        }
+        if(meleeFixtureErzeugen){meleeFixtureErzeugen=false;meleeFixtureErzeugen();}
+        else if(bowFixtureErzeugen){bowFixtureErzeugen=false;
+
+            //new Arrow(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
+           Arrow arrow=Playscreen.arrowPool.obtain();
+            arrow.init(world,screen,currentRichtung,arrowStartVector,arrowFlugVector,this);
+            Playscreen.activeArrows.add(arrow);
+        }
+        if(!runMeleeAnimation && meleeExists && b2body!=null){
+            b2body.destroyFixture(meleeFixture);
+            meleeExists=false;triggerFixture=true;}
+       //waffenNah else(bowFixtureErzeugen){
+        regenerationTimer+=dt;
+        if(regenerationTimer>=3 && getCurrentMana()<getMaxMana()){
+            setCurrentMana(getCurrentMana()+getRegMana());
+            regenerationTimer=0;}
+        }
     public void meleeFixtureDefinieren(Vector2 richtungsVector){
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(15 / AnimaRPG.PPM);
         circleShape.setPosition(richtungsVector);
         fdefAttack = new FixtureDef();
         if(istHeld){fdefAttack.filter.categoryBits = AnimaRPG.HERO_WEAPON_BIT;
-                    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.ENEMY_OBERKOERPER;}
+            fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.ENEMY_OBERKOERPER;}
         else{       fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
-                    fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.HERO_OBERKOERPER;}
+            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.HERO_OBERKOERPER;}
         fdefAttack.shape = circleShape;
         fdefAttack.isSensor = true;
         runMeleeAnimation = true;
 
-    }
-    public void meleeFixtureErzeugen(){
-        meleeFixture = b2body.createFixture(fdefAttack);
-        meleeFixture.setUserData(this);
-        meleeExists= true;
     }
     public void sensorAnpassen(){
         b2body.destroyFixture(sensorFixture);
@@ -1053,53 +992,10 @@ public class HumanoideSprites extends Sprite{
         sensorFixture= b2body.createFixture(fdefSensor);
         sensorFixture.setUserData(this);
     }
-    public int getCurrentHitpoints() {
-        return currentHitpoints;
-    }
-    public float getCurrentHitpointsPercent(){ return ((float)currentHitpoints/(float)maxHitpoints);}
-    public void setCurrentHitpoints(int currentHitpoints) {
-        if(currentHitpoints<=0 && !dead ){
-            readyToDie();
-            this.currentHitpoints=0;
-        }else if(currentHitpoints>maxHitpoints){
-            this.currentHitpoints=maxHitpoints;
-        }
-        else{
-            this.currentHitpoints = currentHitpoints;
-        }
-    }
-    public int getMaxHitpoints() {
-        return maxHitpoints;
-    }
-
-    public void setMaxHitpoints(int maxHitpoints) {
-        int temp=this.maxHitpoints;
-        this.maxHitpoints = maxHitpoints;
-        setCurrentHitpoints(getCurrentHitpoints()+(maxHitpoints-temp));
-    }
-
-    public int getCurrentMana() {
-        return currentMana;
-    }
-
-    public void setCurrentMana(int currentMana) {
-
-        if (currentMana <= 0) {
-            this.currentMana = 0;
-        } else if (currentMana > maxMana) {
-            this.currentMana = maxMana;
-        } else {
-            this.currentMana = currentMana;
-        }
-    }
-    public int getMaxMana() {
-        return maxMana;
-    }
-
-    public void setMaxMana(int maxMana) {
-        this.maxMana = maxMana;
-        setCurrentMana(maxMana);
-
+    public void meleeFixtureErzeugen(){
+        meleeFixture = b2body.createFixture(fdefAttack);
+        meleeFixture.setUserData(this);
+        meleeExists= true;
     }
     public void changeGrafiken(String quelle){
         atlas = new TextureAtlas(quelle+".pack");
@@ -1111,131 +1007,15 @@ public class HumanoideSprites extends Sprite{
         heroSword1Region=atlas.findRegion("sword1");
         heroSword2Region=atlas.findRegion("sword2");
         heroSword3Region=atlas.findRegion("sword3");
-
-    }
-    public int getRegMana() {
-        return regMana;
-    }
-
-    public void setRegMana(int regMana) {
-        this.regMana = regMana;
-    }
-
-    public int getSchadenNah() {
-        return schadenNah;
-    }
-
-    public void setSchadenNah(int schadenNah) {
-        this.schadenNah = schadenNah;
-    }
-
-    public int getSchadenFern() {
-        return schadenFern;
-    }
-
-    public void setSchadenFern(int schadenFern) {
-        this.schadenFern = schadenFern;
-    }
-
-    public int getSchadenZauber() {
-        return schadenZauber;
-    }
-
-    public void setSchadenZauber(int schadenZauber) {
-        this.schadenZauber = schadenZauber;
-    }
-
-    public int getRuestung() {
-        return ruestung;
-    }
-
-    public void setRuestung(int ruestung) {
-        this.ruestung = ruestung;
-    }
-
-    public int getGeschwindigkeitLaufen() {
-        return geschwindigkeitLaufen;
-    }
-
-    public void setGeschwindigkeitLaufen(int geschwindigkeitLaufen) {
-        this.geschwindigkeitLaufen = geschwindigkeitLaufen;
-    }
-    public int getZauberwiderstand() {
-        return zauberwiderstand;
-    }
-
-    public void setZauberwiderstand(int zauberwiderstand) {
-        this.zauberwiderstand = zauberwiderstand;
-    }
-
-    public int getAngriffgeschwindigkeit() {
-        return angriffgeschwindigkeit;
-    }
-
-    public void setAngriffgeschwindigkeit(int angriffgeschwindigkeit) {
-        this.angriffgeschwindigkeit = angriffgeschwindigkeit;
-    }
-
-    public int getRegHitpoints() {
-        return regHitpoints;
-    }
-
-    public void setRegHitpoints(int regHitpoints) {
-        this.regHitpoints = regHitpoints;
-    }
-    public Richtung getCurrentRichtung(){
-        return currentRichtung;
-    }
-    public Richtung getPreviousRichtung(){ return previousRichtung; }
-
-    public float getFeedbackDauer() {
-        return feedbackDauer;
-    }
-
-    public void setFeedbackDauer(float feedbackDauer) {
-        this.feedbackDauer = feedbackDauer;
     }
     public void reset(){
-        resetAktiv=true;
-        if(b2body!=null){for(Fixture fix:b2body.getFixtureList()){
-            Filter filter=fix.getFilterData();
-            filter.categoryBits=AnimaRPG.NOTHING_BIT;
-            fix.setFilterData(filter);}}
-        //world.destroyBody(b2body);
-        //b2body.setUserData(null);
-        b2body=null;
-        runDying=false;
-        destroyed=false;
-
-        currentHitpoints=0;
-        maxHitpoints=0;
-        currentMana=0;
-        maxMana=0;
-        regMana=0;
-        regHitpoints=0;
-        schadenNah=0;
-        schadenFern=0;
-        schadenZauber=0;
-        ruestung=0;
-        zauberwiderstand=0;
-        geschwindigkeitLaufen=0;
-        angriffgeschwindigkeit=0;
+        super.reset();
         meleeExists=false; castExists=false;
         runMeleeAnimation=false;
         istHeld=false;
         runArchery=false;
         runCasting=false;
         hitByFeedback=false;
-        runDying=false;
-        dead=false;
-        destroyed=false;
-    }
-    // beide Methoden ermitteln die Position des Bodys des Helds, damit Figuren sich nicht an seinem Sprite-Grafik orientieren.
-    public float getb2bodyY(){
-        return this.b2body.getPosition().y;
-    }
-    public float getb2bodyX(){
-        return this.b2body.getPosition().x;
     }
     public void uebergroesseAnpassen(){
         if(stateTimer==0)

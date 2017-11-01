@@ -162,8 +162,8 @@ public class B2WorldCreator {
 
         }
             // Erzeugen von Gegner
-            if (map.getLayers().get("enemy") != null) {
-                for (MapObject object : map.getLayers().get("enemy").getObjects().getByType(RectangleMapObject.class)) {
+            if (map.getLayers().get("enemyHumanoid") != null) {
+                for (MapObject object : map.getLayers().get("enemyHumanoid").getObjects().getByType(RectangleMapObject.class)) {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
                     if(object.getProperties().get("typ").toString().contains("npc")){
                         EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
@@ -230,10 +230,10 @@ public class B2WorldCreator {
         } else if (richtung.equals("haus4")) {return 9004;
         } else if (richtung.equals("haus5")) {return 9005;
         } else if (richtung.equals("haus6")) {return 9006;
-        } else if (richtung.equals("haus7")) {return 9007;
-        } else if (richtung.equals("haus8")) {return 9008;
-        } else if (richtung.equals("haus9")) {return 9009;
-        } else if (richtung.equals("haus10")) {return 9010;
+        } else if (richtung.equals("dungeon1A")) {return 9007;
+        } else if (richtung.equals("dungeon1AB")) {return 9008;
+        } else if (richtung.equals("dungeon1CB")) {return 9008;
+        } else if (richtung.equals("dungeon1BC")) {return 9009;
 
         } else{ return 2;}
     }

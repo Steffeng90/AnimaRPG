@@ -233,7 +233,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="enemy">
+ <objectgroup name="enemyHumanoid">
   <object id="74" x="176" y="221" width="16" height="16">
    <properties>
     <property name="typ" value="raider-1"/>

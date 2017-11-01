@@ -1,0 +1,167 @@
+
+ungeheuer.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+spider01
+  rotate: false
+  xy: 1, 645
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+spider02
+  rotate: false
+  xy: 1, 323
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+spider03
+  rotate: false
+  xy: 1, 1
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+man_eater_flower
+  rotate: false
+  xy: 643, 661
+  size: 180, 304
+  orig: 180, 304
+  offset: 0, 0
+  index: -1
+pumpking
+  rotate: false
+  xy: 643, 475
+  size: 138, 184
+  orig: 138, 184
+  offset: 0, 0
+  index: -1
+big_worm
+  rotate: false
+  xy: 825, 765
+  size: 105, 200
+  orig: 105, 200
+  offset: 0, 0
+  index: -1
+ghost
+  rotate: false
+  xy: 643, 289
+  size: 120, 184
+  orig: 120, 184
+  offset: 0, 0
+  index: -1
+eyeball
+  rotate: false
+  xy: 643, 135
+  size: 96, 152
+  orig: 96, 152
+  offset: 0, 0
+  index: -1
+bat
+  rotate: false
+  xy: 643, 5
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+bee
+  rotate: false
+  xy: 825, 635
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+slime
+  rotate: false
+  xy: 783, 505
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+small_worm
+  rotate: false
+  xy: 881, 505
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+snake
+  rotate: false
+  xy: 923, 635
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+
+ungeheuer2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+spider04
+  rotate: false
+  xy: 1, 645
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+spider05
+  rotate: false
+  xy: 1, 323
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+spider06
+  rotate: false
+  xy: 1, 1
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+
+ungeheuer3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+spider07
+  rotate: false
+  xy: 1, 645
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+spider08
+  rotate: false
+  xy: 1, 323
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+spider09
+  rotate: false
+  xy: 1, 1
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+
+ungeheuer4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+spider10
+  rotate: false
+  xy: 1, 323
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1
+spider11
+  rotate: false
+  xy: 1, 1
+  size: 640, 320
+  orig: 640, 320
+  offset: 0, 0
+  index: -1

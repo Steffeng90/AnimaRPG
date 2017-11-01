@@ -122,13 +122,12 @@ public class Menu implements Screen {
         hautpmenueButton.addListener(new HauptmenuListener(this,skin,game));
 
         // Farblich markieren
-        System.out.println("vor switch");
 
         switch(getAktiverReiter()){
-            case 1: charakterReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("vor 1");break;
-            case 2: skillReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("vor 2");break;
-            case 3: inventarReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("vor 3");break;
-            case 4: nutzbareItemsReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);System.out.println("4 switch");break;
+            case 1: charakterReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
+            case 2: skillReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
+            case 3: inventarReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
+            case 4: nutzbareItemsReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
             default: break;
         }
 
