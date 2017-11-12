@@ -27,7 +27,7 @@ public class Bat extends EnemyUngeheuer
         // Am Ende des Init true übergeben (weil isFlying)
         super.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed,true);
         quelle=id;
-        //ddddcreate(is);
+        //(is);
         velocity=new Vector2(0.2f,0.2f);
         //b2body.setActive(false);
         enemyInReichweite=false;
@@ -42,12 +42,12 @@ public class Bat extends EnemyUngeheuer
     }
     @Override
     public void update(Held hero,float dt) {
-
         stateTimer +=dt;
         super.update(hero,dt);
+
         if(hitByFeedback){
             if(vonFeedbackbetroffen){b2body.setLinearVelocity(velocity);
-            //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+            setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
             vonFeedbackbetroffen=false;}
         }
         else if(!dead && !runDying && !runMeleeAnimation){
@@ -77,7 +77,7 @@ public class Bat extends EnemyUngeheuer
 
             float xDist=this.getb2bodyX()-hero.getb2bodyX()*AnimaRPG.PPM;
             float yDist=this.getb2bodyY()-hero.getb2bodyY()*AnimaRPG.PPM;
-            double startingRadius = Math.sqrt(Math.pow(xDist,2)+Math.pow(yDist,2));
+            double startingRadius = Math.sqrt(Math.pow(xDist/2,2)+Math.pow(yDist/2,2));
 
 
             double x = getArmX(startingRadius * (1-t), t * rotations * Math.PI * 2);
@@ -100,11 +100,8 @@ public class Bat extends EnemyUngeheuer
             }else if((velocity.y>-(float)getGeschwindigkeitLaufen()/10 &&velocity.y<(float)getGeschwindigkeitLaufen()/10) || (velocity.y>=getGeschwindigkeitLaufen()/10 && v2.y<0) || (velocity.y<=-getGeschwindigkeitLaufen()/10 && v2.y>0))
                 velocity.y=v2.y;
         }
-
-
     }
     public void animationenErstellen(){
-
         TextureRegion walkQuelle=atlas.findRegion("bat");
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < framesWalk; i++) {
@@ -126,6 +123,28 @@ public class Bat extends EnemyUngeheuer
             frames.add(new TextureRegion(walkQuelle, i *breite, 96, breite, hoehe));
         }
         RightWalk = new Animation(0.15f, frames);
+
+        // Melee
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i*breite,0, breite, hoehe));
+        }
+        UpMelee1 = new Animation(0.3f, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i *breite, 32, breite, hoehe));
+        }
+        LeftMelee1 = new Animation(0.3f, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle,i *breite, 64, breite, hoehe));
+        }
+        DownMelee1 = new Animation(0.3f, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i *breite, 96, breite, hoehe));
+        }
+        RightMelee1 = new Animation(0.3f, frames);
 
         frames.clear();
         standingDownSprite = new TextureRegion(walkQuelle, 0, 64, breite, hoehe);

@@ -3,10 +3,16 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
+        //google()
+
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        // Neues Gradle Plugin funktioniert nochnicht mit Libgdx...
+        // https://stackoverflow.com/questions/46947873/libgdx-doesnt-working-after-updating-gradle-android-studio-3-0
+        //classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:2.3.3'
+
         classpath 'org.robovm:robovm-gradle-plugin:1.8.0'
     }
 }
@@ -28,7 +34,7 @@ allprojects {
     repositories {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url     "https://oss.sonatype.org/content/repositories/releases/" }
     }
 }
 
@@ -77,7 +83,7 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
     }
 }
-
+/*
 project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
@@ -93,7 +99,7 @@ project(":html") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion:sources"
     }
 }
-
+*/
 project(":core") {
     apply plugin: "java"
 

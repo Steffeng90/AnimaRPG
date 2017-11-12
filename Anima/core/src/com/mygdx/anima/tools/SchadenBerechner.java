@@ -15,7 +15,7 @@ import static com.mygdx.anima.screens.Playscreen.schadenlabelPool;
  */
 
 public class SchadenBerechner {
-    public static void  berechneSchaden(int schadensTyp, SpriteVorlage erleidender, HumanoideSprites verursacher){
+    public static void  berechneSchaden(int schadensTyp, SpriteVorlage erleidender, SpriteVorlage verursacher){
         int verursachterSchaden;
         try {
             switch (schadensTyp) {

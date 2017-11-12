@@ -86,79 +86,6 @@ public class UngeheuerSprites extends SpriteVorlage{
         triggerFixture=true;
         setBounds(0, 0, boundsX / AnimaRPG.PPM, boundsY/ AnimaRPG.PPM);
     }
-    //Konstruktor für Held
-    public UngeheuerSprites(Playscreen screen, String quelle, Boolean istHeld) {
-        this.world = screen.getWorld();
-        this.screen=screen;
-        this.anima=screen.getGame();
-        this.istHeld=istHeld;
-        this.bowSpeed=1f;
-        this.meleeSpeed=0.5f;
-        this.castSpeed=2f;
-        this.thrustSpeed=2;
-        setAngriffgeschwindigkeit(10);
-        changeGrafiken(quelle);
-        currentState = State.STANDING;
-        previousState = State.STANDING;
-        currentRichtung = Richtung.Unten;
-        stateTimer = 0;
-        runMeleeAnimation=false;
-        triggerFixture=true;
-        runDying=false;
-        meleeExists=false;
-
-            //hitdauer=wertHeld;
-        hitdauer=1;
-        uebergroeßeAktiv=false;
-
-        //Animationen erstellen
-            updateTextures(quelle,getAngriffgeschwindigkeit(),getGeschwindigkeitLaufen(),0,0,0,0);
-            setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-
-        setRegion(standingDownSprite);
-            }
-        //Spritebreite
-
-
-    public void updateTextures(String quelle,int attackSpeed,int laufSpeed,float castSpeed1,float castSpeed2, float castSpeed3,float castSpeed4){
-        changeGrafiken(quelle);
-        float speedAttack=(0.8f-(float)attackSpeed/100f);
-        float speedLaufen=(1-(float)laufSpeed/100f);
-        //spriteQuelle = new Texture(quelle);
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(WalkRegion, i*breite,0, breite, hoehe));
-        }
-        UpWalk = new Animation(speedLaufen/framesWalk, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(WalkRegion, i *breite, 64, breite, hoehe));
-        }
-        LeftWalk = new Animation(speedLaufen/framesWalk, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(WalkRegion,i *breite, 128, breite, hoehe));
-        }
-        DownWalk = new Animation(speedLaufen/framesWalk, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(WalkRegion, i *breite, 192, breite, hoehe));
-        }
-        RightWalk = new Animation(speedLaufen/framesWalk, frames);
-        frames.clear();
-        for (int i = 0; i < framesDie; i++) {
-            frames.add(new TextureRegion(DieRegion, i *breite, 0,breite,hoehe));
-        }
-        Dying=new Animation(0.2f,frames);
-        frames.clear();
-        Died=new TextureRegion(DieRegion,0, 128,breite,hoehe);
-        standingUpSprite = new TextureRegion(WalkRegion, 0, 0, breite, hoehe);
-        standingLeftSprite = new TextureRegion(WalkRegion, 0, 64, breite, hoehe);
-        standingDownSprite = new TextureRegion(WalkRegion, 0, 128, breite, hoehe);
-        standingRightSprite = new TextureRegion(WalkRegion, 0,192, breite, hoehe);
-        setRegion(standingDownSprite);
-
-    }
     public TextureRegion getFrame(float dt) {
         currentState = getState();
         TextureRegion region;
@@ -219,8 +146,55 @@ public class UngeheuerSprites extends SpriteVorlage{
             case MELEE:
                 switch (currentRichtung) {
                     case Links:
+                            region = LeftMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= LeftMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (LeftMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+
+                        break;
+                    case Rechts:
+                            region = RightMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= RightMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (RightMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+                        break;
+                    case Oben:
+                            region = UpMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= UpMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (UpMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+                        break;
+                    case Unten:
+                            region = DownMelee1.getKeyFrame(stateTimer, true);
+                            if (triggerFixture && stateTimer >= DownMelee1.getAnimationDuration() * 0.3) {
+                                meleeFixtureErzeugen = true;
+                                triggerFixture = false;
+                            }
+                            if (DownMelee1.isAnimationFinished(stateTimer)) {
+                                stateTimer = 0;
+                                runMeleeAnimation = false;
+                            }
+                        break;
+                    default:
+                        region = standingDownSprite;
                         break;
                 }
+                break;
             case FEEDBACK:
                 switch (currentRichtung) {
                     case Links:
@@ -324,7 +298,6 @@ public class UngeheuerSprites extends SpriteVorlage{
         fdefAttack.shape = circleShape;
         fdefAttack.isSensor = true;
         runMeleeAnimation = true;
-
     }
     public void sensorAnpassen(){
         b2body.destroyFixture(sensorFixture);
@@ -371,18 +344,5 @@ public class UngeheuerSprites extends SpriteVorlage{
         runMeleeAnimation=false;
         istHeld=false;
         hitByFeedback=false;
-    }
-    public void uebergroesseAnpassen(){
-        if(stateTimer==0)
-            basicPosition=new Vector2(getX(),getY());
-        this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
-        uebergroeßeAktiv=true;
-    }
-    public void uebergroesseRueckgaengig(){
-        if(uebergroeßeAktiv){
-            this.setBounds(basicPosition.x,basicPosition.y, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
-            uebergroeßeAktiv=false;
-        }
-
     }
 }

@@ -69,7 +69,7 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
         CircleShape shape=new CircleShape();
         shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
-        if(isFlying=true){
+        if(isFlying==true){
             fdef.filter.categoryBits=AnimaRPG.FLYING_UNGEHEUER_BIT;
             fdef.filter.maskBits= AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
                     | AnimaRPG.HERO_ARROW;
@@ -87,7 +87,11 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
         super.update(dt);
         if(enemyInReichweite && !runMeleeAnimation &&!destroyed){
             attack();
+            System.out.println("UPDATE-ATTACK!");
         }
+        if(!runMeleeAnimation && meleeExists && b2body!=null){
+            b2body.destroyFixture(meleeFixture);
+            meleeExists=false;triggerFixture=true;}
         setRegion(getFrame(dt));
     }
     public void readyToDie(){super.readyToDie();
@@ -120,16 +124,16 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
 
         }
         meleeFixtureDefinieren(richtungsVector);
-/*        circleShape.setPosition(richtungsVector);
+        circleShape.setPosition(richtungsVector);
         FixtureDef fdefAttack = new FixtureDef();
-        fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
+        fdefAttack.filter.categoryBits = AnimaRPG.UNGEHEUER_ATTACK_BIT;
         fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT;
         fdefAttack.shape = circleShape;
         fdefAttack.isSensor = true;
         meleeFixture = this.b2body.createFixture(fdefAttack);
         meleeFixture.setUserData(this);
         runMeleeAnimation = true;
-        meleeExists = true;*/
+        meleeExists = true;
     }
     public void changeVelocity(Vector2 v2){
 

@@ -35,14 +35,16 @@ public class WorldContactListener implements ContactListener {
 
             case AnimaRPG.HERO_BIT ^ AnimaRPG.ENEMY_BIT:
                 break;
-            case AnimaRPG.HERO_WEAPON_BIT + AnimaRPG.ENEMY_BIT:
+            case AnimaRPG.HERO_WEAPON_BIT ^ AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_WEAPON_BIT)
                     ((EnemyHumanoid)fixB.getUserData()).getsHitbySword((Held)fixA.getUserData());
-                else
-                    ((EnemyHumanoid)fixA.getUserData()).getsHitbySword((Held)fixB.getUserData());
+                else {
+                    System.out.println("HeroWeaponbit:" + AnimaRPG.HERO_WEAPON_BIT + "Enemybit:" + AnimaRPG.ENEMY_BIT + "categorieBit" + fixA.getFilterData().categoryBits);
+                    ((EnemyHumanoid) fixA.getUserData()).getsHitbySword((Held) fixB.getUserData());
+                }
                 break;
             case AnimaRPG.HERO_WEAPON_BIT ^ AnimaRPG.FLYING_UNGEHEUER_BIT:
-            case AnimaRPG.HERO_WEAPON_BIT + AnimaRPG.UNGEHEUER_BIT:
+            case AnimaRPG.HERO_WEAPON_BIT ^ AnimaRPG.UNGEHEUER_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_WEAPON_BIT)
                     ((EnemyUngeheuer)fixB.getUserData()).getsHitbySword((Held)fixA.getUserData());
                 else
@@ -79,29 +81,29 @@ public class WorldContactListener implements ContactListener {
             case AnimaRPG.ENEMY_ATTACK ^ AnimaRPG.HERO_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
                 {   ((Held)fixB.getUserData()).isHitbyMelee=true;
-                    ((Held)fixB.getUserData()).treffenderEnemyHumanoid =(EnemyHumanoid)fixA.getUserData();}
+                    ((Held)fixB.getUserData()).treffenderEnemy =(EnemyHumanoid)fixA.getUserData();}
                 else
                 {   ((Held)fixA.getUserData()).isHitbyMelee=true;
-                    ((Held)fixA.getUserData()).treffenderEnemyHumanoid =(EnemyHumanoid)fixB.getUserData();}
+                    ((Held)fixA.getUserData()).treffenderEnemy =(EnemyHumanoid)fixB.getUserData();}
                 break;
-            case AnimaRPG.UNGEHEUER_ATTACK_BIT | AnimaRPG.HERO_BIT:
+            case AnimaRPG.UNGEHEUER_ATTACK_BIT ^ AnimaRPG.HERO_BIT:
             case AnimaRPG.UNGEHEUER_ATTACK_BIT ^ AnimaRPG.HERO_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.UNGEHEUER_ATTACK_BIT)
                 {   ((Held)fixB.getUserData()).isHitbyMelee=true;
-                    ((Held)fixB.getUserData()).treffenderEnemyHumanoid =(EnemyHumanoid)fixA.getUserData();}
+                    ((Held)fixB.getUserData()).treffenderEnemy =(EnemyUngeheuer)fixA.getUserData();}
                 else
                 {   ((Held)fixA.getUserData()).isHitbyMelee=true;
-                    ((Held)fixA.getUserData()).treffenderEnemyHumanoid =(EnemyHumanoid)fixB.getUserData();}
+                    ((Held)fixA.getUserData()).treffenderEnemy=(EnemyUngeheuer)fixB.getUserData();}
                 break;
             case AnimaRPG.ENEMY_ARROW ^ AnimaRPG.HERO_BIT:
             case AnimaRPG.ENEMY_ARROW ^ AnimaRPG.HERO_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ARROW)
                 {
-                    ((Held)fixB.getUserData()).treffenderEnemyHumanoid =(EnemyHumanoid)((Arrow)fixA.getUserData()).erzeuger;
+                    ((Held)fixB.getUserData()).treffenderEnemy =(EnemyHumanoid)((Arrow)fixA.getUserData()).erzeuger;
                     ((Held)fixB.getUserData()).isHitbyBow=true;
                     ((Arrow)fixA.getUserData()).setToDestroy=true;}
                 else
-                {   ((Held)fixA.getUserData()).treffenderEnemyHumanoid =(EnemyHumanoid)((Arrow)fixB.getUserData()).erzeuger;
+                {   ((Held)fixA.getUserData()).treffenderEnemy =(EnemyHumanoid)((Arrow)fixB.getUserData()).erzeuger;
                     ((Held)fixA.getUserData()).isHitbyBow=true;
                     ((Arrow)fixB.getUserData()).setToDestroy=true;}
                 break;
@@ -162,30 +164,30 @@ public class WorldContactListener implements ContactListener {
                     Playscreen.setMapEinstieg(((Gebietswechsel)fixB.getUserData()).getAusgangsrichtung());}
                 Playscreen.setMapWechsel(true);
                 break;
-            case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_BIT:
+            case AnimaRPG.ENEMY_HEAL_SENSOR ^ AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
                 {{((RaiderHealer)fixA.getUserData()).addEnemieInRange((EnemyHumanoid)fixB.getUserData());}}
                     else
                 {{((RaiderHealer)fixB.getUserData()).addEnemieInRange((EnemyHumanoid)fixA.getUserData());}}
                 break;
-            case AnimaRPG.ENEMY_CAST_HEAL + AnimaRPG.ENEMY_BIT:
+            case AnimaRPG.ENEMY_CAST_HEAL ^ AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_CAST_HEAL)
                     ((EnemyHumanoid)fixB.getUserData()).getsHitbySpell((ZauberFixture)fixA.getUserData());
                 else
                     ((EnemyHumanoid)fixA.getUserData()).getsHitbySpell((ZauberFixture)fixB.getUserData());
                 break;
-            case AnimaRPG.ENEMY_HEAL_SENSOR + AnimaRPG.HERO_BIT:
+            case AnimaRPG.ENEMY_HEAL_SENSOR ^ AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
                 {((EnemyHumanoid)fixA.getUserData()).enemyNear=true;}
                 else{((EnemyHumanoid)fixB.getUserData()).enemyNear=true;}
                 break;
-            case AnimaRPG.ENEMY_HEAL_SENSOR + AnimaRPG.ENEMY_SEARCH_HEALER:
+            case AnimaRPG.ENEMY_HEAL_SENSOR ^ AnimaRPG.ENEMY_SEARCH_HEALER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_SEARCH_HEALER)
                 {if(((RaiderHealer) fixB.getUserData()).getCurrentMana()>=4){((Raider)fixA.getUserData()).healer=(RaiderHealer) fixB.getUserData();}}
                 else{
                 if(((RaiderHealer) fixA.getUserData()).getCurrentMana()>=4){((Raider)fixB.getUserData()).healer=(RaiderHealer) fixA.getUserData();}}
                 break;
-            case AnimaRPG.HERO_BIT + AnimaRPG.EVENT_AREA_BIT:
+            case AnimaRPG.HERO_BIT ^ AnimaRPG.EVENT_AREA_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.EVENT_AREA_BIT)
                 {((DialogArea)fixA.getUserData()).checkForEvents();}
                 else{((DialogArea)fixB.getUserData()).checkForEvents();}
@@ -200,49 +202,49 @@ public class WorldContactListener implements ContactListener {
     public void endContact(Contact contact) {
         Fixture fixA=contact.getFixtureA();
         Fixture fixB=contact.getFixtureB();
-        int cDef=fixA.getFilterData().categoryBits + fixB.getFilterData().categoryBits;
+        int cDef=fixA.getFilterData().categoryBits ^ fixB.getFilterData().categoryBits;
         switch(cDef) {
-            case AnimaRPG.HERO_SENSOR + AnimaRPG.NPC_BIT:
+            case AnimaRPG.HERO_SENSOR ^ AnimaRPG.NPC_BIT:
                 if (fixA.getFilterData().categoryBits == AnimaRPG.HERO_SENSOR){
                     ((Held) fixA.getUserData()).setNPC(false,null);}
                 else{
                     ((Held) fixB.getUserData()).setNPC(false,null);}
                 break;
-            case AnimaRPG.HERO_SENSOR + AnimaRPG.OBJECT_BIT:
+            case AnimaRPG.HERO_SENSOR ^ AnimaRPG.OBJECT_BIT:
                 if (fixA.getFilterData().categoryBits == AnimaRPG.HERO_SENSOR){
                     ((Held) fixA.getUserData()).setObject(false,null);}
                 else{
                     ((Held) fixB.getUserData()).setObject(false,null);}
                 break;
-            case AnimaRPG.ENEMY_SENSOR + AnimaRPG.HERO_BIT:
+            case AnimaRPG.ENEMY_SENSOR ^ AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_SENSOR){
                     ((EnemyHumanoid) fixA.getUserData()).enemyInReichweite=false;}
                 else {
                     ((EnemyHumanoid) fixB.getUserData()).enemyInReichweite=false;}
                 break;
-            case AnimaRPG.UNGEHEUER_BIT + AnimaRPG.HERO_BIT:
-            case AnimaRPG.FLYING_UNGEHEUER_BIT + AnimaRPG.HERO_BIT:
-                if(fixB.getFilterData().categoryBits==AnimaRPG.HERO_BIT){
-                    ((EnemyUngeheuer) fixA.getUserData()).enemyInReichweite=false;}
-                else {
+            case AnimaRPG.UNGEHEUER_SENSOR_BIT ^ AnimaRPG.HERO_BIT:
+            case AnimaRPG.UNGEHEUER_SENSOR_BIT ^ AnimaRPG.HERO_OBERKOERPER:
+                if(fixB.getFilterData().categoryBits==AnimaRPG.UNGEHEUER_SENSOR_BIT){
                     ((EnemyUngeheuer) fixB.getUserData()).enemyInReichweite=false;}
+                else {
+                    ((EnemyUngeheuer) fixA.getUserData()).enemyInReichweite=false;}
                 break;
-            case AnimaRPG.ENEMY_ATTACK + AnimaRPG.HERO_BIT:
+            case AnimaRPG.ENEMY_ATTACK ^ AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_ATTACK)
-                    {((Held)fixB.getUserData()).treffenderEnemyHumanoid =null;}
-                else{((Held)fixA.getUserData()).treffenderEnemyHumanoid =null;}
+                    {((Held)fixB.getUserData()).treffenderEnemy =null;}
+                else{((Held)fixA.getUserData()).treffenderEnemy =null;}
                 break;
-            case AnimaRPG.UNGEHEUER_ATTACK_BIT + AnimaRPG.HERO_BIT:
+            case AnimaRPG.UNGEHEUER_ATTACK_BIT ^ AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.UNGEHEUER_ATTACK_BIT)
-                {((Held)fixB.getUserData()).treffenderEnemyHumanoid =null;}
-                else{((Held)fixA.getUserData()).treffenderEnemyHumanoid =null;}
+                {((Held)fixB.getUserData()).treffenderEnemy =null;}
+                else{((Held)fixA.getUserData()).treffenderEnemy =null;}
                 break;
-            case AnimaRPG.ENEMY_HEAL_SENSOR + AnimaRPG.HERO_BIT:
+            case AnimaRPG.ENEMY_HEAL_SENSOR ^ AnimaRPG.HERO_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
                 {((EnemyHumanoid)fixA.getUserData()).enemyNear=false;}
                 else{((EnemyHumanoid)fixB.getUserData()).enemyNear=false;}
                 break;
-            case AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_BIT:
+            case AnimaRPG.ENEMY_HEAL_SENSOR ^ AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
                 {{((RaiderHealer)fixA.getUserData()).removeEnemieInRange((EnemyHumanoid)fixB.getUserData());}}
                 else
