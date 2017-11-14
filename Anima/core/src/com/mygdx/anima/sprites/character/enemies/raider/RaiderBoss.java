@@ -15,13 +15,13 @@ import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
  * Created by Steffen on 13.11.2016.
  */
 
-public class Raider extends EnemyHumanoid
+public class RaiderBoss extends EnemyHumanoid
 {
     public RaiderHealer healer;
     float healSensorTimer=0;
     boolean healSensorActive;
     Fixture healSensorFixture;
-    public Raider(){
+    public RaiderBoss(){
         super();
     }
     public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
@@ -69,43 +69,6 @@ public class Raider extends EnemyHumanoid
         else if(einheitsvector.x>0 && einheitsvector.x> Math.abs(einheitsvector.y)){ setCurrentRichtung(1);}
         else if(einheitsvector.y<0 && Math.abs(einheitsvector.y)> Math.abs(einheitsvector.x)){ setCurrentRichtung(3);}
         else { setCurrentRichtung(0);}
-
-
-        //float winkel=xDistanz/yDistanz;
-        //float xStrecke=1-winkel;
-        //float yStrecke=winkel;
-        //velocity.x=xStrecke*getGeschwindigkeitLaufen()/10;
-        //velocity.y=yStrecke*getGeschwindigkeitLaufen()/10;
-//Gdx.app.log("WInkeL",""+winkel);
-        /*if(zielSprite.getX()<getX() ){
-            // Runter
-            if(zielSprite.getY()<getY()){
-
-                walkingVelo(zielSprite,new Vector2(-getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(3);}
-                else{ setCurrentRichtung(0);}
-            }
-            // Hoch
-            else{
-                walkingVelo(zielSprite,new Vector2(-getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(2);}
-                else{setCurrentRichtung(0);}
-            }}
-        // Rechts
-        else {
-            // Runter
-            if (zielSprite.getY() < getY()) {
-                walkingVelo(zielSprite,new Vector2(getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(3);}
-                else{setCurrentRichtung(1);}
-            }
-            // Hoch
-            else{
-                walkingVelo(zielSprite,new Vector2(getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(2);}
-                else{setCurrentRichtung(1);}
-            }
-        }*/
     }
     public void walkingVelo(HumanoideSprites hero,Vector2 v2){
         v2.x=v2.x/10;

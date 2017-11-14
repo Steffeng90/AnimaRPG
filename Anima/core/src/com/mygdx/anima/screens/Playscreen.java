@@ -30,6 +30,7 @@ import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.NPCPool;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
@@ -108,6 +109,7 @@ public class Playscreen implements Screen{
     public static Array<Raider> activeRaider= new Array<Raider>();
     public static Array<RaiderArcher> activeRaiderArcher= new Array<RaiderArcher>();
     public static Array<RaiderHealer> activeRaiderHealer= new Array<RaiderHealer>();
+    public static Array<RaiderBoss> activeRaiderBoss= new Array<RaiderBoss>();
     public static Array<FriendlyNPC> activeNPC= new Array<FriendlyNPC>();
     public static Array<Bat> activeBat= new Array<Bat>();
 
@@ -204,7 +206,7 @@ public class Playscreen implements Screen{
     }
     @Override
     public void render(float delta) {
-        if(isMapWechsel()){
+        if (isMapWechsel()) {
             // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
             setMapWechsel(false);
             aktiveNPCsEntfernen();
@@ -212,77 +214,68 @@ public class Playscreen implements Screen{
             //TODO destroy alle bodies in WOrld (google)
 
 
-            renderer=kartenManager.karteErstellen(mapID,gameViewPort);
-            creator=new B2WorldCreator(this);
+            renderer = kartenManager.karteErstellen(mapID, gameViewPort);
+            creator = new B2WorldCreator(this);
 
-        }
-        switch (getCurrentGameState()) {
-            case RUN:
-                update(delta);
-                break;
-            case PAUSE:
-                break;
-        }
+        } else {
+            switch (getCurrentGameState()) {
+                case RUN:
+                    update(delta);
+                    break;
+                case PAUSE:
+                    break;
+            }
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //karte rendern
-        renderer.render();
-        // Render-Linien
-         b2dr.render(world, gamecam.combined);
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            //karte rendern
+            renderer.render();
+            // Render-Linien
+            b2dr.render(world, gamecam.combined);
 
-        game.batch.setProjectionMatrix(gamecam.combined);
+            game.batch.setProjectionMatrix(gamecam.combined);
 
-        game.batch.begin();
+            game.batch.begin();
 
-        //Enemies malen
-       /*for (EnemyHumanoid enemy : creator.getAllEnemies()) {
-            enemy.draw(game.batch);
-        }*/
-        /*for (Schatztruhe schatztruhe : creator.getAllSchatztruhen()) {
-            schatztruhe.draw(game.batch);
-        }*/
-        /*if (Arrow.getAllArrows().size > 0) {
-            for (Arrow arrow : Arrow.getAllArrows()) {
+            for (Arrow arrow : activeArrows) {
                 arrow.draw(game.batch);
             }
-        }*/
-        for(Arrow arrow :activeArrows){
-            arrow.draw(game.batch);
-        }
-        for(Schatztruhe truhe:activeTruhen){
-            truhe.draw(game.batch);
-        }
-        for (Raider raider:activeRaider){
-            raider.draw(game.batch);
-        }
-        for (Bat bat:activeBat){
-            bat.draw(game.batch);
-        }
+            for (Schatztruhe truhe : activeTruhen) {
+                truhe.draw(game.batch);
+            }
+            for (Raider raider : activeRaider) {
+                raider.draw(game.batch);
+            }
+            for (Bat bat : activeBat) {
+                bat.draw(game.batch);
+            }
 
-        for (FriendlyNPC npc:activeNPC){
-            npc.draw(game.batch);
-        }
-        for(RaiderHealer raiderHealer:activeRaiderHealer){
-            raiderHealer.draw(game.batch);
-        }
-        for(RaiderArcher raiderArcher:activeRaiderArcher){
-            raiderArcher.draw(game.batch);
-        }
-        if (ZauberFixture.getAllZauber().size > 0) {
+            for (FriendlyNPC npc : activeNPC) {
+                npc.draw(game.batch);
+            }
+            for (RaiderHealer raiderHealer : activeRaiderHealer) {
+                raiderHealer.draw(game.batch);
+            }
+            for (RaiderBoss raiderBoss : activeRaiderBoss) {
+                raiderBoss.draw(game.batch);
+            }
+            for (RaiderArcher raiderArcher : activeRaiderArcher) {
+                raiderArcher.draw(game.batch);
+            }
+            if (ZauberFixture.getAllZauber().size > 0) {
 
-            for (ZauberFixture zauberFixture : Nova.getAllZauber()) {
-                if (!zauberFixture.destroyed) {
-                    zauberFixture.draw(game.batch);
+                for (ZauberFixture zauberFixture : Nova.getAllZauber()) {
+                    if (!zauberFixture.destroyed) {
+                        zauberFixture.draw(game.batch);
+                    }
                 }
             }
-        }
         /*for (Gebietswechsel gebietswechsel : creator.getAllAusgang()) {
             gebietswechsel.draw(game.batch);
         }*/
-        spieler.draw(game.batch);
-        if (activeSchadenlabel.size > 0) {
-            for (int i = activeSchadenlabel.size; --i >= 0;) {
+            spieler.draw(game.batch);
+            if (activeSchadenlabel.size > 0) {
+                for (int i = activeSchadenlabel.size; --i >= 0; ) {
                     SchadenLabel sl = activeSchadenlabel.get(i);
                     if (sl.getTimer() < 0.5) {
                         sl.draw(game.batch);
@@ -291,8 +284,9 @@ public class Playscreen implements Screen{
                         activeSchadenlabel.removeIndex(i);
                         schadenlabelPool.free(sl);
                     }
-            }}
-            if (getCurrentItemsprite() != null || getLevelUpWindow()!=null ||getActiveDialog()!=null) {
+                }
+            }
+            if (getCurrentItemsprite() != null || getLevelUpWindow() != null || getActiveDialog() != null) {
                 setCurrentGameState(GameState.PAUSE);
             }
 
@@ -304,13 +298,14 @@ public class Playscreen implements Screen{
                     break;
                 case PAUSE:
                     game.batch.begin();
-                    if(getCurrentItemsprite()!=null)
+                    if (getCurrentItemsprite() != null)
                         getCurrentItemsprite().draw(game.batch);
 
                     game.batch.end();
 
                     controller.draw();
-                    if(itemWindow!=null){itemWindow.draw();
+                    if (itemWindow != null) {
+                        itemWindow.draw();
                         getCurrentItemsprite().update(delta);
                         itemWindow.update(delta);
 
@@ -318,31 +313,31 @@ public class Playscreen implements Screen{
                             setCurrentItemsprite(null);
                             Gdx.input.setInputProcessor(controller.getStage());
                             itemWindow.dispose();
-                            itemWindow=null;
+                            itemWindow = null;
                             setCurrentGameState(GameState.RUN);
-                        }}
-                    if(levelUpWindow!=null){
+                        }
+                    }
+                    if (levelUpWindow != null) {
 
                         levelUpWindow.draw();
                         levelUpWindow.update(delta);
                         if (levelUpWindow.isGeklickt()) {
                             levelUpWindow.dispose();
-                            levelUpWindow=null;
+                            levelUpWindow = null;
                             Gdx.input.setInputProcessor(controller.getStage());
                             setCurrentGameState(GameState.RUN);
                         }
                     }
-                    if(activeDialog!=null){
+                    if (activeDialog != null) {
 
                         activeDialog.draw();
                         activeDialog.update(delta);
                         if (activeDialog.isGeklickt()) {
-                            if((Integer.parseInt(activeDialog.getNachfolger()))!=0){
-                                DialogGenerator.generateDialog(this,game.batch,activeDialog.getNachfolger(),null);
-                            }
-                            else {
+                            if ((Integer.parseInt(activeDialog.getNachfolger())) != 0) {
+                                DialogGenerator.generateDialog(this, game.batch, activeDialog.getNachfolger(), null);
+                            } else {
                                 activeDialog.dispose();
-                                activeDialog=null;
+                                activeDialog = null;
                                 Gdx.input.setInputProcessor(controller.getStage());
                                 setCurrentGameState(GameState.RUN);
                             }
@@ -359,6 +354,7 @@ public class Playscreen implements Screen{
                 //dispose();
             }
         }
+    }
     public void handleInput(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
             spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
@@ -486,6 +482,20 @@ public class Playscreen implements Screen{
             else{
                 kartenManager.isEnemyinRange(raiderArcher);
                 raiderArcher.update(spieler,dt);
+            }
+        }
+        // RaiderBoss
+        RaiderBoss raiderBoss;
+        len = activeRaiderBoss.size;
+        for (int i = len; --i >= 0;) {
+            raiderBoss = activeRaiderBoss.get(i);
+            if (raiderBoss.destroyed == true) {
+                activeRaiderBoss.removeIndex(i);
+                NPCPool.getRaiderBossPool().free(raiderBoss);
+            }
+            else{
+                kartenManager.isEnemyinRange(raiderBoss);
+                raiderBoss.update(spieler,dt);
             }
         }
         // RaiderHealer
@@ -711,6 +721,14 @@ public class Playscreen implements Screen{
             raiderHealer = activeRaiderHealer.get(i);
             activeRaiderHealer.removeIndex(i);
             NPCPool.getRaiderHealerPool().free(raiderHealer);
+        }
+        }
+        size= activeRaiderBoss.size;
+        RaiderBoss raiderBoss;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            raiderBoss = activeRaiderBoss.get(i);
+            activeRaiderBoss.removeIndex(i);
+            NPCPool.getRaiderBossPool().free(raiderBoss);
         }
         }
         Array<Body> bodyArray=new Array<Body>();

@@ -3,66 +3,87 @@ raider.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+raider-4-bigA
+  rotate: false
+  xy: 1, 1165
+  size: 1152, 768
+  orig: 1152, 768
+  offset: 0, 0
+  index: -1
 raider-1-melee
   rotate: false
-  xy: 1, 649
+  xy: 1, 907
   size: 832, 256
   orig: 832, 256
   offset: 0, 0
   index: -1
 raider-1-walk
   rotate: false
-  xy: 1, 391
+  xy: 1155, 1677
   size: 832, 256
   orig: 832, 256
   offset: 0, 0
   index: -1
 raider-2-bow
   rotate: false
-  xy: 835, 649
+  xy: 1, 649
   size: 832, 256
   orig: 832, 256
   offset: 0, 0
   index: -1
 raider-2-walk
   rotate: false
-  xy: 1, 133
+  xy: 1155, 1419
   size: 832, 256
   orig: 832, 256
   offset: 0, 0
   index: -1
 raider-3-cast
   rotate: false
-  xy: 835, 391
+  xy: 1, 391
   size: 832, 256
   orig: 832, 256
   offset: 0, 0
   index: -1
 raider-3-walk
   rotate: false
-  xy: 835, 133
+  xy: 1, 133
   size: 832, 256
   orig: 832, 256
   offset: 0, 0
   index: -1
 raider-1-die
   rotate: false
-  xy: 1, 67
+  xy: 1155, 1353
   size: 832, 64
   orig: 832, 64
   offset: 0, 0
   index: -1
 raider-2-die
   rotate: false
-  xy: 1, 1
+  xy: 1, 67
   size: 832, 64
   orig: 832, 64
   offset: 0, 0
   index: -1
 raider-3-die
   rotate: false
-  xy: 835, 67
+  xy: 1155, 1287
   size: 832, 64
   orig: 832, 64
+  offset: 0, 0
+  index: -1
+raider-4-walk
+  rotate: false
+  xy: 1155, 1029
+  size: 576, 256
+  orig: 576, 256
+  offset: 0, 0
+  index: -1
+raider-4-die
+  rotate: false
+  xy: 1, 1
+  size: 384, 64
+  orig: 384, 64
   offset: 0, 0
   index: -1

@@ -3,6 +3,7 @@ package com.mygdx.anima.sprites.character.enemies;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
@@ -25,6 +26,12 @@ public class NPCPool {
         @Override
         protected RaiderArcher newObject() {
             return new RaiderArcher();
+        }
+    };
+    private static final Pool<RaiderBoss> raiderBossPool = new Pool<RaiderBoss>() {
+        @Override
+        protected RaiderBoss newObject() {
+            return new RaiderBoss();
         }
     };
     private static final Pool<FriendlyNPC> friendlyNPCPool = new Pool<FriendlyNPC>() {
@@ -67,6 +74,9 @@ public class NPCPool {
         else if(enemyHumanoid instanceof RaiderHealer){
             raiderHealerPool.free((RaiderHealer) enemyHumanoid);
         }
+        else if(enemyHumanoid instanceof RaiderBoss){
+            raiderBossPool.free((RaiderBoss) enemyHumanoid);
+        }
     }
     public static void destroyUngeheuer(EnemyUngeheuer enemyUngeheuer){
         if(enemyUngeheuer instanceof Bat){
@@ -84,6 +94,9 @@ public class NPCPool {
 
     public static Pool<RaiderHealer> getRaiderHealerPool() {
         return raiderHealerPool;
+    }
+    public static Pool<RaiderBoss> getRaiderBossPool() {
+        return raiderBossPool;
     }
 
     public static Pool<FriendlyNPC> getFriendlyNPCPool(){return friendlyNPCPool;}

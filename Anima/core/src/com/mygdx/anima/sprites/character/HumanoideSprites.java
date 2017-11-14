@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 
 /**
@@ -39,6 +40,7 @@ public class HumanoideSprites extends SpriteVorlage{
             UpCast2, DownCast2, LeftCast2, RightCast2,
             UpCast3, DownCast3, LeftCast3, RightCast3,
             UpCast4, DownCast4, LeftCast4, RightCast4;
+    public Animation UpBigAttack,DownBigAttack,LeftBigAttack,RightBigAttack;
 
     public Animation Dying;
     public TextureRegion Died;
@@ -66,8 +68,9 @@ public class HumanoideSprites extends SpriteVorlage{
 
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
     public int breite,breite_oversize;
-    public int hoehe;
-    public static float framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13;
+    // size ist die größe, auf die ein übergroßer Enemy zurückgreift, wenn uebergröße Anpassen ausgeführt wird.
+    public int hoehe,size;
+    public static float framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13,framesBigAttac=6;
     public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
     float regenerationTimer;
     //Konstruktor für Enemies
@@ -102,6 +105,7 @@ public class HumanoideSprites extends SpriteVorlage{
         uebergroeßeAktiv=false;
         breite=64;
         hoehe=64;
+        size=(int)boundsX;
         triggerFixture=true;
         setBounds(0, 0, boundsX / AnimaRPG.PPM, boundsY/ AnimaRPG.PPM);
     }
@@ -128,12 +132,13 @@ public class HumanoideSprites extends SpriteVorlage{
         breite=64;breite_oversize=192;
         hoehe=64;
             //hitdauer=wertHeld;
+        size=42;
         hitdauer=1;
         uebergroeßeAktiv=false;
 
         //Animationen erstellen
             updateTextures(quelle,getAngriffgeschwindigkeit(),getGeschwindigkeitLaufen(),0,0,0,0);
-            setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+            setBounds(0, 0, size / AnimaRPG.PPM, size/ AnimaRPG.PPM);
 
         setRegion(standingDownSprite);
             }
@@ -413,6 +418,19 @@ public class HumanoideSprites extends SpriteVorlage{
                             }
 
                         }
+                        else if(this instanceof RaiderBoss){
+                            this.uebergroesseAnpassen();
+                            region = LeftBigAttack.getKeyFrame(stateTimer, true);
+                            if(triggerFixture && stateTimer>=LeftBigAttack.getAnimationDuration()*0.3)
+                            {meleeFixtureErzeugen=true;triggerFixture =false;}
+                            if(LeftBigAttack.isAnimationFinished(stateTimer))
+                            {
+                                stateTimer=0;runMeleeAnimation=false;
+                                uebergroesseRueckgaengig();
+                            }
+                            break;
+                        }
+
                         else {
                             region = LeftMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= LeftMelee1.getAnimationDuration() * 0.3) {
@@ -463,6 +481,19 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                             }
                         }
+                        else if(this instanceof RaiderBoss){
+                            this.uebergroesseAnpassen();
+                            region = RightBigAttack.getKeyFrame(stateTimer, true);
+                            if(triggerFixture && stateTimer>=RightBigAttack.getAnimationDuration()*0.3)
+                            {meleeFixtureErzeugen=true;triggerFixture =false;}
+                            if(RightBigAttack.isAnimationFinished(stateTimer))
+                            {
+                                stateTimer=0;runMeleeAnimation=false;
+                                uebergroesseRueckgaengig();
+                            }
+                            break;
+                        }
+
                         else {
                             region = RightMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= RightMelee1.getAnimationDuration() * 0.3) {
@@ -514,6 +545,19 @@ public class HumanoideSprites extends SpriteVorlage{
                             }
 
                         }
+                        else if(this instanceof RaiderBoss){
+                            this.uebergroesseAnpassen();
+                            region = UpBigAttack.getKeyFrame(stateTimer, true);
+                            if(triggerFixture && stateTimer>=UpBigAttack.getAnimationDuration()*0.3)
+                            {meleeFixtureErzeugen=true;triggerFixture =false;}
+                            if(UpBigAttack.isAnimationFinished(stateTimer))
+                            {
+                                stateTimer=0;runMeleeAnimation=false;
+                                uebergroesseRueckgaengig();
+                            }
+                            break;
+                        }
+
                         else {
                             region = UpMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= UpMelee1.getAnimationDuration() * 0.3) {
@@ -564,6 +608,19 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                             }
                         }
+                        else if(this instanceof RaiderBoss){
+                            this.uebergroesseAnpassen();
+                            region = DownBigAttack.getKeyFrame(stateTimer, true);
+                            if(triggerFixture && stateTimer>=DownBigAttack.getAnimationDuration()*0.3)
+                            {meleeFixtureErzeugen=true;triggerFixture =false;}
+                            if(DownBigAttack.isAnimationFinished(stateTimer))
+                            {
+                                stateTimer=0;runMeleeAnimation=false;
+                                uebergroesseRueckgaengig();
+                            }
+                            break;
+                        }
+
                         else {
                             region = DownMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= DownMelee1.getAnimationDuration() * 0.3) {
@@ -1020,12 +1077,12 @@ public class HumanoideSprites extends SpriteVorlage{
     public void uebergroesseAnpassen(){
         if(stateTimer==0)
             basicPosition=new Vector2(getX(),getY());
-        this.setBounds(this.b2body.getPosition().x-62/ AnimaRPG.PPM, this.b2body.getPosition().y-62/ AnimaRPG.PPM, 126 / AnimaRPG.PPM, 126/ AnimaRPG.PPM);
+        this.setBounds(this.b2body.getPosition().x-(size*1.5f)/ AnimaRPG.PPM, this.b2body.getPosition().y-(size*1.5f)/ AnimaRPG.PPM, (size*3) / AnimaRPG.PPM, (size*3)/ AnimaRPG.PPM);
         uebergroeßeAktiv=true;
     }
     public void uebergroesseRueckgaengig(){
         if(uebergroeßeAktiv){
-            this.setBounds(basicPosition.x,basicPosition.y, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
+            this.setBounds(basicPosition.x,basicPosition.y, size / AnimaRPG.PPM, size/ AnimaRPG.PPM);
             uebergroeßeAktiv=false;
         }
 

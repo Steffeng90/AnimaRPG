@@ -41,7 +41,7 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
     {
     super();
     }
-    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
+    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
         super.init(screen.getGame(),screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
         setPosition(x,y);
         setErfahrung(ep);
@@ -52,75 +52,8 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
         atlas = new TextureAtlas(id.substring(0,id.length()-2)+".pack");
-        animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false);
+        animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false,schadenbigAttack);
         setRegion(standingDownSprite);
-    }
-
-    public void animationenErstellen(int melee){
-        // Die ersten Animationen werden erstellen, unabhängig der Übergebenen Booleans
-        //TextureRegion spriteQuelle = new TextureRegion(atlas.findRegion(quelle+"-walk"), 0, 0, 16, 16);;
-        TextureRegion walkQuelle=atlas.findRegion(quelle+"-walk"),
-                dieQuelle=atlas.findRegion(quelle+"-die");
-
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i*breite,0, breite, hoehe));
-        }
-        UpWalk = new Animation(0.1f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle,i *breite, 128, breite, hoehe));
-        }
-        DownWalk = new Animation(0.1f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 64, breite, hoehe));
-        }
-        LeftWalk = new Animation(0.1f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 192, breite, hoehe));
-        }
-        RightWalk = new Animation(0.1f, frames);
-
-        frames.clear();
-        for (int i = 0; i < framesDie; i++) {
-            frames.add(new TextureRegion(dieQuelle, i *breite, 0,breite,hoehe));
-        }
-        Dying=new Animation(0.2f,frames);
-        frames.clear();
-
-        // Hier folgt die Spezifikation anhand der Boolean, ob Melee oder nicht..
-        if(melee>0) {
-            TextureRegion meleeQuelle=atlas.findRegion(quelle+"-melee");
-            for (int i = 0; i < framesSchwert; i++) {
-                frames.add(new TextureRegion(meleeQuelle, i * breite, 0, breite, hoehe));
-            }
-            UpMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
-            frames.clear();
-            for (int i = 0; i < framesSchwert; i++) {
-                frames.add(new TextureRegion(meleeQuelle, i * breite, 128, breite, hoehe));
-            }
-            DownMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
-            frames.clear();
-            for (int i = 0; i < framesSchwert; i++) {
-                frames.add(new TextureRegion(meleeQuelle, i * breite, 64, breite, hoehe));
-            }
-            LeftMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
-            frames.clear();
-            for (int i = 0; i < framesSchwert; i++) {
-                frames.add(new TextureRegion(meleeQuelle, i * breite, 192, breite, hoehe));
-            }
-            RightMelee1 = new Animation(meleeSpeed/framesSchwert, frames);
-            frames.clear();
-        }
-        Died=new TextureRegion(dieQuelle,320,0,breite,hoehe);
-        standingDownSprite = new TextureRegion(walkQuelle, 0, 128, breite, hoehe);
-        standingUpSprite = new TextureRegion(walkQuelle, 0,0, breite, hoehe);
-        standingLeftSprite = new TextureRegion(walkQuelle, 0, 64, breite, hoehe);
-        standingRightSprite = new TextureRegion(walkQuelle, 0, 192, breite, hoehe);
-        setRegion(standingDownSprite);
-
     }
     public void reset(){
         super.reset();
@@ -166,7 +99,7 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
     public void readyToDie(){super.readyToDie();
         giveErfahrung();
     }
-    public void animationenErstellen(int melee,int bow,int cast,boolean thrust){
+    public void animationenErstellen(int melee,int bow,int cast,boolean thrust,int bigAttack){
         // Die ersten Animationen werden erstellen, unabhängig der Übergebenen Booleans
         //TextureRegion spriteQuelle = new TextureRegion(atlas.findRegion(quelle+"-walk"), 0, 0, 16, 16);;
         TextureRegion walkQuelle=atlas.findRegion(quelle+"-walk"),
@@ -268,6 +201,30 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
                 frames.add(new TextureRegion(castQuelle, i * breite, 64, breite, hoehe));
             }
             LeftCast1 = new Animation(castSpeed/framesCast, frames);
+        }
+        if(bigAttack>0) {
+            int size=192;
+            TextureRegion bigAttackQuelle=atlas.findRegion(quelle+"-bigA");
+            for (int i = 0; i < framesBigAttac; i++) {
+                frames.add(new TextureRegion(bigAttackQuelle, i * size, 0, size, size));
+            }
+            UpBigAttack = new Animation(meleeSpeed/framesBigAttac, frames);
+            frames.clear();
+            for (int i = 0; i < framesBigAttac; i++) {
+                frames.add(new TextureRegion(bigAttackQuelle, i * size, 2*size, size, size));
+            }
+            DownBigAttack = new Animation(meleeSpeed/framesBigAttac, frames);
+            frames.clear();
+            for (int i = 0; i < framesBigAttac; i++) {
+                frames.add(new TextureRegion(bigAttackQuelle, i * size, 3*size, size, size));
+            }
+            RightBigAttack = new Animation(meleeSpeed/framesBigAttac, frames);
+            frames.clear();
+            for (int i = 0; i < framesBigAttac; i++) {
+                frames.add(new TextureRegion(bigAttackQuelle, i * size, size, size, size));
+            }
+            LeftBigAttack = new Animation(meleeSpeed/framesBigAttac, frames);
+            System.out.println("Sizesd esBOsses sind defininiert");
         }
         Died=new TextureRegion(dieQuelle,320,0,breite,hoehe);
         standingDownSprite = new TextureRegion(walkQuelle, 0, 128, breite, hoehe);

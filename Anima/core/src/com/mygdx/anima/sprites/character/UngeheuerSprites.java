@@ -106,6 +106,7 @@ public class UngeheuerSprites extends SpriteVorlage{
                 region=standingDownSprite;
                 break;
             case STANDING:
+                System.out.println("Standing wird gesucht");
                 switch (currentRichtung) {
                     case Links:
                         region = standingLeftSprite;
@@ -155,7 +156,6 @@ public class UngeheuerSprites extends SpriteVorlage{
                                 stateTimer = 0;
                                 runMeleeAnimation = false;
                             }
-
                         break;
                     case Rechts:
                             region = RightMelee1.getKeyFrame(stateTimer, true);

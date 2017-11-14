@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
+import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
@@ -27,7 +28,7 @@ public class EnemyGenerator {
     private static Vector2 vector;
     //Kategorie 1: Nahkampf, 2: Fernkampf 3: Brust, 4: Benutzbar
     //Benutzbarkateogie 1: Lebenspunkte
-    private static int kategorie,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung;
+    private static int kategorie,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,schadenbigAttack;
     private static float castSpeed,bowSpeed,meleeSpeed,thrustSpeed,boundsX,boundsY;
     //  private static kategorie itemKategorie=waffe;
     private static JsonArray itemArray;
@@ -56,6 +57,7 @@ public class EnemyGenerator {
                     schadenNah=item.get("schadenNah").getAsInt();
                     schadenfern=item.get("schadenfern").getAsInt();
                     schadenzauber=item.get("schadenzauber").getAsInt();
+                    schadenbigAttack=item.get("schadenbigAttack").getAsInt();
                     ruestung=item.get("ruestung").getAsInt();
                     boundsX=item.get("boundsX").getAsFloat();
                     boundsY=item.get("boundsY").getAsFloat();
@@ -70,16 +72,20 @@ public class EnemyGenerator {
             default:
             case 1:
                 Raider raider=NPCPool.getRaiderPool().obtain();
-                raider.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                raider.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
                 Playscreen.activeRaider.add(raider);break;
             case 2:
                 RaiderArcher raiderArcher=NPCPool.getRaiderArcherPool().obtain();
-                raiderArcher.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                raiderArcher.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
                 Playscreen.activeRaiderArcher.add(raiderArcher);break;
             case 3:
                 RaiderHealer raiderHealer=NPCPool.getRaiderHealerPool().obtain();
-                raiderHealer.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                raiderHealer.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
                 Playscreen.activeRaiderHealer.add(raiderHealer);break;
+            case 4:
+                RaiderBoss raiderBoss=NPCPool.getRaiderBossPool().obtain();
+                raiderBoss.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeRaiderBoss.add(raiderBoss);break;
             case 101:
                 Bat bat=NPCPool.getBatPool().obtain();
                 bat.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
