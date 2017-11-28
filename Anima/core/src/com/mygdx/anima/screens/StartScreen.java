@@ -47,7 +47,7 @@ public class StartScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.changeScreen(HandleGameData.laden(game));
-                System.out.println("BUtton Pressed");
+
             }
         });
         newGameButton=new TextButton("Neues Spiel",skin);
@@ -60,7 +60,7 @@ public class StartScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.changeScreen(new Playscreen(game));
-                System.out.println("BUtton Pressed");
+
             }
             });
         creditsButton=new TextButton("Credits",skin);

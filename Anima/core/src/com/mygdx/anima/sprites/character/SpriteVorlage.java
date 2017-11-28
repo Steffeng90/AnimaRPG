@@ -249,10 +249,19 @@ public class SpriteVorlage extends Sprite{
     }
     // beide Methoden ermitteln die Position des Bodys des Helds, damit Figuren sich nicht an seinem Sprite-Grafik orientieren.
     public float getb2bodyY(){
-        return this.b2body.getPosition().y;
+
+        try{
+            return this.b2body.getPosition().y;
+        }catch (Exception e){
+            return 0;
+        }
     }
     public float getb2bodyX(){
-        return this.b2body.getPosition().x;
+        try{
+            return this.b2body.getPosition().x;}
+            catch (Exception e){
+            return 0;
+            }
     }
 
 }

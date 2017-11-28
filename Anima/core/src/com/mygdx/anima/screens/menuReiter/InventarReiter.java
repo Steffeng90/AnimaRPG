@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.screens.Menu;
 import com.mygdx.anima.sprites.character.items.Amulett;
 import com.mygdx.anima.sprites.character.items.Brust;
@@ -19,8 +20,6 @@ import com.mygdx.anima.sprites.character.items.WaffeFern;
 import com.mygdx.anima.sprites.character.items.WaffeNah;
 import com.mygdx.anima.tools.listener.InventarListener;
 import com.mygdx.anima.tools.listener.anlegeButtonListener;
-
-import java.util.ArrayList;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
@@ -244,21 +243,21 @@ public class InventarReiter extends Group {
         inventarRechts.setWidth(invRechtsWidth);
         inventarRechts.setPosition(invRechtsWidth, height);
         inventarRechts.align(Align.left | Align.top);
-        if(getHeld().getHeldenInventar().getWaffenNahList().size()==0 &&
-                getHeld().getHeldenInventar().getWaffenFernList().size()==0 &&
-                getHeld().getHeldenInventar().getRuestungsList().size()==0 &&
-                getHeld().getHeldenInventar().getHelmList().size()==0 &&
-                getHeld().getHeldenInventar().getHandschuheList().size()==0 &&
-                getHeld().getHeldenInventar().getSchuheList().size()==0 &&
-                getHeld().getHeldenInventar().getAmulettList().size()==0){
+        if(getHeld().getHeldenInventar().getWaffenNahList().size==0 &&
+                getHeld().getHeldenInventar().getWaffenFernList().size==0 &&
+                getHeld().getHeldenInventar().getRuestungsList().size==0 &&
+                getHeld().getHeldenInventar().getHelmList().size==0 &&
+                getHeld().getHeldenInventar().getHandschuheList().size==0 &&
+                getHeld().getHeldenInventar().getSchuheList().size==0 &&
+                getHeld().getHeldenInventar().getAmulettList().size==0){
             inventarRechts.add(new Label("Du besitzt keine\n Ausruestungsgegenstaende.", menu.getSkin())).colspan(3);
         }
-        if(getHeld().getHeldenInventar().getWaffenNahList().size()>0) {
+        if(getHeld().getHeldenInventar().getWaffenNahList().size>0) {
 
             inventarRechts.add(new Label("Nahkampf-Waffen", menu.getSkin())).colspan(3);
             inventarRechts.row();
-            ArrayList<WaffeNah> liste = getHeld().getHeldenInventar().getWaffenNahList();
-            size = liste.size();
+            Array<WaffeNah> liste = getHeld().getHeldenInventar().getWaffenNahList();
+            size = liste.size;
             for (int i = 0; i < size; i++) {
                 if ((i) % 5 == 0) {
                     inventarRechts.row();
@@ -269,11 +268,11 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
-        if(getHeld().getHeldenInventar().getWaffenFernList().size()>0) {
+        if(getHeld().getHeldenInventar().getWaffenFernList().size>0) {
             inventarRechts.add(new Label("Fernkampf-Waffen", menu.getSkin())).colspan(3);
             inventarRechts.row();
-            ArrayList<WaffeFern> listenf = getHeld().getHeldenInventar().getWaffenFernList();
-            size = listenf.size();
+            Array<WaffeFern> listenf = getHeld().getHeldenInventar().getWaffenFernList();
+            size = listenf.size;
             for (int i = 0; i < size; i++) {
                 if ((i) % 5 == 0) {
                     inventarRechts.row();
@@ -284,11 +283,11 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
-        if(getHeld().getHeldenInventar().getRuestungsList().size()>0){
+        if(getHeld().getHeldenInventar().getRuestungsList().size>0){
         inventarRechts.add(new Label("Ruestungen", menu.getSkin())).colspan(3);
         inventarRechts.row();
-        ArrayList<Brust> listeRues= getHeld().getHeldenInventar().getRuestungsList();
-        size = listeRues.size();
+        Array<Brust> listeRues= getHeld().getHeldenInventar().getRuestungsList();
+        size = listeRues.size;
         for (int i = 0; i < size; i++) {
             if ((i) % 5 == 0) {
                 inventarRechts.row();}
@@ -298,11 +297,11 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
-        if(getHeld().getHeldenInventar().getSchuheList().size()>0) {
+        if(getHeld().getHeldenInventar().getSchuheList().size>0) {
             inventarRechts.add(new Label("Schuhe", menu.getSkin())).colspan(3);
             inventarRechts.row();
-            ArrayList<Schuhe> listenf = getHeld().getHeldenInventar().getSchuheList();
-            size = listenf.size();
+            Array<Schuhe> listenf = getHeld().getHeldenInventar().getSchuheList();
+            size = listenf.size;
             for (int i = 0; i < size; i++) {
                 if ((i) % 5 == 0) {
                     inventarRechts.row();
@@ -313,11 +312,11 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
-        if(getHeld().getHeldenInventar().getHandschuheList().size()>0) {
+        if(getHeld().getHeldenInventar().getHandschuheList().size>0) {
             inventarRechts.add(new Label("Handschuhe", menu.getSkin())).colspan(3);
             inventarRechts.row();
-            ArrayList<Handschuhe> listenf = getHeld().getHeldenInventar().getHandschuheList();
-            size = listenf.size();
+            Array<Handschuhe> listenf = getHeld().getHeldenInventar().getHandschuheList();
+            size = listenf.size;
             for (int i = 0; i < size; i++) {
                 if ((i) % 5 == 0) {
                     inventarRechts.row();
@@ -328,11 +327,11 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
-        if(getHeld().getHeldenInventar().getHelmList().size()>0) {
+        if(getHeld().getHeldenInventar().getHelmList().size>0) {
             inventarRechts.add(new Label("Helm", menu.getSkin())).colspan(3);
             inventarRechts.row();
-            ArrayList<Helm> listenf = getHeld().getHeldenInventar().getHelmList();
-            size = listenf.size();
+            Array<Helm> listenf = getHeld().getHeldenInventar().getHelmList();
+            size = listenf.size;
             for (int i = 0; i < size; i++) {
                 if ((i) % 5 == 0) {
                     inventarRechts.row();
@@ -343,11 +342,11 @@ public class InventarReiter extends Group {
             }
         }
         inventarRechts.row();
-        if(getHeld().getHeldenInventar().getAmulettList().size()>0) {
+        if(getHeld().getHeldenInventar().getAmulettList().size>0) {
             inventarRechts.add(new Label("Amulett", menu.getSkin())).colspan(3);
             inventarRechts.row();
-            ArrayList<Amulett> listenf = getHeld().getHeldenInventar().getAmulettList();
-            size = listenf.size();
+            Array<Amulett> listenf = getHeld().getHeldenInventar().getAmulettList();
+            size = listenf.size;
             for (int i = 0; i < size; i++) {
                 if ((i) % 5 == 0) {
                     inventarRechts.row();

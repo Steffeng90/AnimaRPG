@@ -119,8 +119,6 @@ public class Held extends HumanoideSprites implements Serializable{
         setZauberwiderstand(gameData.zauberwiderstand);
         if(!heldErstellt){
             createHeroBody(new Vector2(150f/AnimaRPG.PPM,100f/AnimaRPG.PPM));
-            Gdx.app.log("Spieler wurde neu navigiert","");
-
             heldErstellt=true;}
         objectInReichweite=false;
         geoeffneteTruhen= new Array<SchatztruhenSpeicherObjekt>();
@@ -318,12 +316,7 @@ public class Held extends HumanoideSprites implements Serializable{
         setAktuellerZauberInt(slotNr);
         getZauberList().getZauberslot(slotNr).fixtureErzeugen(currentRichtung);}
     }
-   /*public void castBlitz()
-    {   if((currentState==State.STANDING |currentState==State.WALKING) && getCurrentMana()>=5){
-        Gdx.app.log("MinusMAna","");
-        setCurrentMana(getCurrentMana()-5);
-        new Nova();}
-    }*/
+
     public void bowAttack()
     {   if(currentState==State.STANDING |currentState==State.WALKING)
         {
@@ -661,16 +654,6 @@ public class Held extends HumanoideSprites implements Serializable{
             case 1: mana=3;break;
         }
         setMaxMana(getMaxMana() + 2);
-
-        System.out.println("Level"+currentLevel);
-        System.out.println(stark);
-        System.out.println(gesch);
-        System.out.println(zaub);
-        System.out.println(currentLevel);
-        if(screen==null){
-            System.out.println("screen ist leer");
-
-        }
         screen.setLevelUpWindow(new LevelUpInfo(screen,AnimaRPG.batch,currentLevel,stark,gesch,zaub,hp,mana));
     }
 
@@ -729,10 +712,7 @@ public class Held extends HumanoideSprites implements Serializable{
     }
     public void setEventList() {
         this.eventList=new boolean[50];
-       /* for(boolean event:eventList){
-            event=true;
-            Gdx.app.log("werte gesetzt","");
-        }*/
+
         for(int i=0;i<50;i++){
             eventList[i]=false;
         }

@@ -71,41 +71,6 @@ public class Raider extends EnemyHumanoid
         else { setCurrentRichtung(0);}
 
 
-        //float winkel=xDistanz/yDistanz;
-        //float xStrecke=1-winkel;
-        //float yStrecke=winkel;
-        //velocity.x=xStrecke*getGeschwindigkeitLaufen()/10;
-        //velocity.y=yStrecke*getGeschwindigkeitLaufen()/10;
-//Gdx.app.log("WInkeL",""+winkel);
-        /*if(zielSprite.getX()<getX() ){
-            // Runter
-            if(zielSprite.getY()<getY()){
-
-                walkingVelo(zielSprite,new Vector2(-getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(3);}
-                else{ setCurrentRichtung(0);}
-            }
-            // Hoch
-            else{
-                walkingVelo(zielSprite,new Vector2(-getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(2);}
-                else{setCurrentRichtung(0);}
-            }}
-        // Rechts
-        else {
-            // Runter
-            if (zielSprite.getY() < getY()) {
-                walkingVelo(zielSprite,new Vector2(getGeschwindigkeitLaufen(),-getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(3);}
-                else{setCurrentRichtung(1);}
-            }
-            // Hoch
-            else{
-                walkingVelo(zielSprite,new Vector2(getGeschwindigkeitLaufen(),getGeschwindigkeitLaufen()));
-                if((Math.abs(zielSprite.getX()-getX())<=Math.abs(zielSprite.getY()-getY()))){ setCurrentRichtung(2);}
-                else{setCurrentRichtung(1);}
-            }
-        }*/
     }
     public void walkingVelo(HumanoideSprites hero,Vector2 v2){
         v2.x=v2.x/10;

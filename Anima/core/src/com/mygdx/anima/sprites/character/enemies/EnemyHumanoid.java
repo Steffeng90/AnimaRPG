@@ -224,7 +224,6 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
                 frames.add(new TextureRegion(bigAttackQuelle, i * size, size, size, size));
             }
             LeftBigAttack = new Animation(meleeSpeed/framesBigAttac, frames);
-            System.out.println("Sizesd esBOsses sind defininiert");
         }
         Died=new TextureRegion(dieQuelle,320,0,breite,hoehe);
         standingDownSprite = new TextureRegion(walkQuelle, 0, 128, breite, hoehe);

@@ -321,7 +321,6 @@ public class HumanoideSprites extends SpriteVorlage{
     public TextureRegion getFrame(float dt) {
         currentState = getState();
         TextureRegion region;
-        // System.out.println(getState().toString()+ stateTimer);
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
         switch (currentState) {
@@ -336,6 +335,9 @@ public class HumanoideSprites extends SpriteVorlage{
             case DEAD:
                 if(runDying && stateTimer >3 ){
                     destroyBody();
+                }
+                else if (runDying && this.istHeld==true && stateTimer>2){
+                    screen.setCurrentGameState(Playscreen.GameState.PAUSE);
                 }
                 region=Died;
                 break;
@@ -383,8 +385,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         if(this instanceof Held){
                             switch(((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe()){
                                 default:
-                                    Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
-                                case 1:
+                                 case 1:
                                     region = LeftMelee1.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=LeftMelee1.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
@@ -891,6 +892,7 @@ public class HumanoideSprites extends SpriteVorlage{
                 }
             break;
             case FEEDBACK:
+                uebergroesseRueckgaengig();
                 switch (currentRichtung) {
                     case Links:
                         region=standingLeftSprite;

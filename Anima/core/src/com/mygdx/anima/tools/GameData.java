@@ -88,7 +88,7 @@ public class GameData implements Serializable{
             geoeffneteTruhenId[i]=speicher.getTruhenID();
         }
        //
-        size=getHeld().getHeldenInventar().getWaffenNahList().size();
+        size=getHeld().getHeldenInventar().getWaffenNahList().size;
         waffenNah =new String[size];
         for(int i=0;i<size;i++)
         {
@@ -98,7 +98,7 @@ public class GameData implements Serializable{
                 angelegtWaffenNahIndex=i;
             }
         }
-        size=getHeld().getHeldenInventar().getWaffenFernList().size();
+        size=getHeld().getHeldenInventar().getWaffenFernList().size;
         waffenFern =new String[size];
         for(int i=0;i<size;i++)
         {
@@ -108,7 +108,7 @@ public class GameData implements Serializable{
                 angelegtWaffenFernIndex=i;
             }
         }
-        size=getHeld().getHeldenInventar().getRuestungsList().size();
+        size=getHeld().getHeldenInventar().getRuestungsList().size;
         brust =new String[size];
         for(int i=0;i<size;i++)
         {
@@ -118,7 +118,7 @@ public class GameData implements Serializable{
                 angelegtBrustIndex=i;
             }
         }
-        size=getHeld().getHeldenInventar().getHelmList().size();
+        size=getHeld().getHeldenInventar().getHelmList().size;
         helm =new String[size];
         for(int i=0;i<size;i++)
         {
@@ -128,7 +128,7 @@ public class GameData implements Serializable{
                 angelegtHelmIndex=i;
             }
         }
-        size=getHeld().getHeldenInventar().getHandschuheList().size();
+        size=getHeld().getHeldenInventar().getHandschuheList().size;
         handschuhe =new String[size];
         for(int i=0;i<size;i++)
         {
@@ -138,7 +138,7 @@ public class GameData implements Serializable{
                 angelegtHandschuheIndx=i;
             }
         }
-        size=getHeld().getHeldenInventar().getSchuheList().size();
+        size=getHeld().getHeldenInventar().getSchuheList().size;
         schuhe =new String[size];
         for(int i=0;i<size;i++)
         {
@@ -148,7 +148,7 @@ public class GameData implements Serializable{
                 angelegtSchuheIndex=i;
             }
         }
-        size=getHeld().getHeldenInventar().getAmulettList().size();
+        size=getHeld().getHeldenInventar().getAmulettList().size;
         amulett =new String[size];
         for(int i=0;i<size;i++)
         {

@@ -56,7 +56,6 @@ public class DialogFenster implements Disposable {
         geklickt = false;
         MyDialog dialog = new MyDialog(sprecher, skin, "dialog") {
             public void result(Object obj) {
-                System.out.println("result " + obj);
             }
         };
         Label l1 = new Label(inhalt , skin);

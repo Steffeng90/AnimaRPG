@@ -96,7 +96,7 @@ public class LevelUpInfo implements Disposable {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(windowTimer>2){
-                    Gdx.app.log("Klicker erkannt","");
+
                     geklickt=true;
                 }
                 return true;}

@@ -42,7 +42,7 @@ public class Benutzbar extends Item {
             case 7: getHeld().setZauberkraft(getHeld().getZauberkraft() + wertUpgradeZahl);break;
             case 8: getHeld().setZauberwiderstand(getHeld().getZauberwiderstand() + wertUpgradeZahl);break;
         }
-        getHeld().getHeldenInventar().getBenutzbarList().remove(this);
+        getHeld().getHeldenInventar().getBenutzbarList().removeValue(this,true);
     }
 
     public String getWertKategorie() {

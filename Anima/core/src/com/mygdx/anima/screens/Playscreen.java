@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -206,18 +207,7 @@ public class Playscreen implements Screen{
     }
     @Override
     public void render(float delta) {
-        if (isMapWechsel()) {
-            // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
-            setMapWechsel(false);
-            aktiveNPCsEntfernen();
-            renderer.dispose();
-            //TODO destroy alle bodies in WOrld (google)
-
-
-            renderer = kartenManager.karteErstellen(mapID, gameViewPort);
-            creator = new B2WorldCreator(this);
-
-        } else {
+            //FPSLogger.log();
             switch (getCurrentGameState()) {
                 case RUN:
                     update(delta);
@@ -225,13 +215,12 @@ public class Playscreen implements Screen{
                 case PAUSE:
                     break;
             }
-
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             //karte rendern
             renderer.render();
             // Render-Linien
-            b2dr.render(world, gamecam.combined);
+            //b2dr.render(world, gamecam.combined);
 
             game.batch.setProjectionMatrix(gamecam.combined);
 
@@ -249,7 +238,6 @@ public class Playscreen implements Screen{
             for (Bat bat : activeBat) {
                 bat.draw(game.batch);
             }
-
             for (FriendlyNPC npc : activeNPC) {
                 npc.draw(game.batch);
             }
@@ -297,28 +285,38 @@ public class Playscreen implements Screen{
                     Gdx.input.setInputProcessor(controller.getStage());
                     break;
                 case PAUSE:
-                    game.batch.begin();
-                    if (getCurrentItemsprite() != null)
-                        getCurrentItemsprite().draw(game.batch);
-
-                    game.batch.end();
-
-                    controller.draw();
-                    if (itemWindow != null) {
+                    if (isMapWechsel()) {
+                    // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
+                    aktiveNPCsEntfernen();
+                    renderer.dispose();
+                    //TODO destroy alle bodies in WOrld (google)
+                    renderer = kartenManager.karteErstellen(mapID, gameViewPort);
+                    creator = new B2WorldCreator(this);
+                    setMapWechsel(false);
+                    setCurrentGameState(GameState.RUN);
+                }
+                    else if (itemWindow != null) {
                         itemWindow.draw();
                         getCurrentItemsprite().update(delta);
                         itemWindow.update(delta);
 
                         if (itemWindow.isGeklickt()) {
                             setCurrentItemsprite(null);
-                            Gdx.input.setInputProcessor(controller.getStage());
                             itemWindow.dispose();
                             itemWindow = null;
+                            Gdx.input.setInputProcessor(controller.getStage());
                             setCurrentGameState(GameState.RUN);
                         }
                     }
-                    if (levelUpWindow != null) {
-
+                    if (getCurrentItemsprite() != null) {
+                        game.batch.begin();
+                        getCurrentItemsprite().draw(game.batch);
+                        game.batch.end();
+                        if (itemWindow == null) {
+                            itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite());
+                        }
+                    }
+                    else if (levelUpWindow != null) {
                         levelUpWindow.draw();
                         levelUpWindow.update(delta);
                         if (levelUpWindow.isGeklickt()) {
@@ -328,8 +326,7 @@ public class Playscreen implements Screen{
                             setCurrentGameState(GameState.RUN);
                         }
                     }
-                    if (activeDialog != null) {
-
+                    else if (activeDialog != null) {
                         activeDialog.draw();
                         activeDialog.update(delta);
                         if (activeDialog.isGeklickt()) {
@@ -343,18 +340,16 @@ public class Playscreen implements Screen{
                             }
                         }
                     }
-
-
+                    else if (gameOver()) {
+                        game.setScreen(new GameOverScreen(game));
+                        //dispose();
+                    }
                     break;
             }
             anzeige.draw();
-
-            if (gameOver()) {
-                game.setScreen(new GameOverScreen(game));
-                //dispose();
-            }
+            controller.draw();
         }
-    }
+
     public void handleInput(float dt) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) | controller.isMeleePressed()) {
             spieler.meleeAttack();spieler.b2body.setLinearVelocity(0, 0);
@@ -412,19 +407,17 @@ public class Playscreen implements Screen{
                     gamecam.position.set(spieler.b2body.getPosition(), 0);
                     kartenManager.justiereCam(gamecam);
                 }
-        Schatztruhe truhe;
         int len = activeTruhen.size;
         for (int i = len; --i >= 0;) {
+            Schatztruhe truhe;
             truhe= activeTruhen.get(i);
             truhe.update(dt);
         }
-        if (getCurrentItemsprite() != null) {
-            itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite());
-        }
         // ArrowPool durchlaufen
-        Arrow arrow;
+
         len = activeArrows.size;
         for (int i = len; --i >= 0;) {
+            Arrow arrow;
             arrow = activeArrows.get(i);
             if (arrow.destroyed == true) {
                 activeArrows.removeIndex(i);
@@ -435,9 +428,10 @@ public class Playscreen implements Screen{
             }
         }
         //Bat-pool
-        Bat bat;
+
         len = activeBat.size;
         for (int i = len; --i >= 0;) {
+            Bat bat;
             bat = activeBat.get(i);
             if (bat.destroyed == true) {
                 activeBat.removeIndex(i);
@@ -449,9 +443,10 @@ public class Playscreen implements Screen{
             }
         }
         //Raider-pool
-        Raider raider;
+
         len = activeRaider.size;
         for (int i = len; --i >= 0;) {
+            Raider raider;
             raider = activeRaider.get(i);
             if (raider.destroyed == true) {
                 activeRaider.removeIndex(i);
@@ -463,17 +458,18 @@ public class Playscreen implements Screen{
             }
         }
         //FriendlyNPC-Pool
-        FriendlyNPC npc;
+
         len = activeNPC.size;
         for (int i = len; --i >= 0;) {
+            FriendlyNPC npc;
             npc = activeNPC.get(i);
             npc.update();
-
         }
         // RaiderArcher
-        RaiderArcher raiderArcher;
+
         len = activeRaiderArcher.size;
         for (int i = len; --i >= 0;) {
+            RaiderArcher raiderArcher;
             raiderArcher = activeRaiderArcher.get(i);
             if (raiderArcher.destroyed == true) {
                 activeRaiderArcher.removeIndex(i);
@@ -485,9 +481,10 @@ public class Playscreen implements Screen{
             }
         }
         // RaiderBoss
-        RaiderBoss raiderBoss;
+
         len = activeRaiderBoss.size;
         for (int i = len; --i >= 0;) {
+            RaiderBoss raiderBoss;
             raiderBoss = activeRaiderBoss.get(i);
             if (raiderBoss.destroyed == true) {
                 activeRaiderBoss.removeIndex(i);
@@ -499,10 +496,10 @@ public class Playscreen implements Screen{
             }
         }
         // RaiderHealer
-        RaiderHealer raiderHealer;
-        len = activeRaiderHealer.size;
 
+        len = activeRaiderHealer.size;
         for (int i = len; --i >= 0;) {
+            RaiderHealer raiderHealer;
             raiderHealer = activeRaiderHealer.get(i);
             if (raiderHealer.destroyed == true) {
                 activeRaiderHealer.removeIndex(i);
@@ -513,7 +510,6 @@ public class Playscreen implements Screen{
                 raiderHealer.update(spieler,dt);
             }
         }
-
         // Zauberfixture
                 for (ZauberFixture zauberFixture : Nova.getAllZauber()) {
                     if (!zauberFixture.destroyed) {
@@ -524,7 +520,7 @@ public class Playscreen implements Screen{
                 }
                 if (!spieler.destroyed)
                     spieler.update(dt);
-                controller.update();
+        controller.update();
     }
     @Override
     public void resize(int width, int height) {
@@ -556,10 +552,8 @@ public class Playscreen implements Screen{
     public TiledMap getMap(){ return kartenManager.getMap();}
 
     public boolean gameOver(){
-        if(spieler.currentState == HumanoideSprites.State.DEAD && spieler.stateTimer>1.5f){
-            System.out.println("Game over ist true");
+        if(spieler.currentState == HumanoideSprites.State.DEAD && currentGameState==GameState.PAUSE){
             return true;
-
         }
         return false;
     }
@@ -608,8 +602,9 @@ public class Playscreen implements Screen{
         return mapWechsel;
     }
 
-    public static void setMapWechsel(boolean tempmapWechsel) {
+    public void setMapWechsel(boolean tempmapWechsel) {
         mapWechsel = tempmapWechsel;
+        setCurrentGameState(GameState.PAUSE);
     }
 
     public static int getMapId() {

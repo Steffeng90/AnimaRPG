@@ -47,7 +47,7 @@ public class ZauberListener extends InputListener {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 posi=new Vector2(x,y);
-           // Gdx.app.log("eingang bei:"+ menu.pane.getVisualScrollPercentY());
+
                 zauberReiter.setScrollbarposition(zauberReiter.pane.getScrollPercentY());
                 return true;
 

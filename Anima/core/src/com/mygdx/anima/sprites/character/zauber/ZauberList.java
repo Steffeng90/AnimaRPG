@@ -1,21 +1,21 @@
 package com.mygdx.anima.sprites.character.zauber;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import com.badlogic.gdx.utils.Array;
 
+import java.io.Serializable;
 /**
  * Created by Steffen on 01.12.2016.
  */
 
 public class ZauberList implements Serializable {
-    private static ArrayList<ZauberEntity> zauberListe;
+    private static Array<ZauberEntity> zauberListe;
 
     private ZauberEntity zauberslot1,zauberslot2,zauberslot3,zauberslot4, zauberAuswahl;
     public ZauberList(){
-        zauberListe=new ArrayList<ZauberEntity>();
+        zauberListe=new Array<ZauberEntity>();
     }
     public int size() {
-        return zauberListe.size();
+        return zauberListe.size;
     }
 
     public void addZauber(ZauberEntity zauber) {
@@ -23,15 +23,15 @@ public class ZauberList implements Serializable {
     }
 
     public boolean remove(ZauberEntity zauber) {
-        return zauberListe.remove(zauber);
+        return zauberListe.removeValue(zauber,true);
     }
     public synchronized void resetAuswahl(){
-        int temp=zauberListe.size();
+        int temp=zauberListe.size;
         for(int i=0;i<temp;i++){
             zauberListe.get(i).setAusgewaehlt(false);
         }
     }
-    public ArrayList<ZauberEntity> getZauberList() {
+    public Array<ZauberEntity> getZauberList() {
         return zauberListe;
     }
 

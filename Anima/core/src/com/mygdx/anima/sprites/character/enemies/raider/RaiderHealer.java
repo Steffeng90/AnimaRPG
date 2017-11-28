@@ -4,25 +4,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 import com.mygdx.anima.sprites.character.zauber.fixtures.HeilzauberAOE;
 
-import java.util.ArrayList;
-
 /**
  * Created by Steffen on 13.11.2016.
  */
 
 public class RaiderHealer extends EnemyHumanoid {
-    ArrayList<EnemyHumanoid> enemiesInRange;
+    Array<EnemyHumanoid> enemiesInRange;
     Boolean zaubereHeilung;
 
     public RaiderHealer() {
         super();
-        enemiesInRange = new ArrayList<EnemyHumanoid>();
+        enemiesInRange = new Array<EnemyHumanoid>();
         zaubereHeilung=false;
     }
     public void init(Playscreen screen, float x, float y, String id, int maxhp, int maxmana, int regMana, int ep, int speed, int schadenNah, int schadenfern, int schadenzauber,int schadenbigAttack, int ruestung, int boundsX, int boundsY, float castSpeed, float bowSpeed, float meleeSpeed, float thrustSpeed){
@@ -134,16 +133,14 @@ public class RaiderHealer extends EnemyHumanoid {
 
             if ((currentState == State.STANDING | currentState == State.WALKING) && getCurrentMana() >= 5) {
                 setCurrentMana(getCurrentMana() - 5);
-                if(screen==null) {
-                    Gdx.app.log("SCreen istnull","");
-                }new HeilzauberAOE(this, screen,world);
+                new HeilzauberAOE(this, screen,world);
                 runCasting=true;
             }
         }
     }
 
     public void removeEnemieInRange(EnemyHumanoid e) {
-        enemiesInRange.remove(e);
+        enemiesInRange.removeValue(e,true);
     }
     public void addEnemieInRange(EnemyHumanoid e) {
         enemiesInRange.add(e);

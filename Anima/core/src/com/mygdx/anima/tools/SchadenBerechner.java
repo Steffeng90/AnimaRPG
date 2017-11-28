@@ -42,12 +42,9 @@ public class SchadenBerechner {
                     verursachterSchaden = -(int) (verursacher.getSchadenZauber() * 1.5);
                     break;
                 default:
-                    Gdx.app.log("Defaul Scahden vergeben", "");
                     verursachterSchaden = 2;
                     break;
             }
-//        Gdx.app.log("Wert",""+verursachterSchaden+" "+ erleidender.toString()+"body:"+ held.b2body.getPosition());
-            //new SchadenLabel(verursachterSchaden, erleidender, getHeld().b2body.getPosition());
             SchadenLabel schadenLabel=schadenlabelPool.obtain();
             schadenLabel.init(verursachterSchaden, erleidender, getHeld().b2body.getPosition());
             activeSchadenlabel.add(schadenLabel);

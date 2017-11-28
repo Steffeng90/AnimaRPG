@@ -39,7 +39,6 @@ public class WorldContactListener implements ContactListener {
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_WEAPON_BIT)
                     ((EnemyHumanoid)fixB.getUserData()).getsHitbySword((Held)fixA.getUserData());
                 else {
-                    System.out.println("HeroWeaponbit:" + AnimaRPG.HERO_WEAPON_BIT + "Enemybit:" + AnimaRPG.ENEMY_BIT + "categorieBit" + fixA.getFilterData().categoryBits);
                     ((EnemyHumanoid) fixA.getUserData()).getsHitbySword((Held) fixB.getUserData());
                 }
                 break;
@@ -59,7 +58,6 @@ public class WorldContactListener implements ContactListener {
                     else{((Held) fixB.getUserData()).setObject(true,((InteraktivesObjekt) fixA.getUserData()));}}
                 break;
             case AnimaRPG.HERO_SENSOR ^ AnimaRPG.NPC_BIT:
-                Gdx.app.log("NPC in Reichweite","");
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_SENSOR){
                     ((Held) fixA.getUserData()).setNPC(true,((FriendlyNPC) fixB.getUserData()));}
                 else{
@@ -123,7 +121,15 @@ public class WorldContactListener implements ContactListener {
                 else{
                     ((Arrow)fixB.getUserData()).setToDestroy=true;}
                 break;
-
+            case AnimaRPG.ENEMY_ARROW ^ AnimaRPG.HERO_ARROW:
+            case AnimaRPG.ENEMY_ARROW ^ AnimaRPG.ENEMY_ARROW:
+                if(fixB.getUserData() instanceof Arrow){
+                    ((Arrow)fixB.getUserData()).setToDestroy=true;
+                }
+                if(fixA.getUserData() instanceof Arrow){
+                    ((Arrow)fixA.getUserData()).setToDestroy=true;
+                }
+                break;
             case AnimaRPG.HERO_ARROW ^ AnimaRPG.ENEMY_BIT:
             case AnimaRPG.HERO_ARROW ^ AnimaRPG.ENEMY_OBERKOERPER:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.HERO_ARROW)
@@ -158,11 +164,12 @@ public class WorldContactListener implements ContactListener {
             case AnimaRPG.HERO_BIT ^ AnimaRPG.GEBIETSWECHSEL_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.GEBIETSWECHSEL_BIT){
                     Playscreen.setMapId(((Gebietswechsel)fixA.getUserData()).getNextMapId());
-                    Playscreen.setMapEinstieg(((Gebietswechsel)fixA.getUserData()).getAusgangsrichtung());}
+                    Playscreen.setMapEinstieg(((Gebietswechsel)fixA.getUserData()).getAusgangsrichtung());
+                    ((Held)fixB.getUserData()).screen.setMapWechsel(true);}
                 else{
                     Playscreen.setMapId(((Gebietswechsel)fixB.getUserData()).getNextMapId());
-                    Playscreen.setMapEinstieg(((Gebietswechsel)fixB.getUserData()).getAusgangsrichtung());}
-                Playscreen.setMapWechsel(true);
+                    Playscreen.setMapEinstieg(((Gebietswechsel)fixB.getUserData()).getAusgangsrichtung());
+                    ((Held)fixA.getUserData()).screen.setMapWechsel(true);}
                 break;
             case AnimaRPG.ENEMY_HEAL_SENSOR ^ AnimaRPG.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==AnimaRPG.ENEMY_HEAL_SENSOR)
@@ -191,7 +198,7 @@ public class WorldContactListener implements ContactListener {
                 if(fixA.getFilterData().categoryBits==AnimaRPG.EVENT_AREA_BIT)
                 {((DialogArea)fixA.getUserData()).checkForEvents();}
                 else{((DialogArea)fixB.getUserData()).checkForEvents();}
-                Gdx.app.log("Dialogarea getroffen","");
+
                 break;
             default:
                 break;

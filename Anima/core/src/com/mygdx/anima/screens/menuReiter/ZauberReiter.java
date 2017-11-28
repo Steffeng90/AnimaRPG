@@ -8,15 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.screens.Menu;
 import com.mygdx.anima.sprites.character.zauber.ZauberEntity;
 import com.mygdx.anima.tools.listener.ZauberListener;
 import com.mygdx.anima.tools.listener.benutzenButtonListener;
 import com.mygdx.anima.tools.listener.zauberslotButtonListener;
-
-import java.util.ArrayList;
-
-import static com.badlogic.gdx.utils.Scaling.fill;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
@@ -142,8 +139,8 @@ public class ZauberReiter extends Group {
         inventarRechts.add(new Label("ZauberFixture", menu.getSkin())).colspan(3);
         inventarRechts.row();
 
-        ArrayList<ZauberEntity> liste = getHeld().getZauberList().getZauberList();
-        int size = liste.size();
+        Array<ZauberEntity> liste = getHeld().getZauberList().getZauberList();
+        int size = liste.size;
         for (int i = 0; i < size; i++) {
             if ((i) % 5 == 0) {inventarRechts.row();}
             Image beispiel4 = new Image(liste.get(i).getGrafik());

@@ -113,7 +113,6 @@ public class B2WorldCreator {
             }
         }
             catch(Exception e){
-                Gdx.app.log("Error:",e.getMessage());
                 Gdx.app.log("Error:",e.getStackTrace().toString());
 
             }

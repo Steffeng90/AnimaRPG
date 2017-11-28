@@ -50,11 +50,10 @@ public class Menu implements Screen {
     public void setAktiverReiter(int aktiverReiter) {
         if (aktiverReiter>1 && aktiverReiter<6) {
             this.aktiverReiter = aktiverReiter;
-            System.out.println("jetzt auf"+ aktiverReiter);
+
         }
         else {
             this.aktiverReiter=1;
-            System.out.println("NAnana");
         }
     }
 

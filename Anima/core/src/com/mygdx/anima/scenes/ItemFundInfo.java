@@ -67,28 +67,9 @@ public class ItemFundInfo implements Disposable {
         geklickt = false;
         MyDialog dialog = new MyDialog("Gegenstand gefunden", skin, "dialog") {
             public void result(Object obj) {
-                System.out.println("result " + obj);
             }
         };
 
-        //img.setPosition(infoWidth *(3f/8f), (1f/3f)*infoHeight);
-        //img.setSize(infoWidth / 3, 5*(infoHeight / 6));
-       /* l1.setAlignment(Align.center);
-        //dialogTable.align(Align.center);
-        //dialogTable.setSize(infoWidth / 4f, infoHeight/3);
-        //dialogTable.setPosition(infoWidth *(3f/8f), 0);
-        /*dialogTable.setFillParent(true);
-
-        dialogTable.add(img).size(infoWidth / 9f,infoWidth / 9f);//.align(Align.center);
-        dialogTable.row();
-        dialogTable.add(l1).size(infoWidth / 5f,25f);//.align(Align.center);
-        dialogTable.center().bottom();
-
-       // dialog.key(Input.Keys.ENTER, true); //sends "true" when the ENTER key is pressed
-        //dialog.setSize(infoWidth / 4f, infoHeight/3);
-       // dialog.setPosition(infoWidth *(3f/8f), 0);
-        //dialog.align(Align.center);
-*/
         Table dialogTable=new Table();
         Label l1 = new Label(item.name , skin);
         Label l2 = new Label(item.name , skin);

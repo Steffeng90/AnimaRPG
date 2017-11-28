@@ -89,7 +89,6 @@ public class UngeheuerSprites extends SpriteVorlage{
     public TextureRegion getFrame(float dt) {
         currentState = getState();
         TextureRegion region;
-        // System.out.println(getState().toString()+ stateTimer);
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
         switch (currentState) {
@@ -106,7 +105,6 @@ public class UngeheuerSprites extends SpriteVorlage{
                 region=standingDownSprite;
                 break;
             case STANDING:
-                System.out.println("Standing wird gesucht");
                 switch (currentRichtung) {
                     case Links:
                         region = standingLeftSprite;

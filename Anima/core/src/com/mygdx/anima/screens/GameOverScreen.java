@@ -54,7 +54,7 @@ import com.mygdx.anima.tools.HandleGameData;
                 //game.setScreen(new Playscreen(game));
                 this.dispose();
                 game.getHeld().wiederbeleben();
-                Playscreen.setMapWechsel(true);
+                game.getHeld().screen.setMapWechsel(true);
                 game.changeScreen(game.currentPlayScreen);
 
             }

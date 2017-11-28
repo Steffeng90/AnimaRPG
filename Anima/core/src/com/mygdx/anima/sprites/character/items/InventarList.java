@@ -1,8 +1,8 @@
 package com.mygdx.anima.sprites.character.items;
 
+import com.badlogic.gdx.utils.Array;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -12,15 +12,15 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
  */
 
 public class InventarList implements Serializable {
-    private static ArrayList<Brust> ruestungsList;
-    private static ArrayList<Handschuhe> handschuheList;
-    private static ArrayList<Schuhe> schuheList;
-    private static ArrayList<Helm> helmList;
-    private static ArrayList<Amulett> amulettList;
+    private static Array<Brust> ruestungsList;
+    private static Array<Handschuhe> handschuheList;
+    private static Array<Schuhe> schuheList;
+    private static Array<Helm> helmList;
+    private static Array<Amulett> amulettList;
 
-    private static ArrayList<WaffeNah> waffenNahList;
-    private static ArrayList<WaffeFern> waffenFernList;
-    private static ArrayList<Benutzbar> benutzbarList;
+    private static Array<WaffeNah> waffenNahList;
+    private static Array<WaffeFern> waffenFernList;
+    private static Array<Benutzbar> benutzbarList;
 
     private WaffeNah angelegtWaffeNah;
     private WaffeFern angelegtWaffeFern;
@@ -31,115 +31,115 @@ public class InventarList implements Serializable {
     private Amulett angelegtAmulett;
 
     public InventarList(){
-        ruestungsList=new ArrayList<Brust>();
-        handschuheList=new ArrayList<Handschuhe>();
-        schuheList=new ArrayList<Schuhe>();
-        helmList=new ArrayList<Helm>();
-        amulettList=new ArrayList<Amulett>();
+        ruestungsList=new Array<Brust>();
+        handschuheList=new Array<Handschuhe>();
+        schuheList=new Array<Schuhe>();
+        helmList=new Array<Helm>();
+        amulettList=new Array<Amulett>();
 
-        waffenNahList =new ArrayList<WaffeNah>();
-        waffenFernList =new ArrayList<WaffeFern>();
-        benutzbarList=new ArrayList<Benutzbar>();
+        waffenNahList =new Array<WaffeNah>();
+        waffenFernList =new Array<WaffeFern>();
+        benutzbarList=new Array<Benutzbar>();
 
     }
-    public ArrayList<Benutzbar> getBenutzbarList() {
+    public Array<Benutzbar> getBenutzbarList() {
         return benutzbarList;
     }
 
-    public ArrayList<WaffeNah> getWaffenNahList() {
+    public Array<WaffeNah> getWaffenNahList() {
         return waffenNahList;
     }
-    public ArrayList<WaffeFern> getWaffenFernList() {
+    public Array<WaffeFern> getWaffenFernList() {
         return waffenFernList;
     }
-    public ArrayList<Brust> getRuestungsList() {
+    public Array<Brust> getRuestungsList() {
         return ruestungsList;
     }
-    public ArrayList<Handschuhe> getHandschuheList() {return handschuheList;}
-    public ArrayList<Schuhe> getSchuheList() {return schuheList;}
-    public ArrayList<Helm> getHelmList() {return helmList;}
-    public ArrayList<Amulett> getAmulettList() {return amulettList;}
+    public Array<Handschuhe> getHandschuheList() {return handschuheList;}
+    public Array<Schuhe> getSchuheList() {return schuheList;}
+    public Array<Helm> getHelmList() {return helmList;}
+    public Array<Amulett> getAmulettList() {return amulettList;}
 
     public int size() {
-        return ruestungsList.size();
+        return ruestungsList.size;
     }
 
     public void add(int i, Brust brust) {
-        ruestungsList.add(i, brust);
+        ruestungsList.add(brust);
     }
 
-    public boolean add(Brust brust) {return ruestungsList.add(brust);}
-    public boolean add(Schuhe schuhe) {return schuheList.add(schuhe);}
-    public boolean add(Handschuhe handschuhe) {return handschuheList.add(handschuhe);}
-    public boolean add(Helm helm) {return helmList.add(helm);}
-    public boolean add(Amulett amulett) {return amulettList.add(amulett);}
+    public void add(Brust brust) {ruestungsList.add(brust);}
+    public void add(Schuhe schuhe) { schuheList.add(schuhe);}
+    public void add(Handschuhe handschuhe) { handschuheList.add(handschuhe);}
+    public void add(Helm helm) { helmList.add(helm);}
+    public void add(Amulett amulett) { amulettList.add(amulett);}
 
 
-    public boolean add(Benutzbar benutzbar) {return benutzbarList.add(benutzbar);}
-    public boolean add(WaffeNah waffeNah) {
-        return waffenNahList.add(waffeNah);
+    public void add(Benutzbar benutzbar) { benutzbarList.add(benutzbar);}
+    public void add(WaffeNah waffeNah) {
+         waffenNahList.add(waffeNah);
     }
-    public boolean add(WaffeFern waffeFern) {
-        return waffenFernList.add(waffeFern);
+    public void add(WaffeFern waffeFern) {
+         waffenFernList.add(waffeFern);
     }
 
-    public boolean remove(Benutzbar benutzbar) {
-        return benutzbarList.remove(benutzbar);
+    public void remove(Benutzbar benutzbar) {
+         benutzbarList.removeValue(benutzbar,true);
     }
 
     public Iterator<Brust> iterator() {
         return ruestungsList.iterator();
     }
 
-    public boolean remove(Object o) {
-        return ruestungsList.remove(o);
-    }
+    /*public void remove(Object o) {
+         ruestungsList.removeValue(o,true);
+    }*/
 
     public WaffeNah get(int i) {
-        return waffenNahList.get(i);
+         return waffenNahList.get(i);
     }
 
-    public WaffeNah set(int i, WaffeNah waffeNah) {
-        return waffenNahList.set(i, waffeNah);
+    public void set(int i, WaffeNah waffeNah) {
+        waffenNahList.set(i, waffeNah);
     }
 
     public void clear() {
         ruestungsList.clear();
     }
 
-    public boolean containsAll(Collection<?> collection) {
+    /*public boolean containsAll(Collection<?> collection) {
         return ruestungsList.containsAll(collection);
-    }
+    }*/
     public synchronized void resetAuswahl(){
-        int temp=waffenNahList.size();
+        int temp=waffenNahList.size;
         for(int i=0;i<temp;i++){
             waffenNahList.get(i).setAusgewaehlt(false);
         }
-        temp=waffenFernList.size();
+        temp=waffenFernList.size;
         for(int i=0;i<temp;i++){
             waffenFernList.get(i).setAusgewaehlt(false);
         }
-        temp=ruestungsList.size();
+        temp=ruestungsList.size;
         for(int i=0;i<temp;i++){
             ruestungsList.get(i).setAusgewaehlt(false);
         }
-        temp=handschuheList.size();
+        temp=handschuheList.size;
         for(int i=0;i<temp;i++){
             handschuheList.get(i).setAusgewaehlt(false);
         }
-        temp=schuheList.size();
+        temp=schuheList.size;
         for(int i=0;i<temp;i++){
             schuheList.get(i).setAusgewaehlt(false);
         }
-        temp=helmList.size();
+        temp=helmList.size;
         for(int i=0;i<temp;i++){
             helmList.get(i).setAusgewaehlt(false);
         }
-        temp=amulettList.size();
+        temp=amulettList.size;
         for(int i=0;i<temp;i++){
             amulettList.get(i).setAusgewaehlt(false);
         }
-        temp=benutzbarList.size();
+        temp=benutzbarList.size;
         for(int i=0;i<temp;i++){
             benutzbarList.get(i).setAusgewaehlt(false);
         }
