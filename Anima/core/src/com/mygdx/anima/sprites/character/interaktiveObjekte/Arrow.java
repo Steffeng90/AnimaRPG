@@ -1,5 +1,6 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,9 +35,6 @@ public class Arrow extends Sprite implements Pool.Poolable {
     TextureRegion pfeilLinks,pfeilRechts,pfeilUp,pfeilDown;
     Texture pfeilQuelle;
     public float laenge,breite;
-    //TextureRegion pfeilTexture=new TextureRegion(new Texture("objekte/icons_for_rpg.png"),5,6,53,14);
-
-
 
     public Arrow() {
         super();
@@ -58,12 +56,11 @@ public class Arrow extends Sprite implements Pool.Poolable {
         b2body.setActive(true);
         b2body.setLinearVelocity(flugVector);
 
-        pfeilQuelle=new Texture("objekte/arrow.png");
-        pfeilRechts=new TextureRegion(pfeilQuelle,5,10,53,9);
-        pfeilLinks=new TextureRegion(pfeilQuelle,5,0,53,9);
+        pfeilRechts=screen.getGame().getAssetManager().getPfeilRechts();
+        pfeilLinks=screen.getGame().getAssetManager().getPfeilLinks();
 
-        pfeilUp=new TextureRegion(pfeilQuelle,15,20,9,53);
-        pfeilDown=new TextureRegion(pfeilQuelle,5,20,9,53);
+        pfeilUp=screen.getGame().getAssetManager().getPfeilUp();
+        pfeilDown=screen.getGame().getAssetManager().getPfeilDown();
         setRegion(getFrame());
         PolygonShape shape = new PolygonShape();
         if(this.richtung== (HumanoideSprites.Richtung.Oben) ||(this.richtung==  HumanoideSprites.Richtung.Unten))

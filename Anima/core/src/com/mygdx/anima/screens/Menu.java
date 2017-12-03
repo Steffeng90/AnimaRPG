@@ -88,7 +88,7 @@ public class Menu implements Screen {
         stage.draw();
     }
     public Image zurueckButtonErzeugen(){
-        Image inventarImg = new Image(new Texture("ui-skin/inventar.png"));
+        Image inventarImg = new Image(game.getAssetManager().get("ui-skin/inventar.png",Texture.class));
         inventarImg.setSize(50, 50);
         inventarImg.addListener(new InputListener() {
             @Override

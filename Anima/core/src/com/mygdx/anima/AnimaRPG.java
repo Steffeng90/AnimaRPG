@@ -4,18 +4,24 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Json;
 import com.google.gson.Gson;
+import com.mygdx.anima.screens.LoadingScreen;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.screens.StartScreen;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.tools.MyAssetManager;
 
 import javax.naming.Context;
 import javax.xml.soap.Text;
 
+import static com.badlogic.gdx.Gdx.app;
 import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
 import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
 import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
@@ -87,32 +93,20 @@ public class AnimaRPG extends Game {
 
 
 	public static SpriteBatch batch;
-	public static Screen currentScreen, previousScreen, currentPlayScreen;
+	public static Screen currentScreen, previousScreen, currentPlayScreen,loadingScreen;
 	private static Held held;
-	private AssetManager assetManager;
+	private MyAssetManager assetManager;
 
 	@Override
 	public void create() {
-		// AUDIOS
-		assetManager = new AssetManager();
-		assetManager.load("audio/music/little town - orchestral.ogg", Music.class);
-		assetManager.load("audio/sounds/anziehen.wav", Sound.class);
-		assetManager.load("audio/sounds/ausziehen.wav", Sound.class);
-		assetManager.load("audio/sounds/reiter_wechsel.ogg", Sound.class);
-		assetManager.load("audio/sounds/walk.ogg", Sound.class);
-		assetManager.load("audio/sounds/laufen.mp3", Sound.class);
-		assetManager.load("audio/sounds/sword_swing.mp3", Sound.class);
-		assetManager.load("audio/sounds/bow_attack.mp3", Sound.class);
-		assetManager.load("audio/sounds/nova.wav", Sound.class);
-		assetManager.load("audio/sounds/levelUp.wav", Sound.class);
-		assetManager.load("audio/sounds/itemFund.wav", Sound.class);
-		assetManager.load("audio/sounds/electricity.wav", Sound.class);
-		assetManager.load("audio/sounds/turn_page.wav", Sound.class);
-		assetManager.finishLoading();
+
+        assetManager = new MyAssetManager();
+		//assetManager.finishLoading();
 
 		batch = new SpriteBatch();
-		currentScreen=new StartScreen(this);
-		setScreen(currentScreen);
+		previousScreen=new StartScreen(this);
+		loadingScreen=new LoadingScreen(this);
+		setScreen(loadingScreen);
 	}
 
 	public void changeScreen(Screen screen){
@@ -132,8 +126,9 @@ public class AnimaRPG extends Game {
 
 	@Override
 	public void render() {
-		super.render();
-	}
+			super.render();
+		}
+
 
 	public static Held getHeld() {
 		return held;
@@ -143,8 +138,7 @@ public class AnimaRPG extends Game {
 		AnimaRPG.held = held;
 	}
 
-	public AssetManager getAssetManager() {
+	public MyAssetManager getAssetManager() {
 		return this.assetManager;
-
 	}
 }

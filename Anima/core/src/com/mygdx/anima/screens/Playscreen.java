@@ -184,7 +184,7 @@ public class Playscreen implements Screen{
         gamecam.position.set(gameViewPort.getWorldWidth() / 2, gameViewPort.getWorldHeight() / 2, 0);
 
         kartenManager =new KartenManager();
-        renderer = kartenManager.karteErstellen(kartenID,gameViewPort);
+        renderer = kartenManager.karteErstellen(game,kartenID,gameViewPort);
 
         // Musik
         /*Music music = AnimaRPG.assetManager.get("audio/music/little town - orchestral.ogg", Music.class);
@@ -218,6 +218,7 @@ public class Playscreen implements Screen{
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             //karte rendern
+
             renderer.render();
             // Render-Linien
             //b2dr.render(world, gamecam.combined);
@@ -290,7 +291,7 @@ public class Playscreen implements Screen{
                     aktiveNPCsEntfernen();
                     renderer.dispose();
                     //TODO destroy alle bodies in WOrld (google)
-                    renderer = kartenManager.karteErstellen(mapID, gameViewPort);
+                    renderer = kartenManager.karteErstellen(game,mapID, gameViewPort);
                     creator = new B2WorldCreator(this);
                     setMapWechsel(false);
                     setCurrentGameState(GameState.RUN);

@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -42,8 +41,7 @@ public class Controller {
     private Touchpad touchpad;
     public int buttonSize;
     Skin skin=new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
-    SpriteDrawable background = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage.png"))));
-    SpriteDrawable background_aktiv = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("ui-skin/button_vorlage_aktiv.png"))));
+    SpriteDrawable background,background_aktiv;
 
 
     public Controller(final AnimaRPG game){
@@ -55,8 +53,10 @@ public class Controller {
         buttonSize=25;
         updateDurchfuehren=false;
 
+        background= new SpriteDrawable(new Sprite(game.getAssetManager().get("ui-skin/button_vorlage.png",Texture.class)));
+        background_aktiv=new SpriteDrawable(new Sprite(game.getAssetManager().get("ui-skin/button_vorlage_aktiv.png",Texture.class)));
         touchpad = new Touchpad(10, skin);
-        skin.add("touchBackground",new Texture("touchBackground.png"));
+        skin.add("touchBackground",game.getAssetManager().get("touchBackground.png"));
         touchpad.getStyle().background=skin.getDrawable("touchBackground");
 
         touchpad.setBounds(0, 0,60, 60);
@@ -65,7 +65,7 @@ public class Controller {
         tableRechts=rechteTabelleZeichnen();
         stage.addActor((tableRechts));
 
-        Image inventarImg=new Image(new Texture("ui-skin/inventar.png"));
+        Image inventarImg=new Image(game.getAssetManager().get("ui-skin/inventar.png",Texture.class));
         inventarImg.setSize(buttonSize,buttonSize);
         inventarImg.addListener(new InputListener(){
             @Override public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -156,8 +156,8 @@ public class Controller {
             style = new ImageButton.ImageButtonStyle();
             style.up = background;
             style.down = background_aktiv;
-            style.imageUp = new SpriteDrawable(new Sprite((new TextureRegion(new Texture("objekte/icons_for_rpg.png"), 8 * 34, 29 * 34, 34, 34))));
-            style.imageDown = new SpriteDrawable(new Sprite((new TextureRegion(new Texture("objekte/icons_for_rpg.png"), 8 * 34, 29 * 34, 34, 34))));
+            style.imageUp = new SpriteDrawable(new Sprite((new TextureRegion(game.getAssetManager().get("objekte/icons_for_rpg.png",Texture.class), 8 * 34, 29 * 34, 34, 34))));
+            style.imageDown = new SpriteDrawable(new Sprite((new TextureRegion(game.getAssetManager().get("objekte/icons_for_rpg.png",Texture.class), 8 * 34, 29 * 34, 34, 34))));
             useButton = new ImageButton(style);
             useButton.setSize(buttonSize, buttonSize);
             useButton.addListener(new InputListener() {

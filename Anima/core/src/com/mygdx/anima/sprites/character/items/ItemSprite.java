@@ -37,7 +37,7 @@ public class ItemSprite extends Sprite {
 
         setPosition(x, y);
         setBounds(getX(),getY(),16/ AnimaRPG.PPM,16/ AnimaRPG.PPM);
-        spriteQuelle=new Texture("objekte/icons_for_rpg.png");
+        spriteQuelle=screen.getGame().getAssetManager().get("objekte/icons_for_rpg.png");
         this.name=name;
         spriteBreite=34;
         spriteHoehe =34;

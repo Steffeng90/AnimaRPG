@@ -35,7 +35,7 @@ public Nova(float zauberFixture) {
     stateTimer=0;
     rueckstoss=3;
 
-    zauberQuelle = new Texture("objekte/energieNova.png");
+    zauberQuelle = screen.getGame().getAssetManager().get("objekte/energieNova.png");
     initialTexture=new TextureRegion(zauberQuelle,13, 463, laenge, breite);
     setRegion(initialTexture);
     setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,120 / AnimaRPG.PPM,120/ AnimaRPG.PPM);

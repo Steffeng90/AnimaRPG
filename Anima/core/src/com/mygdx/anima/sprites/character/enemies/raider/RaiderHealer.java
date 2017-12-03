@@ -45,7 +45,7 @@ public class RaiderHealer extends EnemyHumanoid {
                 zaubereHeilung=false;
                 heilen();
             }
-        else if (!dead && !runDying && !runMeleeAnimation &&!runCasting) {
+        else if (!dead && !runDying && !runMeleeAnimation &&!runCasting && b2body.isActive()) {
             coordinateWalking(hero, dt);
             b2body.setLinearVelocity(velocity);
             setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -54,50 +54,87 @@ public class RaiderHealer extends EnemyHumanoid {
         }
     }
     public void coordinateWalking(Held hero, float dt) {
-        /*if (hero.getX() < getX()) {
-            // Runter
-            if (hero.getY() < getY()) {
-
-                walkingVelo(hero, new Vector2(-getGeschwindigkeitLaufen(), -getGeschwindigkeitLaufen()));
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
-                    setCurrentRichtung(3);
-                } else {
-                    setCurrentRichtung(0);
+        System.out.println("dst:" + (new Vector2(hero.getX(), hero.getY())).dst(new Vector2(this.getX(), this.getY())));
+        if ((new Vector2(hero.getX(), hero.getY())).dst(new Vector2(this.getX(), this.getY())) <= 0.8f) {
+            //System.out.println("dst:"+ distanz);
+            if (hero.getX() > getX()) {
+                // Runter
+                if (hero.getY() > getY()) {
+                    walkingVelo(hero, new Vector2(-getGeschwindigkeitLaufen(), -getGeschwindigkeitLaufen()));
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(3);
+                    } else {
+                        setCurrentRichtung(0);
+                    }
+                }
+                // Hoch
+                else {
+                    walkingVelo(hero, new Vector2(-getGeschwindigkeitLaufen(), getGeschwindigkeitLaufen()));
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(2);
+                    } else {
+                        setCurrentRichtung(0);
+                    }
                 }
             }
-            // Hoch
+            // Rechts
             else {
-                walkingVelo(hero, new Vector2(-getGeschwindigkeitLaufen(), getGeschwindigkeitLaufen()));
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
-                    setCurrentRichtung(2);
-                } else {
-                    setCurrentRichtung(0);
+                // Runter
+                if (hero.getY() > getY()) {
+                    walkingVelo(hero, new Vector2(getGeschwindigkeitLaufen(), -getGeschwindigkeitLaufen()));
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(3);
+                    } else {
+                        setCurrentRichtung(1);
+                    }
+                }
+                // Hoch
+                else {
+                    walkingVelo(hero, new Vector2(getGeschwindigkeitLaufen(), getGeschwindigkeitLaufen()));
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(2);
+                    } else {
+                        setCurrentRichtung(1);
+                    }
+                }
+            }
+        } else {
+            velocity.x = 0;
+            velocity.y = 0;
+            if (hero.getX() > getX()) {
+                if (hero.getY() > getY()) {
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(2);
+                    } else {
+                        setCurrentRichtung(1);
+                    }
+                }
+                else {
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(3);
+                    } else {
+                        setCurrentRichtung(1);
+                    }
+                }
+            }
+            else {
+                if (hero.getY() > getY()) {
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(2);
+                    } else {
+                        setCurrentRichtung(0);
+                    }
+                }
+                else {
+                    if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
+                        setCurrentRichtung(3);
+                    } else {
+                        setCurrentRichtung(0);
+                    }
                 }
             }
         }
-        // Rechts
-        else {
-            // Runter
-            if (hero.getY() < getY()) {
-                walkingVelo(hero, new Vector2(getGeschwindigkeitLaufen(), -getGeschwindigkeitLaufen()));
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
-                    setCurrentRichtung(3);
-                } else {
-                    setCurrentRichtung(1);
-                }
-            }
-            // Hoch
-            else {
-                walkingVelo(hero, new Vector2(getGeschwindigkeitLaufen(), getGeschwindigkeitLaufen()));
-                if ((Math.abs(hero.getX() - getX()) <= Math.abs(hero.getY() - getY()))) {
-                    setCurrentRichtung(2);
-                } else {
-                    setCurrentRichtung(1);
-                }
-            }
-        }*/
     }
-
     public void walkingVelo(Held hero, Vector2 v2) {
         v2.x = v2.x / 10;
         v2.y = v2.y / 10;
@@ -131,7 +168,7 @@ public class RaiderHealer extends EnemyHumanoid {
     public void heilen() {
         {
 
-            if ((currentState == State.STANDING | currentState == State.WALKING) && getCurrentMana() >= 5) {
+            if ((currentState == State.STANDING | currentState == State.WALKING) && getCurrentMana() >= 5 && stateTimer>1f) {
                 setCurrentMana(getCurrentMana() - 5);
                 new HeilzauberAOE(this, screen,world);
                 runCasting=true;

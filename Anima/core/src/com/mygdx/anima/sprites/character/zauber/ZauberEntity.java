@@ -3,6 +3,7 @@ package com.mygdx.anima.sprites.character.zauber;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 
 import java.io.Serializable;
@@ -16,9 +17,6 @@ public class ZauberEntity implements Serializable {
     private State state;
     public static enum kategorie{staerkung,schaden};
     private kategorie itemKategorie;
-    private static Texture spriteQuelle_weiss=new Texture("objekte/icons_for_rpg.png")
-            ,spriteQuelle_blau=new Texture("objekte/icons_for_rpg_auswahl.png"),
-            spriteQuelle_gruen=new Texture("objekte/icons_for_rpg_angelegt.png");
     private TextureRegion grafikNichts,grafikAusgewaehlt,grafikAngelegt;
     private String id,name,beschreibung;
     private int effektivitaet, manakosten;
@@ -36,9 +34,9 @@ public class ZauberEntity implements Serializable {
         this.zauberFixtureTimer=zauberFixtureTimer;
         ausgewaehlt=false;
         angelegt=false;
-        setGrafiken(new TextureRegion(spriteQuelle_weiss, grafikPosX * 34, grafikPosY * 34, 34, 34),
-                new TextureRegion(spriteQuelle_gruen,grafikPosX*34,grafikPosY*34,34,34),
-                new TextureRegion(spriteQuelle_blau,grafikPosX*34,grafikPosY*34,34,34));
+        setGrafiken(new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg.png",Texture.class), grafikPosX * 34, grafikPosY * 34, 34, 34),
+                new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_angelegt.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34),
+                new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_auswahl.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34));
         setItemKategorie(kategorieString);
         setEffektivitaet(effektivitaet);
         setManakosten(manakosten);

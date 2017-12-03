@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -15,9 +14,7 @@ import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
-import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Links;
 import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Oben;
-import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Rechts;
 import static com.mygdx.anima.sprites.character.SpriteVorlage.Richtung.Unten;
 
 /**
@@ -44,7 +41,7 @@ public Blitz(HumanoideSprites.Richtung richtung,float zauberFixture) {
     radius=60;
     stateTimer=0;
     rueckstoss=3;
-    zauberQuelle = new Texture("objekte/blitz.png");
+    zauberQuelle =screen.getGame().getAssetManager().get("objekte/blitz.png",Texture.class);
     initialTexture=new TextureRegion(zauberQuelle,0, 0, 20, 17);
     setRegion(initialTexture);
     // setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,75 / AnimaRPG.PPM,75/ AnimaRPG.PPM);

@@ -95,7 +95,7 @@ public class LevelUpInfo implements Disposable {
                 }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(windowTimer>2){
+                if(windowTimer>1){
 
                     geklickt=true;
                 }

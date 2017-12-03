@@ -16,7 +16,7 @@ import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
  * Created by Steffen on 19.11.2016.
  */
 
-public class HeilzauberAOE extends com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture {
+public class HeilzauberAOE extends ZauberFixture {
 
 public HeilzauberAOE(EnemyHumanoid enemyHumanoid, Playscreen screen, World world) {
     super(0.8f);
@@ -30,9 +30,9 @@ public HeilzauberAOE(EnemyHumanoid enemyHumanoid, Playscreen screen, World world
     b2body.setActive(true);
     radius=38;
     stateTimer=0;
-    zauberQuelle = new Texture("objekte/heilung_versuch2.png");
+    zauberQuelle = screen.getGame().getAssetManager().get("objekte/heilung_versuch2.png",Texture.class);
 
-    setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM,b2body.getPosition().y-radius/AnimaRPG.PPM,100 / AnimaRPG.PPM,100/ AnimaRPG.PPM);
+    setBounds(b2body.getPosition().x-radius/AnimaRPG.PPM-0.17f,b2body.getPosition().y-radius/AnimaRPG.PPM,100 / AnimaRPG.PPM,100/ AnimaRPG.PPM);
     frames = new Array<TextureRegion>();
 
     frames.add(new TextureRegion(zauberQuelle, 0,0,35, 45));

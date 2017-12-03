@@ -149,7 +149,6 @@ public class HumanoideSprites extends SpriteVorlage{
         changeGrafiken(quelle);
         float speedAttack=(0.8f-(float)attackSpeed/100f);
         float speedLaufen=(1-(float)laufSpeed/100f);
-        //spriteQuelle = new Texture(quelle);
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(heroWalkRegion, i*breite,0, breite, hoehe));
@@ -1057,7 +1056,7 @@ public class HumanoideSprites extends SpriteVorlage{
         meleeExists= true;
     }
     public void changeGrafiken(String quelle){
-        atlas = new TextureAtlas(quelle+".pack");
+        atlas =screen.getGame().getAssetManager().loadHeroTextureAtlas(quelle);
         heroDieRegion=atlas.findRegion("die");
         heroWalkRegion=atlas.findRegion("walk");
         heroCastRegion=atlas.findRegion("cast");

@@ -1,6 +1,5 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
@@ -24,7 +22,6 @@ import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
 
 public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
 
-    Texture spriteQuelle;
     Body body;
     Animation openTruhe;
     public enum State {CLOSED, OPENING, OPEN};
@@ -45,21 +42,18 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
         this.truhenID=truhenID;
         this.nachbedtrue=nachbedtrue;
         this.nachbedfalse=nachbedfalse;
-        int xAuswahlBereich;
-        if(truhenTyp==1){xAuswahlBereich=0;}
-        else{xAuswahlBereich=192;}
         closed=isClosed;
-
-        spriteQuelle=new Texture("objekte/schatztruhe.png");
-        spriteOpen=new TextureRegion(spriteQuelle,xAuswahlBereich,224, 32,32);
-        spriteClose=new TextureRegion(spriteQuelle,xAuswahlBereich,128, 32,32);
-
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 1; i < 4; i++) {
-            frames.add(new TextureRegion(spriteQuelle, xAuswahlBereich, i*32+128, 32, 32));
+        if(truhenTyp==1){
+            spriteOpen=screen.getGame().getAssetManager().getSchatztruheOpenBraun();
+            spriteClose=screen.getGame().getAssetManager().getSchatztruheCloseBraun();
+            openTruhe =screen.getGame().getAssetManager().getTruheBraunAnimation();
         }
-        openTruhe = new Animation(0.1f, frames);
-        frames.clear();
+        else{
+            spriteOpen=screen.getGame().getAssetManager().getSchatztruheOpenGold();
+            spriteClose=screen.getGame().getAssetManager().getSchatztruheCloseGold();
+            openTruhe =screen.getGame().getAssetManager().getTruheGoldAnimation();
+        }
+
     }
     @Override
     public void defineItem() {
@@ -79,7 +73,6 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
         body.createFixture(fdef).setUserData(this);
         }
     public void reset(){
-        spriteQuelle=null;
         body=null;
         openTruhe=null;
         currentState=null;

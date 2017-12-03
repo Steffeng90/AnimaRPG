@@ -10,6 +10,8 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 import com.mygdx.anima.sprites.character.enemies.EnemyUngeheuer;
 
+import static com.badlogic.gdx.Gdx.app;
+
 /**
  * Created by Steffen on 18.12.2016.
  */
@@ -24,11 +26,12 @@ public class KartenManager {
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
-    public OrthogonalTiledMapRenderer karteErstellen(int kartenNummer,Viewport gameViewPort){
+    public OrthogonalTiledMapRenderer karteErstellen(AnimaRPG game,int kartenNummer,Viewport gameViewPort){
         if(map!=null){map.dispose();}
         mapLoader = new TmxMapLoader();
         aktuelleKartenId=kartenNummer;
-        map=mapLoader.load("level/level"+kartenNummer+".tmx");
+        //map=mapLoader.load("level/level"+kartenNummer+".tmx");
+        map=game.getAssetManager().loadTiledMap(kartenNummer);
         //Map-Camera-Initialisierung
         properties = map.getProperties();
         mapWidth = properties.get("width", Integer.class);

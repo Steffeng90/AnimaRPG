@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /**
  * Created by Steffen on 01.12.2016.
  */
@@ -17,9 +19,6 @@ public class Item{
     private enum State{nichts,ausgewaehlt,angelegt}
     public static enum kategorie{nahkampf,fernkampf,nutzbar,brust,handschuhe,schuhe,helm,amulett}
     private kategorie itemKategorie;
-    private static Texture spriteQuelle_weiss=new Texture("objekte/icons_for_rpg.png")
-            ,spriteQuelle_blau=new Texture("objekte/icons_for_rpg_auswahl.png"),
-            spriteQuelle_gruen=new Texture("objekte/icons_for_rpg_angelegt.png");
     private TextureRegion grafikNichts,grafikAusgewaehlt,grafikAngelegt;
     private String id,name;
     private int goldWert;
@@ -33,11 +32,12 @@ public class Item{
         grafikPosY = (int) grafikposi.y;
         ausgewaehlt=false;
         angelegt=false;
-        setGrafiken(new TextureRegion(spriteQuelle_weiss, grafikPosX * 34, grafikPosY * 34, 34, 34),
-                new TextureRegion(spriteQuelle_gruen,grafikPosX*34,grafikPosY*34,34,34),
-                new TextureRegion(spriteQuelle_blau,grafikPosX*34,grafikPosY*34,34,34));
+        setGrafiken(new TextureRegion(getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg.png",Texture.class), grafikPosX * 34, grafikPosY * 34, 34, 34),
+                new TextureRegion(getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_angelegt.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34),
+                new TextureRegion(getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_auswahl.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34));
         setGoldWert(goldWert);
         setItemKategorie(kategorieString);
+
     }
 
     public boolean isAngelegt() {

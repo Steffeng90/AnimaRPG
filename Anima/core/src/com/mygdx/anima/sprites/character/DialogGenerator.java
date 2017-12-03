@@ -10,15 +10,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mygdx.anima.scenes.DialogFenster;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.items.Amulett;
-import com.mygdx.anima.sprites.character.items.Benutzbar;
-import com.mygdx.anima.sprites.character.items.Brust;
-import com.mygdx.anima.sprites.character.items.Handschuhe;
-import com.mygdx.anima.sprites.character.items.Helm;
-import com.mygdx.anima.sprites.character.items.ItemSprite;
-import com.mygdx.anima.sprites.character.items.Schuhe;
-import com.mygdx.anima.sprites.character.items.WaffeFern;
-import com.mygdx.anima.sprites.character.items.WaffeNah;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

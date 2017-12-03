@@ -2,7 +2,6 @@ package com.mygdx.anima.sprites.character.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -51,7 +50,7 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
         //b2body.setActive(false);
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
-        atlas = new TextureAtlas(id.substring(0,id.length()-2)+".pack");
+        atlas = screen.getGame().getAssetManager().returnEnemyHumanoidPack(id);
         animationenErstellen(getSchadenNah(),getSchadenFern(),getSchadenZauber(),false,schadenbigAttack);
         setRegion(standingDownSprite);
     }
@@ -101,7 +100,6 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
     }
     public void animationenErstellen(int melee,int bow,int cast,boolean thrust,int bigAttack){
         // Die ersten Animationen werden erstellen, unabhängig der Übergebenen Booleans
-        //TextureRegion spriteQuelle = new TextureRegion(atlas.findRegion(quelle+"-walk"), 0, 0, 16, 16);;
         TextureRegion walkQuelle=atlas.findRegion(quelle+"-walk"),
                 dieQuelle=atlas.findRegion(quelle+"-die");
 
