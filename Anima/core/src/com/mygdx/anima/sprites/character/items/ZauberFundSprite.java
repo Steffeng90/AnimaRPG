@@ -1,6 +1,5 @@
 package com.mygdx.anima.sprites.character.items;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,15 +13,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 
-import static com.mygdx.anima.sprites.character.items.ItemGenerator.generateItem;
-
 /**
  * Created by Steffen on 22.11.2016.
  */
 
 
 
-public class ItemSprite extends Sprite {
+public class ZauberFundSprite extends Sprite {
     protected Playscreen screen;
     protected World world;
     Body body;
@@ -31,7 +28,7 @@ public class ItemSprite extends Sprite {
     public int spriteBreite, spriteHoehe;
     public String name;
 
-    public ItemSprite(Playscreen screen, float x, float y, Vector2 textureArea,String name){
+    public ZauberFundSprite(Playscreen screen, float x, float y, Vector2 textureArea, String name){
         this.screen=screen;
         this.world=screen.getWorld();
 

@@ -21,13 +21,17 @@ public class MyAssetManager extends AssetManager {
     String quelleHeldAlt;
     int quelleMapAlt;
     private TextureRegion schatztruheOpenBraun,schatztruheCloseBraun,schatztruheOpenGold,schatztruheCloseGold,
+            schatztruheCloseBlau,schatztruheOpenBlau,
             pfeilLinks,pfeilRechts,pfeilUp,pfeilDown;
-    Animation truheBraunAnimation,truheGoldAnimation;
+    Animation truheBraunAnimation,truheGoldAnimation,truheBlauAnimation;
     public Animation getTruheBraunAnimation() {
         return truheBraunAnimation;
     }
     public Animation getTruheGoldAnimation() {
         return truheGoldAnimation;
+    }
+    public Animation getTruheBlauAnimation() {
+        return truheBlauAnimation;
     }
 
     public TextureRegion getSchatztruheOpenBraun() {
@@ -41,6 +45,12 @@ public class MyAssetManager extends AssetManager {
     }
     public TextureRegion getSchatztruheCloseGold() {
         return schatztruheCloseGold;
+    }
+    public TextureRegion getSchatztruheCloseBlau() {
+        return schatztruheCloseBlau;
+    }
+    public TextureRegion getSchatztruheOpenBlau() {
+        return schatztruheOpenBlau;
     }
 
     public MyAssetManager() {
@@ -76,18 +86,25 @@ public class MyAssetManager extends AssetManager {
         for (int i = 1; i < 4; i++) {
             frames.add(new TextureRegion(get("objekte/schatztruhe.png",Texture.class), 0, i*32+128, 32, 32));
         }
-        truheBraunAnimation=new Animation(0.1f, frames);
+        truheGoldAnimation=new Animation(0.1f, frames);
         frames.clear();
-        schatztruheOpenBraun= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),0,224, 32,32);
-        schatztruheCloseBraun= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),0,128, 32,32);
-        frames = new Array<TextureRegion>();
+        schatztruheOpenGold= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),0,224, 32,32);
+        schatztruheCloseGold= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),0,128, 32,32);
         for (int i = 1; i < 4; i++) {
             frames.add(new TextureRegion(get("objekte/schatztruhe.png",Texture.class), 192, i*32+128, 32, 32));
         }
-        truheGoldAnimation=new Animation(0.1f, frames);
+        truheBraunAnimation=new Animation(0.1f, frames);
         frames.clear();
-        schatztruheOpenGold= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),192,224, 32,32);
-        schatztruheCloseGold= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),192,128, 32,32);
+        schatztruheOpenBraun= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),192,224, 32,32);
+        schatztruheCloseBraun= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),192,128, 32,32);
+        for (int i = 1; i < 4; i++) {
+            frames.add(new TextureRegion(get("objekte/schatztruhe.png",Texture.class), 288, i*32+0, 32, 32));
+        }
+        truheBlauAnimation=new Animation(0.2f, frames);
+        frames.clear();
+        schatztruheOpenBlau= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),288,96, 32,32);
+        schatztruheCloseBlau= new TextureRegion(get("objekte/schatztruhe.png",Texture.class),288,0, 32,32);
+
 
         // Zauberentity
         load("objekte/icons_for_rpg.png",Texture.class);

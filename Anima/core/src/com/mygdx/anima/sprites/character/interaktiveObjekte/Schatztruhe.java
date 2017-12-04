@@ -12,6 +12,7 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
+import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
@@ -30,7 +31,7 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
     TextureRegion spriteClose,spriteOpen;
     public float stateTimer;
     public String inhalt;
-    public int truhenID,nachbedfalse,nachbedtrue;
+    public int truhenID,nachbedfalse,nachbedtrue,truhentyp;
 
     public Schatztruhe(){
        super();
@@ -39,19 +40,27 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
         super.init(screen,x,y);
         this.inhalt=inhalt;
         defineItem();
+        this.truhentyp=truhenTyp;
         this.truhenID=truhenID;
         this.nachbedtrue=nachbedtrue;
         this.nachbedfalse=nachbedfalse;
         closed=isClosed;
-        if(truhenTyp==1){
-            spriteOpen=screen.getGame().getAssetManager().getSchatztruheOpenBraun();
-            spriteClose=screen.getGame().getAssetManager().getSchatztruheCloseBraun();
-            openTruhe =screen.getGame().getAssetManager().getTruheBraunAnimation();
-        }
-        else{
+        switch(truhenTyp){
+            case 1:
             spriteOpen=screen.getGame().getAssetManager().getSchatztruheOpenGold();
             spriteClose=screen.getGame().getAssetManager().getSchatztruheCloseGold();
             openTruhe =screen.getGame().getAssetManager().getTruheGoldAnimation();
+            break;
+            case 2:
+            spriteOpen=screen.getGame().getAssetManager().getSchatztruheOpenBraun();
+            spriteClose=screen.getGame().getAssetManager().getSchatztruheCloseBraun();
+            openTruhe =screen.getGame().getAssetManager().getTruheBraunAnimation();
+            break;
+            case 3:
+                spriteOpen=screen.getGame().getAssetManager().getSchatztruheOpenBlau();
+                spriteClose=screen.getGame().getAssetManager().getSchatztruheCloseBlau();
+                openTruhe =screen.getGame().getAssetManager().getTruheBlauAnimation();
+                break;
         }
 
     }
@@ -122,7 +131,13 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
                     if(nachbedfalse!=0){
                         getHeld().getEventList()[nachbedfalse]=false;
                     }
-                    screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));
+                    if(truhentyp==1 || truhentyp==2){
+                        screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));
+                    }
+                    else{
+                        screen.setCurrentZauberfundSprite(ZauberGenerator.generateZauber(screen,getX(),getY()+getHeight()/2,inhalt));
+                    }
+
                     getHeld().getGeoeffneteTruhen().add(new SchatztruhenSpeicherObjekt(aktuelleKartenId,truhenID));
                 }
                 break;

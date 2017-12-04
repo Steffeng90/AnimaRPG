@@ -24,6 +24,7 @@ import com.mygdx.anima.scenes.AnzeigenDisplay;
 import com.mygdx.anima.scenes.DialogFenster;
 import com.mygdx.anima.scenes.ItemFundInfo;
 import com.mygdx.anima.scenes.LevelUpInfo;
+import com.mygdx.anima.scenes.ZauberFundInfo;
 import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
@@ -37,6 +38,7 @@ import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
+import com.mygdx.anima.sprites.character.items.ZauberFundSprite;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
@@ -62,6 +64,7 @@ public class Playscreen implements Screen{
     private static Viewport gameViewPort;
     Controller controller;
     ItemFundInfo itemWindow;
+    ZauberFundInfo zauberFundInfoWindow;
     DialogFenster activeDialog;
     private LevelUpInfo levelUpWindow;
     BitmapFont bf;
@@ -83,6 +86,9 @@ public class Playscreen implements Screen{
     private Held spieler;
     private Vector2 spielerPosition;
     private ItemSprite currentItemsprite;
+    private ZauberFundSprite currentZauberfundSprite;
+
+
     private static KartenManager kartenManager;
 
     //Poolable - Arrays
@@ -136,13 +142,13 @@ public class Playscreen implements Screen{
         creator = new B2WorldCreator(this);
 
         //TestZauber erzeugen
-        ZauberGenerator.generateZauber("staerkung1");
-        ZauberGenerator.generateZauber("schaden2");
-        ZauberGenerator.generateZauber("schaden1");
+        //ZauberGenerator.generateZauber("staerkung1");
+        //ZauberGenerator.generateZauber("schaden2");
+        //ZauberGenerator.generateZauber("schaden1");
         ItemGenerator.generateItem(this,0,0,"Schwert1");
         ItemGenerator.generateItem(this,0,0,"Schwert3");
         ItemGenerator.generateItem(this,0,0,"Schwert6");
-        spieler.getHeldenInventar().setAngelegtWaffeNah(spieler.getHeldenInventar().getWaffenNahList().get(2));
+        spieler.getHeldenInventar().setAngelegtWaffeNah(spieler.getHeldenInventar().getWaffenNahList().get(0));
         ItemGenerator.generateItem(this,0,0,"Bogen1");
         ItemGenerator.generateItem(this,0,0,"Bogen3");
         ItemGenerator.generateItem(this,0,0,"Bogen5");
@@ -275,7 +281,7 @@ public class Playscreen implements Screen{
                     }
                 }
             }
-            if (getCurrentItemsprite() != null || getLevelUpWindow() != null || getActiveDialog() != null) {
+            if (getCurrentItemsprite() != null || getCurrentZauberfundSprite() !=null || getLevelUpWindow() != null || getActiveDialog() != null) {
                 setCurrentGameState(GameState.PAUSE);
             }
 
@@ -309,12 +315,33 @@ public class Playscreen implements Screen{
                             setCurrentGameState(GameState.RUN);
                         }
                     }
+                    else if (zauberFundInfoWindow != null) {
+                        zauberFundInfoWindow.draw();
+                        getCurrentZauberfundSprite().update(delta);
+                        zauberFundInfoWindow.update(delta);
+
+                        if (zauberFundInfoWindow.isGeklickt()) {
+                            setCurrentZauberfundSprite(null);
+                            zauberFundInfoWindow.dispose();
+                            zauberFundInfoWindow = null;
+                            Gdx.input.setInputProcessor(controller.getStage());
+                            setCurrentGameState(GameState.RUN);
+                        }
+                    }
                     if (getCurrentItemsprite() != null) {
                         game.batch.begin();
                         getCurrentItemsprite().draw(game.batch);
                         game.batch.end();
                         if (itemWindow == null) {
                             itemWindow=new ItemFundInfo(this,game.batch,getCurrentItemsprite());
+                        }
+                    }
+                    else if (getCurrentZauberfundSprite() != null) {
+                        game.batch.begin();
+                        getCurrentZauberfundSprite().draw(game.batch);
+                        game.batch.end();
+                        if (zauberFundInfoWindow == null) {
+                            zauberFundInfoWindow=new ZauberFundInfo(this,game.batch,getCurrentZauberfundSprite());
                         }
                     }
                     else if (levelUpWindow != null) {
@@ -565,6 +592,13 @@ public class Playscreen implements Screen{
 
     public void setCurrentItemsprite(ItemSprite currentItemsprite) {
         this.currentItemsprite = currentItemsprite;
+    }
+    public ZauberFundSprite getCurrentZauberfundSprite() {
+        return currentZauberfundSprite;
+    }
+
+    public void setCurrentZauberfundSprite(ZauberFundSprite currentZauberfundSprite) {
+        this.currentZauberfundSprite = currentZauberfundSprite;
     }
 
     public GameState getCurrentGameState() {

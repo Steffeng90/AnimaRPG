@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.items.ZauberFundSprite;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -33,7 +35,7 @@ public class ZauberGenerator {
     private static int kategorie,effektivitaet, manakosten;
     private static float zauberZeit, zauberDauer,zauberFixtureTimer;
 
-    public static void generateZauber(String typ) {
+    public static ZauberFundSprite generateZauber(Playscreen screen, float x, float y, String typ) {
         Gson gson = new Gson();
         try {
             FileHandle file =Gdx.files.internal("zauberdb.json");
@@ -69,6 +71,7 @@ public class ZauberGenerator {
             System.out.print("Fehler beim ZauberFixture auslesen:");
             e.printStackTrace();
         }
+        return new ZauberFundSprite(screen,x,y,vector,zauberName);
     }
 
 

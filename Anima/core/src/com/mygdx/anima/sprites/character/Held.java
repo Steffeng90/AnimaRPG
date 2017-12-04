@@ -151,7 +151,7 @@ public class Held extends HumanoideSprites implements Serializable{
         setHeld(this);
         // Zauber auslesen
         for(int i=0; i<gameData.zauber.length;i++){
-            ZauberGenerator.generateZauber(gameData.zauber[i]);
+            ZauberGenerator.generateZauber(screen,0,0,gameData.zauber[i]);
             if(gameData.zauberslot1==zauberList.getZauberList().get(i).getId()){
                 getZauberList().setZauberslot(1,getZauberList().getZauberList().get(i));
             }

@@ -54,7 +54,6 @@ public class RaiderHealer extends EnemyHumanoid {
         }
     }
     public void coordinateWalking(Held hero, float dt) {
-        System.out.println("dst:" + (new Vector2(hero.getX(), hero.getY())).dst(new Vector2(this.getX(), this.getY())));
         if ((new Vector2(hero.getX(), hero.getY())).dst(new Vector2(this.getX(), this.getY())) <= 0.8f) {
             //System.out.println("dst:"+ distanz);
             if (hero.getX() > getX()) {
