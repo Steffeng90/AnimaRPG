@@ -7,6 +7,6 @@ import com.mygdx.anima.AnimaRPG;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new AnimaRPG(), config);
+		new LwjglApplication(new AnimaRPG(null), config);
 	}
 }

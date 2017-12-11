@@ -31,6 +31,7 @@ import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
 import static com.mygdx.anima.AnimaRPG.HERO_ARROW;
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
 import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
+import static com.mygdx.anima.AnimaRPG.UNGEHEUER_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static com.mygdx.anima.screens.Playscreen.activeTruhen;
 import static com.mygdx.anima.screens.Playscreen.getMapEinstieg;
@@ -73,7 +74,7 @@ public class B2WorldCreator {
                     pshape.setAsBox((rect.getWidth() / 2) / AnimaRPG.PPM, (rect.getHeight() / 2) / AnimaRPG.PPM);
                     fdef.shape = pshape;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW |UNGEHEUER_BIT;
                     body.createFixture(fdef);
                 }
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(EllipseMapObject.class)) {
@@ -85,7 +86,7 @@ public class B2WorldCreator {
 
                     fdef.shape = cshape;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW | UNGEHEUER_BIT;
                     body.createFixture(fdef);
                 }
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(PolylineMapObject.class)) {
@@ -106,7 +107,7 @@ public class B2WorldCreator {
 
                     fdef.shape = chain;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ENEMY_ARROW | HERO_ARROW | UNGEHEUER_BIT;
                     body.createFixture(fdef);
                 }
                 // Keine PolygonShapes verwenden.

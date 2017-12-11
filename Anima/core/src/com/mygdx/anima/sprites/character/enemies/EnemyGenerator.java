@@ -13,6 +13,7 @@ import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Eyeball;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 
 import java.io.BufferedReader;
@@ -90,6 +91,42 @@ public class EnemyGenerator {
                 Bat bat=NPCPool.getBatPool().obtain();
                 bat.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
                 Playscreen.activeBat.add(bat);break;
+            case 102:
+                Eyeball eyeball=NPCPool.getEyeballPool().obtain();
+                eyeball.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeEyeball.add(eyeball);break;
+           /* case 103:
+                Ghost ghost=NPCPool.getEyeballPool().obtain();
+                ghost.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeGhost.add(ghost);break;
+            case 104:
+                Pumpkin pumpkin=NPCPool.getEyeballPool().obtain();
+                pumpkin.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activePumpkin.add(pumpkin);break;
+            case 105:
+                Plant plant=NPCPool.getEyeballPool().obtain();
+                plant.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activePlant.add(plant);break;
+            case 106:
+                Slime slime=NPCPool.getEyeballPool().obtain();
+                slime.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeSlime.add(slime);break;
+            case 107:
+                AngryBee angryBee=NPCPool.getEyeballPool().obtain();
+                angryBee.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeAngryBee.add(angryBee);break;
+            case 108:
+                Snake snake=NPCPool.getEyeballPool().obtain();
+                snake.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeSnake.add(snake);break;
+            case 109:
+                WormSmall wormSmall=NPCPool.getEyeballPool().obtain();
+                wormSmall.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeWormSmall.add(wormSmall);break;
+            case 110:
+                WormBig wormBig=NPCPool.getEyeballPool().obtain();
+                wormBig.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeWormBig.add(wormBig);break;*/
         }
         }
     public static void generateNPC(Playscreen screen, Rectangle rect, String typ,String dialogID) {

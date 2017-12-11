@@ -4,7 +4,8 @@
   {"id":"raider-3","kategorie":3,"maxhp":"15","maxmana":20,"regMana":2,"ep":12,"speed":1,"schadenNah":0,"schadenfern":0,"schadenzauber":10,"schadenbigAttack":0,"ruestung":4,"boundsX":42,"boundsY":42,"castSpeed":1.5,"bowSpeed":0,"meleeSpeed":0,"thrustSpeed":0},
   {"id":"raider-4","kategorie":4,"maxhp":"90","maxmana":0,"regMana":0,"ep":50,"speed":3,"schadenNah":0,"schadenfern":0,"schadenzauber":0,"schadenbigAttack":10,"ruestung":8,"boundsX":48,"boundsY":48,"castSpeed":0,"bowSpeed":0,"meleeSpeed":2,"thrustSpeed":0},
 
-  {"id":"bat","kategorie":101,"maxhp":"90","maxmana":0,"regMana":0,"ep":50,"speed":6,"schadenNah":8,"schadenfern":0,"schadenzauber":0,"schadenbigAttack":0,"ruestung":8,"boundsX":32,"boundsY":32,"castSpeed":0,"bowSpeed":0,"meleeSpeed":2,"thrustSpeed":0}
+  {"id":"bat","kategorie":101,"maxhp":"90","maxmana":0,"regMana":0,"ep":50,"speed":6,"schadenNah":8,"schadenfern":0,"schadenzauber":0,"schadenbigAttack":0,"ruestung":8,"boundsX":32,"boundsY":32,"castSpeed":0,"bowSpeed":0,"meleeSpeed":2,"thrustSpeed":0},
+  {"id":"eyeball","kategorie":102,"maxhp":"90","maxmana":0,"regMana":0,"ep":50,"speed":6,"schadenNah":8,"schadenfern":0,"schadenzauber":0,"schadenbigAttack":0,"ruestung":8,"boundsX":32,"boundsY":38,"castSpeed":0,"bowSpeed":0,"meleeSpeed":2,"thrustSpeed":0}
 
 ]
 }

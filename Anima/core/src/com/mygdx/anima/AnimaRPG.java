@@ -1,54 +1,27 @@
 package com.mygdx.anima;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.utils.Json;
-import com.google.gson.Gson;
 import com.mygdx.anima.screens.LoadingScreen;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.screens.StartScreen;
 import com.mygdx.anima.sprites.character.Held;
+import com.mygdx.anima.tools.AdsController;
 import com.mygdx.anima.tools.MyAssetManager;
 
-import javax.naming.Context;
-import javax.xml.soap.Text;
-
-import static com.badlogic.gdx.Gdx.app;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static com.mygdx.anima.AnimaRPG.ENEMY_SEARCH_HEALER;
-import static java.security.AccessController.getContext;
-
 public class AnimaRPG extends Game {
+
+	// Implementierung von Werbung
+	private AdsController adsController;
+
+	public AdsController getAdsController() {
+		return adsController;
+	}
+
+	public AnimaRPG(AdsController adsControllerPara){
+		this.adsController = adsControllerPara;
+	}
 	// Verhätltnis Pixel per Meter, da Box2D pro 100 Pixel einen Meter rechnet und das ein bisschen viel ist
 	//public static final float  MAP_SCALE=0.5625;
 	public static final float PPM = 100;
@@ -70,7 +43,7 @@ public class AnimaRPG extends Game {
 	public static final short ENEMY_BIT=6977;
 	public static final short HERO_WEAPON_BIT=7109;
 	public static final short NPC_BIT=7237;
-	public static final short OBJECT_BIT=7523;
+	public static final short OBJECT_BIT=2;
 	public static final short HERO_SENSOR=128;
 	public static final short ENEMY_SENSOR=256;
 	public static final short ENEMY_ATTACK=512;
@@ -87,7 +60,7 @@ public class AnimaRPG extends Game {
 	public static final short EVENT_AREA_BIT=1201;
 
 	public static final short UNGEHEUER_BIT=811;
-	public static final short FLYING_UNGEHEUER_BIT=907;
+	public static final short FLYING_UNGEHEUER_BIT=16;
 	public static final short UNGEHEUER_SENSOR_BIT=1009;
 	public static final short UNGEHEUER_ATTACK_BIT=1093;
 
@@ -99,7 +72,7 @@ public class AnimaRPG extends Game {
 
 	@Override
 	public void create() {
-
+		//if(adsController.isWifiConnected()) {adsController.showBannerAd();}
         assetManager = new MyAssetManager();
 		//assetManager.finishLoading();
 

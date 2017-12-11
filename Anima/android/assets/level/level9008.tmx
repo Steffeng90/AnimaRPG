@@ -95,7 +95,7 @@
   </object>
   <object id="199" x="832" y="192" width="16" height="16">
    <properties>
-    <property name="typ" value="raider-1"/>
+    <property name="typ" value="bat"/>
    </properties>
   </object>
   <object id="203" x="624" y="592" width="16" height="16">

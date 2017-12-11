@@ -6,6 +6,7 @@ import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Eyeball;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 
 /**
@@ -50,6 +51,12 @@ public class NPCPool {
         @Override
         protected Bat newObject() {
             return new Bat();
+        }
+    };
+    private static final Pool<Eyeball> eyeballPool = new Pool<Eyeball>() {
+        @Override
+        protected Eyeball newObject() {
+            return new Eyeball();
         }
     };
     public static EnemyHumanoid createEnemy(MonsterType monsterType){
@@ -102,4 +109,5 @@ public class NPCPool {
     public static Pool<FriendlyNPC> getFriendlyNPCPool(){return friendlyNPCPool;}
 
     public static Pool<Bat> getBatPool(){return batPool;}
+    public static Pool<Eyeball> getEyeballPool(){return eyeballPool;}
 }

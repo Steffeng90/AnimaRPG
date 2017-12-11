@@ -1,6 +1,5 @@
 package com.mygdx.anima.sprites.character.enemies.ungeheuer;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,12 +15,12 @@ import com.mygdx.anima.sprites.character.enemies.EnemyUngeheuer;
  * Created by Steffen on 13.11.2016.
  */
 
-public class Bat extends EnemyUngeheuer
+public class Eyeball extends EnemyUngeheuer
 {
     float t=0;
     double startingRadius = 150;
     double rotations = 5;
-    public Bat(){
+    public Eyeball(){
         super();
     }
     public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
@@ -35,20 +34,8 @@ public class Bat extends EnemyUngeheuer
         vonFeedbackbetroffen=false;
         framesWalk=3;
         breite=32;
-        hoehe=32;
+        hoehe=38;
 
-        if(anima==null)
-        {
-            System.out.println("1");
-        }
-        if (anima.getAssetManager()==null)
-        {
-            System.out.println("2");
-        }
-        if(anima.getAssetManager().isLoaded("ungeheuer/ungeheuer.atlas"))
-        {
-            System.out.println("3");
-        }
         atlas = anima.getAssetManager().get("ungeheuer/ungeheuer.atlas");
         animationenErstellen();
         setRegion(standingDownSprite);
@@ -70,7 +57,6 @@ public class Bat extends EnemyUngeheuer
         else if(b2body!=null){ b2body.setLinearVelocity(new Vector2(0,0));}
     }
     public void coordinateWalking(HumanoideSprites zielSprite, float dt){
-
         Vector2 einheitsvector=new Vector2(zielSprite.getb2bodyX()-getb2bodyX(),zielSprite.getb2bodyY()-getb2bodyY());
         float einheitsZahl=1/(float)Math.sqrt(Math.pow(einheitsvector.x,2)+Math.pow(einheitsvector.y,2));
         einheitsvector.x=einheitsZahl*einheitsvector.x;
@@ -115,7 +101,7 @@ public class Bat extends EnemyUngeheuer
         }
     }
     public void animationenErstellen(){
-        TextureRegion walkQuelle=atlas.findRegion("bat");
+        TextureRegion walkQuelle=atlas.findRegion("eyeball");
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(walkQuelle, i*breite,0, breite, hoehe));
@@ -123,17 +109,17 @@ public class Bat extends EnemyUngeheuer
         UpWalk = new Animation(0.15f, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle,i *breite, 64, breite, hoehe));
+            frames.add(new TextureRegion(walkQuelle,i *breite, 2*hoehe, breite, hoehe));
         }
         DownWalk = new Animation(0.15f, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 32, breite, hoehe));
+            frames.add(new TextureRegion(walkQuelle, i *breite, 1*hoehe, breite, hoehe));
         }
         LeftWalk = new Animation(0.15f, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 96, breite, hoehe));
+            frames.add(new TextureRegion(walkQuelle, i *breite, 3*hoehe, breite, hoehe));
         }
         RightWalk = new Animation(0.15f, frames);
 
@@ -145,25 +131,25 @@ public class Bat extends EnemyUngeheuer
         UpMelee1 = new Animation(0.3f, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 32, breite, hoehe));
+            frames.add(new TextureRegion(walkQuelle, i *breite, 1*hoehe, breite, hoehe));
         }
         LeftMelee1 = new Animation(0.3f, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle,i *breite, 64, breite, hoehe));
+            frames.add(new TextureRegion(walkQuelle,i *breite, 2*hoehe, breite, hoehe));
         }
         DownMelee1 = new Animation(0.3f, frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 96, breite, hoehe));
+            frames.add(new TextureRegion(walkQuelle, i *breite, 3*hoehe, breite, hoehe));
         }
         RightMelee1 = new Animation(0.3f, frames);
 
         frames.clear();
-        standingDownSprite = new TextureRegion(walkQuelle, 0, 64, breite, hoehe);
+        standingDownSprite = new TextureRegion(walkQuelle, 0, 2*hoehe, breite, hoehe);
         standingUpSprite = new TextureRegion(walkQuelle, 0,0, breite, hoehe);
-        standingLeftSprite = new TextureRegion(walkQuelle, 0, 32, breite, hoehe);
-        standingRightSprite = new TextureRegion(walkQuelle, 0, 96, breite, hoehe);
+        standingLeftSprite = new TextureRegion(walkQuelle, 0, 1*hoehe, breite, hoehe);
+        standingRightSprite = new TextureRegion(walkQuelle, 0, 3*hoehe, breite, hoehe);
         setRegion(standingDownSprite);
 
     }

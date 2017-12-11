@@ -28,6 +28,17 @@ public class KartenManager {
     private TiledMap map;
     public OrthogonalTiledMapRenderer karteErstellen(AnimaRPG game,int kartenNummer,Viewport gameViewPort){
         if(map!=null){map.dispose();}
+       /*
+        if (game.getAdsController().isWifiConnected()) {
+                game.getAdsController().showInterstitialAd(new Runnable() {
+                    @Override
+                    public void run() {
+                    }
+                });
+            } else {
+                System.out.println("Interstitial ad not (yet) loaded");
+            }
+            */
         mapLoader = new TmxMapLoader();
         aktuelleKartenId=kartenNummer;
         //map=mapLoader.load("level/level"+kartenNummer+".tmx");

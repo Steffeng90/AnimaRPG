@@ -101,7 +101,7 @@
     <property name="typ" value="raider-1"/>
    </properties>
   </object>
-  <object id="206" x="272" y="512" width="16" height="16">
+  <object id="206" x="247" y="505" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
    </properties>

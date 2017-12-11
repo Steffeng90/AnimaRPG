@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -53,7 +54,15 @@ import com.mygdx.anima.tools.HandleGameData;
                 // letzter Stand: game.changeScreen(new StartScreen(game));
                 //game.setScreen(new Playscreen(game));
                 this.dispose();
-                game.getHeld().wiederbeleben();
+                game.getAdsController().loadRewardedVideoAd();
+                game.getAdsController().showRewardedVideoAd();
+
+                if(game.getAdsController().getRewardedVideoAdFinished()){
+                    game.getHeld().wiederbeleben(1f);
+                }
+                else{
+                    game.getHeld().wiederbeleben(0.7f);
+                }
                 game.getHeld().screen.setMapWechsel(true);
                 game.changeScreen(game.currentPlayScreen);
 

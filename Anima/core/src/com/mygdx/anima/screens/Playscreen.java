@@ -35,6 +35,7 @@ import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Eyeball;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
@@ -119,6 +120,15 @@ public class Playscreen implements Screen{
     public static Array<RaiderBoss> activeRaiderBoss= new Array<RaiderBoss>();
     public static Array<FriendlyNPC> activeNPC= new Array<FriendlyNPC>();
     public static Array<Bat> activeBat= new Array<Bat>();
+    public static Array<Eyeball> activeEyeball= new Array<Eyeball>();
+    public static Array<Eyeball> activeGhost= new Array<Eyeball>();
+    public static Array<Eyeball> activePumpkin= new Array<Eyeball>();
+    public static Array<Eyeball> activePlant= new Array<Eyeball>();
+    public static Array<Eyeball> activeSlime= new Array<Eyeball>();
+    public static Array<Eyeball> activeAngryBee= new Array<Eyeball>();
+    public static Array<Eyeball> activeSnake= new Array<Eyeball>();
+    public static Array<Eyeball> activeWormSmall= new Array<Eyeball>();
+    public static Array<Eyeball> activeWormBig= new Array<Eyeball>();
 
     public Playscreen(AnimaRPG game,GameData gameData){
         this.game = game;
@@ -245,6 +255,9 @@ public class Playscreen implements Screen{
             for (Bat bat : activeBat) {
                 bat.draw(game.batch);
             }
+        for (Eyeball eyeball : activeEyeball) {
+            eyeball.draw(game.batch);
+        }
             for (FriendlyNPC npc : activeNPC) {
                 npc.draw(game.batch);
             }
@@ -292,7 +305,7 @@ public class Playscreen implements Screen{
                     Gdx.input.setInputProcessor(controller.getStage());
                     break;
                 case PAUSE:
-                    if (isMapWechsel()) {
+                    if (isMapWechsel()){
                     // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
                     aktiveNPCsEntfernen();
                     renderer.dispose();
@@ -468,6 +481,19 @@ public class Playscreen implements Screen{
             else{
                 kartenManager.isEnemyinRangeUngeheuer(bat);
                 bat.update(spieler,dt);
+            }
+        }
+        len = activeEyeball.size;
+        for (int i = len; --i >= 0;) {
+            Eyeball eyeball;
+            eyeball = activeEyeball.get(i);
+            if (eyeball.destroyed == true) {
+                activeEyeball.removeIndex(i);
+                NPCPool.getEyeballPool().free(eyeball);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(eyeball);
+                eyeball.update(spieler,dt);
             }
         }
         //Raider-pool

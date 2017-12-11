@@ -510,8 +510,8 @@ public class Held extends HumanoideSprites implements Serializable{
         }
         else {gesamtLPReg=getRegHitpoints();}
     }
-    public void wiederbeleben(){
-        setCurrentHitpoints((int)(getMaxHitpoints()*0.7f));
+    public void wiederbeleben(float prozent){
+        setCurrentHitpoints((int)(getMaxHitpoints()*prozent));
         runDying=false;
         dead=false;
         currentState=getState();

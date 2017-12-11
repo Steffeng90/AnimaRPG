@@ -87,7 +87,6 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
         super.update(dt);
         if(enemyInReichweite && !runMeleeAnimation &&!destroyed){
             attack();
-
         }
         if(!runMeleeAnimation && meleeExists && b2body!=null){
             b2body.destroyFixture(meleeFixture);

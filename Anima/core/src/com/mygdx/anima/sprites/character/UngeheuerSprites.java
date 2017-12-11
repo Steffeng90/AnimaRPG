@@ -60,6 +60,7 @@ public class UngeheuerSprites extends SpriteVorlage{
     public void init(AnimaRPG anima, Playscreen screen,int maxhp,int maxmana,int regMana,int speed,int schadenNah,int schadenfern,int schadenzauber,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
         this.world = screen.getWorld();
         this.screen=screen;
+        this.anima=anima;
         setMaxHitpoints(maxhp);
         setMaxMana(maxmana);
         setRegMana(regMana);
@@ -331,10 +332,6 @@ public class UngeheuerSprites extends SpriteVorlage{
         meleeFixture = b2body.createFixture(fdefAttack);
         meleeFixture.setUserData(this);
         meleeExists= true;
-    }
-    public void changeGrafiken(String quelle){
-        atlas = new TextureAtlas(quelle+".pack");
-        DieRegion =atlas.findRegion("die");
     }
     public void reset(){
         super.reset();

@@ -119,6 +119,7 @@ public class MyAssetManager extends AssetManager {
         load("objekte/heilung_versuch2.png",Texture.class);
         load("objekte/arrow.png", Texture.class);
         load("objekte/energieNova.png", Texture.class);
+        load("ungeheuer/ungeheuer.atlas",TextureAtlas.class);
 
         finishLoadingAsset("objekte/arrow.png");
         pfeilRechts=new TextureRegion(get("objekte/arrow.png",Texture.class),5,10,53,9);
