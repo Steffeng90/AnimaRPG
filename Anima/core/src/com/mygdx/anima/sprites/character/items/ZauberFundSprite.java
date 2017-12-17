@@ -53,7 +53,7 @@ public class ZauberFundSprite extends Sprite {
         FixtureDef fdef= new FixtureDef();
         PolygonShape shape=new PolygonShape();
         shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(getWidth()/2, getHeight()/2),0);
-        fdef.filter.categoryBits=AnimaRPG.ITEM_SPRITE_BIT;
+        fdef.filter.categoryBits=AnimaRPG.NOTHING_BIT;
 
         fdef.shape=shape;
     }

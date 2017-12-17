@@ -2,7 +2,6 @@ package com.mygdx.anima.sprites.character.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
-import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.UngeheuerSprites;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Blitz;
 import com.mygdx.anima.sprites.character.zauber.fixtures.HeilzauberAOE;
@@ -21,7 +19,6 @@ import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.tools.SchadenBerechner;
 
-import static com.mygdx.anima.AnimaRPG.HERO_ARROW;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
@@ -50,12 +47,6 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
         //b2body.setActive(false);
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
-
-        // animationenErstellen(getSchadenNah());
-
-    }
-    public void reset(){
-        super.reset();
     }
     public void create(boolean isFlying){
         BodyDef bdef=new BodyDef();
@@ -70,14 +61,14 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
         shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         if(isFlying==true){
-            fdef.filter.categoryBits=AnimaRPG.FLYING_UNGEHEUER_BIT;
+            fdef.filter.categoryBits=AnimaRPG.UNGEHEUER_BIT;
             fdef.filter.maskBits= AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
-                    | AnimaRPG.HERO_ARROW;
+                    | AnimaRPG.ARROW_BIT;
         }
         else{
             fdef.filter.categoryBits=AnimaRPG.UNGEHEUER_BIT;
-            fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
-                    | AnimaRPG.HERO_ARROW;
+            fdef.filter.maskBits= AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
+                    | AnimaRPG.ARROW_BIT;
         }
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -120,7 +111,6 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
             default:
                 richtungsVector = new Vector2(0, 0);
                 break;
-
         }
         meleeFixtureDefinieren(richtungsVector);
         circleShape.setPosition(richtungsVector);
@@ -241,6 +231,64 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
         if (!dead || stateTimer < 3)
             super.draw(batch);
     }
-}
+    public void animationenErstellen(String textureRegionQuelle) {
+        atlas = anima.getAssetManager().get("ungeheuer/ungeheuer.atlas");
+        TextureRegion walkQuelle = atlas.findRegion(textureRegionQuelle);
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 0, breite, hoehe));
+        }
+        frames.add(new TextureRegion(walkQuelle, 1 * breite, 0, breite, hoehe));
+        UpWalk = new Animation(animationSpeed, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 2 * hoehe, breite, hoehe));
+        }
+        frames.add(new TextureRegion(walkQuelle, 1 * breite, 2 * hoehe, breite, hoehe));
+        DownWalk = new Animation(animationSpeed, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 1 * hoehe, breite, hoehe));
+        }
+        frames.add(new TextureRegion(walkQuelle, 1 * breite, 1 * hoehe, breite, hoehe));
+        LeftWalk = new Animation(animationSpeed, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 3 * hoehe, breite, hoehe));
+        }
+        frames.add(new TextureRegion(walkQuelle, 1 * breite, 3 * hoehe, breite, hoehe));
+        RightWalk = new Animation(animationSpeed, frames);
+
+        // Melee
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 0, breite, hoehe));
+        }
+        UpMelee1 = new Animation(meleeSpeed/4, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 1 * hoehe, breite, hoehe));
+        }
+        LeftMelee1 = new Animation(meleeSpeed/4, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 2 * hoehe, breite, hoehe));
+        }
+        DownMelee1 = new Animation(meleeSpeed/4, frames);
+        frames.clear();
+        for (int i = 0; i < framesWalk; i++) {
+            frames.add(new TextureRegion(walkQuelle, i * breite, 3 * hoehe, breite, hoehe));
+        }
+        RightMelee1 = new Animation(meleeSpeed/4, frames);
+
+        frames.clear();
+        standingDownSprite = new TextureRegion(walkQuelle, 0, 2 * hoehe, breite, hoehe);
+        standingUpSprite = new TextureRegion(walkQuelle, 0, 0, breite, hoehe);
+        standingLeftSprite = new TextureRegion(walkQuelle, 0, 1 * hoehe, breite, hoehe);
+        standingRightSprite = new TextureRegion(walkQuelle, 0, 3 * hoehe, breite, hoehe);
+        setRegion(standingDownSprite);
+    }
+
+    }
 
 

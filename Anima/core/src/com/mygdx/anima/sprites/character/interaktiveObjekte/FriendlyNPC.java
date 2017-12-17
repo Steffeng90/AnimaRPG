@@ -17,7 +17,6 @@ import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.Held;
 
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
-import static com.mygdx.anima.AnimaRPG.NPC_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
@@ -47,22 +46,18 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
         CircleShape shape=new CircleShape();
         shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
-        fdef.filter.categoryBits=AnimaRPG.NPC_BIT;
-        fdef.filter.maskBits= AnimaRPG.HERO_BIT |AnimaRPG.HERO_SENSOR;
+        fdef.filter.categoryBits=AnimaRPG.OBJECT_BIT;
+        fdef.filter.maskBits= AnimaRPG.HERO_BIT |AnimaRPG.HERO_SENSOR | AnimaRPG.ENEMY_BIT;
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
 
 
         shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
-        fdef.filter.categoryBits=AnimaRPG.NPC_BIT;
-        fdef.filter.maskBits=AnimaRPG.HERO_BIT;
+        fdef.filter.categoryBits=AnimaRPG.OBJECT_BIT;
+        fdef.filter.maskBits=AnimaRPG.HERO_BIT |AnimaRPG.HERO_SENSOR | AnimaRPG.ENEMY_BIT;
         fdef.shape=shape;
         body.createFixture(fdef).setUserData(this);;
 
-
-        fdef.filter.categoryBits = NPC_BIT;
-        fdef.filter.maskBits = HERO_BIT;
-        body.createFixture(fdef);
         Texture quelle=new Texture("FriendlyNPC/"+typ+".png");
         int breite=64;
         setRegion(new TextureRegion(quelle,0,0,breite,breite));

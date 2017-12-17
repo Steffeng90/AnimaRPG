@@ -33,8 +33,8 @@ public class Gebietswechsel {
         chain.createChain(worldVertices);
 
         //pshape.setAsBox((v2.x-v1.x)/ AnimaRPG.PPM, (v2.y/v1.y) / AnimaRPG.PPM);
-        fdef.filter.categoryBits = AnimaRPG.GEBIETSWECHSEL_BIT;
-        fdef.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.ENEMY_ARROW;
+        fdef.filter.categoryBits = AnimaRPG.OBJECT_BIT;
+        fdef.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.ARROW_BIT;
         fdef.shape = chain;
         body.createFixture(fdef).setUserData(this);
     }

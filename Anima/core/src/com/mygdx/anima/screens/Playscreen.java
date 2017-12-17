@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -34,8 +33,16 @@ import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderHealer;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.AngryBee;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Bat;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.Eyeball;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Ghost;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Plant;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Pumpkin;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Slime;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.Snake;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.WormBig;
+import com.mygdx.anima.sprites.character.enemies.ungeheuer.WormSmall;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
@@ -44,7 +51,6 @@ import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.sprites.character.items.ItemSprite;
-import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
 import com.mygdx.anima.tools.B2WorldCreator;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.GameData;
@@ -121,14 +127,14 @@ public class Playscreen implements Screen{
     public static Array<FriendlyNPC> activeNPC= new Array<FriendlyNPC>();
     public static Array<Bat> activeBat= new Array<Bat>();
     public static Array<Eyeball> activeEyeball= new Array<Eyeball>();
-    public static Array<Eyeball> activeGhost= new Array<Eyeball>();
-    public static Array<Eyeball> activePumpkin= new Array<Eyeball>();
-    public static Array<Eyeball> activePlant= new Array<Eyeball>();
-    public static Array<Eyeball> activeSlime= new Array<Eyeball>();
-    public static Array<Eyeball> activeAngryBee= new Array<Eyeball>();
-    public static Array<Eyeball> activeSnake= new Array<Eyeball>();
-    public static Array<Eyeball> activeWormSmall= new Array<Eyeball>();
-    public static Array<Eyeball> activeWormBig= new Array<Eyeball>();
+    public static Array<Ghost> activeGhost= new Array<Ghost>();
+    public static Array<Pumpkin> activePumpkin= new Array<Pumpkin>();
+    public static Array<Plant> activePlant= new Array<Plant>();
+    public static Array<Slime> activeSlime= new Array<Slime>();
+    public static Array<AngryBee> activeAngryBee= new Array<AngryBee>();
+    public static Array<Snake> activeSnake= new Array<Snake>();
+    public static Array<WormSmall> activeWormSmall= new Array<WormSmall>();
+    public static Array<WormBig> activeWormBig= new Array<WormBig>();
 
     public Playscreen(AnimaRPG game,GameData gameData){
         this.game = game;
@@ -252,12 +258,26 @@ public class Playscreen implements Screen{
             for (Raider raider : activeRaider) {
                 raider.draw(game.batch);
             }
-            for (Bat bat : activeBat) {
-                bat.draw(game.batch);
-            }
-        for (Eyeball eyeball : activeEyeball) {
-            eyeball.draw(game.batch);
-        }
+            int len = activeBat.size;
+            for (int i = len; --i >= 0;) {activeBat.get(i).draw(game.batch);}
+            len = activeEyeball.size;
+            for (int i = len; --i >= 0;) {activeEyeball.get(i).draw(game.batch);}
+            len = activeGhost.size;
+            for (int i = len; --i >= 0;) {activeGhost.get(i).draw(game.batch);}
+            len = activePumpkin.size;
+            for (int i = len; --i >= 0;) {activePumpkin.get(i).draw(game.batch);}
+            len = activeAngryBee.size;
+            for (int i = len; --i >= 0;) {activeAngryBee.get(i).draw(game.batch);}
+            len = activePlant.size;
+            for (int i = len; --i >= 0;) {activePlant.get(i).draw(game.batch);}
+            len = activeSlime.size;
+            for (int i = len; --i >= 0;) {activeSlime.get(i).draw(game.batch);}
+            len = activeSnake.size;
+            for (int i = len; --i >= 0;) {activeSnake.get(i).draw(game.batch);}
+            len = activeWormBig.size;
+            for (int i = len; --i >= 0;) {activeWormBig.get(i).draw(game.batch);}
+            len = activeWormSmall.size;
+            for (int i = len; --i >= 0;) {activeWormSmall.get(i).draw(game.batch);}
             for (FriendlyNPC npc : activeNPC) {
                 npc.draw(game.batch);
             }
@@ -307,7 +327,7 @@ public class Playscreen implements Screen{
                 case PAUSE:
                     if (isMapWechsel()){
                     // Die Karte wird gewechselt, dadurch aufruf am ende der If-Abfrage. vorher werden vorhandene Bodies gelöscht
-                    aktiveNPCsEntfernen();
+                    aktiveElementeEntfernen();
                     renderer.dispose();
                     //TODO destroy alle bodies in WOrld (google)
                     renderer = kartenManager.karteErstellen(game,mapID, gameViewPort);
@@ -455,7 +475,6 @@ public class Playscreen implements Screen{
             truhe.update(dt);
         }
         // ArrowPool durchlaufen
-
         len = activeArrows.size;
         for (int i = len; --i >= 0;) {
             Arrow arrow;
@@ -468,8 +487,7 @@ public class Playscreen implements Screen{
                 arrow.update(dt);
             }
         }
-        //Bat-pool
-
+        //Ungeheuer-Pools
         len = activeBat.size;
         for (int i = len; --i >= 0;) {
             Bat bat;
@@ -494,6 +512,110 @@ public class Playscreen implements Screen{
             else{
                 kartenManager.isEnemyinRangeUngeheuer(eyeball);
                 eyeball.update(spieler,dt);
+            }
+        }
+        len = activeGhost.size;
+        for (int i = len; --i >= 0;) {
+            Ghost ghost;
+            ghost = activeGhost.get(i);
+            if (ghost.destroyed == true) {
+                activeGhost.removeIndex(i);
+                NPCPool.getGhostPool().free(ghost);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(ghost);
+                ghost.update(spieler,dt);
+            }
+        }
+        len = activePumpkin.size;
+        for (int i = len; --i >= 0;) {
+            Pumpkin pumpkin;
+            pumpkin = activePumpkin.get(i);
+            if (pumpkin.destroyed == true) {
+                activePumpkin.removeIndex(i);
+                NPCPool.getPumpkinPool().free(pumpkin);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(pumpkin);
+                pumpkin.update(spieler,dt);
+            }
+        }
+        len = activeSlime.size;
+        for (int i = len; --i >= 0;) {
+            Slime slime ;
+            slime = activeSlime.get(i);
+            if (slime.destroyed == true) {
+                activeSlime.removeIndex(i);
+                NPCPool.getSlimePool().free(slime);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(slime);
+                slime.update(spieler,dt);
+            }
+        }
+        len = activeAngryBee.size;
+        for (int i = len; --i >= 0;) {
+            AngryBee angryBee ;
+            angryBee = activeAngryBee.get(i);
+            if (angryBee.destroyed == true) {
+                activeAngryBee.removeIndex(i);
+                NPCPool.getAngryBeePool().free(angryBee);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(angryBee);
+                angryBee.update(spieler,dt);
+            }
+        }
+        len = activePlant.size;
+        for (int i = len; --i >= 0;) {
+            Plant plant;
+            plant = activePlant.get(i);
+            if (plant.destroyed == true) {
+                activePlant.removeIndex(i);
+                NPCPool.getPlantPool().free(plant);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(plant);
+                plant.update(spieler,dt);
+            }
+        }
+        len = activeSnake.size;
+        for (int i = len; --i >= 0;) {
+            Snake snake;
+            snake = activeSnake.get(i);
+            if (snake.destroyed == true) {
+                activeSnake.removeIndex(i);
+                NPCPool.getSnakePool().free(snake);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(snake);
+                snake.update(spieler,dt);
+            }
+        }
+        len = activeWormBig.size;
+        for (int i = len; --i >= 0;) {
+            WormBig wormBig;
+            wormBig = activeWormBig.get(i);
+            if (wormBig.destroyed == true) {
+                activeWormBig.removeIndex(i);
+                NPCPool.getWormBigPool().free(wormBig);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(wormBig);
+                wormBig.update(spieler,dt);
+            }
+        }
+        len = activeWormSmall.size;
+        for (int i = len; --i >= 0;) {
+            WormSmall wormSmall;
+            wormSmall = activeWormSmall.get(i);
+            if (wormSmall.destroyed == true) {
+                activeWormSmall.removeIndex(i);
+                NPCPool.getWormSmallPool().free(wormSmall);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(wormSmall);
+                wormSmall.update(spieler,dt);
             }
         }
         //Raider-pool
@@ -714,7 +836,7 @@ public class Playscreen implements Screen{
         this.activeDialog = activeDialog;
     }
 
-    public void aktiveNPCsEntfernen(){
+    public void aktiveElementeEntfernen(){
         int size= activeArrows.size;
         Arrow arrow;
         if(size>0){ for (int i = size; --i >= 0;) {
@@ -739,54 +861,7 @@ public class Playscreen implements Screen{
             truhenPool.free(truhe);
         }
         }
-        size= activeRaider.size;
-        Raider raider;
-        if(size>0){ for (int i = size; --i >= 0;) {
-            raider = activeRaider.get(i);
-            activeRaider.removeIndex(i);
-            NPCPool.getRaiderPool().free(raider);
-            }
-        }
-        size= activeBat.size;
-        Bat bat;
-        if(size>0){ for (int i = size; --i >= 0;) {
-            bat = activeBat.get(i);
-            activeBat.removeIndex(i);
-            NPCPool.getBatPool().free(bat);
-        }
-        }
-        size= activeNPC.size;
-        FriendlyNPC npc;
-        if(size>0){ for (int i = size; --i >= 0;) {
-            npc = activeNPC.get(i);
-            activeNPC.removeIndex(i);
-            NPCPool.getFriendlyNPCPool().free(npc);
-        }
-        }
-        size= activeRaiderArcher.size;
-        RaiderArcher raiderArcher;
-        if(size>0){ for (int i = size; --i >= 0;) {
-            raiderArcher = activeRaiderArcher.get(i);
-            activeRaiderArcher.removeIndex(i);
-            NPCPool.getRaiderArcherPool().free(raiderArcher);
-        }
-        }
-        size= activeRaiderHealer.size;
-        RaiderHealer raiderHealer;
-        if(size>0){ for (int i = size; --i >= 0;) {
-            raiderHealer = activeRaiderHealer.get(i);
-            activeRaiderHealer.removeIndex(i);
-            NPCPool.getRaiderHealerPool().free(raiderHealer);
-        }
-        }
-        size= activeRaiderBoss.size;
-        RaiderBoss raiderBoss;
-        if(size>0){ for (int i = size; --i >= 0;) {
-            raiderBoss = activeRaiderBoss.get(i);
-            activeRaiderBoss.removeIndex(i);
-            NPCPool.getRaiderBossPool().free(raiderBoss);
-        }
-        }
+
         Array<Body> bodyArray=new Array<Body>();
         world.getBodies(bodyArray);
         //world.clearForces();
@@ -796,5 +871,6 @@ public class Playscreen implements Screen{
             }}
             world.destroyBody(b);
         }
+        NPCPool.aktiveNPCsEntfernen(this);
 }
 }

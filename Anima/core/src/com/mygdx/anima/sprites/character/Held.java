@@ -28,7 +28,6 @@ import com.mygdx.anima.tools.SchadenBerechner;
 import java.io.Serializable;
 
 import static com.badlogic.gdx.Gdx.app;
-import static com.mygdx.anima.AnimaRPG.ENEMY_ARROW;
 import static com.mygdx.anima.AnimaRPG.setHeld;
 
 /**
@@ -219,14 +218,14 @@ public class Held extends HumanoideSprites implements Serializable{
         shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
-        fdef.filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK | AnimaRPG.NPC_BIT
-                | ENEMY_ARROW | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.EVENT_AREA_BIT;
+        fdef.filter.maskBits=AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
+                 | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
         // Oberkörpershape
         shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
-        fdef.filter.categoryBits=AnimaRPG.HERO_OBERKOERPER;
-        fdef.filter.maskBits=AnimaRPG.ENEMY_ATTACK | ENEMY_ARROW;
+        fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
+        fdef.filter.maskBits=AnimaRPG.ENEMY_ATTACK | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT ;
         fdef.isSensor=true;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -518,8 +517,8 @@ public class Held extends HumanoideSprites implements Serializable{
         for(Fixture fix:b2body.getFixtureList()){
             Filter filter=fix.getFilterData();
             filter.categoryBits=AnimaRPG.HERO_BIT;
-            filter.maskBits=AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK | AnimaRPG.NPC_BIT
-                    | ENEMY_ARROW | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.EVENT_AREA_BIT;
+            filter.maskBits=AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
+                  | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT;
             fix.setFilterData(filter);}
     }
     public void updateAlleWerte(){

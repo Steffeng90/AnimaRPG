@@ -64,7 +64,7 @@ public Nova(float zauberFixture) {
     circleShape.setPosition(new Vector2(0,0));
     fdefAttack = new FixtureDef();
     fdefAttack.filter.categoryBits = AnimaRPG.HERO_CAST_BIT;
-    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT;
+    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.UNGEHEUER_BIT;
     fdefAttack.shape = circleShape;
     fdefAttack.isSensor = true;
 

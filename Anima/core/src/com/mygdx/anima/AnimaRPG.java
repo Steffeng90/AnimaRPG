@@ -37,32 +37,27 @@ public class AnimaRPG extends Game {
 	// Man muss ein bisschen rumprobieren, weil sich manche Summen überschneiden.
 	// im World Contact Listener sind mal ^ | und & eingebaut.
 	// Aktueller Stand: 2^X und dann auch mit Negativem Vorzeichen
-	public static final short NOTHING_BIT=6619;
-	public static final short BARRIERE_BIT=6737;
-	public static final short HERO_BIT =6863;
-	public static final short ENEMY_BIT=6977;
-	public static final short HERO_WEAPON_BIT=7109;
-	public static final short NPC_BIT=7237;
-	public static final short OBJECT_BIT=2;
-	public static final short HERO_SENSOR=128;
+	public static final short NOTHING_BIT=0;
+	public static final short BARRIERE_BIT=1;
+	public static final short HERO_BIT =2;
+	public static final short ENEMY_BIT=4;
+	public static final short HERO_WEAPON_BIT=8;
+	public static final short ARROW_BIT =16;
+	public static final short OBJECT_BIT=32;
+	public static final short HERO_SENSOR=64;
+	public static final short HERO_CAST_BIT=128;
 	public static final short ENEMY_SENSOR=256;
 	public static final short ENEMY_ATTACK=512;
-	public static final short ENEMY_ARROW =1024;
-	public static final short HERO_ARROW =2048;
-	public static final short HERO_CAST_BIT=4096;
-	public static final short ITEM_SPRITE_BIT=8192;
-	public static final short GEBIETSWECHSEL_BIT=109;
-	public static final short ENEMY_HEAL_SENSOR=191;
-	public static final short ENEMY_CAST_HEAL=269;
-	public static final short ENEMY_SEARCH_HEALER=353;
-	public static final short ENEMY_OBERKOERPER=617;
-	public static final short HERO_OBERKOERPER=709;
-	public static final short EVENT_AREA_BIT=1201;
 
-	public static final short UNGEHEUER_BIT=811;
-	public static final short FLYING_UNGEHEUER_BIT=16;
-	public static final short UNGEHEUER_SENSOR_BIT=1009;
-	public static final short UNGEHEUER_ATTACK_BIT=1093;
+	public static final short UNGEHEUER_BIT=1024;
+	public static final short UNGEHEUER_SENSOR_BIT=2048;
+	public static final short UNGEHEUER_ATTACK_BIT=4096;
+
+	public static final short ENEMY_HEAL_SENSOR=8192;
+	public static final short ENEMY_CAST_HEAL=16384;
+	public static final short ENEMY_SEARCH_HEALER=17; //wird noch optimiert
+
+
 
 
 	public static SpriteBatch batch;

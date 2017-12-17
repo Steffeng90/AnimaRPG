@@ -128,7 +128,7 @@ public Blitz(HumanoideSprites.Richtung richtung,float zauberFixture) {
     }
     fdefAttack = new FixtureDef();
     fdefAttack.filter.categoryBits = AnimaRPG.HERO_CAST_BIT;
-    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.GEBIETSWECHSEL_BIT;
+    fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.UNGEHEUER_BIT;
 
     fdefAttack.shape = shape;
     fdefAttack.isSensor = true;

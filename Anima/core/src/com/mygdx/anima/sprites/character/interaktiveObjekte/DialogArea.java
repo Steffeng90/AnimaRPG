@@ -37,7 +37,7 @@ public class DialogArea {
         FixtureDef fdef = new FixtureDef();
         ChainShape chain = new ChainShape();
         chain.createChain(worldVertices);
-        fdef.filter.categoryBits = AnimaRPG.EVENT_AREA_BIT;
+        fdef.filter.categoryBits = AnimaRPG.OBJECT_BIT;
         fdef.filter.maskBits = AnimaRPG.HERO_BIT;
         fdef.shape = chain;
         fdef.isSensor=true;

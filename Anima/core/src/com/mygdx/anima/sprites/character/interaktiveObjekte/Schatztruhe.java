@@ -76,7 +76,7 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
         PolygonShape shape=new PolygonShape();
         shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(getWidth()/2, getHeight()/2),0);
         fdef.filter.categoryBits=AnimaRPG.OBJECT_BIT;
-        fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR | AnimaRPG.ENEMY_ARROW | AnimaRPG.ENEMY_ARROW;
+        fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR ;
         fdef.shape=shape;
 
         body.createFixture(fdef).setUserData(this);

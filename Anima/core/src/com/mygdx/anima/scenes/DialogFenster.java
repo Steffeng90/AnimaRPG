@@ -112,7 +112,7 @@ public class DialogFenster implements Disposable {
         }
 
         dialog.getContentTable().add(l1).size((infoWidth/2)-80f,infoHeight/4);
-        dialog.setSize(infoWidth/2f,infoHeight/3);
+        dialog.setSize(infoWidth/1.5f,infoHeight/3);
         dialog.setPosition(infoWidth/4,0);
         stage.addActor(dialog);
         stage.addListener(new InputListener() {

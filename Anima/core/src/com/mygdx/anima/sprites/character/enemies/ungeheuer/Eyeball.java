@@ -17,9 +17,7 @@ import com.mygdx.anima.sprites.character.enemies.EnemyUngeheuer;
 
 public class Eyeball extends EnemyUngeheuer
 {
-    float t=0;
-    double startingRadius = 150;
-    double rotations = 5;
+
     public Eyeball(){
         super();
     }
@@ -27,17 +25,16 @@ public class Eyeball extends EnemyUngeheuer
         // Am Ende des Init true übergeben (weil isFlying)
         super.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed,true);
         quelle=id;
-        //(is);
+
         velocity=new Vector2(0.2f,0.2f);
         //b2body.setActive(false);
         enemyInReichweite=false;
         vonFeedbackbetroffen=false;
-        framesWalk=3;
         breite=32;
         hoehe=38;
 
-        atlas = anima.getAssetManager().get("ungeheuer/ungeheuer.atlas");
-        animationenErstellen();
+        String walkQuelle = "eyeball";
+        animationenErstellen(walkQuelle);
         setRegion(standingDownSprite);
     }
     @Override
@@ -68,24 +65,6 @@ public class Eyeball extends EnemyUngeheuer
         else { setCurrentRichtung(0);}
     }
     public void walkingVelo(HumanoideSprites hero,Vector2 v2,float dt){
-        if((startingRadius * (1-t))>50)
-        {
-            t+= (dt / 16);
-            if (t > 1)
-                t = 1;
-
-            float xDist=this.getb2bodyX()-hero.getb2bodyX()*AnimaRPG.PPM;
-            float yDist=this.getb2bodyY()-hero.getb2bodyY()*AnimaRPG.PPM;
-            double startingRadius = Math.sqrt(Math.pow(xDist/2,2)+Math.pow(yDist/2,2));
-
-
-            double x = getArmX(startingRadius * (1-t), t * rotations * Math.PI * 2);
-            double y = getArmY(startingRadius * (1-t), t * rotations * Math.PI * 2);
-
-            velocity.x=(float)x/100;
-            velocity.y=(float)y/100;
-        }
-        else{
             v2.x=v2.x/10;
             v2.y=v2.y/10;
 
@@ -98,64 +77,7 @@ public class Eyeball extends EnemyUngeheuer
                 velocity.y=0;
             }else if((velocity.y>-(float)getGeschwindigkeitLaufen()/10 &&velocity.y<(float)getGeschwindigkeitLaufen()/10) || (velocity.y>=getGeschwindigkeitLaufen()/10 && v2.y<0) || (velocity.y<=-getGeschwindigkeitLaufen()/10 && v2.y>0))
                 velocity.y=v2.y;
-        }
-    }
-    public void animationenErstellen(){
-        TextureRegion walkQuelle=atlas.findRegion("eyeball");
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i*breite,0, breite, hoehe));
-        }
-        UpWalk = new Animation(0.15f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle,i *breite, 2*hoehe, breite, hoehe));
-        }
-        DownWalk = new Animation(0.15f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 1*hoehe, breite, hoehe));
-        }
-        LeftWalk = new Animation(0.15f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 3*hoehe, breite, hoehe));
-        }
-        RightWalk = new Animation(0.15f, frames);
 
-        // Melee
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i*breite,0, breite, hoehe));
-        }
-        UpMelee1 = new Animation(0.3f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 1*hoehe, breite, hoehe));
-        }
-        LeftMelee1 = new Animation(0.3f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle,i *breite, 2*hoehe, breite, hoehe));
-        }
-        DownMelee1 = new Animation(0.3f, frames);
-        frames.clear();
-        for (int i = 0; i < framesWalk; i++) {
-            frames.add(new TextureRegion(walkQuelle, i *breite, 3*hoehe, breite, hoehe));
-        }
-        RightMelee1 = new Animation(0.3f, frames);
-
-        frames.clear();
-        standingDownSprite = new TextureRegion(walkQuelle, 0, 2*hoehe, breite, hoehe);
-        standingUpSprite = new TextureRegion(walkQuelle, 0,0, breite, hoehe);
-        standingLeftSprite = new TextureRegion(walkQuelle, 0, 1*hoehe, breite, hoehe);
-        standingRightSprite = new TextureRegion(walkQuelle, 0, 3*hoehe, breite, hoehe);
-        setRegion(standingDownSprite);
-
-    }
-    public void reset(){
-        super.reset();
-        t=0;
     }
     public static double getArmX(double length, double angle) {
         return Math.cos(angle) * length;

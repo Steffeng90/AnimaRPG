@@ -966,7 +966,7 @@ public class HumanoideSprites extends SpriteVorlage{
         FixtureDef fdefSensor = new FixtureDef();
         if(this.istHeld) {
             fdefSensor.filter.categoryBits = AnimaRPG.HERO_SENSOR;
-            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT | AnimaRPG.NPC_BIT;
+            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT;
         }
         else {
             fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;
@@ -1007,9 +1007,9 @@ public class HumanoideSprites extends SpriteVorlage{
         circleShape.setPosition(richtungsVector);
         fdefAttack = new FixtureDef();
         if(istHeld){fdefAttack.filter.categoryBits = AnimaRPG.HERO_WEAPON_BIT;
-            fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.ENEMY_OBERKOERPER;}
-        else{       fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
-            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.HERO_OBERKOERPER;}
+            fdefAttack.filter.maskBits = AnimaRPG.ENEMY_BIT | AnimaRPG.UNGEHEUER_BIT;}
+        else{fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;
+            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT;}
         fdefAttack.shape = circleShape;
         fdefAttack.isSensor = true;
         runMeleeAnimation = true;
@@ -1039,7 +1039,7 @@ public class HumanoideSprites extends SpriteVorlage{
         FixtureDef fdefSensor = new FixtureDef();
         if(this.istHeld) {
             fdefSensor.filter.categoryBits = AnimaRPG.HERO_SENSOR;
-            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT | AnimaRPG.NPC_BIT;
+            fdefSensor.filter.maskBits = AnimaRPG.OBJECT_BIT;
         }
         else {
             fdefSensor.filter.categoryBits = AnimaRPG.ENEMY_SENSOR;

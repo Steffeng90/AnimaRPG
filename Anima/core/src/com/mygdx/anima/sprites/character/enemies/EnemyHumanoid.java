@@ -19,8 +19,7 @@ import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 import com.mygdx.anima.tools.SchadenBerechner;
 
-import static com.mygdx.anima.AnimaRPG.ENEMY_ARROW;
-import static com.mygdx.anima.AnimaRPG.HERO_ARROW;
+import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
@@ -70,14 +69,14 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
         shape.setRadius(7f/AnimaRPG.PPM);
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
-        fdef.filter.maskBits= AnimaRPG.GEBIETSWECHSEL_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
-        | AnimaRPG.HERO_ARROW | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_CAST_HEAL;
+        fdef.filter.maskBits=AnimaRPG.BARRIERE_BIT | AnimaRPG.HERO_BIT | AnimaRPG.HERO_WEAPON_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_CAST_BIT
+        | AnimaRPG.ARROW_BIT | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.ENEMY_CAST_HEAL;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
 
         shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
-        fdef.filter.categoryBits=AnimaRPG.ENEMY_OBERKOERPER;
-        fdef.filter.maskBits=AnimaRPG.HERO_WEAPON_BIT | HERO_ARROW;
+        fdef.filter.categoryBits=AnimaRPG.ENEMY_BIT;
+        fdef.filter.maskBits=AnimaRPG.HERO_WEAPON_BIT | ARROW_BIT | AnimaRPG.HERO_CAST_BIT;
         fdef.isSensor=true;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);;

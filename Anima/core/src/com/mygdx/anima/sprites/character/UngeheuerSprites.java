@@ -51,8 +51,8 @@ public class UngeheuerSprites extends SpriteVorlage{
     //BreiteEinstellungen, da man mit verschiedenen Waffen verschieden breit ist.
     public int breite;
     public int hoehe;
-    public float framesCast=7,framesStich=8,framesSchwert=6,framesWalk,framesDie=6,frameArcher=13;
-    public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
+    public float framesWalk=3;
+    public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed,animationSpeed;
     float regenerationTimer;
     //Konstruktor für Enemies
     public UngeheuerSprites(){
@@ -73,6 +73,7 @@ public class UngeheuerSprites extends SpriteVorlage{
         this.meleeSpeed=meleeSpeed;
         this.castSpeed=castSpeed;
         this.thrustSpeed=thrustSpeed;
+        this.animationSpeed=1/(float)speed;
 
         istHeld=false;
         currentState = State.STANDING;
@@ -263,7 +264,7 @@ public class UngeheuerSprites extends SpriteVorlage{
         FixtureDef fdefSensor = new FixtureDef();
 
             fdefSensor.filter.categoryBits = AnimaRPG.UNGEHEUER_SENSOR_BIT;
-            fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.HERO_OBERKOERPER;
+            fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT;
 
         fdefSensor.shape = sensorCircleShape;
         fdefSensor.isSensor = true;
@@ -293,7 +294,7 @@ public class UngeheuerSprites extends SpriteVorlage{
         circleShape.setPosition(richtungsVector);
         fdefAttack = new FixtureDef();
         fdefAttack.filter.categoryBits = AnimaRPG.UNGEHEUER_ATTACK_BIT;
-            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.HERO_OBERKOERPER;
+            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT;
         fdefAttack.shape = circleShape;
         fdefAttack.isSensor = true;
         runMeleeAnimation = true;
@@ -321,7 +322,7 @@ public class UngeheuerSprites extends SpriteVorlage{
         sensorCircleShape.setPosition(richtungsVector);
         FixtureDef fdefSensor = new FixtureDef();
         fdefSensor.filter.categoryBits = AnimaRPG.UNGEHEUER_SENSOR_BIT;
-        fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.HERO_OBERKOERPER;
+        fdefSensor.filter.maskBits = AnimaRPG.HERO_BIT ;
 
         fdefSensor.shape = sensorCircleShape;
         fdefSensor.isSensor = true;
