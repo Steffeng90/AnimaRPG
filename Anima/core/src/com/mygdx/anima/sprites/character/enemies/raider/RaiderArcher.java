@@ -21,8 +21,8 @@ public class RaiderArcher extends EnemyHumanoid
         super();
     }
     @Override
-    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack, int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
-        super.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack, int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed, int aktivierungsEvent){
+        super.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed,aktivierungsEvent);
         this.screen=screen;
     }
     @Override

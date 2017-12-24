@@ -1,5 +1,6 @@
 package com.mygdx.anima.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import static com.badlogic.gdx.Gdx.app;
 
@@ -18,11 +20,13 @@ import static com.badlogic.gdx.Gdx.app;
  */
 
 public class MyAssetManager extends AssetManager {
-    String quelleHeldAlt;
+    String quelleHeldAlt,lastDialogIcon;
     int quelleMapAlt;
     private TextureRegion schatztruheOpenBraun,schatztruheCloseBraun,schatztruheOpenGold,schatztruheCloseGold,
             schatztruheCloseBlau,schatztruheOpenBlau,
-            pfeilLinks,pfeilRechts,pfeilUp,pfeilDown;
+            pfeilLinks,pfeilRechts,pfeilUp,pfeilDown,
+            emptySpellIcon;
+
     Animation truheBraunAnimation,truheGoldAnimation,truheBlauAnimation;
     public Animation getTruheBraunAnimation() {
         return truheBraunAnimation;
@@ -52,8 +56,11 @@ public class MyAssetManager extends AssetManager {
     public TextureRegion getSchatztruheOpenBlau() {
         return schatztruheOpenBlau;
     }
+    public Skin mySkin;
 
     public MyAssetManager() {
+
+
         // AUDIOS
         load("audio/music/little town - orchestral.ogg", Music.class);
         load("audio/sounds/anziehen.wav", Sound.class);
@@ -157,7 +164,15 @@ public class MyAssetManager extends AssetManager {
             }
             return get(id.substring(0,id.length()-2)+".pack",TextureAtlas.class);
         }
-
+        public TextureRegion loadDialogIcon(String typ){
+            lastDialogIcon=typ;
+            load("NPC/"+typ+".png",Texture.class);
+            finishLoadingAsset("NPC/"+typ+".png");
+            return new TextureRegion(get("NPC/"+typ+".png",Texture.class), 20, 136, 24, 32);
+        }
+        public void unloadDialogIcon(){
+            unload("NPC/"+lastDialogIcon+".png");
+        }
     public TextureRegion getPfeilLinks() {
         return pfeilLinks;
     }
@@ -170,5 +185,21 @@ public class MyAssetManager extends AssetManager {
     public TextureRegion getPfeilDown() {
         return pfeilDown;
     }
+
+    public TextureRegion loadEmptySpellIcon() {
+            if(emptySpellIcon==null){
+             emptySpellIcon=new TextureRegion(get("objekte/icons_for_rpg.png",Texture.class),374,612,34,34);
+            }
+            return emptySpellIcon;
+    }
+    public Skin getSkin(){
+            if(mySkin==null){
+                load("ui-skin/uiskin.json",Skin.class);
+                finishLoadingAsset("ui-skin/uiskin.json");
+                mySkin=get("ui-skin/uiskin.json");
+            }
+        return mySkin;
+    }
+
 }
 

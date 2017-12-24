@@ -61,7 +61,8 @@ public class AnimaRPG extends Game {
 
 
 	public static SpriteBatch batch;
-	public static Screen currentScreen, previousScreen, currentPlayScreen,loadingScreen;
+	public static Screen currentScreen, previousScreen,loadingScreen;
+	public Playscreen currentPlayScreen;
 	private static Held held;
 	private MyAssetManager assetManager;
 
@@ -89,6 +90,7 @@ public class AnimaRPG extends Game {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		getAssetManager().dispose();
 		super.dispose();
 	}
 

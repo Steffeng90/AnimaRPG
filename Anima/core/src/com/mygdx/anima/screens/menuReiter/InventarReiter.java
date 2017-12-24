@@ -36,17 +36,20 @@ public class InventarReiter extends Group {
     private float width, height,invLinksWidth,invRechtsWidth,reiterWidth;
     public Item auswahlItem;
     public Menu menu;
+    private float zeilenhoehe;
     int size;
 
     public InventarReiter(Menu menu){
         this.menu=menu;
         this.width=menu.getWidth();
         this.height=menu.getHeight();
+        menu.invReiter=this;
         auswahlItem = null;
         scrollbarposition=0f;
         reiterWidth=width*2/10;
         invLinksWidth=width*3/10;
         invRechtsWidth=width*5/10;
+        zeilenhoehe=height/100f;
         auswahlAnzeige();
         this.addActor(inventarLinks);
         pane = zeigeItems();
@@ -196,43 +199,49 @@ public class InventarReiter extends Group {
             }
             inventarLinks.add(aktWaffe).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(new Label(nameAngelegt, menu.getSkin())).size(invLinksWidth, height / 12f).colspan(2);
+            inventarLinks.add(new Label(nameAngelegt, menu.getSkin())).size(invLinksWidth, zeilenhoehe*10).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(new Label(eigenschaft1, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
-            inventarLinks.add(new Label(wert1angelegt, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.add(new Label(eigenschaft1, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(new Label(wert1angelegt, menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*5);
             inventarLinks.row();
-            inventarLinks.add(new Label(eigenschaft2, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
-            inventarLinks.add(new Label(wert2angelegt, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.add(new Label(eigenschaft2, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(new Label(wert2angelegt, menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*5);
             inventarLinks.row();
-            inventarLinks.add(new Label(eigenschaft3, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
-            inventarLinks.add(new Label(wert3angelegt, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.add(new Label(eigenschaft3, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(new Label(wert3angelegt, menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*5);
+
+            inventarLinks.row();inventarLinks.add(new Label("", menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*5);
             inventarLinks.row();
+
             inventarLinks.add(ausgwWaffe).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(new Label(name, menu.getSkin())).size(invLinksWidth, height / 12f).colspan(2);
+            inventarLinks.add(new Label(name, menu.getSkin())).size(invLinksWidth, zeilenhoehe*10).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(new Label(eigenschaft1, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
-            inventarLinks.add(new Label(wert1auswahl,menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.add(new Label(eigenschaft1, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(new Label(wert1auswahl,menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*5);
             inventarLinks.row();
-            inventarLinks.add(new Label(eigenschaft2, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
-            inventarLinks.add(new Label(wert2auswahl, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.add(new Label(eigenschaft2, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(new Label(wert2auswahl, menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*5);
             inventarLinks.row();
-            inventarLinks.add(new Label(eigenschaft3, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
-            inventarLinks.add(new Label(wert3auswahl, menu.getSkin())).size(invLinksWidth*1/4, height / 12f);
+            inventarLinks.add(new Label(eigenschaft3, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(new Label(wert3auswahl, menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*5);
+
+            inventarLinks.row();inventarLinks.add(new Label("", menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*6.5f);
             inventarLinks.row();
+
             if(auswahlItem.isAngelegt()) {
                 angelegtButton = new TextButton("Ablegen", menu.getSkin());
                 angelegtButton.addListener(new anlegeButtonListener(menu.game, auswahlItem, this));
-                inventarLinks.add(angelegtButton).size(invLinksWidth, height / 6f).colspan(2);
+                inventarLinks.add(angelegtButton).size(invLinksWidth, zeilenhoehe*20f).colspan(2);
             }
             else{
                 angelegtButton = new TextButton("Anlegen", menu.getSkin());
                 angelegtButton.addListener(new anlegeButtonListener(menu.game, auswahlItem, this));
-                inventarLinks.add(angelegtButton).size(invLinksWidth, height / 6f).colspan(2);
+                inventarLinks.add(angelegtButton).size(invLinksWidth, zeilenhoehe*20f).colspan(2);
             }
 
             inventarLinks.row();
-            inventarLinks.add(new TextButton("Wegwerfen", menu.getSkin())).size(invLinksWidth, height / 6f).colspan(2);
+            inventarLinks.add(new TextButton("Wegwerfen", menu.getSkin())).size(invLinksWidth, height / 12f).colspan(2);
             inventarLinks.row();
 
         }

@@ -30,12 +30,13 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
     BodyDef bdef;
     public Body body;
     public TextureRegion standingDownSprite, standingUpSprite,
-            standingLeftSprite, standingRightSprite,profilBild;
-    public String dialogID;
+            standingLeftSprite, standingRightSprite;
+    public String dialogID,typ;
     public FriendlyNPC() {}
     public void init(Playscreen screen, Rectangle rect, String typ,String dialogID){
         this.screen=screen;
         world=screen.getWorld();
+        this.typ=typ;
         setPosition(rect.getX(),rect.getY());
         this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
         bdef= new BodyDef();
@@ -58,7 +59,7 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
         fdef.shape=shape;
         body.createFixture(fdef).setUserData(this);;
 
-        Texture quelle=new Texture("FriendlyNPC/"+typ+".png");
+        Texture quelle=new Texture("NPC/"+typ+".png");
         int breite=64;
         setRegion(new TextureRegion(quelle,0,0,breite,breite));
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -67,7 +68,6 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
         standingLeftSprite = new TextureRegion(quelle, 0, 64, breite, breite);
         standingRightSprite = new TextureRegion(quelle, 0, 192, breite, breite);
         setRegion(standingDownSprite);
-        profilBild= new TextureRegion(standingDownSprite,20,8,24,32 );
         this.dialogID=dialogID;
     }
     @Override
@@ -112,15 +112,13 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
             case 1: setRegion(standingRightSprite);break;
             case 2: setRegion(standingUpSprite);break;
             case 3: setRegion(standingDownSprite);break;
-
         }
 
     }
-    public TextureRegion getProfilbild(){
-        return profilBild;
-    }
     public void talktTo(){
-        DialogGenerator.generateDialog(screen, screen.getGame().batch, dialogID,profilBild);
-
+        DialogGenerator.generateDialog(screen, screen.getGame().batch, dialogID);
+    }
+    public TextureRegion getProfilbild(){
+        return getHeld().screen.getGame().getAssetManager().loadDialogIcon(typ);
     }
 }

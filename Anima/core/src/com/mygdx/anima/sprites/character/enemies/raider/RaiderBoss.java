@@ -11,6 +11,8 @@ import com.mygdx.anima.sprites.character.HumanoideSprites;
 import com.mygdx.anima.sprites.character.enemies.EnemyHumanoid;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
 
+import static com.mygdx.anima.AnimaRPG.getHeld;
+
 /**
  * Created by Steffen on 13.11.2016.
  */
@@ -21,12 +23,13 @@ public class RaiderBoss extends EnemyHumanoid
     float healSensorTimer=0;
     boolean healSensorActive;
     Fixture healSensorFixture;
+    int nachbed;
     public RaiderBoss(){
         super();
     }
-    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
-        super.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
-
+    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed,int aktivierungsEvent,int nachbed){
+        super.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed, aktivierungsEvent);
+        this.nachbed=nachbed;
     }
     @Override
     public void update(Held hero,float dt) {
@@ -89,6 +92,13 @@ public class RaiderBoss extends EnemyHumanoid
         super.getsHealed(z);
         healer=null;
     }
+
+    @Override
+    public void destroyBody() {
+        super.destroyBody();
+        getHeld().getEventList()[nachbed]=true;
+    }
+
     public void createHealerSensor() {
         if(!dead){
         CircleShape circleShape = new CircleShape();

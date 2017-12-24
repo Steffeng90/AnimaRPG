@@ -40,13 +40,14 @@ public class Controller {
     OrthographicCamera cam;
     private Touchpad touchpad;
     public int buttonSize;
-    Skin skin=new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+    Skin skin;
     SpriteDrawable background,background_aktiv;
 
 
     public Controller(final AnimaRPG game){
         cam=new OrthographicCamera();
         this.game=game;
+        skin=game.getAssetManager().getSkin();
         viewport=new FitViewport(AnimaRPG.W_WIDTH,AnimaRPG.W_Height,cam);
         stage=new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
@@ -240,6 +241,7 @@ public class Controller {
             tableRechts=rechteTabelleZeichnen();
             stage.addActor((tableRechts));
         }
+
     }
     //talkButton ist ausgelagert, weil sich Icon während dem game ständig verändern kann.
     public void updateTalkButton(){

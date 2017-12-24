@@ -33,16 +33,17 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
             enemyInReichweite,vonFeedbackbetroffen,
     // enemyNear, wird true, wenn Held den ENEMY_HEAL_SENSOR betritt
             enemyNear;
-    public int erfahrung;
+    public int erfahrung, aktivierungsEvent;
     public String quelle;
     public EnemyHumanoid()
     {
     super();
     }
-    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed){
+    public void init(Playscreen screen,float x, float y,String id,int maxhp,int maxmana,int regMana,int ep,int speed,int schadenNah,int schadenfern,int schadenzauber,int schadenbigAttack,int ruestung,float boundsX,float boundsY,float castSpeed,float bowSpeed,float meleeSpeed,float thrustSpeed, int aktivierungsEvent){
         super.init(screen.getGame(),screen,maxhp,maxmana,regMana,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
         setPosition(x,y);
         setErfahrung(ep);
+        this.aktivierungsEvent=aktivierungsEvent;
         quelle=id;
         create();
         velocity=new Vector2(0.2f,0.2f);

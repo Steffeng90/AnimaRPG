@@ -29,10 +29,11 @@ public class StartScreen implements Screen {
     Stage stage;
     Label titel;
     Button newGameButton, continueButton,creditsButton;
-    private final Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+    private Skin skin;
     private float width, height,reiterWidth;
     public StartScreen(final AnimaRPG game) {
         this.game = game;
+        skin = game.getAssetManager().getSkin();
         Image img=new Image(new Texture(Gdx.files.internal("objekte/startbildschirm.png")));
         img.setFillParent(true);
         width = game.W_WIDTH * 2;
@@ -92,6 +93,8 @@ public class StartScreen implements Screen {
     @Override public void hide() {    }
     @Override public void dispose() {
         //TODO richtiges Dispose einbauen
+        stage.dispose();
+        this.dispose();
     }
     @Override public void show() {    }
     }

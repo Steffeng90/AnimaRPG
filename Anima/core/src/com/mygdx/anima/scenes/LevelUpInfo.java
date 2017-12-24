@@ -47,7 +47,7 @@ public class LevelUpInfo implements Disposable {
         viewport = new FitViewport(infoWidth,infoHeight, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Gdx.input.setInputProcessor(stage);
-        skin=new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+        skin=screen.getGame().getAssetManager().getSkin();
 
         geklickt=false;
 

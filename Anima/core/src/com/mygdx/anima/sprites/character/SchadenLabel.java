@@ -58,4 +58,9 @@ public class SchadenLabel extends BitmapFont implements Pool.Poolable {
         position.y+=0.01f;
         super.draw(batch, schaden,position.x,position.y);
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
 }

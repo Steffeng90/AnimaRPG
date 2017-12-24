@@ -25,7 +25,17 @@ public class zauberslotButtonListener extends InputListener {
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        getHeld().getZauberList().setZauberslot(slotNummer,zauber);
+        if(getHeld().getZauberList().getZauberslot(slotNummer)!=null) {
+            if (getHeld().getZauberList().getZauberslot(slotNummer).equals(zauber)) {
+                getHeld().getZauberList().setZauberslot(slotNummer, null);
+            } else {
+                getHeld().getZauberList().setZauberslot(slotNummer, zauber);
+            }
+        }
+            else{
+                getHeld().getZauberList().setZauberslot(slotNummer,zauber);
+            }
+
         reiter.inventarRechts.clear();
         reiter.inventarLinks.clear();
         reiter.zeigeZauber();

@@ -43,7 +43,7 @@ public class ItemFundInfo implements Disposable {
         viewport = new FitViewport(infoWidth, infoHeight, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+        skin = screen.getGame().getAssetManager().getSkin();
 
         windowTimer = 0;
         geklickt = false;
@@ -89,7 +89,7 @@ public class ItemFundInfo implements Disposable {
     @Override
     public void dispose()
     {   stage.clear();
-        stage.dispose();;
+        stage.dispose();
     }
 
     public void resize(int width,int height){

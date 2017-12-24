@@ -39,12 +39,12 @@ public class HauptmenuListener extends InputListener {
             }
         };
         Label label=new Label("Zurueck zum Hauptmenue?",skin);
-        TextButton accept=new TextButton("Ja",skin);
         TextButton decline=new TextButton("Abbrechen",skin);
+        TextButton accept=new TextButton("       Ja       ",skin);
+        accept.setSize(decline.getWidth(),decline.getHeight());
         accept.addListener(new HauptmenuAbfrageListener(dialog,skin,game,1));
         decline.addListener(new HauptmenuAbfrageListener(dialog,skin,game,2));
 
-        //menu.stage.addActor(dialog);
         Table table=new Table();
         table.add(label).colspan(2);
         table.row();

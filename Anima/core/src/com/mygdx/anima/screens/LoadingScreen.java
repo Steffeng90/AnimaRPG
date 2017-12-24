@@ -20,15 +20,15 @@ import com.mygdx.anima.AnimaRPG;
         private Viewport viewport;
         private Stage stage;
         Label playAgainLabel;
-
+        BitmapFont bf;
         private AnimaRPG game;
         public LoadingScreen(AnimaRPG game)
         {
             this.game=game;
             this.viewport=new FitViewport(AnimaRPG.W_WIDTH,AnimaRPG.W_Height,new OrthographicCamera());
             stage =new Stage(viewport,((AnimaRPG) game).batch);
-
-            Label.LabelStyle font=new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+            bf =new BitmapFont();
+            Label.LabelStyle font=new Label.LabelStyle(bf, Color.WHITE);
             Table table=new Table();
             table.center();
             table.setFillParent(true);
@@ -72,6 +72,7 @@ import com.mygdx.anima.AnimaRPG;
         @Override
         public void dispose() {
             stage.dispose();
+            bf.dispose();
         }
     }
 

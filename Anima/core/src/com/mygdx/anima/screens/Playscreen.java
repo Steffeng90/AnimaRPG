@@ -47,6 +47,7 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.items.ZauberFundSprite;
+import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
@@ -136,6 +137,7 @@ public class Playscreen implements Screen{
     public static Array<WormSmall> activeWormSmall= new Array<WormSmall>();
     public static Array<WormBig> activeWormBig= new Array<WormBig>();
 
+    //restart nach GameOverScreen
     public Playscreen(AnimaRPG game,GameData gameData){
         this.game = game;
         game.currentPlayScreen=this;
@@ -157,10 +159,13 @@ public class Playscreen implements Screen{
         anzeige = new AnzeigenDisplay(game.batch, spieler);
         creator = new B2WorldCreator(this);
 
+        //Test-Events anpassen:
+        spieler.getEventList()[7]=true;
+
         //TestZauber erzeugen
-        //ZauberGenerator.generateZauber("staerkung1");
-        //ZauberGenerator.generateZauber("schaden2");
-        //ZauberGenerator.generateZauber("schaden1");
+        ZauberGenerator.generateZauber(this,0,0,"staerkung1");
+        ZauberGenerator.generateZauber(this,0,0,"schaden2");
+        ZauberGenerator.generateZauber(this,0,0,"schaden1");
         ItemGenerator.generateItem(this,0,0,"Schwert1");
         ItemGenerator.generateItem(this,0,0,"Schwert3");
         ItemGenerator.generateItem(this,0,0,"Schwert6");
@@ -235,6 +240,7 @@ public class Playscreen implements Screen{
                     update(delta);
                     break;
                 case PAUSE:
+                    spieler.walkingSound.stop();
                     break;
             }
             Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -392,7 +398,7 @@ public class Playscreen implements Screen{
                         activeDialog.update(delta);
                         if (activeDialog.isGeklickt()) {
                             if ((Integer.parseInt(activeDialog.getNachfolger())) != 0) {
-                                DialogGenerator.generateDialog(this, game.batch, activeDialog.getNachfolger(), null);
+                                DialogGenerator.generateDialog(this, game.batch, activeDialog.getNachfolger());
                             } else {
                                 activeDialog.dispose();
                                 activeDialog = null;
@@ -713,6 +719,15 @@ public class Playscreen implements Screen{
     public void hide() {    }
     @Override
     public void dispose() {
+        int size= activeSchadenlabel.size;
+        SchadenLabel schadenLabel;
+        if(size>0) {
+            for (int i = size; --i >= 0; ) {
+                schadenLabel = activeSchadenlabel.get(i);
+                schadenLabel.dispose();
+            }
+        }
+        schadenlabelPool.clear();
         world.dispose();
         renderer.dispose();
         kartenManager.getMap().dispose();
@@ -721,7 +736,8 @@ public class Playscreen implements Screen{
         anzeige.dispose();
         b2dr.dispose();
         controller.dispose();
-        // this.dispose();
+        bf.dispose();
+        //this.dispose();
     }
     //Getter und Setter, selbstgeschrieben
     public World getWorld(){ return world;}

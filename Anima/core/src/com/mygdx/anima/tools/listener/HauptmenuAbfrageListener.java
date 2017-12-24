@@ -35,11 +35,6 @@ public class HauptmenuAbfrageListener extends InputListener {
                 break;
             case 2: dialog.hide(); break;
         }
-
-
-
-        //menu.stage.addActor(dialog);
-
         return true;
     }
 }

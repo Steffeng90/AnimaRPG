@@ -22,6 +22,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
+import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
+import com.mygdx.anima.screens.menuReiter.InventarReiter;
+import com.mygdx.anima.screens.menuReiter.ZauberReiter;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.listener.HauptmenuListener;
 import com.mygdx.anima.tools.listener.ReiterButtonListener;
@@ -40,8 +43,11 @@ public class Menu implements Screen {
     public Stage stage;
     Group anzeigeGroup;
     private boolean changeReiter;
-    private final Skin skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
+    private Skin skin;
     private float width, height,reiterWidth;
+    public GegenstandReiter ggstReiter;
+    public InventarReiter invReiter;
+    public ZauberReiter zauberReiter;
 
     public int getAktiverReiter() {
         return aktiverReiter;
@@ -60,11 +66,13 @@ public class Menu implements Screen {
     private int aktiverReiter;
     public Menu(final AnimaRPG game) {
         this.game = game;
+        skin =game.getAssetManager().getSkin();
         width = game.W_WIDTH * 2;
         height = game.W_Height * 2;
         reiterWidth=width*2/10;
         changeReiter=false;
         aktiverReiter=1;
+        negiereAuswahlAllerReiter();
 
         this.viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, game.batch);
@@ -108,9 +116,9 @@ public class Menu implements Screen {
         reiterTable.setPosition(0, height);
         //Button erzeugen
         TextButton charakterReiterButton= new TextButton("Charakter", skin);
-        TextButton skillReiterButton= new TextButton("ZauberFixture", skin);
+        TextButton skillReiterButton= new TextButton("Zauber", skin);
         TextButton inventarReiterButton= new TextButton("Ausruestung", skin);
-        TextButton nutzbareItemsReiterButton= new TextButton("Benutzbar", skin);
+        TextButton nutzbareItemsReiterButton= new TextButton("Verwendbares", skin);
         TextButton hautpmenueButton=new TextButton("Hauptmenue", skin);
 
         //Listener hinzufügen
@@ -130,7 +138,7 @@ public class Menu implements Screen {
             default: break;
         }
 
-        //Zur Zabelle hinzufügen
+        //Zur Tabelle hinzufügen
         reiterTable.add(charakterReiterButton).size(reiterWidth, height / 5f);
         reiterTable.row();
         reiterTable.add(skillReiterButton).size(reiterWidth, height / 5f);
@@ -151,12 +159,18 @@ public class Menu implements Screen {
     public void setAnzeigeGroup(Group anzeigeGroup) {this.anzeigeGroup = anzeigeGroup;}
     public boolean isChangeReiter() {return changeReiter;}
     public void setChangeReiter(boolean changeReiter) {this.changeReiter = changeReiter;}
+
+    public void negiereAuswahlAllerReiter(){
+        getHeld().getZauberList().resetAuswahl();
+        getHeld().getHeldenInventar().resetAuswahl();
+    }
     @Override public void resize(int width, int height) {viewport.update(width, height);}
     @Override public void pause() {    }
     @Override public void resume() {    }
     @Override public void hide() {    }
     @Override public void dispose() {
         //TODO richtiges Dispose einbauen
+        stage.dispose();
     }
     @Override public void show() {    }
     }

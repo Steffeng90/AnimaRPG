@@ -119,6 +119,7 @@ public class B2WorldCreator {
             // Erzeugen von Ein und Ausgängen
             allAusgang = new Array<Gebietswechsel>();
         for (MapObject object : map.getLayers().get("areaborder").getObjects().getByType(PolylineMapObject.class)) {
+            int vorbed=0,nachbedfalse=0,nachbedtrue=0;
             float[] vertices = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
 
             Vector2[] worldVertices = new Vector2[vertices.length / 2];
@@ -145,7 +146,7 @@ public class B2WorldCreator {
             }
             else{
                 String dialogID=object.getProperties().get("dialog").toString();
-                int vorbed=0,nachbedfalse=0,nachbedtrue=0;
+
                 if(object.getProperties().containsKey("vorbed")){
                     vorbed=Integer.parseInt(object.getProperties().get("vorbed").toString());
                 }
@@ -163,19 +164,45 @@ public class B2WorldCreator {
             // Erzeugen von Gegner
             if (map.getLayers().get("enemyHumanoid") != null) {
                 for (MapObject object : map.getLayers().get("enemyHumanoid").getObjects().getByType(RectangleMapObject.class)) {
+                    int vorbed=0,nachbedfalse=0,nachbedtrue=0;
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
                     if(object.getProperties().get("typ").toString().contains("npc")){
                         EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
                                 object.getProperties().get("dialog").toString());
                     }
-                    else{
-                        EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString());
+                    else if(object.getProperties().containsKey("vorbed") && object.getProperties().containsKey("nachbed") && object.getProperties().containsKey("aktivEvent")) {
+                        vorbed=Integer.parseInt(object.getProperties().get("vorbed").toString());
+                        if(getHeld().getEventList()[vorbed]==true){
+                            EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
+                        }}
+                    else if(object.getProperties().containsKey("vorbed") && object.getProperties().containsKey("nachbed")) {
+                        vorbed=Integer.parseInt(object.getProperties().get("vorbed").toString());
+                        if(getHeld().getEventList()[vorbed]==true){
+                            EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),0);
+                        }}
+                    else if(object.getProperties().containsKey("vorbed") && object.getProperties().containsKey("aktivEvent")) {
+                        vorbed=Integer.parseInt(object.getProperties().get("vorbed").toString());
+                        if(getHeld().getEventList()[vorbed]==true){
+                            EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
+                        }
+                    }
+                    else if(object.getProperties().containsKey("vorbed")) {
+                        vorbed=Integer.parseInt(object.getProperties().get("vorbed").toString());
+                        if(getHeld().getEventList()[vorbed]==true){
+                            EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,0);
+                        }
+                    }
+                    else {
+                        EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,0);
                     }
                 }
+
             }
             // Erzeugen von Schatztruhen
             if (map.getLayers().get("schatztruhen") != null) {
                 for (MapObject object : map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
+
                     int truhenId=(Integer) object.getProperties().get("id");
                     boolean isClosed=true;
                     if(getHeld()!=null){

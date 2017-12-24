@@ -196,7 +196,7 @@
    </properties>
    <polyline points="0,0 32,0"/>
   </object>
-  <object id="92" x="368" y="192">
+  <object id="92" x="374" y="190.5">
    <properties>
     <property name="dialog" value="6"/>
     <property name="vorbed" value="5"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="60" tilewidth="16" tileheight="16" nextobjectid="206">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="60" tilewidth="16" tileheight="16" nextobjectid="207">
  <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
   <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
@@ -122,6 +122,15 @@
     <property name="nextMap" value="9"/>
    </properties>
    <polyline points="0,0 144,0"/>
+  </object>
+  <object id="206" x="320" y="832">
+   <properties>
+    <property name="dialog" value="180001"/>
+    <property name="nachbedfalse" value="7"/>
+    <property name="nachbedtrue" value="8"/>
+    <property name="vorbed" value="7"/>
+   </properties>
+   <polyline points="0,0 175.833,0"/>
   </object>
  </objectgroup>
  <objectgroup name="startpunkt">

@@ -22,15 +22,15 @@ import com.mygdx.anima.tools.HandleGameData;
     public class GameOverScreen implements Screen {
         private Viewport viewport;
         private Stage stage;
-
+        BitmapFont bf;
         private AnimaRPG game;
         public GameOverScreen(AnimaRPG game)
         {
             this.game=game;
             this.viewport=new FitViewport(AnimaRPG.W_WIDTH,AnimaRPG.W_Height,new OrthographicCamera());
             stage =new Stage(viewport,((AnimaRPG) game).batch);
-
-            Label.LabelStyle font=new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+            bf= new BitmapFont();
+            Label.LabelStyle font=new Label.LabelStyle(bf, Color.WHITE);
             Table table=new Table();
             table.center();
             table.setFillParent(true);
@@ -86,6 +86,7 @@ import com.mygdx.anima.tools.HandleGameData;
         @Override
         public void dispose() {
             stage.dispose();
+            bf.dispose();
         }
     }
 

@@ -1,6 +1,7 @@
 package com.mygdx.anima.screens.menuReiter;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -34,12 +35,13 @@ public class ZauberReiter extends Group {
         this.menu=menu;
         this.width=menu.getWidth();
         this.height=menu.getHeight();
+        menu.zauberReiter=this;
         auswahlZauber = null;
         scrollbarposition=0f;
         reiterWidth=width*2/10;
         invLinksWidth=width*3/10;
         invRechtsWidth=width*5/10;
-        zeilenhoehe=height/20f;
+        zeilenhoehe=height/100f;
         auswahlAnzeige();
         this.addActor(inventarLinks);
         pane = zeigeZauber();
@@ -56,15 +58,35 @@ public class ZauberReiter extends Group {
         slotTable.setPosition(reiterWidth, height);
         slotTable.add(zauberslot).size(invLinksWidth/4,invLinksWidth/4).colspan(4).size(invLinksWidth, height/16);
         slotTable.row();
-        if(getHeld().getZauberList().getZauberslot(1)==null && getHeld().getZauberList().getZauberslot(2)==null && getHeld().getZauberList().getZauberslot(3)==null && getHeld().getZauberList().getZauberslot(4)==null)
-        {
-            slotTable.add(new Label("", menu.getSkin())).size(invLinksWidth/4,invLinksWidth/4).colspan(2); slotTable.row();
-        }else{
-        if(getHeld().getZauberList().getZauberslot(1)!=null){Image img1=new Image(getHeld().getZauberList().getZauberslot(1).getSlotGrafik());slotTable.add(img1).size(invLinksWidth/4,invLinksWidth/4);}
-        if(getHeld().getZauberList().getZauberslot(2)!=null){Image img2=new Image(getHeld().getZauberList().getZauberslot(2).getSlotGrafik());slotTable.add(img2).size(invLinksWidth/4,invLinksWidth/4);}
-        if(getHeld().getZauberList().getZauberslot(3)!=null){Image img3=new Image(getHeld().getZauberList().getZauberslot(3).getSlotGrafik());slotTable.add(img3).size(invLinksWidth/4,invLinksWidth/4);}
-        if(getHeld().getZauberList().getZauberslot(4)!=null){Image img4=new Image(getHeld().getZauberList().getZauberslot(4).getSlotGrafik());slotTable.add(img4).size(invLinksWidth/4,invLinksWidth/4);}
-        }
+            if (getHeld().getZauberList().getZauberslot(1) != null) {
+                Image img1 = new Image(getHeld().getZauberList().getZauberslot(1).getSlotGrafik());
+                slotTable.add(img1).size(invLinksWidth / 4, invLinksWidth / 4);
+            } else {
+                Image img1 = new Image(menu.game.getAssetManager().loadEmptySpellIcon());
+                slotTable.add(img1).size(invLinksWidth / 4, invLinksWidth / 4);
+            }
+            if (getHeld().getZauberList().getZauberslot(2) != null) {
+                Image img2 = new Image(getHeld().getZauberList().getZauberslot(2).getSlotGrafik());
+                slotTable.add(img2).size(invLinksWidth / 4, invLinksWidth / 4);
+            } else {
+                Image img2 = new Image(menu.game.getAssetManager().loadEmptySpellIcon());
+                slotTable.add(img2).size(invLinksWidth / 4, invLinksWidth / 4);
+            }
+            if (getHeld().getZauberList().getZauberslot(3) != null) {
+                Image img3 = new Image(getHeld().getZauberList().getZauberslot(3).getSlotGrafik());
+                slotTable.add(img3).size(invLinksWidth / 4, invLinksWidth / 4);
+            } else {
+                Image img1 = new Image(menu.game.getAssetManager().loadEmptySpellIcon());
+                slotTable.add(img1).size(invLinksWidth / 4, invLinksWidth / 4);
+            }
+            if (getHeld().getZauberList().getZauberslot(4) != null) {
+                Image img4 = new Image(getHeld().getZauberList().getZauberslot(4).getSlotGrafik());
+                slotTable.add(img4).size(invLinksWidth / 4, invLinksWidth / 4);
+            } else {
+                Image img1 = new Image(menu.game.getAssetManager().loadEmptySpellIcon());
+                slotTable.add(img1).size(invLinksWidth / 4, invLinksWidth / 4);
+            }
+
         inventarLinks.add(slotTable).colspan(2);
         inventarLinks.row();
 
@@ -87,56 +109,76 @@ public class ZauberReiter extends Group {
 
 
             //eigenschaft
-            inventarLinks.add(label1).colspan(2);
+            inventarLinks.add(label1).size(invLinksWidth,zeilenhoehe*10).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(label2).size(invLinksWidth,zeilenhoehe*5).colspan(2);
+            inventarLinks.add(label2).size(invLinksWidth,zeilenhoehe*25).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(fil12).size(invLinksWidth*1/4, zeilenhoehe);
-            inventarLinks.row();
-
-            inventarLinks.add(label3).size(invLinksWidth*3/4, zeilenhoehe);
-            inventarLinks.add(label3b).size(invLinksWidth*1/4, zeilenhoehe);
-            inventarLinks.row();
-            inventarLinks.add(label4).size(invLinksWidth*3/4, zeilenhoehe);
-            inventarLinks.add(label4b).size(invLinksWidth*1/4, zeilenhoehe);
-            inventarLinks.row();
-            inventarLinks.add(label5).size(invLinksWidth*3/4, zeilenhoehe);
-            inventarLinks.add(label5b).size(invLinksWidth*1/4, zeilenhoehe);
-            inventarLinks.row();
-            inventarLinks.add(label6).size(invLinksWidth*3/4, zeilenhoehe);
-            inventarLinks.add(label6b).size(invLinksWidth*1/4, zeilenhoehe);
-
-            inventarLinks.row();inventarLinks.add(fil13).size(invLinksWidth*1/4, zeilenhoehe);
+            inventarLinks.add(fil12).size(invLinksWidth*1/4, zeilenhoehe*2);
             inventarLinks.row();
 
+            inventarLinks.add(label3).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(label3b).size(invLinksWidth*1/4, zeilenhoehe*5);
+            inventarLinks.row();
+            inventarLinks.add(label4).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(label4b).size(invLinksWidth*1/4, zeilenhoehe*5);
+            inventarLinks.row();
+            inventarLinks.add(label5).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(label5b).size(invLinksWidth*1/4, zeilenhoehe*5);
+            inventarLinks.row();
+            inventarLinks.add(label6).size(invLinksWidth*3/4, zeilenhoehe*5);
+            inventarLinks.add(label6b).size(invLinksWidth*1/4, zeilenhoehe*5);
+
+            inventarLinks.row();inventarLinks.add(fil12).size(invLinksWidth*1/4, zeilenhoehe*3);
+            inventarLinks.row();
             // Table für Buttons erstellen.
             Table buttons=new Table();
-            zauberslot1Button = new TextButton("In Feld 1", menu.getSkin());
-            zauberslot2Button = new TextButton("In Feld 2", menu.getSkin());
-            zauberslot3Button = new TextButton("In Feld 3", menu.getSkin());
-            zauberslot4Button = new TextButton("In Feld 4", menu.getSkin());
+            if(auswahlZauber==getHeld().getZauberList().getZauberslot(1)){
+                zauberslot1Button = new TextButton("Aus Slot 1", menu.getSkin());
+            }
+            else{
+                zauberslot1Button = new TextButton("In Slot 1", menu.getSkin());
+            }
+            if(auswahlZauber==getHeld().getZauberList().getZauberslot(2)){
+                zauberslot2Button = new TextButton("Aus Slot 2", menu.getSkin());
+            }
+            else{
+                zauberslot2Button = new TextButton("In Slot 2", menu.getSkin());
+            }
+            if(auswahlZauber==getHeld().getZauberList().getZauberslot(3)){
+                zauberslot3Button = new TextButton("Aus Slot 3", menu.getSkin());
+            }
+            else{
+                zauberslot3Button = new TextButton("In Slot 3", menu.getSkin());
+            }
+            if(auswahlZauber==getHeld().getZauberList().getZauberslot(4)){
+                zauberslot4Button = new TextButton("Aus Slot 4", menu.getSkin());
+            }
+            else{
+                zauberslot4Button = new TextButton("In Slot 4", menu.getSkin());
+            }
                 zauberslot1Button.addListener(new zauberslotButtonListener(auswahlZauber,this,1));
                 zauberslot2Button.addListener(new zauberslotButtonListener(auswahlZauber,this,2));
                 zauberslot3Button.addListener(new zauberslotButtonListener(auswahlZauber,this,3));
                 zauberslot4Button.addListener(new zauberslotButtonListener(auswahlZauber,this,4));
-            buttons.add(zauberslot1Button).size(invLinksWidth/2, height / 12f);
-            buttons.add(zauberslot2Button).size(invLinksWidth/2, height / 12f);
+            buttons.add(zauberslot1Button).size(invLinksWidth/2, height/10 );
+            buttons.add(zauberslot2Button).size(invLinksWidth/2, height/10);
             buttons.row();
 
-            buttons.add(zauberslot3Button).size(invLinksWidth/2, height / 12f);
-            buttons.add(zauberslot4Button).size(invLinksWidth/2, height / 12f);
+            buttons.add(zauberslot3Button).size(invLinksWidth/2, height/10);
+            buttons.add(zauberslot4Button).size(invLinksWidth/2, height/10);
             buttons.row();
             inventarLinks.add(buttons).colspan(2);
 
         }
         this.addActor(inventarLinks);
     }
+
     public ScrollPane zeigeZauber() {
         inventarRechts = new Table();
         inventarRechts.setWidth(invRechtsWidth);
         inventarRechts.setPosition(invRechtsWidth, height);
         inventarRechts.align(Align.left | Align.top);
-        inventarRechts.add(new Label("ZauberFixture", menu.getSkin())).colspan(3);
+        inventarRechts.add(new Label("Erlernte Zauber", menu.getSkin())).colspan(3);
         inventarRechts.row();
 
         Array<ZauberEntity> liste = getHeld().getZauberList().getZauberList();

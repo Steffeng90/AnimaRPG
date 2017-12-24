@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" nextobjectid="108">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" nextobjectid="111">
  <tileset firstgid="1" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/town.png" width="512" height="512"/>
  </tileset>
@@ -116,10 +116,10 @@
  </layer>
  <objectgroup name="barrieren">
   <object id="71" x="224" y="432">
-   <polyline points="0,0 0,-32 -68.7273,-32.7273 -69.2727,-63.2727 -51.0909,-79.0909 -51.2727,-111.273 -108.909,-111.273 -112,-96 -112,-64 -135.667,-64 -136.667,-176.667 -112,-176 -98.6667,-167 -86.3333,-175 -98,-198 -96,-256 -128,-288 -135.333,-361 -66.6667,-361.667"/>
+   <polyline points="0,0 0,-32 -68.7273,-32.7273 -69.2727,-63.2727 -51.0909,-79.0909 -51.2727,-111.273 -108.909,-111.273 -112,-96 -112,-64 -135.667,-64 -136.667,-176.667 -112,-176 -98.6667,-167 -86.3333,-175 -98,-198 -96,-256 -128,-288 -135.333,-361 -63.9688,-358.188"/>
   </object>
   <object id="72" x="160" y="70.3333">
-   <polyline points="0,0 0,-6.33333 48,-6.33333 96,-6.33333 96,-6.33333 128,-6.33333 176,-6.33333 176.333,10.3333 130.667,12.6667 130,45 144,57.6667 160,73.6667 192,73.6667 197.667,132.667 213.333,139 208,201.667 176,201.667 176,249.667 132,249.667 131,295.333 144.667,296.667 144,329.667 96,329.667 96,361.667"/>
+   <polyline points="-1.03125,3.75 0,-6.33333 48,-6.33333 96,-6.33333 128,-6.33333 176,-6.33333 176.333,10.3333 130.667,12.6667 130,45 144,57.6667 160,73.6667 192,73.6667 197.667,132.667 213.333,139 208,201.667 176,201.667 176,249.667 132,249.667 131,295.333 144.667,296.667 144,329.667 96,329.667 96,361.667"/>
   </object>
   <object id="73" x="272" y="224" width="32" height="32">
    <ellipse/>
@@ -129,34 +129,45 @@
   </object>
  </objectgroup>
  <objectgroup name="enemyHumanoid">
-  <object id="98" x="272" y="80" width="16" height="16">
+  <object id="98" x="269.333" y="81.3333" width="16" height="16">
    <properties>
+    <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-2"/>
+    <property name="vorbed" value="8"/>
    </properties>
   </object>
   <object id="101" x="128" y="192" width="16" height="16">
    <properties>
+    <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-1"/>
+    <property name="vorbed" value="8"/>
    </properties>
   </object>
-  <object id="102" x="221.333" y="82.6667" width="16" height="16">
+  <object id="102" x="230" y="106" width="16" height="16">
    <properties>
+    <property name="aktivEvent" value="9"/>
+    <property name="nachbed" value="10"/>
     <property name="typ" value="raider-4"/>
+    <property name="vorbed" value="8"/>
    </properties>
   </object>
-  <object id="104" x="336" y="160" width="16" height="16">
+  <object id="104" x="330.667" y="161.333" width="16" height="16">
    <properties>
+    <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-1"/>
+    <property name="vorbed" value="8"/>
    </properties>
   </object>
-  <object id="107" x="176" y="80" width="16" height="16">
+  <object id="107" x="176" y="80.6667" width="16" height="16">
    <properties>
+    <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-2"/>
+    <property name="vorbed" value="8"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup name="startpunkt">
-  <object id="7" x="224" y="384" width="16" height="16">
+  <object id="7" x="230" y="384" width="16" height="16">
    <properties>
     <property name="start" value="haus6"/>
    </properties>
@@ -170,12 +181,12 @@
    </properties>
    <polyline points="0,0 32,0"/>
   </object>
-  <object id="66" x="128" y="240">
+  <object id="66" x="96.6667" y="287.666">
    <properties>
-    <property name="dialog" value="3"/>
-    <property name="nachbedfalse" value="2"/>
-    <property name="nachbedtrue" value="3"/>
-    <property name="vorbed" value="2"/>
+    <property name="dialog" value="19"/>
+    <property name="nachbedfalse" value="8"/>
+    <property name="nachbedtrue" value="9"/>
+    <property name="vorbed" value="8"/>
    </properties>
    <polyline points="0,0 239.333,0"/>
   </object>
@@ -199,7 +210,7 @@
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="77" x="240" y="48" width="16" height="16">
+  <object id="77" x="288" y="48" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>

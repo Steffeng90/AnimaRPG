@@ -14,6 +14,7 @@ import com.mygdx.anima.screens.Playscreen;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import static com.badlogic.gdx.Gdx.app;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
 /**
@@ -21,9 +22,9 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
  */
 
 public class DialogGenerator {
-    private static String id="",sprecher,inhalt,nachfolger;
+    private static String id="",sprecher,inhalt,nachfolger,icon;
     private static Vector2 vector;
-    public static void generateDialog(Playscreen screen, SpriteBatch sb, String id, TextureRegion profileImage) {
+    public static void generateDialog(Playscreen screen, SpriteBatch sb, String id) {
         Gson gson = new Gson();
         try {
             FileHandle file = Gdx.files.internal("dialog.json");
@@ -39,8 +40,14 @@ public class DialogGenerator {
                     nachfolger = item.get("nachfolger").getAsString();
                     sprecher = item.get("sprecher").getAsString();
                     inhalt = item.get("inhalt").getAsString();
+                    try{
+                        icon = item.get("icon").getAsString();
+                    }
+                    catch(NullPointerException npe){
+                        app.log("ICON","Icon kann nicht geladen werden");
+                        }
 
-                screen.setActiveDialog(new DialogFenster(screen,sb,nachfolger,sprecher,inhalt,profileImage));
+                screen.setActiveDialog(new DialogFenster(screen,sb,nachfolger,sprecher,inhalt,icon));
                 }
             }
         }

@@ -59,7 +59,7 @@ public class Held extends HumanoideSprites implements Serializable{
 
     private int schadenNah,schadenFern,schadenZauber,ruestung,zauberwiderstand,staerke,gesamtZauberwiderstand,gesamtZauberkraft,gesamtManaReg,gesamtLPReg,
     gesamtLaufgeschwindigkeit,geschick,zauberkraft,currentErfahrung,currentLevel,nextLevelUp,basicLaufgeschw,basicAngrGeschw;
-    Sound walkingSound;
+    public Sound walkingSound;
     Boolean soundLoopAktiv;
 
     // Erstmaliges Erstellen mit Konstruktor
@@ -79,7 +79,6 @@ public class Held extends HumanoideSprites implements Serializable{
         // Gameplay-Variablen
         setErfahrungsstufen();
         soundLoopAktiv=false;
-        //walkingSound=AnimaRPG.assetManager.get("audio/sounds/walk.ogg", Sound.class);
         walkingSound=anima.getAssetManager().get("audio/sounds/laufen.mp3", Sound.class);
 
         setMaxHitpoints(100);
@@ -717,6 +716,4 @@ public class Held extends HumanoideSprites implements Serializable{
         }
         eventList[1]=true;
     }
-
-
 }

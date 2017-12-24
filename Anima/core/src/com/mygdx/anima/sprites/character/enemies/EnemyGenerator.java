@@ -41,7 +41,7 @@ public class EnemyGenerator {
     private static float castSpeed,bowSpeed,meleeSpeed,thrustSpeed,boundsX,boundsY;
     //  private static kategorie itemKategorie=waffe;
     private static JsonArray itemArray;
-    public static void generateEnemy(Playscreen screen, float x, float y, String typ) {
+    public static void generateEnemy(Playscreen screen, float x, float y, String typ, int nachbed,int aktivierungsEvent) {
         Gson gson = new Gson();
 
         try {
@@ -81,19 +81,19 @@ public class EnemyGenerator {
             default:
             case 1:
                 Raider raider=NPCPool.getRaiderPool().obtain();
-                raider.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                raider.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed,aktivierungsEvent);
                 Playscreen.activeRaider.add(raider);break;
             case 2:
                 RaiderArcher raiderArcher=NPCPool.getRaiderArcherPool().obtain();
-                raiderArcher.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                raiderArcher.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed, aktivierungsEvent);
                 Playscreen.activeRaiderArcher.add(raiderArcher);break;
             case 3:
                 RaiderHealer raiderHealer=NPCPool.getRaiderHealerPool().obtain();
-                raiderHealer.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                raiderHealer.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed, aktivierungsEvent);
                 Playscreen.activeRaiderHealer.add(raiderHealer);break;
             case 4:
                 RaiderBoss raiderBoss=NPCPool.getRaiderBossPool().obtain();
-                raiderBoss.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                raiderBoss.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,schadenbigAttack,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed,aktivierungsEvent, nachbed);
                 Playscreen.activeRaiderBoss.add(raiderBoss);break;
             case 101:
                 Bat bat=NPCPool.getBatPool().obtain();

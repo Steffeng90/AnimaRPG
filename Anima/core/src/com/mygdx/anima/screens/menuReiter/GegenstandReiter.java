@@ -29,6 +29,7 @@ public class GegenstandReiter extends Group {
     private float width, height,invLinksWidth,invRechtsWidth,reiterWidth;
     public Benutzbar auswahlItem;
     public Menu menu;
+    public float zeilenhoehe;
     private String eigenschaft, aktuell="",verbesserung=" ";
 
     public GegenstandReiter(Menu menu){
@@ -36,10 +37,12 @@ public class GegenstandReiter extends Group {
         this.width=menu.getWidth();
         this.height=menu.getHeight();
         auswahlItem = null;
+        menu.ggstReiter=this;
         scrollbarposition=0f;
         reiterWidth=width*2/10;
         invLinksWidth=width*3/10;
         invRechtsWidth=width*5/10;
+        zeilenhoehe=height/100f;
         auswahlAnzeige();
         this.addActor(inventarLinks);
         pane = zeigeItems();
@@ -65,9 +68,9 @@ public class GegenstandReiter extends Group {
                     "\nauf " + verbesserung +" steigern!", menu.getSkin());break;
         }
 
-        inventarLinks.add(label1).size(invLinksWidth, height / 12f);
+        inventarLinks.add(label1).size(invLinksWidth, zeilenhoehe*10f);
         inventarLinks.row();
-        inventarLinks.add(label2).size(invLinksWidth, height / 4f);
+        inventarLinks.add(label2).size(invLinksWidth, zeilenhoehe*30f);
         this.addActor(inventarLinks);
 
     }
@@ -130,24 +133,27 @@ public class GegenstandReiter extends Group {
             //eigenschaft
             inventarLinks.add(label).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(new Label(name, menu.getSkin())).size(invLinksWidth, height / 12f).colspan(2);
+            inventarLinks.add(new Label(name, menu.getSkin())).size(invLinksWidth, zeilenhoehe*10).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(new Label(beschreibung, menu.getSkin())).size(invLinksWidth*3/4, height / 4f).colspan(2).align(Align.left);
+            inventarLinks.add(new Label(beschreibung, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*30).colspan(2).align(Align.left);
             inventarLinks.row();
             //inventarLinks.add(new Label(eigenschaft, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
             inventarLinks.row();
 
-            inventarLinks.add(new Label(aktuell+" wird zu "+verbesserung, menu.getSkin())).size(invLinksWidth*1/4, height / 12f).align(Align.left);
+            inventarLinks.add(new Label(aktuell+" wird zu "+verbesserung, menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*10).align(Align.left);
             inventarLinks.row();
+            inventarLinks.row();
+
+            inventarLinks.row();inventarLinks.add(new Label("", menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*21f);
             inventarLinks.row();
 
                 benutzenButton = new TextButton("Benutzen", menu.getSkin());
             benutzenButton.addListener(new benutzenButtonListener(auswahlItem,this));
-                inventarLinks.add(benutzenButton).size(invLinksWidth, height / 3f).colspan(2);
+                inventarLinks.add(benutzenButton).size(invLinksWidth, zeilenhoehe*20).colspan(2);
 
 
             inventarLinks.row();
-            inventarLinks.add(new TextButton("Wegwerfen", menu.getSkin())).size(invLinksWidth, height / 6f).colspan(2);
+            inventarLinks.add(new TextButton("Wegwerfen", menu.getSkin())).size(invLinksWidth, zeilenhoehe*10).colspan(2);
             inventarLinks.row();
 
         }

@@ -24,6 +24,7 @@ public class ReiterButtonListener extends InputListener {
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         menu.game.getAssetManager().get("audio/sounds/reiter_wechsel.ogg", Sound.class).play(0.5f);
+        menu.negiereAuswahlAllerReiter();
         menu.setAktiverReiter(auswahl);
         switch (auswahl){
             //Charakterreiter
