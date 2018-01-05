@@ -53,20 +53,25 @@ import com.mygdx.anima.tools.HandleGameData;
                 //game.changeScreen(HandleGameData.laden(game));
                 // letzter Stand: game.changeScreen(new StartScreen(game));
                 //game.setScreen(new Playscreen(game));
-                this.dispose();
-                game.getAdsController().loadRewardedVideoAd();
-                game.getAdsController().showRewardedVideoAd();
-
-                if(game.getAdsController().getRewardedVideoAdFinished()){
-                    game.getHeld().wiederbeleben(1f);
+                // this.dispose();
+                game.getAdsController().activateVideoFlag();
+                    game.getAdsController().showRewardedVideoAd();
+                do {
                 }
-                else{
-                    game.getHeld().wiederbeleben(0.7f);
-                }
-                game.getHeld().screen.setMapWechsel(true);
-                game.changeScreen(game.currentPlayScreen);
+                while(game.getAdsController().getVideoFlag()==false);
+                    if (game.getAdsController().getRewardedVideoAdFinished()) {
+                        game.getHeld().wiederbeleben(1f);
+                        game.getAdsController().setRewardedVideoAdFinished(false);
+                    } else {
+                        game.getHeld().wiederbeleben(0.7f);
+                    }
 
-            }
+                    game.getHeld().screen.setMapWechsel(true);
+                    game.changeScreen(game.currentPlayScreen);
+                }
+
+
+
             Gdx.gl.glClearColor(0,0,0,1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             stage.draw();
@@ -81,8 +86,7 @@ import com.mygdx.anima.tools.HandleGameData;
         public void resume() {
         }
         @Override
-        public void hide() {
-        }
+        public void hide() {        }
         @Override
         public void dispose() {
             stage.dispose();

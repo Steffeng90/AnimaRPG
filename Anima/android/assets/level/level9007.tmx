@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="233">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="248">
  <tileset firstgid="1" name="start" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
  </tileset>
@@ -22,7 +22,7 @@
  </layer>
  <layer name="top1" width="60" height="50">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer name="top2" width="60" height="50">
@@ -76,9 +76,12 @@
   <object id="232" x="128" y="624" width="32" height="32">
    <ellipse/>
   </object>
+  <object id="247" x="480" y="368" width="64" height="48">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup name="schatztruhen">
-  <object id="200" x="80" y="224" width="16" height="16">
+  <object id="200" x="32" y="192" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Nahrung2"/>
     <property name="typ" value="2"/>
@@ -90,7 +93,7 @@
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="202" x="64" y="112" width="16" height="16">
+  <object id="202" x="64" y="48" width="16" height="16">
    <properties>
     <property name="Inhalt" value="NahrungM1"/>
     <property name="typ" value="2"/>
@@ -98,24 +101,74 @@
   </object>
  </objectgroup>
  <objectgroup name="enemyHumanoid">
-  <object id="170" x="432" y="448" width="16" height="16">
+  <object id="170" x="80" y="352" width="16" height="16">
    <properties>
-    <property name="typ" value="raider-1"/>
+    <property name="typ" value="slime"/>
    </properties>
   </object>
-  <object id="173" x="144" y="176" width="16" height="16">
+  <object id="203" x="224" y="528" width="16" height="16">
    <properties>
-    <property name="typ" value="raider-1"/>
+    <property name="typ" value="bat"/>
    </properties>
   </object>
-  <object id="199" x="832" y="192" width="16" height="16">
+  <object id="233" x="528" y="496" width="16" height="16">
    <properties>
-    <property name="typ" value="raider-1"/>
+    <property name="typ" value="bat"/>
    </properties>
   </object>
-  <object id="203" x="96" y="640" width="16" height="16">
+  <object id="234" x="720" y="576" width="16" height="16">
    <properties>
-    <property name="typ" value="raider-1"/>
+    <property name="typ" value="bat"/>
+   </properties>
+  </object>
+  <object id="235" x="544" y="160" width="16" height="16">
+   <properties>
+    <property name="typ" value="bat"/>
+   </properties>
+  </object>
+  <object id="236" x="176" y="112" width="16" height="16">
+   <properties>
+    <property name="typ" value="bat"/>
+   </properties>
+  </object>
+  <object id="237" x="576" y="720" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
+   </properties>
+  </object>
+  <object id="238" x="592" y="672" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
+   </properties>
+  </object>
+  <object id="239" x="608" y="304" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
+   </properties>
+  </object>
+  <object id="240" x="496" y="320" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
+   </properties>
+  </object>
+  <object id="241" x="560" y="368" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
+   </properties>
+  </object>
+  <object id="242" x="736" y="80" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
+   </properties>
+  </object>
+  <object id="243" x="848" y="176" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
+   </properties>
+  </object>
+  <object id="244" x="224" y="48" width="16" height="16">
+   <properties>
+    <property name="typ" value="slime"/>
    </properties>
   </object>
  </objectgroup>
@@ -134,18 +187,9 @@
    </properties>
    <polyline points="0,0 48,0"/>
   </object>
-  <object id="204" x="256" y="560">
-   <properties>
-    <property name="dialog" value="4"/>
-    <property name="nachbedfalse" value="3"/>
-    <property name="nachbedtrue" value="4"/>
-    <property name="vorbed" value="3"/>
-   </properties>
-   <polyline points="0,0 -48,0"/>
-  </object>
  </objectgroup>
  <objectgroup name="startpunkt">
-  <object id="131" x="480" y="672" width="16" height="16">
+  <object id="131" x="192" y="752" width="16" height="16">
    <properties>
     <property name="start" value="dungeon1A"/>
    </properties>

@@ -19,7 +19,6 @@ import java.io.Serializable;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 /**
  * Created by Steffen on 25.01.2017.

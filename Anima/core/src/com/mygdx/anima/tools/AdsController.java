@@ -7,7 +7,11 @@ package com.mygdx.anima.tools;
 public interface AdsController {
     public void showBannerAd();
     public void hideBannerAd();
+    public void activateVideoFlag();
+    public void deactiveVideoFlag();
+    public boolean getVideoFlag();
     public boolean isWifiConnected();
+    public boolean isMobileDataConnected();
     public void showInterstitialAd (Runnable then);
     public void loadRewardedVideoAd();
     public void showRewardedVideoAd();

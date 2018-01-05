@@ -75,7 +75,7 @@ public class Arrow extends Sprite implements Pool.Poolable {
         }
         else{
             fdefAttack.filter.categoryBits = AnimaRPG.ARROW_BIT;
-            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.UNGEHEUER_BIT | AnimaRPG.ARROW_BIT;
+            fdefAttack.filter.maskBits = AnimaRPG.HERO_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.BARRIERE_BIT | AnimaRPG.ARROW_BIT;
 
         }
         fdefAttack.shape = shape;

@@ -23,26 +23,28 @@ public class KartenManager {
     float cameraLeft, cameraRight, cameraTop, cameraBottom;
     MapProperties properties;
     float mapWidth, mapHeight, tilePixelWidth, tilePixelHeight, mapPixelWidth, mapPixelHeight;
-    public static int aktuelleKartenId;
+    public static int aktuelleKartenId,kartenWechselCounterfuerAds=0;
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
     public OrthogonalTiledMapRenderer karteErstellen(AnimaRPG game,int kartenNummer,Viewport gameViewPort){
+        kartenWechselCounterfuerAds++;
         if(map!=null){map.dispose();}
-       /*
-        if (game.getAdsController().isWifiConnected()) {
+/*
+        if (kartenWechselCounterfuerAds>=3 && (game.getAdsController().isWifiConnected() || game.getAdsController().isMobileDataConnected())) {
                 game.getAdsController().showInterstitialAd(new Runnable() {
                     @Override
                     public void run() {
                     }
                 });
+            System.out.println("KartenwechselCounter wieder auf 0");
+            kartenWechselCounterfuerAds=0;
             } else {
                 System.out.println("Interstitial ad not (yet) loaded");
             }
-            */
+*/
         mapLoader = new TmxMapLoader();
         aktuelleKartenId=kartenNummer;
-        //map=mapLoader.load("level/level"+kartenNummer+".tmx");
         map=game.getAssetManager().loadTiledMap(kartenNummer);
         //Map-Camera-Initialisierung
         properties = map.getProperties();

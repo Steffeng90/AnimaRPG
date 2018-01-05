@@ -24,16 +24,20 @@ import com.mygdx.anima.sprites.character.interaktiveObjekte.DialogArea;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.SteinBlock;
 
 import static com.mygdx.anima.AnimaRPG.BARRIERE_BIT;
 import static com.mygdx.anima.AnimaRPG.ENEMY_BIT;
 import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.HERO_BIT;
+import static com.mygdx.anima.AnimaRPG.NOTHING_BIT;
 import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
 import static com.mygdx.anima.AnimaRPG.UNGEHEUER_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
+import static com.mygdx.anima.screens.Playscreen.activeSteinblock;
 import static com.mygdx.anima.screens.Playscreen.activeTruhen;
 import static com.mygdx.anima.screens.Playscreen.getMapEinstieg;
+import static com.mygdx.anima.screens.Playscreen.steinblockPool;
 import static com.mygdx.anima.screens.Playscreen.truhenPool;
 import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
 
@@ -73,7 +77,7 @@ public class B2WorldCreator {
                     pshape.setAsBox((rect.getWidth() / 2) / AnimaRPG.PPM, (rect.getHeight() / 2) / AnimaRPG.PPM);
                     fdef.shape = pshape;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT |UNGEHEUER_BIT;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT |UNGEHEUER_BIT | NOTHING_BIT;
                     body.createFixture(fdef);
                 }
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(EllipseMapObject.class)) {
@@ -85,7 +89,7 @@ public class B2WorldCreator {
 
                     fdef.shape = cshape;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT | UNGEHEUER_BIT;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT | UNGEHEUER_BIT | NOTHING_BIT;
                     body.createFixture(fdef);
                 }
                 for (MapObject object : map.getLayers().get("barrieren").getObjects().getByType(PolylineMapObject.class)) {
@@ -106,7 +110,7 @@ public class B2WorldCreator {
 
                     fdef.shape = chain;
                     fdef.filter.categoryBits = BARRIERE_BIT;
-                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT | UNGEHEUER_BIT;
+                    fdef.filter.maskBits = HERO_BIT | ENEMY_BIT | OBJECT_BIT | ARROW_BIT | UNGEHEUER_BIT | NOTHING_BIT;
                     body.createFixture(fdef);
                 }
                 // Keine PolygonShapes verwenden.
@@ -144,7 +148,7 @@ public class B2WorldCreator {
                 // Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 allAusgang.add(new Gebietswechsel(screen,worldVertices, nextMap, richtungInt));
             }
-            else{
+            else if (object.getProperties().containsKey("dialog")){
                 String dialogID=object.getProperties().get("dialog").toString();
 
                 if(object.getProperties().containsKey("vorbed")){
@@ -158,8 +162,6 @@ public class B2WorldCreator {
                 }
                 new DialogArea(screen,worldVertices,dialogID,vorbed,nachbedfalse,nachbedtrue);
             }
-
-
         }
             // Erzeugen von Gegner
             if (map.getLayers().get("enemyHumanoid") != null) {
@@ -202,34 +204,52 @@ public class B2WorldCreator {
             // Erzeugen von Schatztruhen
             if (map.getLayers().get("schatztruhen") != null) {
                 for (MapObject object : map.getLayers().get("schatztruhen").getObjects().getByType(RectangleMapObject.class)) {
-
-                    int truhenId=(Integer) object.getProperties().get("id");
-                    boolean isClosed=true;
-                    if(getHeld()!=null){
-                        for(SchatztruhenSpeicherObjekt objekt:getHeld().getGeoeffneteTruhen()){
-                            if(aktuelleKartenId==objekt.getMapID() && truhenId==objekt.getTruhenID())
-                            {
-                                isClosed=false;
+                    if (object.getProperties().containsKey("Inhalt")) {
+                        int truhenId = (Integer) object.getProperties().get("id");
+                        boolean isClosed = true;
+                        if (getHeld() != null) {
+                            for (SchatztruhenSpeicherObjekt objekt : getHeld().getGeoeffneteTruhen()) {
+                                if (aktuelleKartenId == objekt.getMapID() && truhenId == objekt.getTruhenID()) {
+                                    isClosed = false;
+                                }
                             }
                         }
-                    }
-                    int vorbed=0,nachbedfalse=0,nachbedtrue=0;
-                    if(object.getProperties().containsKey("vorbed")){
-                        vorbed=Integer.parseInt((String)object.getProperties().get("vorbed"));
-                    }
-                    if(object.getProperties().containsKey("nachbedtrue")){
-                        nachbedtrue=Integer.parseInt((String)object.getProperties().get("nachbedtrue"));
-                    }
-                    if(object.getProperties().containsKey("nachbedfalse")){
-                        nachbedfalse=Integer.parseInt((String)object.getProperties().get("nachbedfalse"));
-                    }
-                    String inhalt = (String) object.getProperties().get("Inhalt");
-                    int typ=Integer.valueOf((String) object.getProperties().get("typ"));
-                    Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                    Schatztruhe truhe=truhenPool.obtain();
-                    if(vorbed==0 || (vorbed!=0 && getHeld().getEventList()[vorbed]==true)){
-                        truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ,truhenId, inhalt,isClosed,nachbedfalse,nachbedtrue);
-                        activeTruhen.add(truhe);
+                        int vorbed = 0, nachbedfalse = 0, nachbedtrue = 0;
+                        if (object.getProperties().containsKey("vorbed")) {
+                            vorbed = Integer.parseInt((String) object.getProperties().get("vorbed"));
+                        }
+                        if (object.getProperties().containsKey("nachbedtrue")) {
+                            nachbedtrue = Integer.parseInt((String) object.getProperties().get("nachbedtrue"));
+                        }
+                        if (object.getProperties().containsKey("nachbedfalse")) {
+                            nachbedfalse = Integer.parseInt((String) object.getProperties().get("nachbedfalse"));
+                        }
+                        String inhalt = (String) object.getProperties().get("Inhalt");
+                        System.out.println("SchatztruhenObjekt: erzeugt"+(String) object.getProperties().get("typ"));
+                        int typ = Integer.valueOf((String) object.getProperties().get("typ"));
+                        Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                        Schatztruhe truhe = truhenPool.obtain();
+                        if (vorbed == 0 || (vorbed != 0 && getHeld().getEventList()[vorbed] == true)) {
+                            truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM, typ, truhenId, inhalt, isClosed, nachbedfalse, nachbedtrue);
+                            activeTruhen.add(truhe);
+                        }
+                    } else {
+                        if (object.getProperties().containsKey("vorbed")) {
+                            int vorbed = Integer.parseInt(object.getProperties().get("vorbed").toString());
+                            if (getHeld().getEventList()[vorbed] == false) {
+                                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                                SteinBlock block= steinblockPool.obtain();
+                                if (object.getProperties().containsKey("typ")) {
+                                    String typ =object.getProperties().get("typ").toString();
+                                    block.init(screen,rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM,typ);}
+                                else{
+                                    block.init(screen,rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM);
+                                }
+
+                                activeSteinblock.add(block);
+                                System.out.println("Steinblock erzeugt");
+                            }
+                        }
                     }
                 }
             }
@@ -254,6 +274,8 @@ public class B2WorldCreator {
         } else if (richtung.equals("haus2")) {return 9002;
         } else if (richtung.equals("haus3")) {return 9003;
         } else if (richtung.equals("haus4")) {return 9004;
+        } else if (richtung.equals("haus4AB")) {return 9010;
+        } else if (richtung.equals("haus4BA")) {return 9004;
         } else if (richtung.equals("haus5")) {return 9005;
         } else if (richtung.equals("haus6")) {return 9006;
         } else if (richtung.equals("dungeon1A")) {return 9007;

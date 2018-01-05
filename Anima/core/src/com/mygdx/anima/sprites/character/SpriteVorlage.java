@@ -40,6 +40,7 @@ public class SpriteVorlage extends Sprite{
             for(Fixture fix:b2body.getFixtureList()){
                 Filter filter=fix.getFilterData();
                 filter.categoryBits=AnimaRPG.NOTHING_BIT;
+                filter.maskBits=AnimaRPG.BARRIERE_BIT;
                 fix.setFilterData(filter);}
             b2body.setLinearVelocity(new Vector2(0,0));
         //}
@@ -212,6 +213,7 @@ public class SpriteVorlage extends Sprite{
         if(b2body!=null){for(Fixture fix:b2body.getFixtureList()){
             Filter filter=fix.getFilterData();
             filter.categoryBits=AnimaRPG.NOTHING_BIT;
+            filter.maskBits=AnimaRPG.BARRIERE_BIT;
             fix.setFilterData(filter);}}
         //world.destroyBody(b2body);
         //b2body.setUserData(null);

@@ -26,7 +26,16 @@ public abstract class InteraktivesObjekt extends Sprite {
         setBounds(getX(),getY(),16/ AnimaRPG.PPM,16/ AnimaRPG.PPM);
 
     }
-    public abstract void defineItem();
+    // für Sondergrößen
+    public void init(Playscreen screen, float x, float y,float width,float height){
+        this.screen=screen;
+        this.world=screen.getWorld();
+
+        setPosition(x, y);
+        setBounds(getX(),getY(),width/ AnimaRPG.PPM,height/ AnimaRPG.PPM);
+
+    }
+    public abstract void defineItem(float x,float y);
     public abstract void use(Held hero);
 
 }

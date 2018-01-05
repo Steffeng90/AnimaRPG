@@ -28,6 +28,7 @@ import com.mygdx.anima.tools.SchadenBerechner;
 import java.io.Serializable;
 
 import static com.badlogic.gdx.Gdx.app;
+import static com.mygdx.anima.AnimaRPG.ARROW_BIT;
 import static com.mygdx.anima.AnimaRPG.setHeld;
 
 /**
@@ -218,13 +219,13 @@ public class Held extends HumanoideSprites implements Serializable{
         shape.setPosition(new Vector2(0,-12/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
         fdef.filter.maskBits=AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
-                 | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT;
+                 | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT | AnimaRPG.ARROW_BIT;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
         // Oberkörpershape
         shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.HERO_BIT;
-        fdef.filter.maskBits=AnimaRPG.ENEMY_ATTACK | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT ;
+        fdef.filter.maskBits=AnimaRPG.ENEMY_ATTACK | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT |ARROW_BIT ;
         fdef.isSensor=true;
         fdef.shape=shape;
         b2body.createFixture(fdef).setUserData(this);
@@ -517,7 +518,7 @@ public class Held extends HumanoideSprites implements Serializable{
             Filter filter=fix.getFilterData();
             filter.categoryBits=AnimaRPG.HERO_BIT;
             filter.maskBits=AnimaRPG.BARRIERE_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.OBJECT_BIT | AnimaRPG.ENEMY_SENSOR | AnimaRPG.ENEMY_ATTACK
-                  | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT;
+                  | AnimaRPG.ENEMY_HEAL_SENSOR | AnimaRPG.UNGEHEUER_SENSOR_BIT | AnimaRPG.UNGEHEUER_ATTACK_BIT | AnimaRPG.ARROW_BIT ;
             fix.setFilterData(filter);}
     }
     public void updateAlleWerte(){

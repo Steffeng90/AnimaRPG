@@ -26,23 +26,40 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.tools.AdsController;
 
+import java.lang.reflect.Method;
+
 public class AndroidLauncher extends AndroidApplication implements AdsController,RewardedVideoAdListener {
+
+
+    // Test-IDs
+    //private static final String BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+    //private static final String INTERSTITIAL_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+    //private static final String REWARDED_VIDEO_ID = "ca-app-pub-3940256099942544/5224354917";
+
+    //Steffens IDs
+    private static final String Steffen_Acc_ID="ca-app-pub-2997944130485417~6399308541";
     private static final String BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
-    private static final String INTERSTITIAL_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+    private static final String INTERSTITIAL_UNIT_ID = "ca-app-pub-2997944130485417/5187257083";
+    private static final String REWARDED_VIDEO_ID = "ca-app-pub-2997944130485417/4259381277";
     AdView bannerAd;
     InterstitialAd interstitialAd;
     RewardedVideoAd mRewardedVideoAd;
-    private boolean rewardedVideoAdFinished;
+    private boolean rewardedVideoAdFinished,rewardedVideoAdWarteFlag;
+    public RewardedVideoAdListener vel;
+    AdRequest.Builder builder;
+
+
     @Override
 	protected void onCreate (Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-
         // Create a gameView and a bannerAd AdView
         View gameView = initializeForView(new AnimaRPG(this), config);
         setupAds();
-
+        MobileAds.initialize(this, Steffen_Acc_ID);
         // Create a rewarding Video
+
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
 
@@ -60,6 +77,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 
         setContentView(layout);
 	}
+	// Für Banner, wird nicht genutzt
     @Override
     public void showBannerAd() {
         runOnUiThread(new Runnable() {
@@ -86,9 +104,11 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         interstitialAd = new InterstitialAd(this);
         interstitialAd.setAdUnitId(INTERSTITIAL_UNIT_ID);
 
-        AdRequest.Builder builder = new AdRequest.Builder();
+        builder = new AdRequest.Builder();
+        builder.addTestDevice("08D5FA3AF0461D86E59908EA9535C581");
         AdRequest ad = builder.build();
         interstitialAd.loadAd(ad);
+        loadRewardedVideoAd();
         bannerAd = new AdView(this);
         bannerAd.setVisibility(View.INVISIBLE);
         bannerAd.setBackgroundColor(0xff000000); // black
@@ -99,9 +119,30 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     @Override
     public boolean isWifiConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        boolean isWifiConn = networkInfo.isConnected();
+        //networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        //boolean isMobileConn = networkInfo.isConnected();
+       // System.out.println("WIFI Methode ist :"+(networkInfo != null && isWifiConn )+ " " +(networkInfo != null && isMobileConn )+"daraus entsteht"+ ((networkInfo != null && isWifiConn ) || (networkInfo != null && isMobileConn )));
+       // return ((networkInfo != null && isWifiConn ) || (networkInfo != null && isMobileConn ));
+        return ((networkInfo != null && isWifiConn ));
+    }
+    @Override
+    public boolean isMobileDataConnected(){
+        boolean mobileDataEnabled = false; // Assume disabled
+    try {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        return (ni != null && ni.isConnected());
+        Class cmClass = Class.forName(cm.getClass().getName());
+        Method method = cmClass.getDeclaredMethod("getMobileDataEnabled");
+        method.setAccessible(true); // Make the method callable
+        // get the setting for "mobile data"
+        mobileDataEnabled = (Boolean)method.invoke(cm);
+    } catch (Exception e) {
+        // Some problem accessible private API
+        // TODO do whatever error handling you want here
+    }
+        return mobileDataEnabled;
     }
     @Override
     public void showInterstitialAd(final Runnable then) {
@@ -124,13 +165,24 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
         });
     }
     public void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
-                new AdRequest.Builder().build());
+        if(isWifiConnected() || isMobileDataConnected()) {
+           // mRewardedVideoAd.loadAd(REWARDED_VIDEO_ID,
+             //       builder.build());
+        }
     }
     public void showRewardedVideoAd(){
-        if (mRewardedVideoAd.isLoaded()) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                if (mRewardedVideoAd.isLoaded()) {
+                    mRewardedVideoAd.show();
+                } else {
+                    loadRewardedVideoAd();
+                }
+            }
+        });
+        /*if (mRewardedVideoAd.isLoaded()) {
             mRewardedVideoAd.show();
-        }
+        }*/
     }
 
     @Override
@@ -157,7 +209,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
     }
     @Override
     public void onRewardedVideoAdClosed() {
-
+        loadRewardedVideoAd();
     }
     @Override
     public void onRewarded(RewardItem reward) {
@@ -165,6 +217,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
                 reward.getAmount(), Toast.LENGTH_SHORT).show();
         rewardedVideoAdFinished=true;
         // Reward the user.
+
     }
     @Override
     public void onRewardedVideoAdLeftApplication() {
@@ -175,4 +228,18 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 
     }
 
+    @Override
+    public void activateVideoFlag() {
+        rewardedVideoAdWarteFlag=true;
+    }
+
+    @Override
+    public void deactiveVideoFlag() {
+        rewardedVideoAdWarteFlag=false;
+    }
+
+    @Override
+    public boolean getVideoFlag() {
+        return rewardedVideoAdWarteFlag;
+    }
 }

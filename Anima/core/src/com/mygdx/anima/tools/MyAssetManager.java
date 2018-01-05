@@ -7,8 +7,10 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,7 +27,7 @@ public class MyAssetManager extends AssetManager {
     private TextureRegion schatztruheOpenBraun,schatztruheCloseBraun,schatztruheOpenGold,schatztruheCloseGold,
             schatztruheCloseBlau,schatztruheOpenBlau,
             pfeilLinks,pfeilRechts,pfeilUp,pfeilDown,
-            emptySpellIcon;
+            emptySpellIcon,steinblock,fassblock;
 
     Animation truheBraunAnimation,truheGoldAnimation,truheBlauAnimation;
     public Animation getTruheBraunAnimation() {
@@ -56,11 +58,23 @@ public class MyAssetManager extends AssetManager {
     public TextureRegion getSchatztruheOpenBlau() {
         return schatztruheOpenBlau;
     }
-    public Skin mySkin;
+    public Skin mySkin,damageSkin;
+    //FreeTypeFontGenerator generator;
+    //FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
+    public TextureRegion getSteinblock() {
+        return steinblock;
+    }
+    public TextureRegion getFassblock() {
+        return fassblock;
+    }
     public MyAssetManager() {
-
-
+        // Versucht einen TFF (Freetype FOnt) einzubauen.
+        /*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 12;
+        BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
+        generator.dispose(); // don't forget to dispose to avoid memory leaks!*/
         // AUDIOS
         load("audio/music/little town - orchestral.ogg", Music.class);
         load("audio/sounds/anziehen.wav", Sound.class);
@@ -86,6 +100,13 @@ public class MyAssetManager extends AssetManager {
         load("touchBackground.png",Texture.class);
         load("touchBackground.png",Texture.class);
 
+        // Steinblock
+        load("objekte/block-fass.png",Texture.class);
+        finishLoadingAsset("objekte/block-fass.png");
+        fassblock=new TextureRegion(get("objekte/block-fass.png",Texture.class), 0, 0, 64, 112);
+        load("objekte/block.png",Texture.class);
+        finishLoadingAsset("objekte/block.png");
+        steinblock=new TextureRegion(get("objekte/block.png",Texture.class), 0, 0, 32, 32);
         //Schatztruhe
         load("objekte/schatztruhe.png",Texture.class);
         finishLoadingAsset("objekte/schatztruhe.png");
@@ -200,6 +221,18 @@ public class MyAssetManager extends AssetManager {
             }
         return mySkin;
     }
-
+    public Skin getDamageSkin(){
+        if(damageSkin==null){
+            load("ui-skin/damageLabel.fnt",Skin.class);
+            finishLoadingAsset("ui-skin/damageLabel.fnt");
+           // damageSkin=get();
+        }
+        return mySkin;
+    }
+    @Override
+    public synchronized void dispose() {
+        super.dispose();
+        mySkin.dispose();
+    }
 }
 

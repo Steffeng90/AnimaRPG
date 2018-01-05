@@ -45,6 +45,7 @@ import com.mygdx.anima.sprites.character.enemies.ungeheuer.WormBig;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.WormSmall;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.SteinBlock;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.items.ZauberFundSprite;
 import com.mygdx.anima.sprites.character.zauber.ZauberGenerator;
@@ -108,10 +109,17 @@ public class Playscreen implements Screen{
         }
     };
     public static Array<Schatztruhe> activeTruhen = new Array<Schatztruhe>();
+    public static Array<SteinBlock> activeSteinblock = new Array<SteinBlock>();
     public static Pool<Schatztruhe> truhenPool= new Pool<Schatztruhe>() {
         @Override
         protected Schatztruhe newObject() {
             return new Schatztruhe();
+        }
+    };
+    public static Pool<SteinBlock> steinblockPool= new Pool<SteinBlock>() {
+        @Override
+        protected SteinBlock newObject() {
+            return new SteinBlock();
         }
     };
     public static Array<SchadenLabel> activeSchadenlabel = new Array<SchadenLabel>();
@@ -249,7 +257,7 @@ public class Playscreen implements Screen{
 
             renderer.render();
             // Render-Linien
-            //b2dr.render(world, gamecam.combined);
+            b2dr.render(world, gamecam.combined);
 
             game.batch.setProjectionMatrix(gamecam.combined);
 
@@ -260,6 +268,9 @@ public class Playscreen implements Screen{
             }
             for (Schatztruhe truhe : activeTruhen) {
                 truhe.draw(game.batch);
+            }
+            for (SteinBlock steinblock : activeSteinblock) {
+                steinblock.draw(game.batch);
             }
             for (Raider raider : activeRaider) {
                 raider.draw(game.batch);
@@ -479,6 +490,12 @@ public class Playscreen implements Screen{
             Schatztruhe truhe;
             truhe= activeTruhen.get(i);
             truhe.update(dt);
+        }
+        len = activeSteinblock.size;
+        for (int i = len; --i >= 0;) {
+            SteinBlock block;
+            block= activeSteinblock.get(i);
+            block.update(dt);
         }
         // ArrowPool durchlaufen
         len = activeArrows.size;
@@ -716,7 +733,7 @@ public class Playscreen implements Screen{
     @Override
     public void resume() {    }
     @Override
-    public void hide() {    }
+    public void hide() {  }
     @Override
     public void dispose() {
         int size= activeSchadenlabel.size;
@@ -803,6 +820,7 @@ public class Playscreen implements Screen{
 
     public void setMapWechsel(boolean tempmapWechsel) {
         mapWechsel = tempmapWechsel;
+        controller.reset();
         setCurrentGameState(GameState.PAUSE);
     }
 
@@ -875,6 +893,14 @@ public class Playscreen implements Screen{
             truhe= activeTruhen.get(i);
             activeTruhen.removeIndex(i);
             truhenPool.free(truhe);
+        }
+        }
+        size= activeSteinblock.size;
+        SteinBlock block;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            block= activeSteinblock.get(i);
+            activeSteinblock.removeIndex(i);
+            steinblockPool.free(block);
         }
         }
 

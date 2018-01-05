@@ -128,16 +128,16 @@ public class UngeheuerSprites extends SpriteVorlage{
             case WALKING:
                 switch (currentRichtung) {
                     case Links:
-                        region = LeftWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) LeftWalk.getKeyFrame(stateTimer, true);
                         break;
                     case Rechts:
-                        region = RightWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) RightWalk.getKeyFrame(stateTimer, true);
                         break;
                     case Oben:
-                        region = UpWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) UpWalk.getKeyFrame(stateTimer, true);
                         break;
                     case Unten:
-                        region = DownWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) DownWalk.getKeyFrame(stateTimer, true);
                         break;
                     default:
                         region = standingDownSprite;
@@ -147,7 +147,7 @@ public class UngeheuerSprites extends SpriteVorlage{
             case MELEE:
                 switch (currentRichtung) {
                     case Links:
-                            region = LeftMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) LeftMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= LeftMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;
@@ -158,7 +158,7 @@ public class UngeheuerSprites extends SpriteVorlage{
                             }
                         break;
                     case Rechts:
-                            region = RightMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) RightMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= RightMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;
@@ -169,7 +169,7 @@ public class UngeheuerSprites extends SpriteVorlage{
                             }
                         break;
                     case Oben:
-                            region = UpMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) UpMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= UpMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;
@@ -180,7 +180,7 @@ public class UngeheuerSprites extends SpriteVorlage{
                             }
                         break;
                     case Unten:
-                            region = DownMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) DownMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= DownMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;

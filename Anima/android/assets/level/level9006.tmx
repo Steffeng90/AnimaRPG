@@ -136,7 +136,7 @@
     <property name="vorbed" value="8"/>
    </properties>
   </object>
-  <object id="101" x="128" y="192" width="16" height="16">
+  <object id="101" x="112" y="144" width="16" height="16">
    <properties>
     <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-1"/>
@@ -151,7 +151,7 @@
     <property name="vorbed" value="8"/>
    </properties>
   </object>
-  <object id="104" x="330.667" y="161.333" width="16" height="16">
+  <object id="104" x="320" y="144" width="16" height="16">
    <properties>
     <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-1"/>
@@ -181,7 +181,7 @@
    </properties>
    <polyline points="0,0 32,0"/>
   </object>
-  <object id="66" x="96.6667" y="287.666">
+  <object id="66" x="128" y="176">
    <properties>
     <property name="dialog" value="19"/>
     <property name="nachbedfalse" value="8"/>

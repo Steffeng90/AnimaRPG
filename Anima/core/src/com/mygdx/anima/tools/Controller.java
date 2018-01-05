@@ -316,4 +316,7 @@ public class Controller {
     public void setTouchpad(Touchpad touchpad) {
         this.touchpad = touchpad;
     }
+    public void reset(){
+    getTouchpad().clearActions();
+    }
 }

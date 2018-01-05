@@ -76,7 +76,7 @@ public class ZauberFixture extends Sprite {
     {
         TextureRegion region;
         stateTimer = stateTimer + dt;
-        region= zauber.getKeyFrame(stateTimer,false);
+        region= (TextureRegion) zauber.getKeyFrame(stateTimer,false);
         if(!fixtureistErzeugt && stateTimer>=zauber.getAnimationDuration()*zauberFixtureTimer)
             fixtureErzeugen=true;
         if(zauber.isAnimationFinished(stateTimer))

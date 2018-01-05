@@ -325,7 +325,7 @@ public class HumanoideSprites extends SpriteVorlage{
         switch (currentState) {
             case DYING:
                 // Baustelle
-                region=Dying.getKeyFrame(stateTimer,false);
+                region= (TextureRegion) Dying.getKeyFrame(stateTimer,false);
                 this.uebergroesseRueckgaengig();
 
                 if(Dying.isAnimationFinished(stateTimer)){
@@ -362,16 +362,16 @@ public class HumanoideSprites extends SpriteVorlage{
             case WALKING:
                 switch (currentRichtung) {
                     case Links:
-                        region = LeftWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) LeftWalk.getKeyFrame(stateTimer, true);
                         break;
                     case Rechts:
-                        region = RightWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) RightWalk.getKeyFrame(stateTimer, true);
                         break;
                     case Oben:
-                        region = UpWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) UpWalk.getKeyFrame(stateTimer, true);
                         break;
                     case Unten:
-                        region = DownWalk.getKeyFrame(stateTimer, true);
+                        region = (TextureRegion) DownWalk.getKeyFrame(stateTimer, true);
                         break;
                     default:
                         region = standingDownSprite;
@@ -385,7 +385,7 @@ public class HumanoideSprites extends SpriteVorlage{
                             switch(((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe()){
                                 default:
                                  case 1:
-                                    region = LeftMelee1.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) LeftMelee1.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=LeftMelee1.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(LeftMelee1.isAnimationFinished(stateTimer))
@@ -395,7 +395,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 2:
                                     this.uebergroesseAnpassen();
-                                    region = LeftMelee2.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) LeftMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=LeftMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(LeftMelee2.isAnimationFinished(stateTimer))
@@ -406,7 +406,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 3:
                                     this.uebergroesseAnpassen();
-                                    region = LeftMelee3.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) LeftMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=LeftMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(LeftMelee3.isAnimationFinished(stateTimer))
@@ -420,7 +420,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
                         else if(this instanceof RaiderBoss){
                             this.uebergroesseAnpassen();
-                            region = LeftBigAttack.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) LeftBigAttack.getKeyFrame(stateTimer, true);
                             if(triggerFixture && stateTimer>=LeftBigAttack.getAnimationDuration()*0.3)
                             {meleeFixtureErzeugen=true;triggerFixture =false;}
                             if(LeftBigAttack.isAnimationFinished(stateTimer))
@@ -432,7 +432,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
 
                         else {
-                            region = LeftMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) LeftMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= LeftMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;
@@ -449,7 +449,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                 default:
                                     Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
                                 case 1:
-                                    region = RightMelee1.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) RightMelee1.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=RightMelee1.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(RightMelee1.isAnimationFinished(stateTimer))
@@ -459,7 +459,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 2:
                                     this.uebergroesseAnpassen();
-                                    region = RightMelee2.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) RightMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=RightMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(RightMelee2.isAnimationFinished(stateTimer))
@@ -470,7 +470,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 3:
                                     this.uebergroesseAnpassen();
-                                    region = RightMelee3.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) RightMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=RightMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(RightMelee3.isAnimationFinished(stateTimer))
@@ -483,7 +483,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
                         else if(this instanceof RaiderBoss){
                             this.uebergroesseAnpassen();
-                            region = RightBigAttack.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) RightBigAttack.getKeyFrame(stateTimer, true);
                             if(triggerFixture && stateTimer>=RightBigAttack.getAnimationDuration()*0.3)
                             {meleeFixtureErzeugen=true;triggerFixture =false;}
                             if(RightBigAttack.isAnimationFinished(stateTimer))
@@ -495,7 +495,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
 
                         else {
-                            region = RightMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) RightMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= RightMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;
@@ -512,7 +512,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                 default:
                                     Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
                                 case 1:
-                                    region = UpMelee1.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) UpMelee1.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=UpMelee1.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(UpMelee1.isAnimationFinished(stateTimer))
@@ -522,7 +522,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 2:
                                     this.uebergroesseAnpassen();
-                                    region = UpMelee2.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) UpMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=UpMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(UpMelee2.isAnimationFinished(stateTimer))
@@ -533,7 +533,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 3:
                                     this.uebergroesseAnpassen();
-                                    region = UpMelee3.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) UpMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=UpMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(UpMelee3.isAnimationFinished(stateTimer))
@@ -547,7 +547,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
                         else if(this instanceof RaiderBoss){
                             this.uebergroesseAnpassen();
-                            region = UpBigAttack.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) UpBigAttack.getKeyFrame(stateTimer, true);
                             if(triggerFixture && stateTimer>=UpBigAttack.getAnimationDuration()*0.3)
                             {meleeFixtureErzeugen=true;triggerFixture =false;}
                             if(UpBigAttack.isAnimationFinished(stateTimer))
@@ -559,7 +559,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
 
                         else {
-                            region = UpMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) UpMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= UpMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;
@@ -576,7 +576,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                 default:
                                     Gdx.app.log("Defaulttrigger",""+((Held)this).getHeldenInventar().getAngelegtWaffeNah().getAnimationsStufe());
                                 case 1:
-                                    region = DownMelee1.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) DownMelee1.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=DownMelee1.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(DownMelee1.isAnimationFinished(stateTimer))
@@ -586,7 +586,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 2:
                                     this.uebergroesseAnpassen();
-                                    region = DownMelee2.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) DownMelee2.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=DownMelee2.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(DownMelee2.isAnimationFinished(stateTimer))
@@ -597,7 +597,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                     break;
                                 case 3:
                                     this.uebergroesseAnpassen();
-                                    region = DownMelee3.getKeyFrame(stateTimer, true);
+                                    region = (TextureRegion) DownMelee3.getKeyFrame(stateTimer, true);
                                     if(triggerFixture && stateTimer>=DownMelee3.getAnimationDuration()*0.3)
                                     {meleeFixtureErzeugen=true;triggerFixture =false;}
                                     if(DownMelee3.isAnimationFinished(stateTimer))
@@ -610,7 +610,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
                         else if(this instanceof RaiderBoss){
                             this.uebergroesseAnpassen();
-                            region = DownBigAttack.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) DownBigAttack.getKeyFrame(stateTimer, true);
                             if(triggerFixture && stateTimer>=DownBigAttack.getAnimationDuration()*0.3)
                             {meleeFixtureErzeugen=true;triggerFixture =false;}
                             if(DownBigAttack.isAnimationFinished(stateTimer))
@@ -622,7 +622,7 @@ public class HumanoideSprites extends SpriteVorlage{
                         }
 
                         else {
-                            region = DownMelee1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) DownMelee1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= DownMelee1.getAnimationDuration() * 0.3) {
                                 meleeFixtureErzeugen = true;
                                 triggerFixture = false;
@@ -643,7 +643,7 @@ public class HumanoideSprites extends SpriteVorlage{
                     case Links:
                         if(this instanceof Held){
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
-                                region = LeftBow2.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) LeftBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=LeftBow2.getAnimationDuration()*0.8)
                                 {bowFixtureErzeugen=true;triggerFixture =false;
                                     anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
@@ -652,7 +652,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                 {runArchery=false;triggerFixture=true;}
                             }
                             else{
-                                region = LeftBow1.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) LeftBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= LeftBow1.getAnimationDuration() * 0.8) {
                                     anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
@@ -665,7 +665,7 @@ public class HumanoideSprites extends SpriteVorlage{
                             }
                         }
                         else {
-                            region = LeftBow1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) LeftBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= LeftBow1.getAnimationDuration() * 0.8) {
                                 anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
@@ -680,7 +680,7 @@ public class HumanoideSprites extends SpriteVorlage{
                     case Rechts:
                         if(this instanceof Held){
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
-                                region = RightBow2.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) RightBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=RightBow2.getAnimationDuration()*0.8)
                                 {            anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
 
@@ -689,7 +689,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                 {runArchery=false;triggerFixture=true;}
                             }
                             else{
-                                region = RightBow1.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) RightBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= RightBow1.getAnimationDuration() * 0.8) {
                                     anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
@@ -702,7 +702,7 @@ public class HumanoideSprites extends SpriteVorlage{
                             }
                         }
                         else {
-                            region = RightBow1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) RightBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= RightBow1.getAnimationDuration() * 0.8) {
                                 anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
@@ -717,7 +717,7 @@ public class HumanoideSprites extends SpriteVorlage{
                     case Oben:
                         if(this instanceof Held){
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
-                                region = UpBow2.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) UpBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=UpBow2.getAnimationDuration()*0.8)
                                 {            anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen=true;triggerFixture =false;}
@@ -725,7 +725,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                 {runArchery=false;triggerFixture=true;}
                             }
                             else{
-                                region = UpBow1.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) UpBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= UpBow1.getAnimationDuration() * 0.8) {
                                     anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
@@ -738,7 +738,7 @@ public class HumanoideSprites extends SpriteVorlage{
                             }
                         }
                         else {
-                            region = UpBow1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) UpBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= UpBow1.getAnimationDuration() * 0.8) {
                                 anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
@@ -753,7 +753,7 @@ public class HumanoideSprites extends SpriteVorlage{
                     case Unten:
                         if(this instanceof Held){
                             if(((Held)this).getHeldenInventar().getAngelegtWaffeFern().getAnimationsStufe()==2){
-                                region = DownBow2.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) DownBow2.getKeyFrame(stateTimer, true);
                                 if(triggerFixture && stateTimer>=DownBow2.getAnimationDuration()*0.8)
                                 {   anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen=true;triggerFixture =false;}
@@ -761,7 +761,7 @@ public class HumanoideSprites extends SpriteVorlage{
                                 {runArchery=false;triggerFixture=true;}
                             }
                             else{
-                                region = DownBow1.getKeyFrame(stateTimer, true);
+                                region = (TextureRegion) DownBow1.getKeyFrame(stateTimer, true);
                                 if (triggerFixture && stateTimer >= DownBow1.getAnimationDuration() * 0.8) {
                                     anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                     bowFixtureErzeugen = true;
@@ -774,7 +774,7 @@ public class HumanoideSprites extends SpriteVorlage{
                             }
                         }
                         else {
-                            region = DownBow1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) DownBow1.getKeyFrame(stateTimer, true);
                             if (triggerFixture && stateTimer >= DownBow1.getAnimationDuration() * 0.8) {
                                 anima.getAssetManager().get("audio/sounds/bow_attack.mp3", Sound.class).play(0.5f);
                                 bowFixtureErzeugen = true;
@@ -797,21 +797,21 @@ public class HumanoideSprites extends SpriteVorlage{
                         if(this instanceof Held){
                             switch(((Held)this).getAktuellerZauberInt()){
                                 default:
-                                case 1: region = LeftCast1.getKeyFrame(stateTimer, true);
+                                case 1: region = (TextureRegion) LeftCast1.getKeyFrame(stateTimer, true);
                                     if(LeftCast1.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 2: region = LeftCast2.getKeyFrame(stateTimer, true);
+                                case 2: region = (TextureRegion) LeftCast2.getKeyFrame(stateTimer, true);
                                     if(LeftCast2.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 3: region = LeftCast3.getKeyFrame(stateTimer, true);
+                                case 3: region = (TextureRegion) LeftCast3.getKeyFrame(stateTimer, true);
                                     if(LeftCast3.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 4: region = LeftCast4.getKeyFrame(stateTimer, true);
+                                case 4: region = (TextureRegion) LeftCast4.getKeyFrame(stateTimer, true);
                                     if(LeftCast4.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
                             }
                         }else{
-                            region = LeftCast1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) LeftCast1.getKeyFrame(stateTimer, true);
                             if(LeftCast1.isAnimationFinished(stateTimer)){
                                 runCasting=false;}
                         }
@@ -820,21 +820,21 @@ public class HumanoideSprites extends SpriteVorlage{
                         if(this instanceof Held){
                             switch(((Held)this).getAktuellerZauberInt()){
                                 default:
-                                case 1: region = RightCast1.getKeyFrame(stateTimer, true);
+                                case 1: region = (TextureRegion) RightCast1.getKeyFrame(stateTimer, true);
                                     if(RightCast1.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 2: region = RightCast2.getKeyFrame(stateTimer, true);
+                                case 2: region = (TextureRegion) RightCast2.getKeyFrame(stateTimer, true);
                                     if(RightCast2.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 3: region = RightCast3.getKeyFrame(stateTimer, true);
+                                case 3: region = (TextureRegion) RightCast3.getKeyFrame(stateTimer, true);
                                     if(RightCast3.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 4: region = RightCast4.getKeyFrame(stateTimer, true);
+                                case 4: region = (TextureRegion) RightCast4.getKeyFrame(stateTimer, true);
                                     if(RightCast4.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
                             }
                         }else{
-                            region = RightCast1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) RightCast1.getKeyFrame(stateTimer, true);
                             if(RightCast1.isAnimationFinished(stateTimer)){
                                 runCasting=false;}
                         }
@@ -843,21 +843,21 @@ public class HumanoideSprites extends SpriteVorlage{
                         if(this instanceof Held){
                             switch(((Held)this).getAktuellerZauberInt()){
                                 default:
-                                case 1: region = UpCast1.getKeyFrame(stateTimer, true);
+                                case 1: region = (TextureRegion) UpCast1.getKeyFrame(stateTimer, true);
                                     if(UpCast1.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 2: region = UpCast2.getKeyFrame(stateTimer, true);
+                                case 2: region = (TextureRegion) UpCast2.getKeyFrame(stateTimer, true);
                                     if(UpCast2.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 3: region = UpCast3.getKeyFrame(stateTimer, true);
+                                case 3: region = (TextureRegion) UpCast3.getKeyFrame(stateTimer, true);
                                     if(UpCast3.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 4: region = UpCast4.getKeyFrame(stateTimer, true);
+                                case 4: region = (TextureRegion) UpCast4.getKeyFrame(stateTimer, true);
                                     if(UpCast4.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
                             }
                         }else{
-                            region = UpCast1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) UpCast1.getKeyFrame(stateTimer, true);
                             if(UpCast1.isAnimationFinished(stateTimer)){
                                 runCasting=false;}
                         }
@@ -866,21 +866,21 @@ public class HumanoideSprites extends SpriteVorlage{
                         if(this instanceof Held){
                             switch(((Held)this).getAktuellerZauberInt()){
                                 default:
-                                case 1: region = DownCast1.getKeyFrame(stateTimer, true);
+                                case 1: region = (TextureRegion) DownCast1.getKeyFrame(stateTimer, true);
                                     if(DownCast1.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 2: region = DownCast2.getKeyFrame(stateTimer, true);
+                                case 2: region = (TextureRegion) DownCast2.getKeyFrame(stateTimer, true);
                                     if(DownCast2.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 3: region = DownCast3.getKeyFrame(stateTimer, true);
+                                case 3: region = (TextureRegion) DownCast3.getKeyFrame(stateTimer, true);
                                     if(DownCast3.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
-                                case 4: region = DownCast4.getKeyFrame(stateTimer, true);
+                                case 4: region = (TextureRegion) DownCast4.getKeyFrame(stateTimer, true);
                                     if(DownCast4.isAnimationFinished(stateTimer)){
                                         runCasting=false;}break;
                             }
                         }else{
-                            region = DownCast1.getKeyFrame(stateTimer, true);
+                            region = (TextureRegion) DownCast1.getKeyFrame(stateTimer, true);
                             if(DownCast1.isAnimationFinished(stateTimer)){
                                 runCasting=false;}
                         }

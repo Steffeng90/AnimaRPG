@@ -167,7 +167,7 @@ public class Menu implements Screen {
     @Override public void resize(int width, int height) {viewport.update(width, height);}
     @Override public void pause() {    }
     @Override public void resume() {    }
-    @Override public void hide() {    }
+    @Override public void hide() { }
     @Override public void dispose() {
         //TODO richtiges Dispose einbauen
         stage.dispose();

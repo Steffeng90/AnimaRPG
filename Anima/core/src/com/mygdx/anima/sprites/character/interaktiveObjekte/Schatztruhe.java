@@ -39,7 +39,7 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
     public void init(Playscreen screen, float x, float y,int truhenTyp,int truhenID,String inhalt,boolean isClosed,int nachbedfalse,int nachbedtrue){
         super.init(screen,x,y);
         this.inhalt=inhalt;
-        defineItem();
+        defineItem(8,8);
         this.truhentyp=truhenTyp;
         this.truhenID=truhenID;
         this.nachbedtrue=nachbedtrue;
@@ -65,7 +65,7 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
 
     }
     @Override
-    public void defineItem() {
+    public void defineItem(float x,float y) {
         BodyDef bdef= new BodyDef();
         bdef.position.set(getX(),getY());
         bdef.type = BodyDef.BodyType.StaticBody;
@@ -74,7 +74,7 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
 
         FixtureDef fdef= new FixtureDef();
         PolygonShape shape=new PolygonShape();
-        shape.setAsBox(8/ AnimaRPG.PPM,8/AnimaRPG.PPM,new Vector2(getWidth()/2, getHeight()/2),0);
+        shape.setAsBox(x/ AnimaRPG.PPM,y/AnimaRPG.PPM,new Vector2(getWidth()/2, getHeight()/2),0);
         fdef.filter.categoryBits=AnimaRPG.OBJECT_BIT;
         fdef.filter.maskBits=AnimaRPG.HERO_BIT | AnimaRPG.ENEMY_BIT | AnimaRPG.HERO_SENSOR ;
         fdef.shape=shape;
@@ -122,7 +122,7 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
                     region=spriteClose;
                 break;
             case OPENING:
-                region = openTruhe.getKeyFrame(stateTimer, false);
+                region = (TextureRegion) openTruhe.getKeyFrame(stateTimer, false);
                 if(openTruhe.isAnimationFinished(stateTimer)){
                     runOpenAnimation=false;closed=false;
                     if(nachbedtrue!=0){
