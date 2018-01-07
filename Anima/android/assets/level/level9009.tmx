@@ -105,7 +105,7 @@
   </object>
  </objectgroup>
  <objectgroup name="startpunkt">
-  <object id="236" x="232" y="609" width="16" height="16">
+  <object id="236" x="234" y="597" width="16" height="16">
    <properties>
     <property name="start" value="dungeon1BC"/>
    </properties>

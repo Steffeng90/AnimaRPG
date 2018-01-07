@@ -1,6 +1,5 @@
 package com.mygdx.anima.screens.menuReiter;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -9,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.anima.screens.Menu;
+import com.mygdx.anima.screens.MenuScreen;
 import com.mygdx.anima.sprites.character.items.Benutzbar;
 import com.mygdx.anima.tools.listener.GegenstandListener;
 import com.mygdx.anima.tools.listener.benutzenButtonListener;
@@ -28,11 +27,11 @@ public class GegenstandReiter extends Group {
     public Table inventarLinks,inventarRechts;
     private float width, height,invLinksWidth,invRechtsWidth,reiterWidth;
     public Benutzbar auswahlItem;
-    public Menu menu;
+    public MenuScreen menu;
     public float zeilenhoehe;
     private String eigenschaft, aktuell="",verbesserung=" ";
 
-    public GegenstandReiter(Menu menu){
+    public GegenstandReiter(MenuScreen menu){
         this.menu=menu;
         this.width=menu.getWidth();
         this.height=menu.getHeight();

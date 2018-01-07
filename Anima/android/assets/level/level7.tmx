@@ -92,6 +92,7 @@
    <properties>
     <property name="dialog" value="8008"/>
     <property name="typ" value="npc-hint"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
  </objectgroup>

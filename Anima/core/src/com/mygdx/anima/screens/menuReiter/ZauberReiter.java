@@ -1,7 +1,5 @@
 package com.mygdx.anima.screens.menuReiter;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -10,10 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.anima.screens.Menu;
+import com.mygdx.anima.screens.MenuScreen;
 import com.mygdx.anima.sprites.character.zauber.ZauberEntity;
 import com.mygdx.anima.tools.listener.ZauberListener;
-import com.mygdx.anima.tools.listener.benutzenButtonListener;
 import com.mygdx.anima.tools.listener.zauberslotButtonListener;
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
@@ -28,10 +25,10 @@ public class ZauberReiter extends Group {
     public Table inventarLinks,inventarRechts;
     private float width, height,invLinksWidth,invRechtsWidth,reiterWidth,zeilenhoehe;
     public ZauberEntity auswahlZauber;
-    public Menu menu;
+    public MenuScreen menu;
     private String eigenschaft, aktuell="",verbesserung=" ";
 
-    public ZauberReiter(Menu menu){
+    public ZauberReiter(MenuScreen menu){
         this.menu=menu;
         this.width=menu.getWidth();
         this.height=menu.getHeight();

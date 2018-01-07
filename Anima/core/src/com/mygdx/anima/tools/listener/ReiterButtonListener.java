@@ -3,8 +3,7 @@ package com.mygdx.anima.tools.listener;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.screens.Menu;
+import com.mygdx.anima.screens.MenuScreen;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
@@ -15,9 +14,9 @@ import com.mygdx.anima.screens.menuReiter.ZauberReiter;
  */
 
 public class ReiterButtonListener extends InputListener {
-    Menu menu;
+    MenuScreen menu;
     int auswahl;
-    public ReiterButtonListener(Menu menu,int auswahl){
+    public ReiterButtonListener(MenuScreen menu, int auswahl){
         this.menu=menu;
         this.auswahl=auswahl;
     }

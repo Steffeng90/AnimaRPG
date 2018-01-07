@@ -107,22 +107,22 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
         for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(walkQuelle, i*breite,0, breite, hoehe));
         }
-        UpWalk = new Animation(0.1f, frames);
+        UpWalk = new Animation((framesWalk)/(float)(laufspeed*10), frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(walkQuelle,i *breite, 128, breite, hoehe));
         }
-        DownWalk = new Animation(0.1f, frames);
+        DownWalk = new Animation((framesWalk)/(float)(laufspeed*10), frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(walkQuelle, i *breite, 64, breite, hoehe));
         }
-        LeftWalk = new Animation(0.1f, frames);
+        LeftWalk = new Animation((framesWalk)/(float)(laufspeed*10), frames);
         frames.clear();
         for (int i = 0; i < framesWalk; i++) {
             frames.add(new TextureRegion(walkQuelle, i *breite, 192, breite, hoehe));
         }
-        RightWalk = new Animation(0.1f, frames);
+        RightWalk = new Animation((framesWalk)/(float)(laufspeed*10), frames);
 
         frames.clear();
         for (int i = 0; i < framesDie; i++) {
@@ -257,7 +257,7 @@ public abstract class EnemyHumanoid extends HumanoideSprites implements Pool.Poo
                 break;
 
         }
-        meleeFixtureDefinieren(richtungsVector);
+        meleeFixtureDefinieren(richtungsVector,15);
 /*        circleShape.setPosition(richtungsVector);
         FixtureDef fdefAttack = new FixtureDef();
         fdefAttack.filter.categoryBits = AnimaRPG.ENEMY_ATTACK;

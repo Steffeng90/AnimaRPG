@@ -133,14 +133,14 @@
    <properties>
     <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-2"/>
-    <property name="vorbed" value="8"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="101" x="112" y="144" width="16" height="16">
    <properties>
     <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-1"/>
-    <property name="vorbed" value="8"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="102" x="230" y="106" width="16" height="16">
@@ -148,21 +148,21 @@
     <property name="aktivEvent" value="9"/>
     <property name="nachbed" value="10"/>
     <property name="typ" value="raider-4"/>
-    <property name="vorbed" value="8"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="104" x="320" y="144" width="16" height="16">
    <properties>
     <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-1"/>
-    <property name="vorbed" value="8"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="107" x="176" y="80.6667" width="16" height="16">
    <properties>
     <property name="aktivEvent" value="9"/>
     <property name="typ" value="raider-2"/>
-    <property name="vorbed" value="8"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
  </objectgroup>

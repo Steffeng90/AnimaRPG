@@ -17,7 +17,7 @@
     {
       "id": 3,
       "sprecher": "Held",
-      "inhalt": "Ich sollte mich mit dem Dolch ausrüsten. Berühre das Inventar-Icon in der rechten oberen Ecke. Dort kann du im Reiter Ausruestung den Dolch auswaehlen und anlegen.",
+      "inhalt": "Ich sollte mich mit dem Dolch ausrüsten. Berühre das Inventar-Icon in der rechten oberen Ecke. Dort kann du im Reiter Ausrüstung den Dolch auswählen und anlegen.",
       "nachfolger":0,
       "icon":"held"
     },
@@ -178,13 +178,13 @@
 
 
 
+
     {
       "id": 8001,
       "sprecher": "Dorfbewohner",
-      "inhalt": "Hmm, wenn du Gladin besiegen konnest, dann kann sie garnicht so mächtig gewesen sein, wie alle behaupten...",
+      "inhalt": "Ich hoffe wir können uns irgendwann bei dir revanchieren. Vielen Dank.",
       "nachfolger":0,
       "icon":"npc1"
-
     },
     {
       "id": 8002,
@@ -231,9 +231,10 @@
     {
       "id": 8006,
       "sprecher": "Dorfbewohner",
-      "inhalt": "Ich hoffe wir können uns irgendwann bei dir revanchieren. Vielen Dank.",
+      "inhalt": "Hmm, wenn du Gladin besiegen konnest, dann kann sie garnicht so mächtig gewesen sein, wie alle behaupten...",
       "nachfolger":0,
       "icon":"npc6"
+
     },
     {
       "id": 8007,
@@ -252,14 +253,14 @@
     {
       "id": 8008,
       "sprecher": "Unbekannter",
-      "inhalt": "Hallo Kriegerin, ich habe von dir gehoert. Du sollst auf dem Weg sein Gladin zu töten. In mir hast du keinen Feind. Ich will dir einen Hinweis geben",
+      "inhalt": "Hallo Kriegerin, ich habe von dir gehört. Du sollst auf dem Weg sein Gladin zu töten. In mir hast du keinen Feind. Ich will dir einen Hinweis geben",
       "nachfolger":80081,
       "icon":"npc-hint"
     },
     {
       "id": 80081,
       "sprecher": "Unbekannter",
-      "inhalt": "In dieser Höhle findest du einen magischen Schatz, der dir dabei hilft, gegen Gladins Raeuber zu bestehen. Viel Erfolg!",
+      "inhalt": "In dieser Höhle findest du einen magischen Schatz, der dir dabei hilft, gegen Gladins Räuber zu bestehen. Viel Erfolg!",
       "nachfolger":0,
       "icon":"npc-hint"
     }

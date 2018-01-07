@@ -62,4 +62,8 @@ public class HandleGameData {
 
             return new Playscreen(game);
         }
+        public static boolean pruefeObSpielStandVorhanden(){
+            FileHandle file = files.local("save.txt");
+            return file.exists();
+        }
 }

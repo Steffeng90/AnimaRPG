@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="279">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="290">
  <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
   <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
@@ -210,54 +210,86 @@
   </object>
  </objectgroup>
  <objectgroup name="enemyHumanoid">
-  <object id="246" x="400" y="512" width="16" height="16">
-   <properties>
-    <property name="typ" value="raider-3"/>
-   </properties>
-  </object>
   <object id="247" x="48" y="752" width="16" height="16">
    <properties>
     <property name="typ" value="raider-1"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="248" x="864" y="240" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="249" x="158" y="474" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="250" x="192" y="176" width="16" height="16">
    <properties>
     <property name="typ" value="raider-1"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="252" x="322" y="302" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="253" x="704" y="544" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="254" x="128" y="288" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="255" x="578" y="332" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
+    <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
   <object id="256" x="426" y="510" width="16" height="16">
    <properties>
     <property name="typ" value="raider-1"/>
+    <property name="vorbedfalse" value="10"/>
+   </properties>
+  </object>
+  <object id="286" x="562" y="269" width="16" height="16">
+   <properties>
+    <property name="dialog" value="8001"/>
+    <property name="typ" value="npc1"/>
+    <property name="vorbedtrue" value="10"/>
+   </properties>
+  </object>
+  <object id="287" x="736" y="496" width="16" height="16">
+   <properties>
+    <property name="dialog" value="8002"/>
+    <property name="typ" value="npc2"/>
+    <property name="vorbedtrue" value="10"/>
+   </properties>
+  </object>
+  <object id="288" x="528" y="464" width="16" height="16">
+   <properties>
+    <property name="dialog" value="8003"/>
+    <property name="typ" value="npc3"/>
+    <property name="vorbedtrue" value="10"/>
+   </properties>
+  </object>
+  <object id="289" x="224" y="192" width="16" height="16">
+   <properties>
+    <property name="dialog" value="8004"/>
+    <property name="typ" value="npc4"/>
+    <property name="vorbedtrue" value="10"/>
    </properties>
   </object>
  </objectgroup>

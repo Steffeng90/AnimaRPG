@@ -163,7 +163,7 @@
   </object>
   <object id="114" x="608" y="96">
    <properties>
-    <property name="ausgang" value="nord"/>
+    <property name="ausgang" value="haus4AB"/>
     <property name="nextMap" value="9010"/>
    </properties>
    <polyline points="36,-36 36,-4"/>

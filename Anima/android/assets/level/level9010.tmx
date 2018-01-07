@@ -139,7 +139,7 @@
  <objectgroup name="areaborder">
   <object id="80" x="560" y="112">
    <properties>
-    <property name="ausgang" value="haus4BA"/>
+    <property name="ausgang" value="haus4AB"/>
     <property name="nextMap" value="9004"/>
    </properties>
    <polyline points="32,-32 32,0"/>

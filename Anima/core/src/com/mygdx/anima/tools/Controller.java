@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.screens.Menu;
+import com.mygdx.anima.screens.MenuScreen;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
 
@@ -73,7 +73,7 @@ public class Controller {
                 game.getAssetManager().get("audio/sounds/turn_page.wav", Sound.class).play();
 
                 game.getScreen().pause();
-                game.changeScreen(new Menu(game));}
+                game.changeScreen(new MenuScreen(game));}
             @Override public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;}});
         inventarImg.setPosition(AnimaRPG.W_WIDTH-buttonSize,AnimaRPG.W_Height-buttonSize);

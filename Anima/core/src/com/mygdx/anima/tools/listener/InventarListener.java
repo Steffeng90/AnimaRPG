@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.anima.screens.Menu;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
 import com.mygdx.anima.sprites.character.items.Item;
 

@@ -69,6 +69,9 @@ public class MyAssetManager extends AssetManager {
         return fassblock;
     }
     public MyAssetManager() {
+        loadAllAssets();
+    }
+    public void loadAllAssets(){
         // Versucht einen TFF (Freetype FOnt) einzubauen.
         /*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -233,6 +236,10 @@ public class MyAssetManager extends AssetManager {
     public synchronized void dispose() {
         super.dispose();
         mySkin.dispose();
+    }
+    public void reloadAsset(){
+        this.clear();
+        loadAllAssets();
     }
 }
 

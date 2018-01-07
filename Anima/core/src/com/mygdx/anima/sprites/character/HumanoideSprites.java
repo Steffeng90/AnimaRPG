@@ -71,7 +71,7 @@ public class HumanoideSprites extends SpriteVorlage{
     // size ist die größe, auf die ein übergroßer Enemy zurückgreift, wenn uebergröße Anpassen ausgeführt wird.
     public int hoehe,size;
     public static float framesCast=7,framesStich=8,framesSchwert=6,framesWalk=9,framesDie=6,frameArcher=13,framesBigAttac=6;
-    public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed;
+    public float castSpeed,bowSpeed,meleeSpeed,thrustSpeed,laufspeed;
     float regenerationTimer;
     //Konstruktor für Enemies
     public HumanoideSprites(){
@@ -83,6 +83,7 @@ public class HumanoideSprites extends SpriteVorlage{
         setMaxHitpoints(maxhp);
         setMaxMana(maxmana);
         setRegMana(regMana);
+        laufspeed=speed;
         setGeschwindigkeitLaufen(speed);
         this.setSchadenNah(schadenNah);
         this.setSchadenFern(schadenfern);
@@ -935,14 +936,14 @@ public class HumanoideSprites extends SpriteVorlage{
             return State.CASTING;
         else if(runMeleeAnimation)
             return State.MELEE;
-        else if(velocity.x == 0 && velocity.y == 0)
+        else if((velocity.x == 0 && velocity.y == 0) || !b2body.isActive())
             {return State.STANDING;}
         else
             return State.WALKING;
     }
     public void createSensor(){
         sensorCircleShape = new CircleShape();
-        sensorCircleShape.setRadius(5 / AnimaRPG.PPM);
+        sensorCircleShape.setRadius(10 / AnimaRPG.PPM);
         Vector2 sensorRichtungsVector;
         switch (getCurrentRichtung()) {
             case Rechts:
@@ -1001,9 +1002,9 @@ public class HumanoideSprites extends SpriteVorlage{
             setCurrentMana(getCurrentMana()+getRegMana());
             regenerationTimer=0;}
         }
-    public void meleeFixtureDefinieren(Vector2 richtungsVector){
+    public void meleeFixtureDefinieren(Vector2 richtungsVector,float radius){
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(15 / AnimaRPG.PPM);
+        circleShape.setRadius(radius / AnimaRPG.PPM);
         circleShape.setPosition(richtungsVector);
         fdefAttack = new FixtureDef();
         if(istHeld){fdefAttack.filter.categoryBits = AnimaRPG.HERO_WEAPON_BIT;

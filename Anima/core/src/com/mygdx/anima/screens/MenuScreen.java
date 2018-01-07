@@ -37,7 +37,7 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
  * Created by Steffen on 24.11.2016.
  */
 
-public class Menu implements Screen {
+public class MenuScreen implements Screen {
     public AnimaRPG game;
     private Viewport viewport;
     public Stage stage;
@@ -64,7 +64,7 @@ public class Menu implements Screen {
     }
 
     private int aktiverReiter;
-    public Menu(final AnimaRPG game) {
+    public MenuScreen(final AnimaRPG game) {
         this.game = game;
         skin =game.getAssetManager().getSkin();
         width = game.W_WIDTH * 2;

@@ -296,7 +296,7 @@ public class Held extends HumanoideSprites implements Serializable{
                 break;
 
         }
-        meleeFixtureDefinieren(richtungsVector);
+        meleeFixtureDefinieren(richtungsVector,15);
         // TODO ALle FixturesErzeugungenn (Melee,Bow, Cast und Thrust, in HumanoideSprites als Methode auslagern.
         /*circleShape.setPosition(richtungsVector);
         FixtureDef fdefAttack = new FixtureDef();

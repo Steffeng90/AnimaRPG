@@ -1,6 +1,5 @@
 package com.mygdx.anima.tools.listener;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -10,22 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.anima.AnimaRPG;
-import com.mygdx.anima.screens.Menu;
-import com.mygdx.anima.screens.StartScreen;
-import com.mygdx.anima.screens.menuReiter.CharakterReiter;
-import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
-import com.mygdx.anima.screens.menuReiter.InventarReiter;
-import com.mygdx.anima.screens.menuReiter.ZauberReiter;
+import com.mygdx.anima.screens.MenuScreen;
 
 /**
  * Created by Steffen on 05.12.2016.
  */
 
 public class HauptmenuListener extends InputListener {
-    Menu menu;
+    MenuScreen menu;
     Skin skin;
     AnimaRPG game;
-    public HauptmenuListener(Menu menu,Skin skin,AnimaRPG game){
+    public HauptmenuListener(MenuScreen menu, Skin skin, AnimaRPG game){
     this.skin=skin;
         this.menu=menu;
         this.game=game;

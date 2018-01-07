@@ -200,9 +200,4 @@
    </properties>
   </object>
  </objectgroup>
- <layer name="rand" width="60" height="50" visible="0">
-  <data encoding="base64" compression="zlib">
-   eJztmEuOwyAMQHsJ7n8Csp+5E913VqNIg8aybOIPJgnhSahVocGvfAx9vRaLxeL+5OQvW+KfzdWdRUmyUmOn6t438pViib2nr3RO9eIM3/r9TMy1aOeRvtDnDV4rZULfDewXeH+A9drnwu9KiiVubTxwbKsvFQu3T3LA/VVaonzxGq2uGTlbYxmBxpfLbXhMrozWl/M5yvNXQeqbBT6z+Epc74LE9y5zVcKRx0xju8Pl9lp3lqvkzOF5Ls7h8J41ypdybJ0zLO74bM+dbaLJjCMXM2yj/S+gEJ+1zsaRvtbzp6Zk9L5174nCetexjAfsi1rPW7LFY41B0haOkcYXzl08p0ry7Q0a4P8GkvXnGVd8r6sU9Hnk3gX7khRLHK09YnTu9Yybpo/ec8Yax4j+IuaMJ45ZzqwtZjufH/Gksd2prpG5/UrAXPcUnjSfd0bmPWvpSfQapmLWuPR2ps7pPZA64fqv9F++E93GCz6j93DWxAjbfoBrlG9FMtYR6w633Z1//gpV3xNqrOH9XNq3x9fzLA/QXdun1jej3zRyj25RjL470v0Xvh/th/Hm59H5tQdXjGmxWDyDX3TgzRE=
-  </data>
- </layer>
 </map>

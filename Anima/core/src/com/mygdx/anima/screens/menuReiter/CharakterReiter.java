@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.anima.screens.Menu;
+import com.mygdx.anima.screens.MenuScreen;
 import com.mygdx.anima.sprites.character.Held;
 
 import static com.mygdx.anima.AnimaRPG.getHeld;
@@ -20,9 +20,9 @@ public class CharakterReiter extends Group {
     public ScrollPane pane;
     public Table charLinks, charRechts;
     private float width, height, linksWidth, rechtsWidth,reiterWidth,zeilenHeight,zahlenwertWidth,attributWidth;
-    public Menu menu;
+    public MenuScreen menu;
     private Held held;
-    public CharakterReiter(Menu menu){
+    public CharakterReiter(MenuScreen menu){
         this.menu=menu;
         this.held=getHeld();
         this.width=menu.getWidth();
@@ -127,8 +127,8 @@ public class CharakterReiter extends Group {
         scrollPane.setScrollbarsOnTop(false);
         scrollPane.setupFadeScrollBars(0, 0);
         scrollPane.layout();
-        scrollPane.setScrollPercentY(getScrollbarposition());
-        scrollPane.layout();
+        //scrollPane.setScrollPercentY(getScrollbarposition());
+        //scrollPane.layout();
         this.addActor(scrollPane);
         pane=scrollPane;
 //        menu.zurueckButtonErzeugen();
