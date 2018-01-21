@@ -24,6 +24,7 @@ import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
+import com.mygdx.anima.screens.menuReiter.QuestReiter;
 import com.mygdx.anima.screens.menuReiter.ZauberReiter;
 import com.mygdx.anima.tools.Controller;
 import com.mygdx.anima.tools.listener.HauptmenuListener;
@@ -48,6 +49,7 @@ public class MenuScreen implements Screen {
     public GegenstandReiter ggstReiter;
     public InventarReiter invReiter;
     public ZauberReiter zauberReiter;
+    public QuestReiter questReiter;
 
     public int getAktiverReiter() {
         return aktiverReiter;
@@ -119,6 +121,7 @@ public class MenuScreen implements Screen {
         TextButton skillReiterButton= new TextButton("Zauber", skin);
         TextButton inventarReiterButton= new TextButton("Ausruestung", skin);
         TextButton nutzbareItemsReiterButton= new TextButton("Verwendbares", skin);
+        TextButton questButton=new TextButton("Quests", skin);
         TextButton hautpmenueButton=new TextButton("Hauptmenue", skin);
 
         //Listener hinzufügen
@@ -126,6 +129,7 @@ public class MenuScreen implements Screen {
         skillReiterButton.addListener(new ReiterButtonListener(this,2));
         inventarReiterButton.addListener(new ReiterButtonListener(this,3));
         nutzbareItemsReiterButton.addListener(new ReiterButtonListener(this,4));
+        questButton.addListener(new ReiterButtonListener(this,5));
         hautpmenueButton.addListener(new HauptmenuListener(this,skin,game));
 
         // Farblich markieren
@@ -135,19 +139,22 @@ public class MenuScreen implements Screen {
             case 2: skillReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
             case 3: inventarReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
             case 4: nutzbareItemsReiterButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
+            case 5: questButton.setColor(com.badlogic.gdx.graphics.Color.OLIVE);break;
             default: break;
         }
 
         //Zur Tabelle hinzufügen
-        reiterTable.add(charakterReiterButton).size(reiterWidth, height / 5f);
+        reiterTable.add(charakterReiterButton).size(reiterWidth, height / 6f);
         reiterTable.row();
-        reiterTable.add(skillReiterButton).size(reiterWidth, height / 5f);
+        reiterTable.add(skillReiterButton).size(reiterWidth, height / 6f);
         reiterTable.row();
-        reiterTable.add(inventarReiterButton).size(reiterWidth, height / 5f);
+        reiterTable.add(inventarReiterButton).size(reiterWidth, height / 6f);
         reiterTable.row();
-        reiterTable.add(nutzbareItemsReiterButton).size(reiterWidth, height / 5f);
+        reiterTable.add(nutzbareItemsReiterButton).size(reiterWidth, height / 6f);
         reiterTable.row();
-        reiterTable.add(hautpmenueButton).size(reiterWidth, height / 5f);
+        reiterTable.add(questButton).size(reiterWidth, height / 6f);
+        reiterTable.row();
+        reiterTable.add(hautpmenueButton).size(reiterWidth, height / 6f);
         return reiterTable;
     }
     public Skin getSkin() {return skin;}
@@ -163,6 +170,7 @@ public class MenuScreen implements Screen {
     public void negiereAuswahlAllerReiter(){
         getHeld().getZauberList().resetAuswahl();
         getHeld().getHeldenInventar().resetAuswahl();
+        getHeld().getQuestlog().resetAuswahl();
     }
     @Override public void resize(int width, int height) {viewport.update(width, height);}
     @Override public void pause() {    }

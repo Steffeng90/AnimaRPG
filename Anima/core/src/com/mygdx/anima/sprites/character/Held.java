@@ -1,6 +1,7 @@
 package com.mygdx.anima.sprites.character;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -52,6 +53,7 @@ public class Held extends HumanoideSprites implements Serializable{
     private int aktuellerZauberInt;
     private TextureRegion dialogBild;
     private boolean[] eventList;
+    private QuestLog questlog;
     //Dieser Wert wird über Methoden übergeben, um den Held neu zu positionieren, bei Kartenwechsel
     private Vector2 heldPosition;
     //Statistik-Werte
@@ -76,6 +78,7 @@ public class Held extends HumanoideSprites implements Serializable{
         geoeffneteTruhen= new Array<SchatztruhenSpeicherObjekt>();
         heldenInventar=new InventarList();
         zauberList=new ZauberList();
+        questlog=new QuestLog();
         setEventList();
         // Gameplay-Variablen
         setErfahrungsstufen();
@@ -123,7 +126,7 @@ public class Held extends HumanoideSprites implements Serializable{
         geoeffneteTruhen= new Array<SchatztruhenSpeicherObjekt>();
         heldenInventar=new InventarList();
         zauberList=new ZauberList();
-
+        questlog=new QuestLog();
         // Nicht löschen: setSchadenZauber();
         // TODO RUESTUNG durch ITEMS definieren
 
@@ -168,6 +171,8 @@ public class Held extends HumanoideSprites implements Serializable{
         for(int i = 0; i<gameData.geoeffneteTruhenMaps.length; i++)
         {   geoeffneteTruhen.add(new SchatztruhenSpeicherObjekt(gameData.geoeffneteTruhenMaps[i],gameData.geoeffneteTruhenId[i]));
             }
+        // Questlog auslesen
+        questlog=gameData.questlog;
         // Gespeicherte Items auslesen und wieder anziehen
         for(int i = 0; i<gameData.waffenNah.length; i++)
         {   ItemGenerator.generateItem(screen,0f,0f,gameData.waffenNah[i]);
@@ -710,11 +715,28 @@ public class Held extends HumanoideSprites implements Serializable{
         this.eventList = eventList;
     }
     public void setEventList() {
-        this.eventList=new boolean[50];
+        this.eventList=new boolean[60000];
 
-        for(int i=0;i<50;i++){
+        for(int i=0;i<eventList.length;i++){
             eventList[i]=false;
         }
         eventList[1]=true;
+    }
+    public boolean getEventListEntryValue(int i){
+        return eventList[i];
+    }
+    public void changeEventListEntry(int i, boolean wert,Playscreen screen){
+        this.eventList[i]=wert;
+        if(wert==true){
+            this.questlog.checkEvents(i,screen);
+        }
+
+    }
+    public QuestLog getQuestlog() {
+        return questlog;
+    }
+
+    public void setQuestlog(QuestLog questlog) {
+        this.questlog = questlog;
     }
 }

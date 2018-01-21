@@ -1,16 +1,15 @@
 package com.mygdx.anima.scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -18,71 +17,71 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.anima.AnimaRPG;
 import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.screens.actors.MyDialog;
-import com.mygdx.anima.sprites.character.items.ItemSprite;
 
 /**
  * Created by Steffen on 18.11.2016.
  */
 
-public class ItemFundInfo implements Disposable {
+public class QuestInfo implements Disposable {
 
     //Scene2D.ui Stage and its own Viewport for HUD
     public Stage stage;
     public Playscreen screen;
     private Viewport viewport;
-    private boolean geklickt;
     private Skin skin;
-    public float windowTimer;
+    public float windowTimer,positionX,positionY;
     //Scene2D widgets
-    private float infoWidth,infoHeight,iconSize;
+    private float infoWidth,infoHeight;
+    private String nachfolger;
+    public boolean readyForDispose;
+    MyDialog dialog;
 
-    public ItemFundInfo(final Playscreen screen, SpriteBatch sb,ItemSprite item) {
+    public QuestInfo(final Playscreen screen, SpriteBatch sb, String questName, String questStatus) {
         this.screen = screen;
-        this.screen.getGame().getAssetManager().get("audio/sounds/itemFund.wav", Sound.class).play(0.5f);
+        // AnimaRPG.assetManager.get("audio/sounds/itemFund.wav", Sound.class).play();
         infoWidth = (float) (AnimaRPG.W_WIDTH * 2);
         infoHeight = (float) (AnimaRPG.W_Height * 2);
-        iconSize=80f;
+        positionY=-infoHeight / 6;
+        positionX=infoWidth/3;
         viewport = new FitViewport(infoWidth, infoHeight, new OrthographicCamera());
         stage = new Stage(viewport, sb);
-        Gdx.input.setInputProcessor(stage);
         skin = screen.getGame().getAssetManager().getSkin();
 
         windowTimer = 0;
-        geklickt = false;
-        MyDialog dialog = new MyDialog("Gegenstand gefunden", skin, "dialog") {
+        dialog = new MyDialog(questStatus, skin, "default") {
             public void result(Object obj) {
+                System.out.println("result " + obj);
             }
         };
+        Label l1 = new Label(questName, skin);
+        l1.setWrap(true);
+//        l1.setAlignment(Align.topLeft);
+        l1.setAlignment(Align.center);
+        dialog.getContentTable().add(l1);//.size((infoWidth / 2) - 45f, infoHeight / 5);
+        dialog.setSize(infoWidth/3f, infoHeight / 6);
+        dialog.setPosition(positionX, positionY);
 
-        Table dialogTable=new Table();
-        Label l1 = new Label(item.name , skin);
-        l1.setWrap(true);l1.setAlignment(Align.center);
-        Image img=new Image(item.texture);
-
-        dialogTable.add(l1).size(iconSize*1.2f,iconSize);
-        dialogTable.add(img).size(iconSize,iconSize).padTop(5f);
-        dialog.add(dialogTable);
-        dialog.show(stage);
-        stage.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                //geklickt = true;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (windowTimer >= 0.4f) {
-                    geklickt = true;
-                }
-                return true;
-            }
-        });
+        //Mit dieser Methode kann das Fesnter auch aus der Stage fliegen.
+        dialog.setKeepWithinStage(false);
+        stage.addActor(dialog);
     }
     public void update(float dt){
-        windowTimer+=dt;
+        if(positionY<0 / 6 && windowTimer<=2){
+            positionY+=2f;
+        }else if( windowTimer<=2){
+            windowTimer+=dt;
+        }
+        else{
+            positionY-=2f;
+        }
+        dialog.setPosition(positionX,positionY);
+        if(windowTimer>2 && positionY<-infoHeight / 6){
+            this.readyForDispose=true;
+        }
         }
 
     public void draw() {
+        stage.act();
         stage.draw();
     }
     @Override
@@ -94,7 +93,5 @@ public class ItemFundInfo implements Disposable {
     public void resize(int width,int height){
         viewport.update(width,height);
     }
-    public boolean isGeklickt() {
-        return geklickt;
-    }
+
 }

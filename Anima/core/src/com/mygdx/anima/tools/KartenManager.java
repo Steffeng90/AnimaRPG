@@ -102,7 +102,7 @@ public class KartenManager {
     public void isEnemyinRange(EnemyHumanoid enemyHumanoid) {
         if (enemyHumanoid.getX() < cameraRight + enemyActivePuffer && enemyHumanoid.getX() > cameraLeft - enemyActivePuffer
                 && enemyHumanoid.getY() < cameraTop + enemyActivePuffer && enemyHumanoid.getY() > cameraBottom - enemyActivePuffer) {
-            if (enemyHumanoid.b2body.isActive() == false && ((enemyHumanoid.aktivierungsEvent!=0 && AnimaRPG.getHeld().getEventList()[enemyHumanoid.aktivierungsEvent]==true) || enemyHumanoid.aktivierungsEvent==0))
+            if (enemyHumanoid.b2body.isActive() == false && ((enemyHumanoid.aktivierungsEvent!=0 && AnimaRPG.getHeld().getEventListEntryValue(enemyHumanoid.aktivierungsEvent)==true) || enemyHumanoid.aktivierungsEvent==0))
             {
                 enemyHumanoid.b2body.setActive(true);
             }

@@ -1,6 +1,7 @@
 package com.mygdx.anima.tools;
 
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.QuestLog;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
 import com.mygdx.anima.sprites.character.items.Amulett;
 import com.mygdx.anima.sprites.character.items.Brust;
@@ -32,6 +33,7 @@ public class GameData implements Serializable{
             angelegtAmuleettIndex, angelegtHandschuheIndx, angelegtSchuheIndex;
     public String zauberslot1,zauberslot2,zauberslot3,zauberslot4;
     public String[] waffenNah,waffenFern,brust,helm,handschuhe,schuhe,amulett,zauber;
+    public QuestLog questlog;
     public int[] geoeffneteTruhenMaps,geoeffneteTruhenId;
     public boolean[] eventArray;
     public GameData()
@@ -157,6 +159,8 @@ public class GameData implements Serializable{
                 angelegtAmuleettIndex=i;
             }
         }
+        // Questlog
+        this.questlog=getHeld().getQuestlog();
 
     }
     public byte[] serialize( ) throws IOException {

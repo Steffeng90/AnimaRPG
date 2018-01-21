@@ -126,10 +126,11 @@ public class Schatztruhe extends InteraktivesObjekt implements Pool.Poolable{
                 if(openTruhe.isAnimationFinished(stateTimer)){
                     runOpenAnimation=false;closed=false;
                     if(nachbedtrue!=0){
-                        getHeld().getEventList()[nachbedtrue]=true;
+                        getHeld().changeEventListEntry(nachbedtrue,true,screen);
+
                     }
                     if(nachbedfalse!=0){
-                        getHeld().getEventList()[nachbedfalse]=false;
+                        getHeld().changeEventListEntry(nachbedfalse,false,screen);
                     }
                     if(truhentyp==1 || truhentyp==2){
                         screen.setCurrentItemsprite(ItemGenerator.generateItem(screen,getX(),getY()+getHeight()/2,inhalt));

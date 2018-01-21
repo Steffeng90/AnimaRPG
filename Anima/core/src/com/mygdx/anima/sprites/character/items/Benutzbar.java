@@ -17,9 +17,9 @@ public class Benutzbar extends Item {
         switch (kategorie)
         {
             case 1: this.wertKategorie="Lebenspunkte";break;
-            case 2: this.wertKategorie="maximalen \nLebenspunkte";break;
+            case 2: this.wertKategorie="maximalen Lebenspunkte";break;
             case 3: this.wertKategorie="Magiepunkte";break;
-            case 4: this.wertKategorie="maximalen \nMagiepunkte";break;
+            case 4: this.wertKategorie="maximalen Magiepunkte";break;
             case 5: this.wertKategorie="Kraft";break;
             case 6: this.wertKategorie="Geschicklichkeit";break;
             case 7: this.wertKategorie="Zauberkraft";break;
@@ -28,8 +28,8 @@ public class Benutzbar extends Item {
         }
         kategoriezahl=kategorie;
         this.wertUpgradeZahl=wertZahl;
-        beschreibung="Steigert die \n"+
-                wertKategorie+" beim \nBenutzen um "+wertUpgradeZahl+".";
+        beschreibung="Steigert die "+
+                wertKategorie+" beim Benutzen um "+wertUpgradeZahl+".";
     }
     public void benutzen(){
         switch(kategoriezahl) {

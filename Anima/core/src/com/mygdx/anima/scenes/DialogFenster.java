@@ -41,51 +41,6 @@ public class DialogFenster implements Disposable {
     private float infoWidth,infoHeight;
     private String nachfolger;
     public TextureRegion profileImage;
-/*
-    public DialogFenster(final Playscreen screen, SpriteBatch sb, String nachfolger,String sprecher,String inhalt) {
-        this.screen = screen;
-        this.nachfolger=nachfolger;
-        // AnimaRPG.assetManager.get("audio/sounds/itemFund.wav", Sound.class).play();
-        infoWidth = (float) (AnimaRPG.W_WIDTH * 2);
-        infoHeight = (float) (AnimaRPG.W_Height * 2);
-        viewport = new FitViewport(infoWidth, infoHeight, new OrthographicCamera());
-        stage = new Stage(viewport, sb);
-        Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("ui-skin/uiskin.json"));
-
-        windowTimer = 0;
-        geklickt = false;
-        MyDialog dialog = new MyDialog(sprecher, skin, "dialog") {
-            public void result(Object obj) {
-            }
-        };
-        Label l1 = new Label(inhalt , skin);
-        l1.setWrap(true);
-        l1.setAlignment(Align.topLeft);
-        Image img=new Image(getHeld().getDialogbild());
-        img.setSize(48f,62f);
-        dialog.getContentTable().add(img).size(48f,62f);
-        dialog.getContentTable().add(l1).size((infoWidth/2)-80f,infoHeight/4);
-        dialog.setSize(infoWidth/2f,infoHeight/3);
-        dialog.setPosition(infoWidth/4,0);
-        stage.addActor(dialog);
-
-        stage.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                //geklickt = true;
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (windowTimer >= 0.4f) {
-                    geklickt = true;
-                }
-                return true;
-            }
-        });
-    }
-    */
     public DialogFenster(final Playscreen screen, SpriteBatch sb, String nachfolger, String sprecher, String inhalt,String icon) {
         this.screen = screen;
         this.nachfolger=nachfolger;

@@ -23,10 +23,12 @@ import com.mygdx.anima.scenes.AnzeigenDisplay;
 import com.mygdx.anima.scenes.DialogFenster;
 import com.mygdx.anima.scenes.ItemFundInfo;
 import com.mygdx.anima.scenes.LevelUpInfo;
+import com.mygdx.anima.scenes.QuestInfo;
 import com.mygdx.anima.scenes.ZauberFundInfo;
 import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
+import com.mygdx.anima.sprites.character.QuestGenerator;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.NPCPool;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
@@ -76,6 +78,15 @@ public class Playscreen implements Screen{
     ZauberFundInfo zauberFundInfoWindow;
     DialogFenster activeDialog;
     private LevelUpInfo levelUpWindow;
+
+    private QuestInfo questInfo;
+    public QuestInfo getQuestInfo() {
+        return questInfo;
+    }
+    public void setQuestInfo(QuestInfo questInfo){
+        this.questInfo=questInfo;
+    }
+
     BitmapFont bf;
 
 
@@ -168,7 +179,7 @@ public class Playscreen implements Screen{
         creator = new B2WorldCreator(this);
 
         //Test-Events anpassen:
-        spieler.getEventList()[7]=true;
+        spieler.changeEventListEntry(7,true,this);
 
         //TestZauber erzeugen
         ZauberGenerator.generateZauber(this,0,0,"staerkung1");
@@ -207,6 +218,9 @@ public class Playscreen implements Screen{
         ItemGenerator.generateItem(this,0,0,"kopf3");
         ItemGenerator.generateItem(this,0,0,"kopf4");
         ItemGenerator.generateItem(this,0,0,"kopf5");
+        QuestGenerator.generateQuest(this,game.batch,1);
+        QuestGenerator.generateQuest(this,game.batch,2);
+        QuestGenerator.generateQuest(this,game.batch,3);
     }
     // Hier sind die Gemeinsamkeiten der beiden Konstruktoren ausgelagert
     public void defineScreen(AnimaRPG game,int kartenID){
@@ -236,6 +250,7 @@ public class Playscreen implements Screen{
         bf.setUseIntegerPositions(false);
         bf.getData().setScale(1f/AnimaRPG.W_WIDTH,1f/AnimaRPG.W_Height);
 
+        questInfo=new QuestInfo(this,  game.batch, "Erster Quest", "Quest aufgenommen");
     }
     @Override
     public void show() {
@@ -257,7 +272,7 @@ public class Playscreen implements Screen{
 
             renderer.render();
             // Render-Linien
-            b2dr.render(world, gamecam.combined);
+            //b2dr.render(world, gamecam.combined);
 
             game.batch.setProjectionMatrix(gamecam.combined);
 
@@ -424,6 +439,9 @@ public class Playscreen implements Screen{
                     }
                     break;
             }
+        if(questInfo!=null){
+            questInfo.draw();
+        }
             anzeige.draw();
             controller.draw();
         }
@@ -476,15 +494,20 @@ public class Playscreen implements Screen{
         }
     }
     public void update(float dt) {
-                handleInput(dt);
-                world.step(1 / 60f, 6, 2);
-                anzeige.update(dt, spieler);
-                gamecam.update();
-                renderer.setView(gamecam);
-                if (spieler.getCurrentHitpoints() > 0) {
-                    gamecam.position.set(spieler.b2body.getPosition(), 0);
-                    kartenManager.justiereCam(gamecam);
-                }
+        try {
+            handleInput(dt);
+            world.step(1 / 60f, 6, 2);
+            anzeige.update(dt, spieler);
+            gamecam.update();
+            renderer.setView(gamecam);
+            if (spieler.getCurrentHitpoints() > 0) {
+                gamecam.position.set(spieler.b2body.getPosition(), 0);
+                kartenManager.justiereCam(gamecam);
+            }
+        }
+        catch (Exception e){
+            System.out.println("Fehler beim Update des Playscreen");
+        }
         int len = activeTruhen.size;
         for (int i = len; --i >= 0;) {
             Schatztruhe truhe;
@@ -719,6 +742,13 @@ public class Playscreen implements Screen{
                 }
                 if (!spieler.destroyed)
                     spieler.update(dt);
+        if(questInfo!=null && !questInfo.readyForDispose){
+            questInfo.update(dt);
+        } else if(questInfo!=null && questInfo.readyForDispose){
+            questInfo.dispose();
+            questInfo=null;
+        }
+
         controller.update();
     }
     @Override
@@ -729,11 +759,15 @@ public class Playscreen implements Screen{
     }
 
     @Override
-    public void pause(    ) {}
+    public void pause() {
+        System.out.println("Pause durchgeführt");
+    }
     @Override
-    public void resume() {    }
+    public void resume() {
+        System.out.println("Resume durchgeführt");
+         }
     @Override
-    public void hide() {  }
+    public void hide() { }
     @Override
     public void dispose() {
         int size= activeSchadenlabel.size;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="68">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="69">
  <tileset firstgid="1" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/town.png" width="512" height="512"/>
  </tileset>
@@ -127,6 +127,15 @@
     <property name="vorbed" value="2"/>
    </properties>
    <polyline points="0,0 239.333,0"/>
+  </object>
+  <object id="68" x="290" y="317">
+   <properties>
+    <property name="dialog" value="1"/>
+    <property name="nachbedfalse" value="2"/>
+    <property name="nachbedtrue" value="50001"/>
+    <property name="vorbed" value="5"/>
+   </properties>
+   <polyline points="0,0 92.3333,0"/>
   </object>
  </objectgroup>
  <objectgroup name="schatztruhen">

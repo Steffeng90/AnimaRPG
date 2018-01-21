@@ -1,0 +1,64 @@
+﻿{
+  "quests": [
+      {
+        "id":1,
+        "name":"Ein neuer Weg",
+        "questAktivierungsEvent":1,
+        "belohnung":"ABC",
+        "questParts":[
+          {
+            "abschlussEvent":5,
+            "inhalt": "Du bist gerade noch aus dem Hinterhalt entkommen, der dein Leben beendet sollte. Und nun stehst du alleine da. Zum ersten Mal bist du wirklich auf dich selbst gestellt. Im nächsten Dorf solltest du Informationen finden"
+          },
+          {
+            "abschlussEvent":50001,
+            "inhalt": "Das Dorf in dem du angekommen bist ist von Räuber überrannt worden. Suche im Dorf nach Spuren der Bewohner."
+          },
+          {
+            "abschlussEvent":6,
+            "inhalt": "Die Dorfbewohner sind kaum in der Lage dir Informationen zu geben... Es ist wichtig, dass du das Dorf rettest, danach wird dir der Dorfälteste bestimmt die Informationen geben, die du benötigst. Suche im Westen der Dorfs nach einer Spur, die dich zum Lager der Banditen bringt."
+          },
+          {
+            "abschlussEvent":10,
+            "inhalt": "Ein Unbekannter gab dir den Hinweis auf einen Zauber, der in einer Höhle versteckt ist. Dieser wird dir sicherlich im Kampf helfen. Danach kannst du es mit Gladin aufnehmen."
+          },
+          {
+            "abschlussEvent":11,
+            "inhalt": "Du hast die Riesin Gladin besiegt und dadurch den Angriff der Räuber vereitelt. Gehe zurück ins Dorf und sprich mit dem Dorfältesten"
+          }
+        ]
+      },
+      {
+        "id":2,
+        "name":"Ein neuer Weg",
+        "questAktivierungsEvent":10,
+        "belohnung":"ABC",
+        "questParts":[
+          {
+            "abschlussEvent":1,
+            "inhalt": "Das Juwel einer Dorfbewohnerin wurd gestohlen. Sie sagt sie hat mitbekommen, dass es im Süden des Dorfes auf ein Schiff gebracht wurde. Finde das Amulett und Sie wird dich Belohnen"
+          },
+          {
+            "abschlussEvent":1,
+            "inhalt": "Du hast das Juwel der Dorfbewohnerin gefunden. Bring es zu ihr zurück, um eine Belohnung zu erhalten."
+          }
+          ]
+      },
+    {
+      "id":3,
+      "name":"Ein neuer Weg",
+      "questAktivierungsEvent":3,
+      "belohnung":"ABC",
+      "questParts":[
+        {
+          "abschlussEvent":1,
+          "inhalt": "Das Juwel einer Dorfbewohnerin wurd gestohlen. Sie sagt sie hat mitbekommen, dass es im Süden des Dorfes auf ein Schiff gebracht wurde. Finde das Amulett und Sie wird dich Belohnen"
+        },
+        {
+          "abschlussEvent":1,
+          "inhalt": "Du hast das Juwel der Dorfbewohnerin gefunden. Bring es zu ihr zurück, um eine Belohnung zu erhalten."
+        }
+      ]
+    }
+  ]
+}

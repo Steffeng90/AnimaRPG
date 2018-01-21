@@ -157,7 +157,7 @@ public class MyAssetManager extends AssetManager {
         pfeilLinks=new TextureRegion(get("objekte/arrow.png",Texture.class),5,0,53,9);
         pfeilUp=new TextureRegion(get("objekte/arrow.png",Texture.class),15,20,9,53);
         pfeilDown=new TextureRegion(get("objekte/arrow.png",Texture.class),5,20,9,53);
-        //SchatztruhenTextures
+        this.finishLoading();
     }
         public TextureAtlas loadHeroTextureAtlas(String quelle){
             load(quelle+".pack", TextureAtlas.class);

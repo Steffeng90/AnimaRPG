@@ -2,6 +2,7 @@ package com.mygdx.anima.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -57,6 +58,7 @@ public class StartScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.getAssetManager().get("audio/sounds/reiter_wechsel.ogg", Sound.class).play();
                 game.changeScreen(HandleGameData.laden(game));
 
             }

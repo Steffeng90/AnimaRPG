@@ -90,6 +90,7 @@ public class ZauberReiter extends Group {
         if(auswahlZauber !=null) {
             Label label1 = new Label(auswahlZauber.getName(), menu.getSkin());
             Label label2 = new Label(auswahlZauber.getBeschreibung(), menu.getSkin());
+            label2.setWrap(true);
             Label label3 = new Label("Wirkungskraft", menu.getSkin());
             Label label3b = new Label(""+auswahlZauber.getEffektivitaet(), menu.getSkin());
             Label label4 = new Label("Manakosten", menu.getSkin());

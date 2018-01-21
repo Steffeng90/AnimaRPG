@@ -50,13 +50,19 @@ public class DialogArea {
     }
 
     public void checkForEvents(){
-        if(getHeld().getEventList()[vorbed]){
+
+        System.out.println("DialogAreaCheck"+vorbed+"ist auf"+getHeld().getEventListEntryValue(vorbed));
+        if(getHeld().getEventListEntryValue(vorbed)){
+            System.out.println("Diag1");
             createDialog();
+            System.out.println("Diag2");
         }
     }
     public void createDialog(){
         DialogGenerator.generateDialog(screen, screen.getGame().batch, id);
-        getHeld().getEventList()[nachbedfalse]=false;
-        getHeld().getEventList()[nachbedtrue]=true;
+        getHeld().changeEventListEntry(nachbedfalse,false,screen);
+        getHeld().changeEventListEntry(nachbedtrue,true,screen);
+        System.out.println("Dialog erzeugt und Event"+nachbedtrue+"auf true");
+
     }
 }

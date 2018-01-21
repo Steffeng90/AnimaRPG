@@ -7,6 +7,7 @@ import com.mygdx.anima.screens.MenuScreen;
 import com.mygdx.anima.screens.menuReiter.CharakterReiter;
 import com.mygdx.anima.screens.menuReiter.GegenstandReiter;
 import com.mygdx.anima.screens.menuReiter.InventarReiter;
+import com.mygdx.anima.screens.menuReiter.QuestReiter;
 import com.mygdx.anima.screens.menuReiter.ZauberReiter;
 
 /**
@@ -31,6 +32,7 @@ public class ReiterButtonListener extends InputListener {
             case 2:        menu.setAnzeigeGroup(new ZauberReiter(menu));break;
             case 3:        menu.setAnzeigeGroup(new InventarReiter(menu));break;
             case 4:        menu.setAnzeigeGroup(new GegenstandReiter(menu));break;
+            case 5:        menu.setAnzeigeGroup(new QuestReiter(menu));break;
         }
         menu.setChangeReiter(true);
         return true;

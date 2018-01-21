@@ -175,7 +175,7 @@ public class B2WorldCreator {
                         {
                             vorbedfalse= Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
                             vorbedtrue= Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                            if(getHeld().getEventList()[vorbedfalse]==false && getHeld().getEventList()[vorbedtrue]==true){
+                            if(getHeld().getEventListEntryValue(vorbedfalse)==false && getHeld().getEventListEntryValue(vorbedtrue)==true){
                                 EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
                                         object.getProperties().get("dialog").toString());
                             }
@@ -183,13 +183,13 @@ public class B2WorldCreator {
                         else if(object.getProperties().containsKey("vorbedfalse"))
                         {
                             vorbedfalse= Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
-                            if(getHeld().getEventList()[vorbedfalse]==false){
+                            if(getHeld().getEventListEntryValue(vorbedfalse)==false){
                                 EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
                                         object.getProperties().get("dialog").toString());
                             }
                         }else if(object.getProperties().containsKey("vorbedtrue")){
                             vorbedtrue= Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                            if(getHeld().getEventList()[vorbedtrue]==true){
+                            if(getHeld().getEventListEntryValue(vorbedtrue)==true){
                                 EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
                                         object.getProperties().get("dialog").toString());
                             }
@@ -203,65 +203,65 @@ public class B2WorldCreator {
                     else if(object.getProperties().containsKey("vorbedfalse") && object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("nachbed") && object.getProperties().containsKey("aktivEvent")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true && getHeld().getEventList()[vorbedfalse]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true && getHeld().getEventListEntryValue(vorbedfalse)==true){
                             EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
                         }}
                     else if(object.getProperties().containsKey("vorbedfalse") && object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("nachbed")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true && getHeld().getEventList()[vorbedfalse]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true && getHeld().getEventListEntryValue(vorbedfalse)==true){
                             EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),0);
                         }}
                     else if(object.getProperties().containsKey("vorbedfalse") && object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("aktivEvent")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true && getHeld().getEventList()[vorbedfalse]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true && getHeld().getEventListEntryValue(vorbedfalse)==true){
                             EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
                         }}
                     else if(object.getProperties().containsKey("vorbedfalse") && object.getProperties().containsKey("vorbedtrue")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true && getHeld().getEventList()[vorbedfalse]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true && getHeld().getEventListEntryValue(vorbedfalse)==true){
                             EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,0);
                         }}
                     else if(object.getProperties().containsKey("vorbedfalse") && !object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("nachbed") && object.getProperties().containsKey("aktivEvent")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
-                        if(getHeld().getEventList()[vorbedfalse]==false){
+                        if(getHeld().getEventListEntryValue(vorbedfalse)==false){
                             EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
                         }}
                     else if(object.getProperties().containsKey("vorbedfalse") && !object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("nachbed")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
-                        if(getHeld().getEventList()[vorbedfalse]==false){
+                        if(getHeld().getEventListEntryValue(vorbedfalse)==false){
                             EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),0);
                         }}
                     else if(object.getProperties().containsKey("vorbedfalse") && !object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("aktivEvent")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
-                        if(getHeld().getEventList()[vorbedfalse]==false){
+                        if(getHeld().getEventListEntryValue(vorbedfalse)==false){
                             EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
                         }}
                     else if(object.getProperties().containsKey("vorbedfalse") &&!object.getProperties().containsKey("vorbedtrue")) {
                         vorbedfalse=Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
-                        if(getHeld().getEventList()[vorbedfalse]==false){
+                        if(getHeld().getEventListEntryValue(vorbedfalse)==false){
                             EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,0);
                         }}
                     else if(object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("nachbed") && object.getProperties().containsKey("aktivEvent")) {
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true){
                             EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
                         }}
                     else if(object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("nachbed")) {
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true){
                             EnemyGenerator.generateEnemy(screen,(rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),Integer.parseInt(object.getProperties().get("nachbed").toString()),0);
                         }}
                     else if(object.getProperties().containsKey("vorbedtrue") && object.getProperties().containsKey("aktivEvent")) {
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true){
                             EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,Integer.parseInt(object.getProperties().get("aktivEvent").toString()));
                         }}
                     else if(object.getProperties().containsKey("vorbedtrue")) {
                         vorbedtrue=Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
-                        if(getHeld().getEventList()[vorbedtrue]==true){
+                        if(getHeld().getEventListEntryValue(vorbedtrue)==true){
                             EnemyGenerator.generateEnemy(screen, (rect.getX()+(rect.getWidth()/2))/ AnimaRPG.PPM, (rect.getY()+(rect.getHeight()/2)) / AnimaRPG.PPM,object.getProperties().get("typ").toString(),0,0);
                         }}
                     else {
@@ -298,14 +298,14 @@ public class B2WorldCreator {
                         int typ = Integer.valueOf((String) object.getProperties().get("typ"));
                         Rectangle rect = ((RectangleMapObject) object).getRectangle();
                         Schatztruhe truhe = truhenPool.obtain();
-                        if (vorbed == 0 || (vorbed != 0 && getHeld().getEventList()[vorbed] == true)) {
+                        if (vorbed == 0 || (vorbed != 0 && getHeld().getEventListEntryValue(vorbed) == true)) {
                             truhe.init(screen, rect.getX() / AnimaRPG.PPM, rect.getY() / AnimaRPG.PPM, typ, truhenId, inhalt, isClosed, nachbedfalse, nachbedtrue);
                             activeTruhen.add(truhe);
                         }
                     } else {
                         if (object.getProperties().containsKey("vorbed")) {
                             int vorbed = Integer.parseInt(object.getProperties().get("vorbed").toString());
-                            if (getHeld().getEventList()[vorbed] == false) {
+                            if (getHeld().getEventListEntryValue(vorbed) == false) {
                                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                                 SteinBlock block= steinblockPool.obtain();
                                 if (object.getProperties().containsKey("typ")) {

@@ -78,7 +78,7 @@ public class CreditScreen implements Screen {
         creditsButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.getAssetManager().get("audio/sounds/turn_page.wav", Sound.class).play();
+                game.getAssetManager().get("audio/sounds/reiter_wechsel.ogg", Sound.class).play();
                 //game.closeScreen();
                 game.changeScreen(new StartScreen(game));
                 dispose();}

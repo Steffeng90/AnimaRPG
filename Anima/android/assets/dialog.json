@@ -37,64 +37,78 @@
     },
     {
       "id": 6,
-      "sprecher": "Dorfbewohner1",
-      "inhalt": "Wer seid ihr? Ihr seht nicht aus, wie all die anderen Räuber.Seid ihr hier um uns zu helfen?",
+      "sprecher": "Dorfältester",
+      "inhalt": "Wer seid ihr? Ihr seht nicht aus, wie all die anderen Räuber. Seid ihr hier um uns zu helfen?",
       "nachfolger":7,
       "icon":"npc1"
     },
     {
       "id": 7,
       "sprecher": "Held",
-      "inhalt": "Nein, ich bin keiner dieser Räuber. Aber ich verstehe nicht. Woher kommen all diese Banditen, und warum greifen sie ein ganzes Dorf an?.",
-      "nachfolger":8,
+      "inhalt": "Nein, ich bin keiner dieser Räuber. Ich habe selbst nicht erwartet hier angegriffen zu werden.",
+      "nachfolger":70001,
       "icon":"held"
     },
     {
+      "id": 70001,
+      "sprecher": "Held",
+      "inhalt": "Woher kommen all diese Banditen, und warum greifen sie ein ganzes Dorf an?.",
+      "nachfolger":80001,
+      "icon":"held"
+    },
+    {
+      "id": 80001 ,
+      "sprecher": "Dorfältester",
+      "inhalt": "Wir hörten sie haben einen neuen Hauptmann. Gladin heißt er. Sie haben sich über ihn unterhalten, scheinbar",
+      "nachfolger":8,
+      "icon":"npc1"
+    },
+    {
       "id": 8 ,
-      "sprecher": "Dorfbewohner1",
-      "inhalt": "Wir hörten sie haben einen neuen Hauptmann. Gladin heisst er. Sie haben sich über ihn unterhalten, scheinbar ist er grössenwahnsinnig und will sein eigenes Reich gründen.",
+      "sprecher": "Dorfältester",
+      "inhalt": "ist er größenwahnsinnig und will sein eigenes Reich gründen. Es heisst er lockt Söldner und sonstigen Abschaum",
       "nachfolger":9,
       "icon":"npc1"
     },
     {
       "id": 9 ,
-      "sprecher": "Dorfbewohner1",
-      "inhalt": "Es heisst er lockt Söldner und sonstigen Abschaum mit ungeheuren Reichtümern sich ihm anzuschliessen. Er muss aufgehalten werden.",
+      "sprecher": "Dorfältester",
+      "inhalt": "mit ungeheuren Reichtümern sich ihm anzuschliessen. Er muss aufgehalten werden.",
       "nachfolger":10,
       "icon":"npc1"
     },
     {
       "id": 10 ,
-      "sprecher": "Dorfbewohner1",
-      "inhalt": "Es heisst er lockt Söldner und sonstigen Abschaum mit ungeheuren Reichtümern sich ihm anzuschliessen. Er muss aufgehalten werden.",
-      "nachfolger":11,
-      "icon":"npc1"
-    },
-    {
-      "id": 11 ,
       "sprecher": "Held",
-      "inhalt": "Und wie kann ich euch dabei helfen? ",
-      "nachfolger":12,
+      "inhalt": "Ich ahne schon, welche Rolle ich dabei spiele? Wie kann ich euch helfen?",
+      "nachfolger":11,
       "icon":"held"
     },
     {
-      "id": 12 ,
-      "sprecher": "Dorfbewohner1",
+      "id": 11 ,
+      "sprecher": "Dorfältester",
       "inhalt": "Tötet Gladin! Dazu müsst Ihr das Lager der Banditen ausfindet machen. Sie kamen aus dem Wald nahe unserer Höfe im Westen. Von dort aus findet Ihr sicher einen Weg.",
+      "nachfolger":12,
+      "icon":"npc1"
+    },
+    {
+      "id": 12 ,
+      "sprecher": "Dorfältester",
+      "inhalt": "Von dort aus findet Ihr sicher einen Weg.",
       "nachfolger":13,
       "icon":"npc1"
     },
     {
       "id": 13 ,
       "sprecher": "Held",
-      "inhalt": "Und ihr wartet hier und dreht Däumchen?",
+      "inhalt": "Und ihr wartet hier und dreht Däumchen? Ich verstehe euer Problem, doch riskiere ich mein Leben nicht für warme Worte.",
       "nachfolger":14,
       "icon":"held"
     },
     {
       "id": 14 ,
-      "sprecher": "Dorfbewohner1",
-      "inhalt": "Wir sind keine Krieger, nur einfache Bauern und Händler... Wir haben Schätze hier in Sicherheit gebracht. Ihr könnt sie haben, wenn Ihr uns rettet.",
+      "sprecher": "Dorfältester",
+      "inhalt": "Wir sind keine Krieger, nur einfache Bauern und Händler... Wir haben Schätze hier in Sicherheit gebracht. Ihr könnt sie haben.",
       "nachfolger":15,
       "icon":"npc1"
     },
@@ -107,15 +121,22 @@
     },
     {
       "id": 16 ,
-      "sprecher": "Dorfbewohner1",
-      "inhalt": "Vielen Dank, Kriegerin! Bevor ihr Richtung Westen aufbrecht geht in mein Haus, nahe von hier, und sucht meinen Bogen, er soll euch gehören.",
+      "sprecher": "Dorfältester",
+      "inhalt": "Vielen Dank, Kriegerin! Bevor ihr Richtung Westen aufbrecht geht in mein Haus, nahe von hier, und sucht meinen Bogen.",
+      "nachfolger":0,
+      "icon":"npc1"
+    },
+    {
+      "id": 16 ,
+      "sprecher": "Dorfältester",
+      "inhalt": "Er soll Euch gehören. Benutzt ihn, um die Banditen aus der Entfernung zu töten, bevor sie Euch erreichen.",
       "nachfolger":0,
       "icon":"npc1"
     },
     {
       "id": 17 ,
       "sprecher": "Held",
-      "inhalt": "Hier sollte es sein. Ich sollte die Augen offen halten, um herauszufinden von wo die Banditen kommen.",
+      "inhalt": "Hier sollte es sein. Ich sollte die Augen offen halten, um herauszufinden woher die Banditen kommen.",
       "nachfolger":0,
       "icon":"held"
     },
@@ -143,7 +164,7 @@
     {
       "id": 20,
       "sprecher": "Held",
-      "inhalt": "Ich bin Aria. Ich komme, um das Dorf, das ihr Banditen überfallen, habt zu befreien. Sagt mir wo ich Gladin finde.",
+      "inhalt": "Ich bin Aria. Ich komme, um das Dorf, das ihr Banditen überfallen habt, zu befreien. Sagt mir wo ich Gladin finde.",
       "nachfolger":21,
       "icon":"held"
     },
@@ -164,14 +185,21 @@
     {
       "id": 23,
       "sprecher": "Gladin",
-      "inhalt": "Haha, ich bin keine einfache Frau. Ich bin eine Halbriesin und mir kann keiner das Wasser reichen. Du wirst sterben, wenn du dich mir in den Weg stellst",
+      "inhalt": "Haha, ich bin keine einfache Frau. Ich bin eine Halbriesin und mir kann keiner das Wasser reichen. Du wirst sterben, wenn du",
       "nachfolger":24,
       "icon":"gladin"
     },
     {
       "id": 24,
       "sprecher": "Gladin",
-      "inhalt": "Wärst du gekommen, um dich mir anzuschliessen hätte ich dich in meine Armee aufgenommen. Doch wer mir droht hat sein Leben verwirkt.",
+      "inhalt": "dich mir in den Weg stellst. Wärst du gekommen, um dich mir anzuschliessen hätte ich dich in meine Armee aufgenommen.",
+      "nachfolger":25,
+      "icon":"gladin"
+    },
+    {
+      "id": 25,
+      "sprecher": "Gladin",
+      "inhalt": "Doch wer mir droht hat sein Leben verwirkt. Es wird Zeit dir meine Stärke zu zeigen!",
       "nachfolger":0,
       "icon":"gladin"
     },
@@ -181,8 +209,8 @@
 
     {
       "id": 8001,
-      "sprecher": "Dorfbewohner",
-      "inhalt": "Ich hoffe wir können uns irgendwann bei dir revanchieren. Vielen Dank.",
+      "sprecher": "Dorfältester",
+      "inhalt": "Du hast uns gerettet. Wir verdanken dir unser Leben. Leider haben die Räuber unsere Schätze entwendet... Tut mir Leid.",
       "nachfolger":0,
       "icon":"npc1"
     },
@@ -210,14 +238,14 @@
     {
       "id": 8005,
       "sprecher": "Dorfbewohner",
-      "inhalt": "Heyeh, ich geb dir mal einen Tipp, als Dank für deine Rettung.",
+      "inhalt": "Hey du, ich geb dir mal einen Tipp, als Dank für deine Rettung.",
       "nachfolger":80051,
       "icon":"npc5"
     },
     {
       "id": 80051,
       "sprecher": "Dorfbewohner",
-      "inhalt": "Aber verrate es lieber nicht weiter....",
+      "inhalt": "Aber verrate es lieber nicht weiter...",
       "nachfolger":80052,
       "icon":"npc5"
     },
@@ -253,14 +281,21 @@
     {
       "id": 8008,
       "sprecher": "Unbekannter",
-      "inhalt": "Hallo Kriegerin, ich habe von dir gehört. Du sollst auf dem Weg sein Gladin zu töten. In mir hast du keinen Feind. Ich will dir einen Hinweis geben",
+      "inhalt": "Hallo Kriegerin, ich habe von dir gehört. Du sollst auf dem Weg sein Gladin zu töten. In mir hast du keinen Feind. Ich will dir",
       "nachfolger":80081,
       "icon":"npc-hint"
     },
     {
       "id": 80081,
       "sprecher": "Unbekannter",
-      "inhalt": "In dieser Höhle findest du einen magischen Schatz, der dir dabei hilft, gegen Gladins Räuber zu bestehen. Viel Erfolg!",
+      "inhalt": "einen Hinweis geben. In dieser Höhle findest du einen magischen Schatz, der dir dabei hilft, gegen Gladins Räuber zu",
+      "nachfolger":80082,
+      "icon":"npc-hint"
+    },
+    {
+      "id": 80082,
+      "sprecher": "Unbekannter",
+      "inhalt": "bestehen. Denk nicht daran, wer ich bin. Sieh in mir einen anonymen Unterstützer. Ich hoffe wir sehen uns wieder!",
       "nachfolger":0,
       "icon":"npc-hint"
     }

@@ -28,6 +28,12 @@ public class NewGameListener extends InputListener {
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        return true;
+    }
+
+    @Override
+    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        game.getAssetManager().get("audio/sounds/reiter_wechsel.ogg", Sound.class).play();
         if(!HandleGameData.pruefeObSpielStandVorhanden()){
             game.changeScreen(new Playscreen(game));
         }
@@ -54,7 +60,6 @@ public class NewGameListener extends InputListener {
             dialog.show(startScreen.stage);
 
         }
-
-        return true;
+        super.touchUp(event, x, y, pointer, button);
     }
 }

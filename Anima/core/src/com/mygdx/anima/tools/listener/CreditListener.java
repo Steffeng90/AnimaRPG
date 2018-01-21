@@ -1,5 +1,6 @@
 package com.mygdx.anima.tools.listener;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -22,8 +23,13 @@ public class CreditListener extends InputListener {
     }
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            game.changeScreen(new CreditScreen(game));
-            System.out.println("Bildschirm sollte wechseln");
         return true;
+    }
+
+    @Override
+    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        game.getAssetManager().get("audio/sounds/reiter_wechsel.ogg", Sound.class).play();
+        game.changeScreen(new CreditScreen(game));
     }
 }

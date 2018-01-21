@@ -58,17 +58,18 @@ public class GegenstandReiter extends Group {
             case 1:
             case 2:
             case 3:
-            case 4: label2 = new Label("Du konntest deine \n"+eigenschaft+" von\n" + aktuell+" " +
-                    "auf " + verbesserung +"\n steigern!", menu.getSkin());break;
+            case 4: label2 = new Label("Du konntest deine "+eigenschaft+" von " + aktuell+" " +
+                    " auf " + verbesserung +" steigern!", menu.getSkin());break;
             case 5:
             case 6:
             case 7:
-            default: label2 = new Label("Du konntest deine \n"+eigenschaft+" von " + aktuell+" " +
-                    "\nauf " + verbesserung +" steigern!", menu.getSkin());break;
+            default: label2 = new Label("Du konntest deine "+eigenschaft+" von " + aktuell+" " +
+                    " auf " + verbesserung +" steigern!", menu.getSkin());break;
         }
 
         inventarLinks.add(label1).size(invLinksWidth, zeilenhoehe*10f);
         inventarLinks.row();
+        label2.setWrap(true);
         inventarLinks.add(label2).size(invLinksWidth, zeilenhoehe*30f);
         this.addActor(inventarLinks);
 
@@ -134,9 +135,12 @@ public class GegenstandReiter extends Group {
             inventarLinks.row();
             inventarLinks.add(new Label(name, menu.getSkin())).size(invLinksWidth, zeilenhoehe*10).colspan(2);
             inventarLinks.row();
-            inventarLinks.add(new Label(beschreibung, menu.getSkin())).size(invLinksWidth*3/4, zeilenhoehe*30).colspan(2).align(Align.left);
+            Label ggstBeschreibung=new Label(beschreibung, menu.getSkin());
+            ggstBeschreibung.setWrap(true);
+            inventarLinks.add(ggstBeschreibung).size(invLinksWidth*3/4, zeilenhoehe*30).colspan(2).align(Align.left);
+
             inventarLinks.row();
-            //inventarLinks.add(new Label(eigenschaft, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
+            //questLogDetails.add(new Label(eigenschaft, menu.getSkin())).size(invLinksWidth*3/4, height / 12f);
             inventarLinks.row();
 
             inventarLinks.add(new Label(aktuell+" wird zu "+verbesserung, menu.getSkin())).size(invLinksWidth*1/4, zeilenhoehe*10).align(Align.left);

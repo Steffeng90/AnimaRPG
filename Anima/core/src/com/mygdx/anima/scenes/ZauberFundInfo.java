@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -34,13 +35,14 @@ public class ZauberFundInfo implements Disposable {
     private Skin skin;
     public float windowTimer;
     //Scene2D widgets
-    private float infoWidth,infoHeight;
+    private float infoWidth,infoHeight,iconSize;
 
     public ZauberFundInfo(final Playscreen screen, SpriteBatch sb, ZauberFundSprite sprite) {
         this.screen = screen;
         this.screen.getGame().getAssetManager().get("audio/sounds/itemFund.wav", Sound.class).play(0.5f);
         infoWidth = (float) (AnimaRPG.W_WIDTH * 2);
         infoHeight = (float) (AnimaRPG.W_Height * 2);
+        iconSize=80f;
         viewport = new FitViewport(infoWidth, infoHeight, new OrthographicCamera());
         stage = new Stage(viewport, sb);
         Gdx.input.setInputProcessor(stage);
@@ -55,12 +57,11 @@ public class ZauberFundInfo implements Disposable {
 
         Table dialogTable=new Table();
         Label l1 = new Label(sprite.name , skin);
+        l1.setWrap(true);l1.setAlignment(Align.center);
         Image img=new Image(sprite.texture);
-        img.setSize(80f,80f);
 
-        dialogTable.add(l1);
-        dialogTable.add(img).size(80f,80f).padTop(5f);
-        //dialog.add(img).size(80f,80f).padTop(5f);
+        dialogTable.add(l1).size(iconSize*1.2f,iconSize);
+        dialogTable.add(img).size(iconSize,iconSize).padTop(5f);
         dialog.add(dialogTable);
         dialog.show(stage);
         stage.addListener(new InputListener() {

@@ -199,15 +199,6 @@
     <property name="vorbed" value="10"/>
    </properties>
   </object>
-  <object id="277" x="437.333" y="639.333">
-   <properties>
-    <property name="dialog" value="5"/>
-    <property name="nachbedfalse" value="4"/>
-    <property name="nachbedtrue" value="5"/>
-    <property name="vorbed" value="4"/>
-   </properties>
-   <polyline points="0,0 92.3333,0"/>
-  </object>
  </objectgroup>
  <objectgroup name="enemyHumanoid">
   <object id="247" x="48" y="752" width="16" height="16">

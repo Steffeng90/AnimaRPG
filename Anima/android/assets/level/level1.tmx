@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="22" height="50" tilewidth="16" tileheight="16" nextobjectid="247">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="22" height="50" tilewidth="16" tileheight="16" nextobjectid="250">
  <tileset firstgid="1" name="start" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
  </tileset>
@@ -205,6 +205,24 @@
     <property name="nextMap" value="10"/>
    </properties>
    <polyline points="0,0 144,0"/>
+  </object>
+  <object id="247" x="144" y="432">
+   <properties>
+    <property name="dialog" value="5"/>
+    <property name="nachbedfalse" value="4"/>
+    <property name="nachbedtrue" value="5"/>
+    <property name="vorbed" value="1"/>
+   </properties>
+   <polyline points="0,0 92.3333,0"/>
+  </object>
+  <object id="249" x="272" y="352">
+   <properties>
+    <property name="dialog" value="3"/>
+    <property name="nachbedfalse" value="4"/>
+    <property name="nachbedtrue" value="6"/>
+    <property name="vorbed" value="50001"/>
+   </properties>
+   <polyline points="0,0 92.3333,0"/>
   </object>
  </objectgroup>
  <objectgroup name="startpunkt">

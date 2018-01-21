@@ -114,7 +114,7 @@ public class RaiderBoss extends EnemyHumanoid {
     @Override
     public void giveErfahrung() {
         super.giveErfahrung();
-        getHeld().getEventList()[nachbed] = true;
+        getHeld().changeEventListEntry(nachbed,true,screen);
     }
 
     public void createHealerSensor() {

@@ -223,9 +223,10 @@
    </properties>
    <polyline points="0,0 32,0"/>
   </object>
-  <object id="92" x="374" y="190.5">
+  <object id="92" x="355.5" y="191.5">
    <properties>
     <property name="dialog" value="6"/>
+    <property name="nachbedtrue" value="50001"/>
     <property name="vorbed" value="5"/>
    </properties>
    <polyline points="-16,-48 -16,96"/>
