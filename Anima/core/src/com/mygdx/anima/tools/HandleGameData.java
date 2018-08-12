@@ -42,10 +42,10 @@ public class HandleGameData {
                     FileHandle file = files.local("save.txt");
                     byte[] dataBytes=data.serialize();
                     file.writeBytes(dataBytes,false);
-                System.out.print("Spiel gespeichert");
+                System.out.println("Spiel gespeichert");
             }
             catch(Exception e) {
-                System.out.print("Fehler beim Heldspeichern:"+e.getMessage());
+                System.out.println("Fehler beim Heldspeichern:"+e.getMessage());
             }
         }
         public static Playscreen laden(AnimaRPG game) {
@@ -53,11 +53,12 @@ public class HandleGameData {
                 FileHandle file = files.local("save.txt");
                 byte[] dataBytes=file.readBytes();
                 GameData gameData=(GameData) GameData.deserialize(dataBytes);
-                System.out.print("Spiel geladen");
+                System.out.println("Spiel geladen");
                 return new Playscreen(game,gameData);
             }
             catch(Exception e){
-                System.out.print(e.getStackTrace()+"Fehler beim Heldladen:"+e.getMessage());
+                System.out.println(e.getStackTrace()+"Fehler beim Heldladen:"+e.getMessage());
+
             }
 
             return new Playscreen(game);

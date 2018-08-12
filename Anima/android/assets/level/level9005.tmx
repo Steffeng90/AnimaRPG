@@ -179,12 +179,5 @@
    <polyline points="0,0 32,0"/>
   </object>
  </objectgroup>
- <objectgroup name="schatztruhen">
-  <object id="51" x="80" y="160" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="ruestung1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup name="schatztruhen"/>
 </map>

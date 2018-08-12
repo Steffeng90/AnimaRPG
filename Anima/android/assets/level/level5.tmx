@@ -72,15 +72,9 @@
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="201" x="946" y="492" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Nahrung3"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
   <object id="202" x="480" y="32" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="NahrungM1"/>
+    <property name="Inhalt" value="FoliantGeschick"/>
     <property name="typ" value="2"/>
    </properties>
   </object>

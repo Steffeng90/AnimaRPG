@@ -95,7 +95,7 @@
   </object>
   <object id="202" x="64" y="48" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="NahrungM1"/>
+    <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>

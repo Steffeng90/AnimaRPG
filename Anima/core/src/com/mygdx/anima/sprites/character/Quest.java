@@ -71,7 +71,7 @@ public class Quest {
     public boolean questFortschritt(){
         // Gibt true zurück, wenn das Quest abgeschlossen ist, sonst false
         System.out.print("aktQP"+aktuellerQuestPart+" length"+questParts.length);
-        if(aktuellerQuestPart<questParts.length){
+        if(aktuellerQuestPart<(questParts.length-1)){
             aktuellerQuestPart++;
             return false;
         }else{
@@ -79,7 +79,9 @@ public class Quest {
             return true;
         }
     }
-
+    public int getId(){
+        return id;
+    }
     public boolean isAusgewaehltImLog() {
         return ausgewaehltImLog;
     }
@@ -90,6 +92,12 @@ public class Quest {
 
     public QuestPart getAktuellenQuestpart(){
         return questParts[aktuellerQuestPart];
+    }
+    public int getIDAktuellerQuestPart(){
+        return aktuellerQuestPart;
+    }
+    public void setIDAktuellerQuestPart(int part){
+        aktuellerQuestPart=part;
     }
 }
 

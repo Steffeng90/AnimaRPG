@@ -22,6 +22,7 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.enemies.EnemyGenerator;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.DialogArea;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Gebietswechsel;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.QuestSprechblase;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Schatztruhe;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SteinBlock;
@@ -34,9 +35,11 @@ import static com.mygdx.anima.AnimaRPG.NOTHING_BIT;
 import static com.mygdx.anima.AnimaRPG.OBJECT_BIT;
 import static com.mygdx.anima.AnimaRPG.UNGEHEUER_BIT;
 import static com.mygdx.anima.AnimaRPG.getHeld;
+import static com.mygdx.anima.screens.Playscreen.activeSprechblase;
 import static com.mygdx.anima.screens.Playscreen.activeSteinblock;
 import static com.mygdx.anima.screens.Playscreen.activeTruhen;
 import static com.mygdx.anima.screens.Playscreen.getMapEinstieg;
+import static com.mygdx.anima.screens.Playscreen.questSprechblasePool;
 import static com.mygdx.anima.screens.Playscreen.steinblockPool;
 import static com.mygdx.anima.screens.Playscreen.truhenPool;
 import static com.mygdx.anima.tools.KartenManager.aktuelleKartenId;
@@ -170,14 +173,20 @@ public class B2WorldCreator {
                     Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
                     // LOGIK FÜR NCPS
+
                     if(object.getProperties().get("typ").toString().contains("npc")){
+                        if(object.getProperties().containsKey("nachbedtrue"))
+                        {
+                            nachbedtrue=Integer.parseInt(object.getProperties().get("nachbedtrue").toString());
+                        }
                         if(object.getProperties().containsKey("vorbedfalse") && object.getProperties().containsKey("vorbedtrue"))
                         {
                             vorbedfalse= Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
                             vorbedtrue= Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
                             if(getHeld().getEventListEntryValue(vorbedfalse)==false && getHeld().getEventListEntryValue(vorbedtrue)==true){
                                 EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
-                                        object.getProperties().get("dialog").toString());
+                                        object.getProperties().get("dialog").toString(),nachbedtrue);
+                                erzeugeSprechblase(screen,nachbedtrue,rect);
                             }
                         }
                         else if(object.getProperties().containsKey("vorbedfalse"))
@@ -185,18 +194,21 @@ public class B2WorldCreator {
                             vorbedfalse= Integer.parseInt(object.getProperties().get("vorbedfalse").toString());
                             if(getHeld().getEventListEntryValue(vorbedfalse)==false){
                                 EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
-                                        object.getProperties().get("dialog").toString());
+                                        object.getProperties().get("dialog").toString(),nachbedtrue);
+                                erzeugeSprechblase(screen,nachbedtrue,rect);
                             }
                         }else if(object.getProperties().containsKey("vorbedtrue")){
                             vorbedtrue= Integer.parseInt(object.getProperties().get("vorbedtrue").toString());
                             if(getHeld().getEventListEntryValue(vorbedtrue)==true){
                                 EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
-                                        object.getProperties().get("dialog").toString());
+                                        object.getProperties().get("dialog").toString(),nachbedtrue);
+                                erzeugeSprechblase(screen,nachbedtrue,rect);
                             }
                         }
                         else{
                             EnemyGenerator.generateNPC(screen, rect,object.getProperties().get("typ").toString(),
-                                    object.getProperties().get("dialog").toString());
+                                    object.getProperties().get("dialog").toString(),nachbedtrue);
+                            erzeugeSprechblase(screen,nachbedtrue,rect);
                         }
                     }
                     // LOGIK FÜR ENEMYS
@@ -294,7 +306,7 @@ public class B2WorldCreator {
                             nachbedfalse = Integer.parseInt((String) object.getProperties().get("nachbedfalse"));
                         }
                         String inhalt = (String) object.getProperties().get("Inhalt");
-                        System.out.println("SchatztruhenObjekt: erzeugt"+(String) object.getProperties().get("typ"));
+                        //System.out.println("SchatztruhenObjekt: erzeugt"+(String) object.getProperties().get("typ"));
                         int typ = Integer.valueOf((String) object.getProperties().get("typ"));
                         Rectangle rect = ((RectangleMapObject) object).getRectangle();
                         Schatztruhe truhe = truhenPool.obtain();
@@ -316,7 +328,7 @@ public class B2WorldCreator {
                                 }
 
                                 activeSteinblock.add(block);
-                                System.out.println("Steinblock erzeugt");
+                                //System.out.println("Steinblock erzeugt");
                             }
                         }
                     }
@@ -350,10 +362,16 @@ public class B2WorldCreator {
         } else if (richtung.equals("dungeon1A")) {return 9007;
         } else if (richtung.equals("dungeon1AB")) {return 9008;
         } else if (richtung.equals("dungeon1BA")) {return 90081;
-
         } else if (richtung.equals("dungeon1CB")) {return 9009;
         } else if (richtung.equals("dungeon1BC")) {return 90091;
 
         } else{ return 2;}
+    }
+    public void erzeugeSprechblase(Playscreen screen,int nachbedtrue, Rectangle rect){
+        if(!getHeld().getEventListEntryValue(nachbedtrue) && nachbedtrue!=0) {
+            QuestSprechblase sprechblase = questSprechblasePool.obtain();
+            sprechblase.init(screen, rect.getX() / AnimaRPG.PPM, (rect.getY() + 18) / AnimaRPG.PPM, nachbedtrue);
+            activeSprechblase.add(sprechblase);
+        }
     }
 }

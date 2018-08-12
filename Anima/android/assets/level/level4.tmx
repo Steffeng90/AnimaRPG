@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="290">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="293">
  <tileset firstgid="1" name="terrain_atlas" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
   <image source="tilesets/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
@@ -109,33 +109,21 @@
   </object>
  </objectgroup>
  <objectgroup name="schatztruhen">
-  <object id="72" x="112" y="80" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Nahrung1"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
   <object id="73" x="64" y="656" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung2"/>
+    <property name="Inhalt" value="FoliantKraft"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
   <object id="74" x="800" y="80" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung3"/>
+    <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
   <object id="238" x="656" y="656" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Nahrung1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
-  <object id="239" x="720" y="448" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="NahrungM1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
@@ -262,24 +250,51 @@
     <property name="vorbedtrue" value="10"/>
    </properties>
   </object>
-  <object id="287" x="736" y="496" width="16" height="16">
+  <object id="287" x="704" y="496" width="16" height="16">
    <properties>
     <property name="dialog" value="8002"/>
     <property name="typ" value="npc2"/>
-    <property name="vorbedtrue" value="10"/>
+    <property name="vorbedtrue" value="14"/>
    </properties>
   </object>
   <object id="288" x="528" y="464" width="16" height="16">
    <properties>
     <property name="dialog" value="8003"/>
     <property name="typ" value="npc3"/>
-    <property name="vorbedtrue" value="10"/>
+    <property name="vorbedtrue" value="15"/>
    </properties>
   </object>
   <object id="289" x="224" y="192" width="16" height="16">
    <properties>
     <property name="dialog" value="8004"/>
     <property name="typ" value="npc4"/>
+    <property name="vorbedtrue" value="10"/>
+   </properties>
+  </object>
+  <object id="290" x="640" y="496" width="16" height="16">
+   <properties>
+    <property name="dialog" value="80021"/>
+    <property name="nachbedtrue" value="12"/>
+    <property name="typ" value="npc2"/>
+    <property name="vorbedfalse" value="13"/>
+    <property name="vorbedtrue" value="10"/>
+   </properties>
+  </object>
+  <object id="291" x="752" y="512" width="16" height="16">
+   <properties>
+    <property name="dialog" value="80024"/>
+    <property name="nachbedtrue" value="14"/>
+    <property name="typ" value="npc2"/>
+    <property name="vorbedfalse" value="14"/>
+    <property name="vorbedtrue" value="13"/>
+   </properties>
+  </object>
+  <object id="292" x="432" y="448" width="16" height="16">
+   <properties>
+    <property name="dialog" value="80031"/>
+    <property name="nachbedtrue" value="15"/>
+    <property name="typ" value="npc3"/>
+    <property name="vorbedfalse" value="15"/>
     <property name="vorbedtrue" value="10"/>
    </properties>
   </object>

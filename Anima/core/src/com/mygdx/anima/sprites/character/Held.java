@@ -126,7 +126,7 @@ public class Held extends HumanoideSprites implements Serializable{
         geoeffneteTruhen= new Array<SchatztruhenSpeicherObjekt>();
         heldenInventar=new InventarList();
         zauberList=new ZauberList();
-        questlog=new QuestLog();
+        eventList=gameData.eventArray;
         // Nicht löschen: setSchadenZauber();
         // TODO RUESTUNG durch ITEMS definieren
 
@@ -148,9 +148,18 @@ public class Held extends HumanoideSprites implements Serializable{
         setSpielzeit(gameData.spielzeit);
 
         setNextLevelUp(getCurrentLevel());
-        eventList=gameData.eventArray;
 
         setHeld(this);
+        // Questlog auslesen
+        this.questlog=new QuestLog();
+
+        for(int y=0;y<gameData.questId.length;y++){
+            QuestGenerator.generateQuest(screen,null,gameData.questId[y],this);
+        }
+        for(int y=0;y<gameData.questStand.length;y++){
+            questlog.getQuestArray().get(y).setIDAktuellerQuestPart(gameData.questStand[y]);
+        }
+
         // Zauber auslesen
         for(int i=0; i<gameData.zauber.length;i++){
             ZauberGenerator.generateZauber(screen,0,0,gameData.zauber[i]);
@@ -171,8 +180,7 @@ public class Held extends HumanoideSprites implements Serializable{
         for(int i = 0; i<gameData.geoeffneteTruhenMaps.length; i++)
         {   geoeffneteTruhen.add(new SchatztruhenSpeicherObjekt(gameData.geoeffneteTruhenMaps[i],gameData.geoeffneteTruhenId[i]));
             }
-        // Questlog auslesen
-        questlog=gameData.questlog;
+
         // Gespeicherte Items auslesen und wieder anziehen
         for(int i = 0; i<gameData.waffenNah.length; i++)
         {   ItemGenerator.generateItem(screen,0f,0f,gameData.waffenNah[i]);
@@ -726,8 +734,9 @@ public class Held extends HumanoideSprites implements Serializable{
         return eventList[i];
     }
     public void changeEventListEntry(int i, boolean wert,Playscreen screen){
+        boolean tempwert=this.eventList[i];
         this.eventList[i]=wert;
-        if(wert==true){
+        if(tempwert==false && wert==true){
             this.questlog.checkEvents(i,screen);
         }
 

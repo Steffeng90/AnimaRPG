@@ -1,5 +1,6 @@
 package com.mygdx.anima.screens.menuReiter;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -71,16 +72,36 @@ public class QuestReiter extends Group {
         // questLogRechts.setPosition(0, height);
         questLogRechts.align(Align.left | Align.top);
         questLogRechts.setSize(questRechtsWidth*2,height);
-        questLogRechts.add(new Label("QuestListe", menu.getSkin()));
+        questLogRechts.add(new Label("Aktuelle Quests", menu.getSkin()));
         questLogRechts.row();
 
         QuestLog questLog = getHeld().getQuestlog();
         int size = questLog.getQuestlog().size;
         for (int i = 0; i < size; i++) {
-            benutzenButton = new TextButton(questLog.getQuestlog().get(i).getName(), menu.getSkin());
-            benutzenButton.addListener(new questLogButtonListener(questLog.getQuestlog().get(i),this));
-            questLogRechts.add(benutzenButton).size(questRechtsWidth,zeilenhoehe*15);
-            questLogRechts.row();
+            // Anzeige für unabgeschlossene Quests
+            if(!questLog.getQuestlog().get(i).isAbgeschlossen()){
+                benutzenButton = new TextButton(questLog.getQuestlog().get(i).getName(), menu.getSkin());
+                benutzenButton.addListener(new questLogButtonListener(questLog.getQuestlog().get(i),this));
+                questLogRechts.add(benutzenButton).size(questRechtsWidth,zeilenhoehe*15);
+                questLogRechts.row();
+            }
+        }
+        // Prüfen ob abgeschlossene Quests da sind:
+        for (int i = 0; i < size; i++) {
+            if (questLog.getQuestlog().get(i).isAbgeschlossen()) {
+                questLogRechts.add(new Label("Abgeschlossene Quests:", menu.getSkin()));
+                questLogRechts.row();
+                break;
+            }
+        }
+        for (int i = 0; i < size; i++) {
+            // Anzeige für abgeschlossene Quests
+            if(questLog.getQuestlog().get(i).isAbgeschlossen()){
+                benutzenButton = new TextButton(questLog.getQuestlog().get(i).getName(), menu.getSkin());
+                benutzenButton.setColor(Color.DARK_GRAY);
+                questLogRechts.add(benutzenButton).size(questRechtsWidth,zeilenhoehe*10);
+                questLogRechts.row();
+            }
         }
 
         ScrollPane scrollPane = new ScrollPane(questLogRechts, menu.getSkin());

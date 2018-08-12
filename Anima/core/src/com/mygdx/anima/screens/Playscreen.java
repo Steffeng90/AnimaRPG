@@ -28,6 +28,7 @@ import com.mygdx.anima.scenes.ZauberFundInfo;
 import com.mygdx.anima.sprites.character.DialogGenerator;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.HumanoideSprites;
+import com.mygdx.anima.sprites.character.Quest;
 import com.mygdx.anima.sprites.character.QuestGenerator;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.NPCPool;
@@ -47,6 +48,7 @@ import com.mygdx.anima.sprites.character.enemies.ungeheuer.WormBig;
 import com.mygdx.anima.sprites.character.enemies.ungeheuer.WormSmall;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.Arrow;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.FriendlyNPC;
+import com.mygdx.anima.sprites.character.interaktiveObjekte.QuestSprechblase;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SteinBlock;
 import com.mygdx.anima.sprites.character.items.ItemGenerator;
 import com.mygdx.anima.sprites.character.items.ZauberFundSprite;
@@ -121,6 +123,7 @@ public class Playscreen implements Screen{
     };
     public static Array<Schatztruhe> activeTruhen = new Array<Schatztruhe>();
     public static Array<SteinBlock> activeSteinblock = new Array<SteinBlock>();
+    public static Array<QuestSprechblase> activeSprechblase= new Array<QuestSprechblase>();
     public static Pool<Schatztruhe> truhenPool= new Pool<Schatztruhe>() {
         @Override
         protected Schatztruhe newObject() {
@@ -131,6 +134,12 @@ public class Playscreen implements Screen{
         @Override
         protected SteinBlock newObject() {
             return new SteinBlock();
+        }
+    };
+    public static Pool<QuestSprechblase> questSprechblasePool= new Pool<QuestSprechblase>() {
+        @Override
+        protected QuestSprechblase newObject() {
+            return new QuestSprechblase();
         }
     };
     public static Array<SchadenLabel> activeSchadenlabel = new Array<SchadenLabel>();
@@ -218,9 +227,7 @@ public class Playscreen implements Screen{
         ItemGenerator.generateItem(this,0,0,"kopf3");
         ItemGenerator.generateItem(this,0,0,"kopf4");
         ItemGenerator.generateItem(this,0,0,"kopf5");
-        QuestGenerator.generateQuest(this,game.batch,1);
-        QuestGenerator.generateQuest(this,game.batch,2);
-        QuestGenerator.generateQuest(this,game.batch,3);
+        QuestGenerator.generateQuest(this,game.batch,1,null);
     }
     // Hier sind die Gemeinsamkeiten der beiden Konstruktoren ausgelagert
     public void defineScreen(AnimaRPG game,int kartenID){
@@ -286,6 +293,12 @@ public class Playscreen implements Screen{
             }
             for (SteinBlock steinblock : activeSteinblock) {
                 steinblock.draw(game.batch);
+            }
+            for (QuestSprechblase sprechblase: activeSprechblase) {
+                System.out.println("aktive SPrechblasen:"+ activeSprechblase.size);
+                if(sprechblase==null)
+                    System.out.println("Sprechblase ist null");
+                sprechblase.draw(game.batch);
             }
             for (Raider raider : activeRaider) {
                 raider.draw(game.batch);
@@ -519,6 +532,16 @@ public class Playscreen implements Screen{
             SteinBlock block;
             block= activeSteinblock.get(i);
             block.update(dt);
+        }
+        len = activeSprechblase.size;
+        for (int i = len; --i >= 0;) {
+            QuestSprechblase blase;
+            blase= activeSprechblase.get(i);
+            blase.update(dt);
+            if(blase.getDeleteFlag()){
+                activeSprechblase.removeIndex(i);
+                questSprechblasePool.free(blase);
+            }
         }
         // ArrowPool durchlaufen
         len = activeArrows.size;
@@ -760,11 +783,12 @@ public class Playscreen implements Screen{
 
     @Override
     public void pause() {
-        System.out.println("Pause durchgeführt");
+        //System.out.println("Pause durchgeführt");
     }
     @Override
     public void resume() {
-        System.out.println("Resume durchgeführt");
+
+        //System.out.println("Resume durchgeführt");
          }
     @Override
     public void hide() { }
@@ -935,6 +959,14 @@ public class Playscreen implements Screen{
             block= activeSteinblock.get(i);
             activeSteinblock.removeIndex(i);
             steinblockPool.free(block);
+        }
+        }
+        size= activeSprechblase.size;
+        QuestSprechblase sprechblase;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            sprechblase= activeSprechblase.get(i);
+            activeSprechblase.removeIndex(i);
+            questSprechblasePool.free(sprechblase);
         }
         }
 

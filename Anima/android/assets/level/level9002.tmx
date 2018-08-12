@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="69">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="71">
  <tileset firstgid="1" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/town.png" width="512" height="512"/>
  </tileset>
@@ -146,8 +146,24 @@
   </object>
   <object id="67" x="112" y="304" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="NahrungM1"/>
+    <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="69" x="320" y="224" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung1"/>
+    <property name="nachbedtrue" value="21"/>
+    <property name="typ" value="2"/>
+    <property name="vorbed" value="14"/>
+   </properties>
+  </object>
+  <object id="70" x="228" y="292" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="FoliantZauberW"/>
+    <property name="nachbedtrue" value="13"/>
+    <property name="typ" value="1"/>
+    <property name="vorbedtrue" value="12"/>
    </properties>
   </object>
  </objectgroup>

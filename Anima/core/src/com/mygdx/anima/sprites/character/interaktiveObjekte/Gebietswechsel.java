@@ -61,6 +61,9 @@ public class Gebietswechsel {
             case 9009: return 9009;
             case 90091: return 90091;
             case 9010: return 9010;
+            case 9011: return 9011;
+            case 9012: return 9012;
+            case 9013: return 9013;
             default: Gdx.app.log("Fehler bei",""+this);return 1;
         }
         }

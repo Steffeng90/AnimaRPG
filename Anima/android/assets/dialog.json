@@ -203,6 +203,22 @@
       "nachfolger":0,
       "icon":"gladin"
     },
+    {
+      "id": 26,
+      "sprecher": "Held",
+      "inhalt": "Das scheint der Hof zu sein, hoffentlich ist noch jemand am Leben, den ich retten kann.",
+      "nachfolger":0,
+      "icon":"held"
+    },
+    {
+      "id": 27,
+      "sprecher": "Held",
+      "inhalt": "Das ist also die alte Schmiede. Ich glaube ich bin hier drin nicht allein.",
+      "nachfolger":0,
+      "icon":"held"
+    },
+
+
 
 
 
@@ -222,11 +238,74 @@
       "icon":"npc2"
     },
     {
+      "id": 80021,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Hallo tapfere Heldin, vielen Dank, dass du uns gerettet hast. Ich brauche aber erneut deine Hilfe.",
+      "nachfolger":80022,
+      "icon":"npc2"
+    },
+    {
+      "id": 80022,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Die Räuber haben ein Familienjuwel entwendet! Ich habe sie belauscht und hörte, dass sie es auf einem Boot am Steg verstaut haben.",
+      "nachfolger":80023,
+      "icon":"npc2"
+    },
+    {
+      "id": 80023,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich weiß wo der besagte Steeg ist. Du findest ihn südlich des Dorfs. Wenn du Wasser siehst gehe nach Westen.",
+      "nachfolger":0,
+      "icon":"npc2"
+    },
+    {
+      "id": 80024,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Das ist das Juwel! Oh vielen Dank! Gehe in mein Haus und nimm alles mit was du möchtest!",
+      "nachfolger":0,
+      "icon":"npc2"
+    },
+    {
       "id": 8003,
       "sprecher": "Dorfbewohner",
       "inhalt": "Ich kann es nicht glauben, dass du Gladin ganz alleine besiegt hast.",
       "nachfolger":0,
       "icon":"npc3"
+    },
+    {
+      "id": 80031,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Da die Räuber zuerst die Bauernhöfe erreichten waren die Bauern auch die ersten, die ihnen zum Opfer fielen.",
+      "nachfolger":80032,
+      "icon":"npc3"
+    },
+    {
+      "id": 80032,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich weiß nicht, ob noch jemand von ihnen lebt, aber ich will dich mit gutem Willen dorthin schicken",
+      "nachfolger":80033,
+      "icon":"npc3"
+    },
+    {
+      "id": 80033,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Suche bei unseren Höfen im Westen nach einem alten Bauernhof. Dort wirst du sie finden.",
+      "nachfolger":80034,
+      "icon":"npc3"
+    },
+    {
+      "id": 80034,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Sollte dort niemand mehr am Leben sein, dann nimm dir ihr magisches Amulett. Sie haben es in ihrem Turm versteckt.",
+      "nachfolger":80035,
+      "icon":"npc3"
+    },
+    {
+      "id": 80035,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich hoffe wirklich nicht, dass ihnen was passiert ist, deswegen mache ich mich gleich auf den Weg. Vielleicht ist es nicht zu spät.",
+      "nachfolger":0,
+      "icon":"held"
     },
     {
       "id": 8004,
@@ -268,15 +347,43 @@
       "id": 8007,
       "sprecher": "Dorf-Ältester",
       "inhalt": "Danke für alles Heldin, du hast das Dorf und alle Einwohner gerettet. Ich will nicht daran denken, was ohne deine Hilfe geschehen wäre.",
-      "nachfolger":80071,
+      "nachfolger":0,
       "icon":"npc7"
     },
     {
       "id": 80071,
       "sprecher": "Dorfbewohner",
       "inhalt": "Wir stehen für immer in deiner Schuld. Ich hoffe wir können uns irgendwann erkenntlich zeigen.",
-      "nachfolger":0,
+      "nachfolger":80072,
       "icon":"npc7"
+    },
+    {
+      "id": 80072,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Mir fällt da gerade etwas ein... ich habe noch eine Rüstung, die ich dir zum Dank geben kann. der Haken dabei ist, dass diese Rüstung gerade nicht hier ist.",
+      "nachfolger":80073,
+      "icon":"npc7"
+    },
+    {
+      "id": 80073,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Und wo finde ich die Rüstung?",
+      "nachfolger":80074,
+      "icon":"held"
+    },
+    {
+      "id": 80074,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich habe sie in der alten Schmiede zurückgelassen, damals. Du findest sie, wenn du dich im Süden des Dorfes umschaust.",
+      "nachfolger":80075,
+      "icon":"npc7"
+    },
+    {
+      "id": 80075,
+      "sprecher": "Dorfbewohner",
+      "inhalt": "Ich danke dir für diese Information, ich werde die Schmiede finden und mir diese Rüstung holen.",
+      "nachfolger":0,
+      "icon":"held"
     },
     {
       "id": 8008,

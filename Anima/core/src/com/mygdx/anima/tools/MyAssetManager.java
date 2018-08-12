@@ -27,7 +27,7 @@ public class MyAssetManager extends AssetManager {
     private TextureRegion schatztruheOpenBraun,schatztruheCloseBraun,schatztruheOpenGold,schatztruheCloseGold,
             schatztruheCloseBlau,schatztruheOpenBlau,
             pfeilLinks,pfeilRechts,pfeilUp,pfeilDown,
-            emptySpellIcon,steinblock,fassblock;
+            emptySpellIcon,steinblock,fassblock,sprechblase;
 
     Animation truheBraunAnimation,truheGoldAnimation,truheBlauAnimation;
     public Animation getTruheBraunAnimation() {
@@ -64,6 +64,9 @@ public class MyAssetManager extends AssetManager {
 
     public TextureRegion getSteinblock() {
         return steinblock;
+    }
+    public TextureRegion getSprechblase() {
+        return sprechblase;
     }
     public TextureRegion getFassblock() {
         return fassblock;
@@ -110,6 +113,10 @@ public class MyAssetManager extends AssetManager {
         load("objekte/block.png",Texture.class);
         finishLoadingAsset("objekte/block.png");
         steinblock=new TextureRegion(get("objekte/block.png",Texture.class), 0, 0, 32, 32);
+        load("objekte/expressions.png",Texture.class);
+        finishLoadingAsset("objekte/expressions.png");
+        sprechblase=new TextureRegion(get("objekte/expressions.png",Texture.class), 18, 36, 16, 16);
+
         //Schatztruhe
         load("objekte/schatztruhe.png",Texture.class);
         finishLoadingAsset("objekte/schatztruhe.png");

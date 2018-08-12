@@ -240,12 +240,6 @@
   </object>
  </objectgroup>
  <objectgroup name="schatztruhen">
-  <object id="51" x="144" y="80" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="handschuhe1"/>
-    <property name="typ" value="1"/>
-   </properties>
-  </object>
   <object id="88" x="496" y="80" width="16" height="16">
    <properties>
     <property name="Inhalt" value="Nahrung1"/>
@@ -260,7 +254,7 @@
   </object>
   <object id="90" x="464" y="112" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung3"/>
+    <property name="Inhalt" value="Nahrung2"/>
     <property name="typ" value="2"/>
    </properties>
   </object>

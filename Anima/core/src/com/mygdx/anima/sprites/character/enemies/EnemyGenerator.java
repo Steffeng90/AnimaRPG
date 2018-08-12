@@ -137,9 +137,9 @@ public class EnemyGenerator {
                 Playscreen.activePlant.add(plant);break;
         }
         }
-    public static void generateNPC(Playscreen screen, Rectangle rect, String typ,String dialogID) {
+    public static void generateNPC(Playscreen screen, Rectangle rect, String typ,String dialogID,int nachbedtrue) {
         FriendlyNPC friendlyNPC=NPCPool.getFriendlyNPCPool().obtain();
-        friendlyNPC.init(screen,rect,typ,dialogID);
+        friendlyNPC.init(screen,rect,typ,dialogID,nachbedtrue);
         Playscreen.activeNPC.add(friendlyNPC);
     }
     }

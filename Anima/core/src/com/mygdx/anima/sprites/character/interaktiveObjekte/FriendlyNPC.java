@@ -1,6 +1,7 @@
 package com.mygdx.anima.sprites.character.interaktiveObjekte;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -32,11 +33,13 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
     public TextureRegion standingDownSprite, standingUpSprite,
             standingLeftSprite, standingRightSprite;
     public String dialogID,typ;
+    public int nachbedtrue;
     public FriendlyNPC() {}
-    public void init(Playscreen screen, Rectangle rect, String typ,String dialogID){
+    public void init(Playscreen screen, Rectangle rect, String typ,String dialogID,int nachbedtrue){
         this.screen=screen;
         world=screen.getWorld();
         this.typ=typ;
+        this.nachbedtrue=nachbedtrue;
         setPosition(rect.getX(),rect.getY());
         this.setBounds(0, 0, 42 / AnimaRPG.PPM, 42/ AnimaRPG.PPM);
         bdef= new BodyDef();
@@ -51,7 +54,6 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
         fdef.filter.maskBits= AnimaRPG.HERO_BIT |AnimaRPG.HERO_SENSOR | AnimaRPG.ENEMY_BIT;
         fdef.shape = shape;
         body.createFixture(fdef).setUserData(this);
-
 
         shape.setPosition(new Vector2(0,4.5f/AnimaRPG.PPM));
         fdef.filter.categoryBits=AnimaRPG.OBJECT_BIT;
@@ -116,9 +118,15 @@ public class FriendlyNPC extends Sprite implements Pool.Poolable{
 
     }
     public void talktTo(){
+        if(nachbedtrue!=0){
+            getHeld().changeEventListEntry(nachbedtrue,true,screen);
+        }
         DialogGenerator.generateDialog(screen, screen.getGame().batch, dialogID);
     }
     public TextureRegion getProfilbild(){
         return getHeld().screen.getGame().getAssetManager().loadDialogIcon(typ);
+    }
+    public void draw(Batch batch){
+        super.draw(batch);
     }
 }

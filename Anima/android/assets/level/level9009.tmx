@@ -22,12 +22,12 @@
  </layer>
  <layer name="top1" width="30" height="40">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer name="top2" width="30" height="40">
   <data encoding="base64" compression="zlib">
-   eJztlbtKA0EUhg8YskWYTYL2iTYWGuMLaCH4BElvjIWF184LaCH4BNprIl7AdBG8FL6E9pqAJjFRCwUvoPgHdtnJhF12s5MEYX/4YXfPcL7ZmTlziDx58uSpM4owoihrPyejEmVV430KzBQzj8tSATmLXN49MPeZeVyW+oNEA0Hj/Q7Me2Yeb1XXwtynkTPN5Y0gHlXN463oB/l+LdYsrWB/EU9pY2YUdzxdY5j3uIO5x8AfgePcXA8DREcBZ9wNMDdNuBn8W1ZprKMF8BbhJY77AOajQ66VCmAWleY6cqs85nxmox7EOnKrNzDfbXDFOnKjXj9Rn19OLidKgJnsAncHzN0ucG/AvLXJre9vVsL+9viNdfbZYMs8zwnUZdLmnSfrPD/jfnqBX+Fj5DuxyJljzX2hVcVCuGPhOFxC3jJcgZ80689VuMYa+4Is8fe8/sx/G21Df6+Lv+f1Z/7bsmr0hQMJPbCMNa6E7I2V1RdOcZ5y9TMl9L+VMNEqvAavh91zRFXBq8ElgXsO1gV8CV+1gTuE9R2GB4V1/gDrE/6CvzmujDqa9BHNgTcPz2rcCZ/1eL2OrMbJ1jbH2uog19P/0R+7RFyP
+   eJztlT1Lw0AYxx+wJNOlLbq3ujhorV9AB8FP0O7WOjj4uvkCOgh+At21cVCwm4LVwS+hu7ZLW1t1UPAFFP+FhFyvJKTJpUXIH/6Q5I7nd7m753mIQoUKFao3SjCiJAueU9CIdM16nwMzx+zHZamMmBUu7hGYx8x+XJaGo0QjUev9AcxHZj/uVbfC2ucRM8/FTWA8qdmPe9EP4v067FlexfliPGfMWVD98UxNYd3TXaw9Bf4EnPZ5vjtg7tpwC/g3XW3PoxXwVuG1AO6VqTKYFbUzj/zqAmu+dLFuMY/86g3MdxdcMY/8aFAhGlLkxOpGGTCzfeAegHnYB+4dmPcuua3z1SWc74Bi7XPEBVvmfc4gL7Mua56s+/yM+vQCv8KniHfmELPIOvuCV6ViqLFwGq4ibg2uw0+GzecG3GTtfUGW+DpvPvPfJgOqw3ydN5/5b+ua1RdOJPTAGva4HnM3V1ZfOMd9KrbulND/NuJEm/AWvB33zxHVAK8JVwXuFVgl+Bq+CYA7hv0dh0eFff4A6xP+gr85row8mo0QLYG3DC8a3JmI83wzj5zmydY+x9rrITfU/9EfkpRZTQ==
   </data>
  </layer>
  <objectgroup name="barrieren">
@@ -47,7 +47,7 @@
   </object>
   <object id="241" x="80" y="560" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="NahrungM1"/>
+    <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
@@ -79,7 +79,7 @@
     <property name="typ" value="slime"/>
    </properties>
   </object>
-  <object id="251" x="224" y="16" width="16" height="16">
+  <object id="251" x="208" y="32" width="16" height="16">
    <properties>
     <property name="typ" value="slime"/>
    </properties>
@@ -105,7 +105,7 @@
   </object>
  </objectgroup>
  <objectgroup name="startpunkt">
-  <object id="236" x="234" y="597" width="16" height="16">
+  <object id="236" x="234" y="588" width="16" height="16">
    <properties>
     <property name="start" value="dungeon1BC"/>
    </properties>

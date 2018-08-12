@@ -125,11 +125,6 @@
   </properties>
  </objectgroup>
  <objectgroup name="startpunkt">
-  <object id="7" x="128" y="352" width="16" height="16">
-   <properties>
-    <property name="start" value="haus4"/>
-   </properties>
-  </object>
   <object id="115" x="608" y="96" width="16" height="16">
    <properties>
     <property name="start" value="haus4AB"/>
@@ -144,36 +139,23 @@
    </properties>
    <polyline points="32,-32 32,0"/>
   </object>
-  <object id="92" x="384" y="137">
-   <properties>
-    <property name="dialog" value="6"/>
-    <property name="vorbed" value="5"/>
-   </properties>
-   <polyline points="-16,-48 -16,96"/>
-  </object>
  </objectgroup>
  <objectgroup name="schatztruhen">
-  <object id="51" x="144" y="80" width="16" height="16">
+  <object id="51" x="80" y="144" width="16" height="16">
    <properties>
     <property name="Inhalt" value="handschuhe1"/>
     <property name="typ" value="1"/>
    </properties>
   </object>
-  <object id="88" x="496" y="80" width="16" height="16">
-   <properties>
-    <property name="Inhalt" value="Nahrung1"/>
-    <property name="typ" value="2"/>
-   </properties>
-  </object>
-  <object id="89" x="416" y="112" width="16" height="16">
+  <object id="89" x="224" y="272" width="16" height="16">
    <properties>
     <property name="Inhalt" value="NahrungM1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="90" x="464" y="112" width="16" height="16">
+  <object id="90" x="653" y="280" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung3"/>
+    <property name="Inhalt" value="Nahrung1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>

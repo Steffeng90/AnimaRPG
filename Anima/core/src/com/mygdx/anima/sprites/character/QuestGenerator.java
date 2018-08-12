@@ -26,7 +26,8 @@ public class QuestGenerator {
     private static int questAktivierungsEvent,id;
     private static QuestPart[] questParts;
 
-    public static void generateQuest(Playscreen screen, SpriteBatch sb, int event) {
+    public static void generateQuest(Playscreen screen, SpriteBatch sb, int event, Held held) {
+        System.out.println("Generate Quest");
         Gson gson = new Gson();
         try {
             FileHandle file = Gdx.files.internal("quest.json");
@@ -48,9 +49,19 @@ public class QuestGenerator {
                     questParts=new QuestPart[size];
                     for(int y=0;y<size;y++){
                         questParts[y]=new QuestPart(temp.get(y).getAsJsonObject().get("abschlussEvent").getAsInt(),temp.get(y).getAsJsonObject().get("inhalt").getAsString());
-                        }
-                    screen.getSpieler().getQuestlog().addQuest(new Quest(id,name,belohnung,questParts));
-                    screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, name, "Neuer Quest"));
+                    }
+                    if(screen.getSpieler()!=null){
+                        screen.getSpieler().getQuestlog().addQuest(new Quest(id,name,belohnung,questParts));
+                        System.out.println("Quest hinzugefügt #1");
+                    }
+                    else{
+                        held.getQuestlog().addQuest(new Quest(id,name,belohnung,questParts));
+                        System.out.println("Quest hinzugefügt #2");
+                    }
+                    if(sb !=null){
+                        screen.setQuestInfo(new QuestInfo(screen,sb, name, "Neuer Quest"));
+                    }
+
                 }
             }
         }
@@ -59,7 +70,6 @@ public class QuestGenerator {
             e.printStackTrace();
         }
     }
-
 
     }
 

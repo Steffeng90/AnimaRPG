@@ -1,10 +1,8 @@
 package com.mygdx.anima.sprites.character;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.scenes.QuestInfo;
 import com.mygdx.anima.screens.Playscreen;
-import com.mygdx.anima.sprites.character.zauber.ZauberEntity;
 
 import java.io.Serializable;
 
@@ -13,44 +11,51 @@ import java.io.Serializable;
  */
 
 public class QuestLog implements Serializable {
-    private static Array<Quest> questlog;
+    private static Array<Quest> questArray;
 
     public QuestLog() {
-        questlog = new Array<Quest>();
+        questArray = new Array<Quest>();
+    }
+    public void setQuestArray(Array<Quest> arr){
+        questArray=arr;
+    }
+    public Array<Quest> getQuestArray(){
+        return questArray;
     }
 
     public int size() {
-        return questlog.size;
+        return questArray.size;
     }
 
     public void addQuest(Quest quest) {
-        questlog.add(quest);
+        questArray.add(quest);
     }
 
     public boolean remove(Quest quest) {
-        return questlog.removeValue(quest, true);
+        return questArray.removeValue(quest, true);
     }
 
     public synchronized void resetAuswahl() {
-        int temp = questlog.size;
+        System.out.println("Questarray:+ "+ questArray);
+        int temp = questArray.size;
         for (int i = 0; i < temp; i++) {
-            questlog.get(i).setAusgewaehltImLog(false);
+            questArray.get(i).setAusgewaehltImLog(false);
         }
     }
 
     public Array<Quest> getQuestlog() {
-        return questlog;
+        return questArray;
     }
 
     public void checkEvents(int i, Playscreen screen) {
-        QuestGenerator.generateQuest(screen,screen.getGame().batch,i);
-        for (int y = 0; y < questlog.size; y++) {
-            System.out.println("Compare" + i + "mit" + questlog.get(y).getAktuellenQuestpart().getPartAbschlussEvent());
-            if (i == questlog.get(y).getAktuellenQuestpart().getPartAbschlussEvent()) {
-                if (questlog.get(y).questFortschritt()) {
-                    screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, "Erster Quest", "Quest abgeschlossen"));
+        QuestGenerator.generateQuest(screen,screen.getGame().batch,i,null);
+        for (int y = 0; y < questArray.size; y++) {
+            System.out.println("Compare" + i + "mit" + questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent());
+            if (i == questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent()) {
+                if (questArray.get(y).questFortschritt()) {
+                    screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest abgeschlossen"));
                 } else {
-                    screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, "Erster Quest", "Quest fortgeschritten"));
+                    screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest fortgeschritten"));
                 }
             }
         }

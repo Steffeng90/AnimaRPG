@@ -1,6 +1,8 @@
 package com.mygdx.anima.tools;
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.Quest;
 import com.mygdx.anima.sprites.character.QuestLog;
 import com.mygdx.anima.sprites.character.interaktiveObjekte.SchatztruhenSpeicherObjekt;
 import com.mygdx.anima.sprites.character.items.Amulett;
@@ -33,8 +35,7 @@ public class GameData implements Serializable{
             angelegtAmuleettIndex, angelegtHandschuheIndx, angelegtSchuheIndex;
     public String zauberslot1,zauberslot2,zauberslot3,zauberslot4;
     public String[] waffenNah,waffenFern,brust,helm,handschuhe,schuhe,amulett,zauber;
-    public QuestLog questlog;
-    public int[] geoeffneteTruhenMaps,geoeffneteTruhenId;
+    public int[] geoeffneteTruhenMaps,geoeffneteTruhenId,questId,questStand;
     public boolean[] eventArray;
     public GameData()
     {
@@ -62,6 +63,16 @@ public class GameData implements Serializable{
         spielzeit=getHeld().getSpielzeit();
         int size=getHeld().getZauberList().size();
         zauber=new String[size];
+        // Questlog
+        questId=new int[getHeld().getQuestlog().size()];
+        for(int y=0;y<questId.length;y++){
+            questId[y]=getHeld().getQuestlog().getQuestArray().get(y).getId();
+        }
+        questStand=new int[getHeld().getQuestlog().size()];
+        for(int y=0;y<questStand.length;y++){
+            questStand[y]=getHeld().getQuestlog().getQuestArray().get(y).getIDAktuellerQuestPart();
+        }
+
         for(int i=0;i<size;i++)
         {
             zauber[i]=getHeld().getZauberList().getZauberList().get(i).getId();
@@ -159,8 +170,7 @@ public class GameData implements Serializable{
                 angelegtAmuleettIndex=i;
             }
         }
-        // Questlog
-        this.questlog=getHeld().getQuestlog();
+
 
     }
     public byte[] serialize( ) throws IOException {

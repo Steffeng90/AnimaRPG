@@ -30,33 +30,53 @@
       },
       {
         "id":2,
-        "name":"Ein neuer Weg",
-        "questAktivierungsEvent":10,
+        "name":"Das verlorene Juwel",
+        "questAktivierungsEvent":12,
         "belohnung":"ABC",
         "questParts":[
           {
-            "abschlussEvent":1,
-            "inhalt": "Das Juwel einer Dorfbewohnerin wurd gestohlen. Sie sagt sie hat mitbekommen, dass es im Süden des Dorfes auf ein Schiff gebracht wurde. Finde das Amulett und Sie wird dich Belohnen"
+            "inhalt": "Das Juwel einer Dorfbewohnerin wurd gestohlen. Sie sagt sie hat mitbekommen, dass es im Süden des Dorfes auf ein Schiff gebracht wurde. Finde das Amulett und Sie wird dich belohnen",
+            "abschlussEvent":13
           },
           {
-            "abschlussEvent":1,
-            "inhalt": "Du hast das Juwel der Dorfbewohnerin gefunden. Bring es zu ihr zurück, um eine Belohnung zu erhalten."
+            "inhalt": "Du hast das Juwel der Dorfbewohnerin gefunden. Bring es zu ihr zurück, um eine Belohnung zu erhalten.",
+            "abschlussEvent":14
+          },
+          {
+            "inhalt": "Als Dank für das erhaltene Juwel hat dir die Dorfbewohnerin einen Schatz aus ihrem Haus angeboten.",
+            "abschlussEvent":21
           }
           ]
       },
     {
       "id":3,
-      "name":"Ein neuer Weg",
-      "questAktivierungsEvent":3,
+      "name":"Der verlassene Bauernhof",
+      "questAktivierungsEvent":15,
       "belohnung":"ABC",
       "questParts":[
         {
-          "abschlussEvent":1,
-          "inhalt": "Das Juwel einer Dorfbewohnerin wurd gestohlen. Sie sagt sie hat mitbekommen, dass es im Süden des Dorfes auf ein Schiff gebracht wurde. Finde das Amulett und Sie wird dich Belohnen"
+          "inhalt": "Eine Dorfbewohnerin will sich bei dir Bedanken, in dem Sie dir ihre Halskette überlässt. Du findest die Halskette in einem verlassenen Bauernhofsgebäude westlich der Stadt",
+          "abschlussEvent":16
         },
         {
-          "abschlussEvent":1,
-          "inhalt": "Du hast das Juwel der Dorfbewohnerin gefunden. Bring es zu ihr zurück, um eine Belohnung zu erhalten."
+          "inhalt": "Du hast den Bauernhof gefunden. Suche im Gebäude nach der Halskette.",
+          "abschlussEvent":17
+        }
+      ]
+    },
+	{
+      "id":4,
+      "name":"Besetzte Schmiede",
+      "questAktivierungsEvent":18,
+      "belohnung":"ABC",
+      "questParts":[
+        {
+          "inhalt": "Der Schmied des Dorfes möchte dir ein Rüstungsteil vermachen. Er hat ihn in der alten Schmiede zurückgelassen. Um die Schmiede zu finden musst du südlich des Dorfes die Wege erkunden. Doch hüte dich vor den Räuber, die ziellos umherstreifen.",
+          "abschlussEvent":19
+        },
+        {
+          "inhalt": "Du hast die Schmiede erreicht. Doch hier haben sich Räuber niedergelassen. Es wird ein langer Kampf das Rüstungsteil zu finden.",
+          "abschlussEvent":20
         }
       ]
     }

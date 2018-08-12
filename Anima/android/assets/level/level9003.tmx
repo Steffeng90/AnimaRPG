@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="83">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="25" tilewidth="16" tileheight="16" nextobjectid="84">
  <tileset firstgid="1" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/town.png" width="512" height="512"/>
  </tileset>
@@ -153,6 +153,15 @@
    <properties>
     <property name="dialog" value="8007"/>
     <property name="typ" value="npc7"/>
+    <property name="vorbedtrue" value="18"/>
+   </properties>
+  </object>
+  <object id="83" x="192" y="176" width="16" height="16">
+   <properties>
+    <property name="dialog" value="80071"/>
+    <property name="nachbedtrue" value="18"/>
+    <property name="typ" value="npc7"/>
+    <property name="vorbedfalse" value="18"/>
     <property name="vorbedtrue" value="10"/>
    </properties>
   </object>
