@@ -94,7 +94,7 @@ public class QuestReiter extends Group {
                 break;
             }
         }
-        for (int i = 0; i < size; i++) {
+        for (int i = (size-1); i >= 0; i--) {
             // Anzeige für abgeschlossene Quests
             if(questLog.getQuestlog().get(i).isAbgeschlossen()){
                 benutzenButton = new TextButton(questLog.getQuestlog().get(i).getName(), menu.getSkin());

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="55" height="65" tilewidth="16" tileheight="16" nextobjectid="128">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="55" height="65" tilewidth="16" tileheight="16" nextobjectid="146">
  <tileset firstgid="1" name="town" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/town.png" width="512" height="512"/>
  </tileset>
@@ -229,9 +229,6 @@
   <object id="109" x="384" y="288">
    <polyline points="0,0 0,256 128,256 128,224 192,224 192,256 224,256 224,224 288,224 288,544 268,563 224,544 223.333,574.333 288.667,607 192,608 192,624 -32,624"/>
   </object>
-  <object id="111" x="672" y="720" width="32" height="96">
-   <ellipse/>
-  </object>
   <object id="112" x="704" y="640" width="32" height="32">
    <ellipse/>
   </object>
@@ -247,36 +244,58 @@
   <object id="124" x="384" y="352">
    <polyline points="0,0 32,0 32,32 128,32 128,-48 112,-64 0,-64"/>
   </object>
+  <object id="140" x="672" y="720" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="142" x="672" y="752" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object id="143" x="672" y="784" width="32" height="32">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup name="enemyHumanoid">
   <properties>
    <property name="typ" value="raider-1"/>
   </properties>
-  <object id="56" x="208" y="208" width="16" height="16">
+  <object id="56" x="560" y="256" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
    </properties>
   </object>
-  <object id="57" x="240" y="112" width="16" height="16">
+  <object id="57" x="704" y="304" width="16" height="16">
    <properties>
     <property name="typ" value="raider-2"/>
    </properties>
   </object>
-  <object id="58" x="176" y="352" width="16" height="16">
+  <object id="131" x="720" y="464" width="16" height="16">
    <properties>
     <property name="typ" value="raider-1"/>
    </properties>
   </object>
-  <object id="84" x="368" y="320" width="16" height="16">
+  <object id="132" x="297.333" y="905.333" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="Nahrung2"/>
-    <property name="typ" value="1"/>
+    <property name="typ" value="raider-2"/>
    </properties>
   </object>
-  <object id="85" x="352" y="80" width="16" height="16">
+  <object id="134" x="432" y="208" width="16" height="16">
    <properties>
-    <property name="Inhalt" value="FoliantGeschick"/>
-    <property name="typ" value="1"/>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="137" x="672" y="224" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-3"/>
+   </properties>
+  </object>
+  <object id="138" x="752" y="144" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
+   </properties>
+  </object>
+  <object id="139" x="544" y="160" width="16" height="16">
+   <properties>
+    <property name="typ" value="raider-1"/>
    </properties>
   </object>
  </objectgroup>
@@ -312,9 +331,27 @@
   <object id="51" x="160" y="176" width="16" height="16">
    <properties>
     <property name="Inhalt" value="ruestung2"/>
-    <property name="nachbedfalse" value="20"/>
+    <property name="nachbedtrue" value="20"/>
     <property name="typ" value="1"/>
     <property name="vorbedtrue" value="19"/>
+   </properties>
+  </object>
+  <object id="128" x="416" y="512" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung1"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="129" x="752" y="80" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="Nahrung2"/>
+    <property name="typ" value="2"/>
+   </properties>
+  </object>
+  <object id="130" x="69.3333" y="326.667" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="MaxHP"/>
+    <property name="typ" value="1"/>
    </properties>
   </object>
  </objectgroup>

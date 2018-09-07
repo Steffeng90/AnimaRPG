@@ -29,7 +29,7 @@ import static com.mygdx.anima.AnimaRPG.getHeld;
  */
 
 public class ZauberGenerator {
-    private static String zauberName="Default",beschreibung="defaul";
+    private static String zauberName="Default",beschreibung="default",menuIconSource="standard";
     private static Vector2 vector;
     //Kategorie 1: Staerkung, 2: Schaden
     private static int kategorie,effektivitaet, manakosten;
@@ -54,14 +54,15 @@ public class ZauberGenerator {
                     zauberDauer=zauber.get("zauberDauer").getAsFloat();
                     kategorie = zauber.get("kategorie").getAsInt();
                     beschreibung=zauber.get("beschreibung").getAsString();
+                    menuIconSource=zauber.get("menu-icon-source").getAsString();
                     zauberFixtureTimer=zauber.get("zauberFixtureTimer").getAsFloat();
 
                switch (kategorie){
                     case 1:
-                        getHeld().getZauberList().addZauber(new ZauberEntity(typ,zauberName,"staerkung", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
+                        getHeld().getZauberList().addZauber(new ZauberEntity(typ,zauberName,"staerkung", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung,menuIconSource));
                         break;
                     case 2:
-                        getHeld().getZauberList().addZauber(new ZauberEntity(typ,zauberName,"schaden", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung));
+                        getHeld().getZauberList().addZauber(new ZauberEntity(typ,zauberName,"schaden", vector, effektivitaet, manakosten,zauberFixtureTimer, zauberZeit, zauberDauer,beschreibung,menuIconSource));
                         break;
                 }
                 break;}
@@ -71,7 +72,7 @@ public class ZauberGenerator {
             System.out.print("Fehler beim ZauberFixture auslesen:");
             e.printStackTrace();
         }
-        return new ZauberFundSprite(screen,x,y,vector,zauberName);
+        return new ZauberFundSprite(screen,x,y,vector,zauberName,menuIconSource);
     }
 
 

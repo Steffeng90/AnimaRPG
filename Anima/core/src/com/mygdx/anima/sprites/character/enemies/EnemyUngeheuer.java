@@ -14,6 +14,7 @@ import com.mygdx.anima.screens.Playscreen;
 import com.mygdx.anima.sprites.character.Held;
 import com.mygdx.anima.sprites.character.UngeheuerSprites;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Blitz;
+import com.mygdx.anima.sprites.character.zauber.fixtures.Frostsphere;
 import com.mygdx.anima.sprites.character.zauber.fixtures.HeilzauberAOE;
 import com.mygdx.anima.sprites.character.zauber.fixtures.Nova;
 import com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture;
@@ -155,7 +156,7 @@ public abstract class EnemyUngeheuer extends UngeheuerSprites implements Pool.Po
             }
         } else if (z instanceof HeilzauberAOE){
             getsHealed(z);        }
-        else if(z instanceof Blitz){
+        else if(z instanceof Blitz || z instanceof Nova || z instanceof Frostsphere){
             vonFeedbackbetroffen = true;
             // setFeedbackDauer=z.getFeedbackDauer();
             hitByFeedback = true;

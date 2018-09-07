@@ -119,7 +119,7 @@
    </properties>
    <polyline points="0,0 160,0"/>
   </object>
-  <object id="211" x="799.333" y="246">
+  <object id="211" x="810.666" y="242.667">
    <properties>
     <property name="ausgang" value="ost"/>
     <property name="nextMap" value="11"/>

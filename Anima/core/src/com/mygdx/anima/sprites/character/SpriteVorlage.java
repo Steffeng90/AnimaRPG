@@ -105,6 +105,9 @@ public class SpriteVorlage extends Sprite{
     public int getCurrentMana() {
         return currentMana;
     }
+    public float getCurrentManaPercent() {
+        return (float)currentMana/(float)maxMana;
+    }
 
     public void setCurrentMana(int currentMana) {
 

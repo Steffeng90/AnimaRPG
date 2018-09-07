@@ -75,6 +75,7 @@ public class MenuScreen implements Screen {
         changeReiter=false;
         aktiverReiter=1;
         negiereAuswahlAllerReiter();
+        getHeld().walkingSound.stop();
 
         this.viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, game.batch);

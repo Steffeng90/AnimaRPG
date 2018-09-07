@@ -32,6 +32,7 @@ import com.mygdx.anima.sprites.character.Quest;
 import com.mygdx.anima.sprites.character.QuestGenerator;
 import com.mygdx.anima.sprites.character.SchadenLabel;
 import com.mygdx.anima.sprites.character.enemies.NPCPool;
+import com.mygdx.anima.sprites.character.enemies.miscMonster.Golem;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
@@ -163,6 +164,7 @@ public class Playscreen implements Screen{
     public static Array<AngryBee> activeAngryBee= new Array<AngryBee>();
     public static Array<Snake> activeSnake= new Array<Snake>();
     public static Array<WormSmall> activeWormSmall= new Array<WormSmall>();
+    public static Array<Golem> activeGolem= new Array<Golem>();
     public static Array<WormBig> activeWormBig= new Array<WormBig>();
 
     //restart nach GameOverScreen
@@ -279,7 +281,7 @@ public class Playscreen implements Screen{
 
             renderer.render();
             // Render-Linien
-            //b2dr.render(world, gamecam.combined);
+            b2dr.render(world, gamecam.combined);
 
             game.batch.setProjectionMatrix(gamecam.combined);
 
@@ -295,9 +297,6 @@ public class Playscreen implements Screen{
                 steinblock.draw(game.batch);
             }
             for (QuestSprechblase sprechblase: activeSprechblase) {
-                System.out.println("aktive SPrechblasen:"+ activeSprechblase.size);
-                if(sprechblase==null)
-                    System.out.println("Sprechblase ist null");
                 sprechblase.draw(game.batch);
             }
             for (Raider raider : activeRaider) {
@@ -323,6 +322,8 @@ public class Playscreen implements Screen{
             for (int i = len; --i >= 0;) {activeWormBig.get(i).draw(game.batch);}
             len = activeWormSmall.size;
             for (int i = len; --i >= 0;) {activeWormSmall.get(i).draw(game.batch);}
+            len = activeGolem.size;
+            for (int i = len; --i >= 0;) {activeGolem.get(i).draw(game.batch);}
             for (FriendlyNPC npc : activeNPC) {
                 npc.draw(game.batch);
             }
@@ -685,6 +686,19 @@ public class Playscreen implements Screen{
             else{
                 kartenManager.isEnemyinRangeUngeheuer(wormSmall);
                 wormSmall.update(spieler,dt);
+            }
+        }
+        len = activeGolem.size;
+        for (int i = len; --i >= 0;) {
+            Golem golem;
+            golem= activeGolem.get(i);
+            if (golem.destroyed == true) {
+                activeGolem.removeIndex(i);
+                NPCPool.getGolemPool().free(golem);
+            }
+            else{
+                kartenManager.isEnemyinRangeUngeheuer(golem);
+                golem.update(spieler,dt);
             }
         }
         //Raider-pool

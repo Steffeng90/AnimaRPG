@@ -2,6 +2,7 @@ package com.mygdx.anima.sprites.character.enemies;
 
 import com.badlogic.gdx.utils.Pool;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.enemies.miscMonster.Golem;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
@@ -104,6 +105,12 @@ public class NPCPool {
             return new Slime();
         }
     };
+    private static final Pool<Golem> golemPool= new Pool<Golem>() {
+        @Override
+        protected Golem newObject() {
+            return new Golem();
+        }
+    };
     private static final Pool<WormBig> wormBigPool = new Pool<WormBig>() {
         @Override
         protected WormBig newObject() {
@@ -178,6 +185,9 @@ public class NPCPool {
 
     public static Pool<Plant> getPlantPool() {
         return plantPool;
+    }
+    public static Pool<Golem> getGolemPool() {
+        return golemPool;
     }
 
     public static Pool<AngryBee> getAngryBeePool() {
@@ -287,6 +297,14 @@ public class NPCPool {
             wormSmall= screen.activeWormSmall.get(i);
             screen.activeWormSmall.removeIndex(i);
             getWormSmallPool().free(wormSmall);
+        }
+        }
+        size= screen.activeGolem.size;
+        Golem golem;
+        if(size>0){ for (int i = size; --i >= 0;) {
+            golem= screen.activeGolem.get(i);
+            screen.activeGolem.removeIndex(i);
+            getGolemPool().free(golem);
         }
         }
         size= screen.activeNPC.size;

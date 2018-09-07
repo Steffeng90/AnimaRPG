@@ -3,6 +3,7 @@ package com.mygdx.anima.sprites.character.items;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -28,18 +29,27 @@ public class ZauberFundSprite extends Sprite {
     public int spriteBreite, spriteHoehe;
     public String name;
 
-    public ZauberFundSprite(Playscreen screen, float x, float y, Vector2 textureArea, String name){
+    public ZauberFundSprite(Playscreen screen, float x, float y, Vector2 textureArea, String name,String menuIconSource){
         this.screen=screen;
         this.world=screen.getWorld();
 
         setPosition(x, y);
         setBounds(getX(),getY(),16/ AnimaRPG.PPM,16/ AnimaRPG.PPM);
-        spriteQuelle=screen.getGame().getAssetManager().get("objekte/icons_for_rpg.png");
-        this.name=name;
-        spriteBreite=34;
-        spriteHoehe =34;
+        if(menuIconSource.equals("standard")){
+            spriteQuelle=screen.getGame().getAssetManager().get("objekte/icons_for_rpg.png");
+            this.name=name;
+            spriteBreite=34;
+            spriteHoehe =34;
+            texture=new TextureRegion(spriteQuelle,((int)textureArea.x)*spriteBreite,((int)textureArea.y)*spriteHoehe,spriteBreite,spriteHoehe);
+        }
+        else{
+            TextureAtlas atlas=screen.getGame().getAssetManager().get("objekte/casts/castingIcons.atlas");
+            this.name=name;
+            spriteBreite=128;
+            spriteHoehe =128;
+            texture=new TextureRegion(atlas.findRegion(menuIconSource),((int)textureArea.x)*spriteBreite,((int)textureArea.y)*spriteHoehe,spriteBreite,spriteHoehe);
 
-        texture=new TextureRegion(spriteQuelle,((int)textureArea.x)*spriteBreite,((int)textureArea.y)*spriteHoehe,spriteBreite,spriteHoehe);
+        }
 
         setRegion(texture);
         defineItem();

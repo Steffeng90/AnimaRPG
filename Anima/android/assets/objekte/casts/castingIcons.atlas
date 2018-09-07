@@ -1,0 +1,215 @@
+
+castingIcons.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+firelion_auswahl
+  rotate: false
+  xy: 1, 781
+  size: 134, 128
+  orig: 134, 128
+  offset: 0, 0
+  index: -1
+firelion
+  rotate: false
+  xy: 1, 651
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+firelion_angelegt
+  rotate: false
+  xy: 137, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frostsphere
+  rotate: false
+  xy: 1, 521
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frostsphere_angelegt
+  rotate: false
+  xy: 131, 651
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+frostsphere_auswahl
+  rotate: false
+  xy: 267, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+greenshield
+  rotate: false
+  xy: 1, 391
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+greenshield_angelegt
+  rotate: false
+  xy: 131, 521
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+greenshield_auswahl
+  rotate: false
+  xy: 261, 651
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+iceshield
+  rotate: false
+  xy: 397, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+iceshield_angelegt
+  rotate: false
+  xy: 1, 261
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+iceshield_auswahl
+  rotate: false
+  xy: 131, 391
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+snakebite
+  rotate: false
+  xy: 261, 521
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+snakebite_angelegt
+  rotate: false
+  xy: 391, 651
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+snakebite_auswahl
+  rotate: false
+  xy: 527, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Spikes_brown
+  rotate: false
+  xy: 1, 131
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Spikes_brown_angelegt
+  rotate: false
+  xy: 131, 261
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Spikes_brown_auswahl
+  rotate: false
+  xy: 261, 391
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Spikes_ice
+  rotate: false
+  xy: 391, 521
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Spikes_ice_angelegt
+  rotate: false
+  xy: 521, 651
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+Spikes_ice_auswahl
+  rotate: false
+  xy: 657, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+thunderclaw
+  rotate: false
+  xy: 1, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+thunderclaw_angelegt
+  rotate: false
+  xy: 131, 131
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+thunderclaw_auswahl
+  rotate: false
+  xy: 261, 261
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tornado
+  rotate: false
+  xy: 391, 391
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tornado_angelegt
+  rotate: false
+  xy: 521, 521
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tornado_auswahl
+  rotate: false
+  xy: 651, 651
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+torrentacle
+  rotate: false
+  xy: 787, 781
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+torrentacle_angelegt
+  rotate: false
+  xy: 131, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+torrentacle_auswahl
+  rotate: false
+  xy: 261, 131
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

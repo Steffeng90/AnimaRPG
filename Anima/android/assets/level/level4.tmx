@@ -246,6 +246,7 @@
   <object id="286" x="562" y="269" width="16" height="16">
    <properties>
     <property name="dialog" value="8001"/>
+    <property name="nachbedtrue" value="11"/>
     <property name="typ" value="npc1"/>
     <property name="vorbedtrue" value="10"/>
    </properties>

@@ -113,9 +113,9 @@ public class MyAssetManager extends AssetManager {
         load("objekte/block.png",Texture.class);
         finishLoadingAsset("objekte/block.png");
         steinblock=new TextureRegion(get("objekte/block.png",Texture.class), 0, 0, 32, 32);
-        load("objekte/expressions.png",Texture.class);
-        finishLoadingAsset("objekte/expressions.png");
-        sprechblase=new TextureRegion(get("objekte/expressions.png",Texture.class), 18, 36, 16, 16);
+        load("objekte/sprechblasen.png",Texture.class);
+        finishLoadingAsset("objekte/sprechblasen.png");
+        sprechblase=new TextureRegion(get("objekte/sprechblasen.png",Texture.class), 18, 36, 16, 16);
 
         //Schatztruhe
         load("objekte/schatztruhe.png",Texture.class);
@@ -156,8 +156,23 @@ public class MyAssetManager extends AssetManager {
         //Textures
         load("objekte/heilung_versuch2.png",Texture.class);
         load("objekte/arrow.png", Texture.class);
-        load("objekte/energieNova.png", Texture.class);
+
+        load("objekte/casts/firelion_down.png", Texture.class);
+        load("objekte/casts/firelion_left.png", Texture.class);
+        load("objekte/casts/firelion_right.png", Texture.class);
+        load("objekte/casts/firelion_up.png", Texture.class);
+        load("objekte/casts/iceshield.png", Texture.class);
+        load("objekte/casts/icetacle.png", Texture.class);
+        load("objekte/casts/lightningclaw.png", Texture.class);
+        load("objekte/casts/snakebite_down.png", Texture.class);
+        load("objekte/casts/spikes.png", Texture.class);
+        load("objekte/casts/tornado.png", Texture.class);
+        load("objekte/casts/torrentacle.png", Texture.class);
+        load("objekte/casts/turtleshell_front.png", Texture.class);
+
+        load("objekte/casts/castingIcons.atlas",TextureAtlas.class);
         load("ungeheuer/ungeheuer.atlas",TextureAtlas.class);
+        load("objekte/ui_anzeigeBild.png", Texture.class);
 
         finishLoadingAsset("objekte/arrow.png");
         pfeilRechts=new TextureRegion(get("objekte/arrow.png",Texture.class),5,10,53,9);

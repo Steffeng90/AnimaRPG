@@ -34,24 +34,6 @@ public class ZauberList implements Serializable {
     public Array<ZauberEntity> getZauberList() {
         return zauberListe;
     }
-
-    // Getter und Setter für angelegte Variablen
-    /*public synchronized void setAngelegtWaffeNah(WaffeNah angelegtWaffeNah) {
-        if(this.angelegtWaffeNah!=null)
-            this.angelegtWaffeNah.setAngelegt(false);
-        if(angelegtWaffeNah!=null){
-        this.angelegtWaffeNah = angelegtWaffeNah;angelegtWaffeNah.setAngelegt(true);}
-    else{this.angelegtWaffeNah=null;}
-        getHeld().setSchadenNah();}
-    public synchronized WaffeFern getAngelegtWaffeFern() {return angelegtWaffeFern;}
-    public synchronized void setAngelegtWaffeFern(WaffeFern angelegtWaffeFern) {
-        if(this.angelegtWaffeFern!=null)
-            this.angelegtWaffeFern.setAngelegt(false);
-        if(angelegtWaffeFern!=null){
-        this.angelegtWaffeFern = angelegtWaffeFern;angelegtWaffeFern.setAngelegt(true);}
-        else{this.angelegtWaffeFern=null;}
-        getHeld().setSchadenFern();}
-*/
     public void setZauberslot(int slotNummer,ZauberEntity zauber){
         switch(slotNummer){
             case 1: zauberslot1=zauber;break;

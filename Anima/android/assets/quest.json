@@ -25,6 +25,13 @@
           {
             "abschlussEvent":11,
             "inhalt": "Du hast die Riesin Gladin besiegt und dadurch den Angriff der Räuber vereitelt. Gehe zurück ins Dorf und sprich mit dem Dorfältesten"
+          },
+          {
+
+            "inhalt": "Du hast die Riesin Gladin besiegt und dadurch den Angriff der Räuber vereitelt. Gehe zurück ins Dorf und sprich mit dem Dorfältesten",
+            "abschlussEvent":17,
+            "abschlussEventB":21,
+            "abschlussEventC":20
           }
         ]
       },

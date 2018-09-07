@@ -8,11 +8,27 @@ import com.mygdx.anima.sprites.character.items.Item;
 
 public class QuestPart {
     private String inhalt;
-    private int PartAbschlussEvent;
+    private int PartAbschlussEvent[];
 
-    public QuestPart(int abschlussEvent,String inhalt){
-        this.PartAbschlussEvent=abschlussEvent;
+    public QuestPart(int abschlussEvent,int abschlussEventB,int abschlussEventC, String inhalt){
+        this.PartAbschlussEvent=new int[]{abschlussEvent,abschlussEventB,abschlussEventC};
         this.inhalt=inhalt;
+    }
+    public QuestPart(int abschlussEvent, int abschlussEventB,String inhalt){
+        this.PartAbschlussEvent=new int[]{abschlussEvent,abschlussEventB};
+        this.inhalt=inhalt;
+    }
+    public QuestPart(int abschlussEvent,String inhalt){
+        this.PartAbschlussEvent=new int[]{abschlussEvent};
+        this.inhalt=inhalt;
+    }
+    public QuestPart(int[] abschlussEvent,String inhalt){
+        this.PartAbschlussEvent=new int[abschlussEvent.length];
+        for(int y=0;y<abschlussEvent.length;y++){
+            this.PartAbschlussEvent[y]=abschlussEvent[y];
+            this.inhalt=inhalt;
+        }
+
     }
     public String getInhalt() {
         return inhalt;
@@ -22,11 +38,13 @@ public class QuestPart {
         this.inhalt = inhalt;
     }
 
-    public int getPartAbschlussEvent() {
+    public int getPartAbschlussEvent(int i) {
+        return PartAbschlussEvent[i];
+    }
+    public int[] getPartAbschlussEvent() {
         return PartAbschlussEvent;
     }
-
-    public void setPartAbschlussEvent(int partAbschlussEvent) {
+    public void setPartAbschlussEvent(int[] partAbschlussEvent) {
         PartAbschlussEvent = partAbschlussEvent;
     }
 }

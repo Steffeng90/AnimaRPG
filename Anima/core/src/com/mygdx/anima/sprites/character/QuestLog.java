@@ -12,7 +12,6 @@ import java.io.Serializable;
 
 public class QuestLog implements Serializable {
     private static Array<Quest> questArray;
-
     public QuestLog() {
         questArray = new Array<Quest>();
     }
@@ -47,17 +46,39 @@ public class QuestLog implements Serializable {
         return questArray;
     }
 
-    public void checkEvents(int i, Playscreen screen) {
+    public void checkEvents(Held held,int i, Playscreen screen) {
         QuestGenerator.generateQuest(screen,screen.getGame().batch,i,null);
+        int questcounter=0;
         for (int y = 0; y < questArray.size; y++) {
-            System.out.println("Compare" + i + "mit" + questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent());
-            if (i == questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent()) {
-                if (questArray.get(y).questFortschritt()) {
-                    screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest abgeschlossen"));
-                } else {
-                    screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest fortgeschritten"));
+            if(!questArray.get(y).isAbgeschlossen()) {
+                //int[] questArray=questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent()
+                for (int z = 0; z < questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent().length; z++) {
+                    int eventId=questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent(z);
+                    if (held.getEventList()[eventId]) {
+                        questcounter++;
+                    }
                 }
+                if(questcounter>=questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent().length){
+                    if (questArray.get(y).questFortschritt()) {
+                        screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest abgeschlossen"));
+                    } else {
+                        screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest fortgeschritten"));
+                    }
+                }
+
             }
+
+           /* System.out.println("Compare" + i + "mit" + questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent());
+            for(int z=0; y<questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent().length;z++){
+                if (i == questArray.get(y).getAktuellenQuestpart().getPartAbschlussEvent()) {
+
+            }
+            }
+            if (questArray.get(y).questFortschritt()) {
+                screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest abgeschlossen"));
+            } else {
+                screen.setQuestInfo(new QuestInfo(screen, screen.getGame().batch, questArray.get(y).getName(), "Quest fortgeschritten"));
+            }*/
         }
     }
 }

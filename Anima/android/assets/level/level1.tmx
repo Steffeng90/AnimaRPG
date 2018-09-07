@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="22" height="50" tilewidth="16" tileheight="16" nextobjectid="251">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="22" height="50" tilewidth="16" tileheight="16" nextobjectid="259">
  <tileset firstgid="1" name="start" tilewidth="16" tileheight="16" tilecount="1024" columns="32">
   <image source="tilesets/trees_plants_rocks.png" width="512" height="512"/>
  </tileset>
@@ -57,51 +57,99 @@
   </object>
  </objectgroup>
  <objectgroup name="schatztruhen">
-  <object id="115" x="224" y="592" width="16" height="16">
+  <object id="115" x="224" y="512" width="16" height="16">
    <properties>
     <property name="Inhalt" value="MaxHP"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="116" x="144" y="592" width="16" height="16">
+  <object id="116" x="144" y="512" width="16" height="16">
    <properties>
     <property name="Inhalt" value="MaxMana"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="119" x="96" y="576" width="16" height="16">
+  <object id="119" x="96" y="496" width="16" height="16">
    <properties>
     <property name="Inhalt" value="ManaPot1"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="120" x="192" y="592" width="16" height="16">
+  <object id="120" x="192" y="512" width="16" height="16">
    <properties>
     <property name="Inhalt" value="ManaPot2"/>
     <property name="typ" value="2"/>
    </properties>
   </object>
-  <object id="230" x="256" y="496" width="16" height="16">
+  <object id="230" x="256" y="416" width="16" height="16">
    <properties>
     <property name="Inhalt" value="schaden1"/>
     <property name="typ" value="3"/>
    </properties>
   </object>
-  <object id="231" x="208" y="528" width="16" height="16">
+  <object id="231" x="208" y="448" width="16" height="16">
    <properties>
     <property name="Inhalt" value="staerkung1"/>
     <property name="typ" value="3"/>
    </properties>
   </object>
-  <object id="232" x="144" y="528" width="16" height="16">
+  <object id="232" x="144" y="448" width="16" height="16">
    <properties>
     <property name="Inhalt" value="schaden2"/>
     <property name="typ" value="3"/>
    </properties>
   </object>
-  <object id="244" x="272" y="624" width="16" height="16">
+  <object id="244" x="256" y="512" width="16" height="16">
    <properties>
     <property name="vorbed" value="2"/>
+   </properties>
+  </object>
+  <object id="251" x="112" y="624" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden3"/>
+    <property name="typ" value="3"/>
+   </properties>
+  </object>
+  <object id="252" x="144" y="624" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden4"/>
+    <property name="typ" value="3"/>
+   </properties>
+  </object>
+  <object id="253" x="176" y="624" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden5"/>
+    <property name="typ" value="3"/>
+   </properties>
+  </object>
+  <object id="254" x="208" y="624" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden6"/>
+    <property name="typ" value="3"/>
+   </properties>
+  </object>
+  <object id="255" x="240" y="624" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden7"/>
+    <property name="typ" value="3"/>
+   </properties>
+  </object>
+  <object id="256" x="304" y="656" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden8"/>
+    <property name="typ" value="3"/>
+   </properties>
+  </object>
+  <object id="257" x="304" y="688" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden9"/>
+    <property name="typ" value="3"/>
+   </properties>
+  </object>
+  <object id="258" x="304" y="720" width="16" height="16">
+   <properties>
+    <property name="Inhalt" value="schaden10"/>
+    <property name="typ" value="3"/>
    </properties>
   </object>
  </objectgroup>
@@ -156,14 +204,14 @@
     <property name="typ" value="angryBee"/>
    </properties>
   </object>
-  <object id="246" x="176" y="544" width="16" height="16">
+  <object id="246" x="176" y="464" width="16" height="16">
    <properties>
     <property name="nachbed" value="10"/>
     <property name="typ" value="raider-4"/>
     <property name="vorbedfalse" value="10"/>
    </properties>
   </object>
-  <object id="250" x="240" y="560" width="16" height="16">
+  <object id="250" x="240" y="480" width="16" height="16">
    <properties>
     <property name="dialog" value="80021"/>
     <property name="nachbedtrue" value="12"/>

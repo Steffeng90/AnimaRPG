@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mygdx.anima.screens.Playscreen;
+import com.mygdx.anima.sprites.character.enemies.miscMonster.Golem;
 import com.mygdx.anima.sprites.character.enemies.raider.Raider;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderArcher;
 import com.mygdx.anima.sprites.character.enemies.raider.RaiderBoss;
@@ -135,6 +136,10 @@ public class EnemyGenerator {
                 Plant plant=NPCPool.getPlantPool().obtain();
                 plant.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
                 Playscreen.activePlant.add(plant);break;
+            case 111:
+                Golem golem=NPCPool.getGolemPool().obtain();
+                golem.init(screen,x,y,id,maxhp,maxmana,regMana,ep,speed,schadenNah,schadenfern,schadenzauber,ruestung,boundsX,boundsY,castSpeed,bowSpeed,meleeSpeed,thrustSpeed);
+                Playscreen.activeGolem.add(golem);break;
         }
         }
     public static void generateNPC(Playscreen screen, Rectangle rect, String typ,String dialogID,int nachbedtrue) {

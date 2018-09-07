@@ -443,6 +443,10 @@ public class Held extends HumanoideSprites implements Serializable{
         return currentLevel;
     }
 
+    public float getCurrentEXPpercent(){
+        return (float)currentErfahrung/(float)nextLevelUp;
+    }
+
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
         setNextLevelUp(currentLevel);
@@ -737,7 +741,7 @@ public class Held extends HumanoideSprites implements Serializable{
         boolean tempwert=this.eventList[i];
         this.eventList[i]=wert;
         if(tempwert==false && wert==true){
-            this.questlog.checkEvents(i,screen);
+            this.questlog.checkEvents(this,i,screen);
         }
 
     }

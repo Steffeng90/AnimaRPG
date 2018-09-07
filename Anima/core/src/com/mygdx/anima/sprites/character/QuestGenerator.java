@@ -48,7 +48,15 @@ public class QuestGenerator {
                     System.out.println("Size"+size);
                     questParts=new QuestPart[size];
                     for(int y=0;y<size;y++){
-                        questParts[y]=new QuestPart(temp.get(y).getAsJsonObject().get("abschlussEvent").getAsInt(),temp.get(y).getAsJsonObject().get("inhalt").getAsString());
+                        if(temp.get(y).getAsJsonObject().has("abschlussEventC")){
+                            questParts[y]=new QuestPart(temp.get(y).getAsJsonObject().get("abschlussEvent").getAsInt(),temp.get(y).getAsJsonObject().get("abschlussEventB").getAsInt(),temp.get(y).getAsJsonObject().get("abschlussEventC").getAsInt(),temp.get(y).getAsJsonObject().get("inhalt").getAsString());
+                        }
+                        else if(temp.get(y).getAsJsonObject().has("abschlussEventB")){
+                            questParts[y]=new QuestPart(temp.get(y).getAsJsonObject().get("abschlussEvent").getAsInt(),temp.get(y).getAsJsonObject().get("abschlussEventB").getAsInt(),temp.get(y).getAsJsonObject().get("inhalt").getAsString());
+                        }
+                        else{
+                            questParts[y]=new QuestPart(temp.get(y).getAsJsonObject().get("abschlussEvent").getAsInt(),temp.get(y).getAsJsonObject().get("inhalt").getAsString());
+                        }
                     }
                     if(screen.getSpieler()!=null){
                         screen.getSpieler().getQuestlog().addQuest(new Quest(id,name,belohnung,questParts));

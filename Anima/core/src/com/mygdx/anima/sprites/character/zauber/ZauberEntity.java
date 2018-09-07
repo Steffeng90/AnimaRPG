@@ -1,6 +1,7 @@
 package com.mygdx.anima.sprites.character.zauber;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.anima.AnimaRPG;
@@ -26,7 +27,7 @@ public class ZauberEntity implements Serializable {
     private int grafikPosX,grafikPosY;
     private com.mygdx.anima.sprites.character.zauber.fixtures.ZauberFixture zauberFixture;
 
-    public ZauberEntity(String id,String name, String kategorieString, Vector2 grafikposi, int effektivitaet, int manakosten,float zauberFixtureTimer,float zauberZeit,float zauberDauer,String beschreibung) {
+    public ZauberEntity(String id,String name, String kategorieString, Vector2 grafikposi, int effektivitaet, int manakosten,float zauberFixtureTimer,float zauberZeit,float zauberDauer,String beschreibung,String menuIconSource) {
         this.id=id;
         setName(name);
         grafikPosX = (int) grafikposi.x;
@@ -34,9 +35,19 @@ public class ZauberEntity implements Serializable {
         this.zauberFixtureTimer=zauberFixtureTimer;
         ausgewaehlt=false;
         angelegt=false;
-        setGrafiken(new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg.png",Texture.class), grafikPosX * 34, grafikPosY * 34, 34, 34),
-                new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_angelegt.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34),
-                new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_auswahl.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34));
+        if(menuIconSource.equals("standard")){
+            setGrafiken(new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg.png",Texture.class), grafikPosX * 34, grafikPosY * 34, 34, 34),
+                    new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_angelegt.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34),
+                    new TextureRegion(AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/icons_for_rpg_auswahl.png",Texture.class),grafikPosX*34,grafikPosY*34,34,34));
+        }
+        else {
+            TextureAtlas atlas=AnimaRPG.getHeld().screen.getGame().getAssetManager().get("objekte/casts/castingIcons.atlas",TextureAtlas.class);
+            System.out.println("Name des Zaubers:"+menuIconSource);
+            TextureRegion tr1=atlas.findRegion(menuIconSource+""),
+                    tr2=atlas.findRegion(menuIconSource+"_angelegt"),
+                    tr3=atlas.findRegion(menuIconSource+"_auswahl");
+            setGrafiken(tr1,tr2,tr3);
+        }
         setItemKategorie(kategorieString);
         setEffektivitaet(effektivitaet);
         setManakosten(manakosten);
@@ -81,6 +92,25 @@ public class ZauberEntity implements Serializable {
         else if(name.equals("Blitz")){
             new com.mygdx.anima.sprites.character.zauber.fixtures.Blitz(richtung,zauberFixtureTimer);
         }
+        else if(name.equals("Frostsphere")){
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Frostsphere(richtung,zauberFixtureTimer);
+        }
+        else if(name.equals("Feuerlöwe")){
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Feuerlöwe(richtung,zauberFixtureTimer);
+        }
+        else if(name.equals("Tornado")){
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Tornado(richtung,zauberFixtureTimer);
+        }
+        else if(name.equals("Schlangenbiss")){
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Schlangenbiss(richtung,zauberFixtureTimer);
+        }
+        else if(name.equals("Blitzkralle")){
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Blitzkralle(richtung,zauberFixtureTimer);
+        }
+        else if(name.equals("Gravitation")){
+            new com.mygdx.anima.sprites.character.zauber.fixtures.Gravitation(richtung,zauberFixtureTimer);
+        }
+
     }
     public TextureRegion getSlotGrafik(){return grafikNichts;}
     public boolean isStaerkung(){

@@ -1,9 +1,19 @@
 {"zauber":[
   // Staerkungszauber (kat=1)
-  {"id":"staerkung1","name":"Schutzschild","kategorie":1,"vectorX":7,"vectorY":26,"effektivitaet":10,"manakosten":4,"zauberZeit":1.5,"zauberFixtureTimer":0.8,"zauberDauer":30,"beschreibung":"Steigert eure Verteidung um 30%."},
+  {"id":"staerkung1","name":"Schutzschild","menu-icon-source":"standard","kategorie":1,"vectorX":7,"vectorY":26,"effektivitaet":10,"manakosten":4,"zauberZeit":1.5,"zauberFixtureTimer":0.8,"zauberDauer":30,"beschreibung":"Steigert eure Verteidung um 30%."},
+  {"id":"staerkung2","name":"IceShield","menu-icon-source":"iceshield","kategorie":1,"vectorX":7,"vectorY":26,"effektivitaet":10,"manakosten":4,"zauberZeit":1.5,"zauberFixtureTimer":0.8,"zauberDauer":30,"beschreibung":"Steigert eure Verteidung um 30%."},
+  {"id":"staerkung3","name":"GreenShield","menu-icon-source":"greenshield","kategorie":1,"vectorX":7,"vectorY":26,"effektivitaet":10,"manakosten":4,"zauberZeit":1.5,"zauberFixtureTimer":0.8,"zauberDauer":30,"beschreibung":"Steigert eure Verteidung um 30%."},
 
   // Schadenzauber (kat=2)
-  {"id":"schaden1","name":"Energie-Nova","kategorie":2,"vectorX":2,"vectorY":21,"effektivitaet":15,"manakosten":5,"zauberZeit":1.0,"zauberFixtureTimer":0.8,"zauberDauer":0,"beschreibung":"Ihr konzentriert reines Mana in eurer Umgebung und bringt es zur Explosion, wodurch alle Gegner im Umfeld Schaden erleiden."},
-  {"id":"schaden2","name":"Blitz","kategorie":2,"vectorX":0,"vectorY":23,"effektivitaet":12,"manakosten":3,"zauberZeit":0.3,"zauberFixtureTimer":0.0,"zauberDauer":0,"beschreibung":"Erzeugt einen BLitz und schleudert ihn auf die Gegner."}
+  {"id":"schaden1","name":"Energie-Nova","menu-icon-source":"standard","kategorie":2,"vectorX":2,"vectorY":21,"effektivitaet":15,"manakosten":5,"zauberZeit":1.0,"zauberFixtureTimer":0.8,"zauberDauer":0,"beschreibung":"Ihr konzentriert reines Mana in eurer Umgebung und bringt es zur Explosion, wodurch alle Gegner im Umfeld Schaden erleiden."},
+  {"id":"schaden2","name":"Blitz","menu-icon-source":"standard","kategorie":2,"vectorX":0,"vectorY":23,"effektivitaet":12,"manakosten":3,"zauberZeit":0.3,"zauberFixtureTimer":0.0,"zauberDauer":0,"beschreibung":"Erzeugt einen BLitz und schleudert ihn auf die Gegner."},
+  {"id":"schaden3","name":"Frostsphere","menu-icon-source":"frostsphere","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."},
+  {"id":"schaden4","name":"Feuerlöwe","menu-icon-source":"firelion","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."},
+  {"id":"schaden5","name":"Tornado","menu-icon-source":"tornado","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."},
+  {"id":"schaden6","name":"Schlangenbiss","menu-icon-source":"snakebite","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."},
+  {"id":"schaden7","name":"Blitzkralle","menu-icon-source":"thunderclaw","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."},
+  {"id":"schaden8","name":"Blauer Stachel","menu-icon-source":"Spikes_ice","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."},
+  {"id":"schaden9","name":"Felsenstich","menu-icon-source":"Spikes_brown","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."},
+  {"id":"schaden10","name":"Gravitation","menu-icon-source":"torrentacle","kategorie":2,"vectorX":0,"vectorY":0,"effektivitaet":12,"manakosten":3,"zauberZeit":0.5,"zauberFixtureTimer":0.0,"zauberDauer":0.5,"beschreibung":"Hält Gegner in einiger Entfernt in einer Sphäre aus Eis fest."}
 
 ]}
